@@ -1,5 +1,18 @@
 export type TechCategory = 'frontend' | 'backend' | 'database' | 'devops'
 
+export type ThemeMode = 'system' | 'dark' | 'light'
+
+export type LocaleMode = 'system' | 'es' | 'en'
+
+export type ResolvedTheme = 'dark' | 'light'
+
+export type ResolvedLocale = 'es' | 'en'
+
+export interface Preferences {
+  readonly theme: ThemeMode
+  readonly locale: LocaleMode
+}
+
 export type TechFilter = 'all' | TechCategory
 
 export type TechIconKey =
