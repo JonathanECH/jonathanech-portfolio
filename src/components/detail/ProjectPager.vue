@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { ArrowLeft, ArrowRight } from '@lucide/vue'
+import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
 defineProps<{
   previous: Project | null
   next: Project | null
 }>()
+
+const { t } = useI18n()
 </script>
 
 <template>
-  <nav class="border-t border-border" aria-label="Navegación entre proyectos">
+  <nav class="border-t border-border" :aria-label="t('pager.aria')">
     <div class="mx-auto w-full max-w-7xl px-5 py-10 sm:px-6 sm:py-12 lg:px-12">
       <div class="grid gap-px overflow-hidden rounded border border-border bg-border sm:grid-cols-2">
         <RouterLink
@@ -26,7 +29,7 @@ defineProps<{
           </span>
           <span class="min-w-0">
             <span class="block font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-              CASO ANTERIOR
+              {{ t('pager.previous') }}
             </span>
             <span
               class="mt-1 block text-base font-semibold leading-snug text-white transition-colors duration-200 group-hover:text-cyan-accent"
@@ -52,13 +55,13 @@ defineProps<{
           </span>
           <span class="min-w-0">
             <span class="block font-mono text-[10px] uppercase tracking-[0.2em] text-white/25">
-              CASO ANTERIOR
+              {{ t('pager.previous') }}
             </span>
             <span class="mt-1 block text-base font-semibold leading-snug text-white/30">
-              Sin proyecto anterior
+              {{ t('pager.noPrevious') }}
             </span>
             <span class="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-white/15">
-              INICIO DE LA SERIE
+              {{ t('pager.start') }}
             </span>
           </span>
         </div>
@@ -70,7 +73,7 @@ defineProps<{
         >
           <span class="min-w-0">
             <span class="block font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-              SIGUIENTE CASO
+              {{ t('pager.next') }}
             </span>
             <span
               class="mt-1 block text-base font-semibold leading-snug text-white transition-colors duration-200 group-hover:text-cyan-accent"
@@ -96,13 +99,13 @@ defineProps<{
         >
           <span class="min-w-0">
             <span class="block font-mono text-[10px] uppercase tracking-[0.2em] text-white/25">
-              SIGUIENTE CASO
+              {{ t('pager.next') }}
             </span>
             <span class="mt-1 block text-base font-semibold leading-snug text-white/30">
-              Sin proyecto siguiente
+              {{ t('pager.noNext') }}
             </span>
             <span class="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-white/15">
-              FIN DE LA SERIE
+              {{ t('pager.end') }}
             </span>
           </span>
           <span

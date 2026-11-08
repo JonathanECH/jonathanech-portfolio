@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { CircleCheck } from '@lucide/vue'
+import { useI18n } from '@/i18n'
 import type { GallerySlide, MockupVariant } from '@/types/portfolio'
 
 const props = defineProps<{
@@ -8,6 +9,8 @@ const props = defineProps<{
   accent: string
   projectSlug: string
 }>()
+
+const { t } = useI18n()
 
 const isErp = computed(() => props.projectSlug === 'erp-contable')
 
@@ -47,11 +50,11 @@ interface InventoryStat {
   readonly highlight?: boolean
 }
 
-const inventoryStats: readonly InventoryStat[] = [
-  { label: 'Existencias', value: '18,420', fill: '82%', highlight: true },
-  { label: 'Lotes activos', value: '312', fill: '64%' },
-  { label: 'Alertas', value: '07', fill: '28%' },
-]
+const inventoryStats = computed<readonly InventoryStat[]>(() => [
+  { label: t('mockup.stock'), value: '18,420', fill: '82%', highlight: true },
+  { label: t('mockup.activeBatches'), value: '312', fill: '64%' },
+  { label: t('mockup.alerts'), value: '07', fill: '28%' },
+])
 
 interface InventoryRow {
   readonly sku: string
@@ -61,12 +64,12 @@ interface InventoryRow {
   readonly warn?: boolean
 }
 
-const inventoryRows: readonly InventoryRow[] = [
+const inventoryRows = computed<readonly InventoryRow[]>(() => [
   { sku: 'TX-4410 / L-08', size: 'M', stock: '184', status: 'OK' },
   { sku: 'TX-4412 / L-09', size: 'L', stock: '092', status: 'OK' },
-  { sku: 'TX-4420 / L-12', size: 'S', stock: '014', status: 'REPONER', warn: true },
+  { sku: 'TX-4420 / L-12', size: 'S', stock: '014', status: t('mockup.restock'), warn: true },
   { sku: 'TX-4431 / L-14', size: 'XL', stock: '240', status: 'OK' },
-]
+])
 
 interface LedgerEntry {
   readonly id: string
@@ -75,26 +78,26 @@ interface LedgerEntry {
   readonly credit: string
 }
 
-const inventoryLedgerEntries: readonly LedgerEntry[] = [
-  { id: 'a1', account: 'Caja / Banco', debit: '24,800.00', credit: '' },
-  { id: 'a2', account: 'Ventas B2B', debit: '', credit: '24,800.00' },
-  { id: 'a3', account: 'Costo de venta', debit: '9,120.00', credit: '' },
-  { id: 'a4', account: 'Inventario', debit: '', credit: '9,120.00' },
-  { id: 'a5', account: 'Ajuste de lote', debit: '312.40', credit: '' },
-  { id: 'a6', account: 'Merma / ajuste', debit: '', credit: '312.40' },
-]
+const inventoryLedgerEntries = computed<readonly LedgerEntry[]>(() => [
+  { id: 'a1', account: t('mockup.accountCash'), debit: '24,800.00', credit: '' },
+  { id: 'a2', account: t('mockup.accountB2bSales'), debit: '', credit: '24,800.00' },
+  { id: 'a3', account: t('mockup.accountCogs'), debit: '9,120.00', credit: '' },
+  { id: 'a4', account: t('mockup.accountInventory'), debit: '', credit: '9,120.00' },
+  { id: 'a5', account: t('mockup.accountBatchAdjustment'), debit: '312.40', credit: '' },
+  { id: 'a6', account: t('mockup.accountShrinkage'), debit: '', credit: '312.40' },
+])
 
-const erpLedgerEntries: readonly LedgerEntry[] = [
-  { id: 'a1', account: 'Caja / Banco', debit: '24,800.00', credit: '' },
-  { id: 'a2', account: 'Ingresos por servicios', debit: '', credit: '24,800.00' },
-  { id: 'a3', account: 'Gasto operativo', debit: '9,120.00', credit: '' },
-  { id: 'a4', account: 'Cuentas por pagar', debit: '', credit: '9,120.00' },
-  { id: 'a5', account: 'IVA crédito fiscal', debit: '312.40', credit: '' },
-  { id: 'a6', account: 'IVA por pagar', debit: '', credit: '312.40' },
-]
+const erpLedgerEntries = computed<readonly LedgerEntry[]>(() => [
+  { id: 'a1', account: t('mockup.accountCash'), debit: '24,800.00', credit: '' },
+  { id: 'a2', account: t('mockup.accountServiceRevenue'), debit: '', credit: '24,800.00' },
+  { id: 'a3', account: t('mockup.accountOperatingExpense'), debit: '9,120.00', credit: '' },
+  { id: 'a4', account: t('mockup.accountPayables'), debit: '', credit: '9,120.00' },
+  { id: 'a5', account: t('mockup.accountVatCredit'), debit: '312.40', credit: '' },
+  { id: 'a6', account: t('mockup.accountVatPayable'), debit: '', credit: '312.40' },
+])
 
 const ledgerEntries = computed(() =>
-  isErp.value ? erpLedgerEntries : inventoryLedgerEntries,
+  isErp.value ? erpLedgerEntries.value : inventoryLedgerEntries.value,
 )
 
 const ledgerTotal = '34,232.40'
@@ -125,9 +128,9 @@ interface MedicalColumn {
   readonly slots: readonly MedicalSlot[]
 }
 
-const medicalColumns: readonly MedicalColumn[] = [
+const medicalColumns = computed<readonly MedicalColumn[]>(() => [
   {
-    room: 'CONS. 01',
+    room: t('mockup.room', { number: '01' }),
     slots: [
       { time: '08:00', patient: 'A. Rivas', active: true },
       { time: '08:30', patient: 'M. León' },
@@ -135,7 +138,7 @@ const medicalColumns: readonly MedicalColumn[] = [
     ],
   },
   {
-    room: 'CONS. 02',
+    room: t('mockup.room', { number: '02' }),
     slots: [
       { time: '08:00', patient: 'C. Díaz' },
       { time: '08:30', patient: 'L. Mora', active: true },
@@ -143,14 +146,14 @@ const medicalColumns: readonly MedicalColumn[] = [
     ],
   },
   {
-    room: 'CONS. 03',
+    room: t('mockup.room', { number: '03' }),
     slots: [
       { time: '08:00', patient: 'R. Silva', active: true },
       { time: '08:30', patient: 'P. Ruiz' },
       { time: '09:00', patient: 'T. Gil', active: true },
     ],
   },
-]
+])
 
 interface ErpLine {
   readonly label: string
@@ -158,13 +161,13 @@ interface ErpLine {
   readonly total?: boolean
 }
 
-const erpLines: readonly ErpLine[] = [
-  { label: 'Ingresos operativos', value: '148,320' },
-  { label: 'Costo de ventas', value: '(62,140)' },
-  { label: 'Margen bruto', value: '86,180', total: true },
-  { label: 'Gastos operativos', value: '(24,860)' },
-  { label: 'Resultado neto', value: '61,320', total: true },
-]
+const erpLines = computed<readonly ErpLine[]>(() => [
+  { label: t('mockup.erpOperatingRevenue'), value: '148,320' },
+  { label: t('mockup.erpCostOfSales'), value: '(62,140)' },
+  { label: t('mockup.erpGrossMargin'), value: '86,180', total: true },
+  { label: t('mockup.erpOperatingExpenses'), value: '(24,860)' },
+  { label: t('mockup.erpNetResult'), value: '61,320', total: true },
+])
 
 const erpBars: readonly number[] = [38, 52, 44, 66, 58, 78, 62, 84, 72, 92]
 
@@ -174,26 +177,26 @@ interface AnalyticsMetric {
   readonly fill: string
 }
 
-const clinicAnalyticsMetrics: readonly AnalyticsMetric[] = [
-  { label: 'Ocupación', value: '87%', fill: '87%' },
-  { label: 'Espera media', value: '12m', fill: '42%' },
-  { label: 'SLA cumplido', value: '96%', fill: '96%' },
-]
+const clinicAnalyticsMetrics = computed<readonly AnalyticsMetric[]>(() => [
+  { label: t('mockup.occupancy'), value: '87%', fill: '87%' },
+  { label: t('mockup.avgWait'), value: '12m', fill: '42%' },
+  { label: t('mockup.slaMet'), value: '96%', fill: '96%' },
+])
 
-const erpAnalyticsMetrics: readonly AnalyticsMetric[] = [
-  { label: 'Latencia media', value: '64ms', fill: '64%' },
-  { label: 'Integridad', value: '100%', fill: '100%' },
-  { label: 'Transacciones', value: '8,412', fill: '84%' },
-]
+const erpAnalyticsMetrics = computed<readonly AnalyticsMetric[]>(() => [
+  { label: t('mockup.avgLatency'), value: '64ms', fill: '64%' },
+  { label: t('mockup.integrity'), value: '100%', fill: '100%' },
+  { label: t('mockup.transactions'), value: '8,412', fill: '84%' },
+])
 
 const analyticsMetrics = computed(() =>
-  isErp.value ? erpAnalyticsMetrics : clinicAnalyticsMetrics,
+  isErp.value ? erpAnalyticsMetrics.value : clinicAnalyticsMetrics.value,
 )
 
 const analyticsOverlay = computed(() =>
   isErp.value
-    ? { label: 'Latencia', value: '64ms' }
-    : { label: 'Ocupación', value: '87%' },
+    ? { label: t('mockup.latency'), value: '64ms' }
+    : { label: t('mockup.occupancy'), value: '87%' },
 )
 
 const analyticsAxis = computed(() =>
@@ -214,7 +217,7 @@ const analyticsAxis = computed(() =>
       v-else
       class="relative h-full w-full bg-grid-fine"
       role="img"
-      :aria-label="`Representación visual de ${slide.title}`"
+      :aria-label="t('mockup.visualAria', { title: slide.title })"
     >
       <div class="pointer-events-none absolute inset-0" :style="glowStyle" aria-hidden="true" />
 
@@ -295,10 +298,10 @@ const analyticsAxis = computed(() =>
                 <div
                   class="grid grid-cols-[1.4fr_0.5fr_0.5fr_0.9fr] gap-1.5 border-b border-border px-2 py-1 font-mono text-[6px] uppercase tracking-wider text-muted sm:text-[8px]"
                 >
-                  <span>SKU / Lote</span>
-                  <span>Talla</span>
-                  <span>Stock</span>
-                  <span>Estado</span>
+                  <span>{{ t('mockup.skuBatch') }}</span>
+                  <span>{{ t('mockup.size') }}</span>
+                  <span>{{ t('mockup.stockColumn') }}</span>
+                  <span>{{ t('mockup.status') }}</span>
                 </div>
                 <div
                   v-for="row in inventoryRows"
@@ -339,7 +342,7 @@ const analyticsAxis = computed(() =>
                 <p
                   class="font-mono text-[6px] uppercase tracking-wider text-muted sm:text-[8px]"
                 >
-                  Balance del periodo
+                  {{ t('mockup.periodBalance') }}
                 </p>
                 <p class="font-sans text-base font-bold leading-none text-white sm:text-2xl">
                   $ {{ ledgerTotal }}
@@ -349,13 +352,13 @@ const analyticsAxis = computed(() =>
                 <p
                   class="font-mono text-[6px] uppercase tracking-wider text-muted sm:text-[7px]"
                 >
-                  Débito = Crédito
+                  {{ t('mockup.debitEqualsCredit') }}
                 </p>
                 <p
                   class="font-mono text-[8px] font-semibold sm:text-[10px]"
                   :style="{ color: accent }"
                 >
-                  ✓ CUADRADO
+                  {{ t('mockup.balanced') }}
                 </p>
               </div>
             </div>
@@ -366,9 +369,9 @@ const analyticsAxis = computed(() =>
                   class="grid grid-cols-[0.4fr_1.5fr_0.8fr_0.8fr] gap-1 border-b border-border px-2 py-1 font-mono text-[6px] uppercase tracking-wider text-muted sm:text-[8px]"
                 >
                   <span>#</span>
-                  <span>Cuenta</span>
-                  <span>Debe</span>
-                  <span>Haber</span>
+                  <span>{{ t('mockup.account') }}</span>
+                  <span>{{ t('mockup.debit') }}</span>
+                  <span>{{ t('mockup.credit') }}</span>
                 </div>
                 <div
                   v-for="(entry, index) in ledgerEntries"
@@ -396,7 +399,7 @@ const analyticsAxis = computed(() =>
                   <p
                     class="font-mono text-[5px] uppercase tracking-wider text-muted sm:text-[7px]"
                   >
-                    Hash bloque
+                    {{ t('mockup.blockHash') }}
                   </p>
                   <p class="mt-0.5 font-mono text-[5px] leading-tight text-white/60 sm:text-[7px]">
                     a3f9…e21c
@@ -429,7 +432,7 @@ const analyticsAxis = computed(() =>
                 <p
                   class="truncate font-mono text-[5px] uppercase tracking-wider text-muted sm:text-[7px]"
                 >
-                  Terminales RF
+                  {{ t('mockup.rfTerminals') }}
                 </p>
                 <p class="font-sans text-[10px] font-bold leading-none text-white sm:text-sm">24</p>
               </div>
@@ -437,7 +440,7 @@ const analyticsAxis = computed(() =>
                 <p
                   class="truncate font-mono text-[5px] uppercase tracking-wider text-muted sm:text-[7px]"
                 >
-                  Latencia media
+                  {{ t('mockup.avgLatency') }}
                 </p>
                 <p
                   class="font-sans text-[10px] font-bold leading-none sm:text-sm"
@@ -450,7 +453,7 @@ const analyticsAxis = computed(() =>
                 <p
                   class="truncate font-mono text-[5px] uppercase tracking-wider text-muted sm:text-[7px]"
                 >
-                  Cola sync
+                  {{ t('mockup.syncQueue') }}
                 </p>
                 <p class="font-sans text-[10px] font-bold leading-none text-white sm:text-sm">00</p>
               </div>
@@ -463,7 +466,7 @@ const analyticsAxis = computed(() =>
                 <p
                   class="font-mono text-[6px] uppercase tracking-wider text-muted sm:text-[8px]"
                 >
-                  Lotes en tránsito
+                  {{ t('mockup.batchesInTransit') }}
                 </p>
                 <div
                   v-for="batch in batchRows"
@@ -524,7 +527,7 @@ const analyticsAxis = computed(() =>
                 <span
                   class="absolute bottom-1 left-1.5 font-mono text-[5px] uppercase tracking-wider text-muted sm:text-[7px]"
                 >
-                  throughput / min
+                  {{ t('mockup.throughput') }}
                 </span>
               </div>
             </div>
@@ -538,7 +541,7 @@ const analyticsAxis = computed(() =>
             <div
               class="flex items-center justify-between font-mono text-[6px] uppercase tracking-wider text-muted sm:text-[8px]"
             >
-              <span>Agenda diaria // consultorios</span>
+              <span>{{ t('mockup.dailyAgenda') }}</span>
               <span :style="{ color: accent }">14 NOV</span>
             </div>
 
@@ -580,7 +583,7 @@ const analyticsAxis = computed(() =>
           >
             <div class="flex min-h-0 flex-col gap-1.5">
               <p class="font-mono text-[6px] uppercase tracking-wider text-muted sm:text-[8px]">
-                Estado de resultados
+                {{ t('mockup.incomeStatement') }}
               </p>
               <div
                 v-for="line in erpLines"
@@ -610,7 +613,7 @@ const analyticsAxis = computed(() =>
                 <span
                   class="truncate font-mono text-[5px] uppercase tracking-wider text-white/70 sm:text-[7px]"
                 >
-                  Conciliación bancaria OK
+                  {{ t('mockup.bankReconciliation') }}
                 </span>
               </div>
             </div>
@@ -619,7 +622,7 @@ const analyticsAxis = computed(() =>
               class="flex min-h-0 flex-col gap-1.5 rounded-sm border border-border bg-surface/40 p-1.5"
             >
               <p class="font-mono text-[6px] uppercase tracking-wider text-muted sm:text-[8px]">
-                Cash flow
+                {{ t('mockup.cashFlow') }}
               </p>
               <div class="flex min-h-0 flex-1 items-end gap-1">
                 <div
@@ -636,9 +639,9 @@ const analyticsAxis = computed(() =>
               <div
                 class="flex justify-between font-mono text-[5px] uppercase tracking-wider text-muted sm:text-[7px]"
               >
-                <span>ENE</span>
-                <span>JUN</span>
-                <span>DIC</span>
+                <span>{{ t('mockup.jan') }}</span>
+                <span>{{ t('mockup.jun') }}</span>
+                <span>{{ t('mockup.dec') }}</span>
               </div>
             </div>
           </div>

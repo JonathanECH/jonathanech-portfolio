@@ -2,18 +2,20 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ArrowLeft, ArrowUpRight, ExternalLink, FileText } from '@lucide/vue'
+import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
 const props = defineProps<{ project: Project }>()
+const { t } = useI18n()
 
 const accentStyle = computed<Record<string, string>>(() => ({
   '--project-accent': props.project.accent,
 }))
 
 const metaChips = computed<readonly { label: string; value: string }[]>(() => [
-  { label: 'ROL', value: props.project.role },
-  { label: 'CLIENTE', value: props.project.client },
-  { label: 'DURACIÓN', value: props.project.duration },
+  { label: t('detail.role'), value: props.project.role },
+  { label: t('detail.client'), value: props.project.client },
+  { label: t('detail.duration'), value: props.project.duration },
 ])
 </script>
 
@@ -36,7 +38,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
     >
       <div class="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-5">
         <nav
-          aria-label="Migas de pan"
+          :aria-label="t('detail.breadcrumbAria')"
           class="flex min-w-0 flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] sm:text-[11px]"
         >
           <RouterLink
@@ -48,7 +50,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
               aria-hidden="true"
               class="transition-transform duration-200 group-hover:-translate-x-1"
             />
-            <span>PROYECTOS</span>
+            <span>{{ t('detail.projects') }}</span>
           </RouterLink>
           <span class="text-white/20" aria-hidden="true">/</span>
           <span class="text-white/75">{{ project.name }}</span>
@@ -56,7 +58,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
 
         <div class="flex flex-wrap items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.18em]">
           <span class="rounded border border-border bg-surface-card/70 px-2.5 py-1 text-muted">
-            AÑO // {{ project.year }}
+            {{ t('detail.year', { year: project.year }) }}
           </span>
           <span
             class="inline-flex items-center gap-1.5 rounded border border-[color:var(--project-accent)]/30 bg-[color:var(--project-accent)]/10 px-2.5 py-1 text-[color:var(--project-accent)]"
@@ -92,14 +94,14 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
           class="mt-7 max-w-3xl border-l-2 border-[color:var(--project-accent)]/60 bg-surface-card/40 px-4 py-3 sm:px-5"
         >
           <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
-            // PROBLEMA
+            {{ t('detail.problem') }}
           </p>
           <p class="mt-2 text-sm leading-relaxed text-white/60 sm:text-[15px]">
             {{ project.problem }}
           </p>
         </div>
 
-        <ul class="mt-8 flex flex-wrap gap-2" aria-label="Metadatos del proyecto">
+        <ul class="mt-8 flex flex-wrap gap-2" :aria-label="t('detail.metadataAria')">
           <li
             v-for="chip in metaChips"
             :key="chip.label"
@@ -121,13 +123,13 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             rel="noopener noreferrer"
             class="group inline-flex items-center gap-2 rounded bg-cyan-accent px-5 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-black transition-all duration-300 hover:shadow-[0_0_28px_rgba(0,229,255,0.35)]"
           >
-            Demo en vivo
+            {{ t('detail.demo') }}
             <ArrowUpRight
               :size="15"
               aria-hidden="true"
               class="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
             />
-            <span class="sr-only">(abre en una nueva pestaña)</span>
+            <span class="sr-only">{{ t('detail.opensNewTab') }}</span>
           </a>
 
           <a
@@ -137,9 +139,9 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             rel="noopener noreferrer"
             class="group inline-flex items-center gap-2 rounded border border-border bg-surface-card/60 px-5 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-white/85 transition-all duration-300 hover:border-border-hover hover:text-cyan-accent"
           >
-            Ver código
+            {{ t('detail.viewCode') }}
             <ExternalLink :size="14" aria-hidden="true" />
-            <span class="sr-only">(abre en una nueva pestaña)</span>
+            <span class="sr-only">{{ t('detail.opensNewTab') }}</span>
           </a>
 
           <a
@@ -148,9 +150,9 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             download
             class="group inline-flex items-center gap-2 rounded border border-border bg-surface-card/60 px-5 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-white/70 transition-all duration-300 hover:border-border-hover hover:text-white"
           >
-            Whitepaper
+            {{ t('detail.whitepaper') }}
             <FileText :size="14" aria-hidden="true" />
-            <span class="sr-only">(descarga en PDF)</span>
+            <span class="sr-only">{{ t('detail.downloadPdf') }}</span>
           </a>
         </div>
       </div>

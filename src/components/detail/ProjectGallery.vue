@@ -3,9 +3,11 @@ import { computed, ref } from 'vue'
 import { ChevronLeft, ChevronRight, Lock, Pause, Play } from '@lucide/vue'
 import MockupCanvas from '@/components/detail/MockupCanvas.vue'
 import { useCinematicCarousel } from '@/composables/useCinematicCarousel'
+import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
 const props = defineProps<{ project: Project }>()
+const { t } = useI18n()
 
 const gallerySlides = props.project.gallery
 
@@ -100,7 +102,11 @@ function handleGoTo(index: number): void {
 }
 
 function announceCurrent(): void {
-  manualAnnouncement.value = `Captura ${activeIndex.value + 1} de ${total.value}: ${activeSlide.value?.title ?? ''}`
+  manualAnnouncement.value = t('gallery.manualAnnouncement', {
+    index: activeIndex.value + 1,
+    total: total.value,
+    title: activeSlide.value?.title ?? '',
+  })
 }
 </script>
 
@@ -109,7 +115,7 @@ function announceCurrent(): void {
     class="overflow-hidden rounded-xl border border-border bg-surface-card/50 shadow-[0_8px_32px_rgba(0,0,0,0.55)]"
     role="region"
     aria-roledescription="carousel"
-    :aria-label="`Galería de capturas de ${project.name}`"
+    :aria-label="t('gallery.regionAria', { name: project.name })"
   >
     <!-- Console HUD -->
     <div
@@ -142,17 +148,17 @@ function announceCurrent(): void {
           :disabled="reducedMotion"
           :aria-label="
             reducedMotion
-              ? 'Reproducción automática desactivada por movimiento reducido'
+              ? t('gallery.autoplayDisabled')
               : isPlaying
-                ? 'Pausar reproducción automática'
-                : 'Reanudar reproducción automática'
+                ? t('gallery.pauseAutoplay')
+                : t('gallery.resumeAutoplay')
           "
           @click="toggle"
         >
           <Pause v-if="reducedMotion || isPlaying" class="h-3 w-3" aria-hidden="true" />
           <Play v-else class="h-3 w-3" aria-hidden="true" />
           <span class="font-mono text-[8px] uppercase tracking-wider sm:text-[9px]">
-            {{ reducedMotion ? 'SIN AUTOPLAY' : isPlaying ? 'AUTOPLAY' : 'PAUSA' }}
+            {{ reducedMotion ? t('gallery.noAutoplay') : isPlaying ? t('gallery.autoplay') : t('gallery.pause') }}
           </span>
         </button>
 
@@ -170,7 +176,7 @@ function announceCurrent(): void {
 
         <span class="hidden items-center gap-1.5 font-mono text-[10px] text-muted md:flex">
           <Lock class="h-3 w-3" aria-hidden="true" />
-          HTTPS // SECURE
+          {{ t('gallery.secure') }}
         </span>
       </div>
 
@@ -192,7 +198,13 @@ function announceCurrent(): void {
       class="group relative aspect-[4/3] w-full overflow-hidden bg-background sm:aspect-[16/9]"
       tabindex="0"
       role="group"
-      :aria-label="`Captura ${activeIndex + 1} de ${total}: ${activeSlide?.title ?? ''}`"
+      :aria-label="
+        t('gallery.captureAria', {
+          index: activeIndex + 1,
+          total,
+          title: activeSlide?.title ?? '',
+        })
+      "
       @keydown.left.prevent="handlePrev"
       @keydown.right.prevent="handleNext"
       @mouseenter="handlePointerEnter"
@@ -213,7 +225,7 @@ function announceCurrent(): void {
       <button
         type="button"
         class="absolute left-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-white/80 backdrop-blur-md transition-all hover:border-cyan-accent/70 hover:text-cyan-accent active:scale-95 sm:left-4 sm:h-10 sm:w-10"
-        aria-label="Captura anterior"
+        :aria-label="t('gallery.previous')"
         @click="handlePrev"
       >
         <ChevronLeft class="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
@@ -222,7 +234,7 @@ function announceCurrent(): void {
       <button
         type="button"
         class="absolute right-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-white/80 backdrop-blur-md transition-all hover:border-cyan-accent/70 hover:text-cyan-accent active:scale-95 sm:right-4 sm:h-10 sm:w-10"
-        aria-label="Captura siguiente"
+        :aria-label="t('gallery.next')"
         @click="handleNext"
       >
         <ChevronRight class="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
@@ -238,7 +250,7 @@ function announceCurrent(): void {
           class="h-1.5 rounded-full transition-all duration-300"
           :class="index === activeIndex ? 'w-6' : 'w-2 bg-white/25 hover:bg-white/50'"
           :style="index === activeIndex ? { backgroundColor: project.accent } : undefined"
-          :aria-label="`Ver captura ${index + 1}: ${slide.title}`"
+          :aria-label="t('gallery.goTo', { index: index + 1, title: slide.title })"
           :aria-current="index === activeIndex ? 'true' : 'false'"
           @click="handleGoTo(index)"
         />
@@ -250,7 +262,7 @@ function announceCurrent(): void {
       <p class="sr-only" aria-live="polite" aria-atomic="true">{{ manualAnnouncement }}</p>
       <div>
         <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-cyan-accent/80">
-          {{ activeSlide?.title ?? 'Sin captura' }}
+          {{ activeSlide?.title ?? t('gallery.noCapture') }}
         </p>
         <p class="mt-1.5 max-w-3xl text-sm leading-relaxed text-muted">
           {{ activeSlide?.caption }}

@@ -136,6 +136,7 @@ export const enMessages = {
   'gallery.autoplay': 'AUTOPLAY',
   'gallery.pause': 'PAUSE',
   'gallery.captureAria': 'Capture {index} of {total}: {title}',
+  'gallery.manualAnnouncement': 'Capture {index} of {total}: {title}',
   'gallery.previous': 'Previous capture',
   'gallery.next': 'Next capture',
   'gallery.goTo': 'View capture {index}: {title}',

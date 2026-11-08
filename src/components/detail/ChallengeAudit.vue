@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { ArrowRight, CircleCheck, ShieldCheck } from '@lucide/vue'
+import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
 const props = defineProps<{ project: Project }>()
+const { t } = useI18n()
 
 const accentStyle = computed<Record<string, string>>(() => ({
   '--project-accent': props.project.accent,
@@ -20,7 +22,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
       <span
         class="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan-accent/80 sm:text-[11px]"
       >
-        // 01. EL DESAFÍO TÉCNICO &amp; AUDITORÍA
+        {{ t('detail.challengeCode') }}
       </span>
       <span class="h-px flex-1 bg-border" aria-hidden="true" />
     </div>
@@ -31,7 +33,8 @@ const accentStyle = computed<Record<string, string>>(() => ({
           id="challenge-title"
           class="text-2xl font-bold tracking-[-0.03em] text-white sm:text-3xl"
         >
-          El <span class="text-cyan-accent">Desafío</span>
+          {{ t('detail.challengeTitle') }}
+          <span class="text-cyan-accent">{{ t('detail.challengeHighlight') }}</span>
         </h2>
 
         <p class="mt-4 text-sm leading-relaxed text-white/65 sm:text-[15px]">
@@ -73,10 +76,10 @@ const accentStyle = computed<Record<string, string>>(() => ({
               class="inline-flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--project-accent)] sm:text-[11px]"
             >
               <ShieldCheck :size="15" aria-hidden="true" />
-              Reporte de Auditoría
+              {{ t('detail.auditReport') }}
             </h3>
             <span class="font-mono text-[9px] uppercase tracking-[0.18em] text-white/30">
-              AUDIT // {{ project.year }}
+              {{ t('detail.audit', { year: project.year }) }}
             </span>
           </div>
 
@@ -86,7 +89,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
                 class="mb-1.5 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-danger-soft/80"
               >
                 <span class="h-1.5 w-1.5 rounded-full bg-danger-soft/80" aria-hidden="true" />
-                DIAGNÓSTICO // HALLAZGO CRÍTICO
+                {{ t('detail.diagnosis') }}
               </p>
               <p
                 class="rounded bg-surface-card-hover/50 p-3 font-mono text-[11px] leading-relaxed text-white/70"
@@ -103,7 +106,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
                   class="h-1.5 w-1.5 rounded-full bg-[color:var(--project-accent)]"
                   aria-hidden="true"
                 />
-                RESOLUCIÓN // SOLUCIÓN TÉCNICA
+                {{ t('detail.resolution') }}
               </p>
               <p
                 class="rounded bg-surface-card-hover/50 p-3 font-mono text-[11px] leading-relaxed text-white/60"
@@ -115,7 +118,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
             <div class="grid grid-cols-1 gap-2 border-t border-border pt-5 sm:grid-cols-3">
               <div class="rounded border border-border bg-surface/70 px-3 py-3">
                 <p class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
-                  LATENCIA PREVIA
+                  {{ t('detail.latencyBefore') }}
                 </p>
                 <p class="mt-1.5 font-mono text-sm font-semibold text-danger-soft/80">
                   {{ project.audit.latencyBefore }}
@@ -133,7 +136,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
                     aria-hidden="true"
                     class="text-[color:var(--project-accent)]"
                   />
-                  POST-REFACTOR
+                  {{ t('detail.postRefactor') }}
                 </p>
                 <p class="mt-1.5 font-mono text-sm font-semibold text-[color:var(--project-accent)]">
                   {{ project.audit.latencyAfter }}
@@ -145,7 +148,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
 
               <div class="rounded border border-border bg-surface/70 px-3 py-3">
                 <p class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
-                  DISCREPANCIA
+                  {{ t('detail.discrepancy') }}
                 </p>
                 <p class="mt-1.5 font-mono text-sm font-semibold text-white">
                   {{ project.audit.discrepancy }}

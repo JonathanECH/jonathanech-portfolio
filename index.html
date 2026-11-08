@@ -10,6 +10,41 @@
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Jonathan Campos — Frontend &amp; Software Architect</title>
+    <script>
+      ;(() => {
+        try {
+          const raw = localStorage.getItem('ech:preferences')
+          const parsed = raw ? JSON.parse(raw) : {}
+          const themeMode = ['system', 'dark', 'light'].includes(parsed.theme)
+            ? parsed.theme
+            : 'system'
+          const localeMode = ['system', 'es', 'en'].includes(parsed.locale)
+            ? parsed.locale
+            : 'system'
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const theme = themeMode === 'system' ? (prefersDark ? 'dark' : 'light') : themeMode
+          const locale =
+            localeMode === 'system'
+              ? (navigator.language || 'es').toLowerCase().startsWith('en')
+                ? 'en'
+                : 'es'
+              : localeMode
+
+          const root = document.documentElement
+          root.classList.toggle('dark', theme === 'dark')
+          root.classList.toggle('light', theme === 'light')
+          root.dataset.theme = theme
+          root.lang = locale
+
+          const themeColor = document.querySelector('meta[name="theme-color"]')
+          if (themeColor) {
+            themeColor.setAttribute('content', theme === 'dark' ? '#0B0E14' : '#F6F8FC')
+          }
+        } catch {
+          // Preferences are optional; keep the static dark defaults.
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>

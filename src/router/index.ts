@@ -45,7 +45,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      meta: { title: 'Jonathan Campos — Frontend & Software Architect' },
     },
     {
       path: '/proyectos/:slug',
@@ -57,7 +56,6 @@ const router = createRouter({
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: () => import('@/views/NotFoundView.vue'),
-      meta: { title: '404 — Jonathan Campos' },
     },
   ],
   scrollBehavior(to, _from, savedPosition) {
@@ -72,12 +70,6 @@ const router = createRouter({
     }
     return { top: 0 }
   },
-})
-
-router.afterEach((to) => {
-  if (typeof to.meta.title === 'string') {
-    document.title = to.meta.title
-  }
 })
 
 export default router

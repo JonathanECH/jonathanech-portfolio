@@ -3,9 +3,11 @@ import { computed } from 'vue'
 import { Activity, Check, Database, Layers } from '@lucide/vue'
 import type { Component } from 'vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
+import { useI18n } from '@/i18n'
 import type { ModuleIcon, Project } from '@/types/portfolio'
 
 const props = defineProps<{ project: Project }>()
+const { t } = useI18n()
 
 const accentStyle = computed<Record<string, string>>(() => ({
   '--project-accent': props.project.accent,
@@ -29,23 +31,23 @@ function formatCounter(index: number, total: number): string {
 <template>
   <section
     class="mx-auto w-full max-w-7xl px-5 pb-16 sm:px-6 sm:pb-20 lg:px-12"
-    aria-label="Arquitectura modular del proyecto"
+    :aria-label="t('detail.architectureAria')"
     :style="accentStyle"
   >
     <div class="mb-8 flex items-center gap-3">
       <span
         class="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan-accent/80 sm:text-[11px]"
       >
-        // 02. ARQUITECTURA DE SOFTWARE
+        {{ t('detail.architectureCode') }}
       </span>
       <span class="h-px flex-1 bg-border" aria-hidden="true" />
     </div>
 
     <SectionHeading
       code="// ARCHITECTURE // MODULES"
-      title="Arquitectura"
-      highlight="Modular"
-      description="Tres capas verificables: reactividad en la interfaz, estado predictible y persistencia transaccional."
+      :title="t('detail.architectureTitle')"
+      :highlight="t('detail.architectureHighlight')"
+      :description="t('detail.architectureDescription')"
     />
 
     <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -66,7 +68,7 @@ function formatCounter(index: number, total: number): string {
             <component :is="moduleIcon(module.icon)" :size="18" aria-hidden="true" />
           </span>
           <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-white/30">
-            MODULE {{ formatCounter(index, project.modules.length) }}
+            {{ t('detail.module', { counter: formatCounter(index, project.modules.length) }) }}
           </span>
         </div>
 

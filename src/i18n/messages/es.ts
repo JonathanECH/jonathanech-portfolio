@@ -134,6 +134,7 @@ export const esMessages = {
   'gallery.autoplay': 'AUTOPLAY',
   'gallery.pause': 'PAUSA',
   'gallery.captureAria': 'Captura {index} de {total}: {title}',
+  'gallery.manualAnnouncement': 'Captura {index} de {total}: {title}',
   'gallery.previous': 'Captura anterior',
   'gallery.next': 'Captura siguiente',
   'gallery.goTo': 'Ver captura {index}: {title}',

@@ -5,6 +5,9 @@ import '@fontsource-variable/jetbrains-mono'
 import './styles/main.css'
 import App from './App.vue'
 import router from './router'
+import { initPreferences } from './composables/usePreferences'
+
+initPreferences()
 
 const app = createApp(App)
 

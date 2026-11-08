@@ -1,11 +1,35 @@
 <script setup lang="ts">
+import { watchEffect } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import AppNavbar from '@/components/layout/AppNavbar.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import { useI18n } from '@/i18n'
 
 const route = useRoute()
-const { t } = useI18n()
+const { content, t } = useI18n()
+
+watchEffect(() => {
+  const name = route.name
+
+  if (name === 'home') {
+    document.title = t('meta.homeTitle')
+  } else if (name === 'not-found') {
+    document.title = t('meta.notFoundTitle')
+  } else if (name === 'project-detail') {
+    const slug = typeof route.params.slug === 'string' ? route.params.slug : ''
+    const project = content.value.projects.find((item) => item.slug === slug)
+
+    document.title = project
+      ? t('meta.projectTitle', { name: project.name })
+      : t('meta.projectNotFoundTitle')
+  }
+
+  const description = document.querySelector<HTMLMetaElement>('meta[name="description"]')
+
+  if (description) {
+    description.content = t('meta.description')
+  }
+})
 </script>
 
 <template>

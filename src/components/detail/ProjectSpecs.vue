@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
 const props = defineProps<{ project: Project }>()
+const { t } = useI18n()
 
 interface SpecItem {
   readonly label: string
@@ -16,19 +18,19 @@ const accentStyle = computed<Record<string, string>>(() => ({
 
 const specs = computed<readonly SpecItem[]>(() => [
   {
-    label: 'ROL',
+    label: t('detail.role'),
     value: props.project.role,
     detail: props.project.sector,
   },
   {
-    label: 'CLIENTE',
+    label: t('detail.client'),
     value: props.project.client,
-    detail: `PROYECTO ${props.project.year}`,
+    detail: t('detail.projectYear', { year: props.project.year }),
   },
   {
-    label: 'DURACIÓN',
+    label: t('detail.duration'),
     value: props.project.duration,
-    detail: `STATUS // ${props.project.status}`,
+    detail: t('detail.status', { status: props.project.status }),
   },
   {
     label: 'STACK',
@@ -44,7 +46,7 @@ const specs = computed<readonly SpecItem[]>(() => [
     aria-labelledby="project-specs-title"
     :style="accentStyle"
   >
-    <h2 id="project-specs-title" class="sr-only">Especificaciones del proyecto</h2>
+    <h2 id="project-specs-title" class="sr-only">{{ t('detail.specsTitle') }}</h2>
 
     <div
       class="grid grid-cols-1 gap-px overflow-hidden rounded border border-border bg-border sm:grid-cols-2 xl:grid-cols-4"
