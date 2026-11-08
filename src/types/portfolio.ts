@@ -172,3 +172,11 @@ export interface ContactChannel {
   readonly copyValue?: string
   readonly external?: boolean
 }
+
+export interface PortfolioContent {
+  readonly technologies: readonly Technology[]
+  readonly techFilterOptions: readonly TechFilterOption[]
+  readonly projects: readonly Project[]
+  readonly profile: Profile
+  readonly contactChannels: readonly ContactChannel[]
+}
