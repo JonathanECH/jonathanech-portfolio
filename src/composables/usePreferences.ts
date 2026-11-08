@@ -61,7 +61,7 @@ function applyToDocument(): void {
   const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
 
   if (themeColor) {
-    themeColor.content = resolvedTheme.value === 'dark' ? '#0B0E14' : '#F6F8FC'
+    themeColor.content = resolvedTheme.value === 'dark' ? '#0B0E14' : '#EDF0F8'
   }
 }
 
