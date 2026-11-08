@@ -628,8 +628,8 @@ export const contactChannels: readonly ContactChannel[] = [
   {
     id: 'linkedin',
     label: 'NETWORK',
-    value: 'linkedin.com/in/jonathancampos',
-    href: 'https://linkedin.com/in/jonathancampos',
+    value: 'linkedin.com/in/jonathanech',
+    href: 'https://linkedin.com/in/jonathanech',
     description: 'Trayectoria, colaboraciones y contacto profesional.',
     icon: 'linkedin',
     actionLabel: 'LinkedIn Sync',
