@@ -95,7 +95,7 @@ onUnmounted(() => {
     <button
       ref="triggerRef"
       type="button"
-      class="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-muted transition-colors hover:border-border-hover hover:text-cyan-accent"
+      class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-border text-muted transition-colors hover:border-border-hover hover:text-cyan-accent"
       :class="open ? 'border-border-hover text-cyan-accent' : ''"
       aria-haspopup="dialog"
       :aria-expanded="open"
@@ -134,7 +134,7 @@ onUnmounted(() => {
               v-for="option in localeOptions"
               :key="option.value"
               type="button"
-              class="flex w-full items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left font-sans text-xs transition-colors"
+              class="flex w-full cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left font-sans text-xs transition-colors"
               :class="
                 localeMode === option.value
                   ? 'bg-cyan-accent/10 text-cyan-accent'
@@ -168,7 +168,7 @@ onUnmounted(() => {
               v-for="option in themeOptions"
               :key="option.value"
               type="button"
-              class="flex w-full items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left font-sans text-xs transition-colors"
+              class="flex w-full cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left font-sans text-xs transition-colors"
               :class="
                 themeMode === option.value
                   ? 'bg-cyan-accent/10 text-cyan-accent'
