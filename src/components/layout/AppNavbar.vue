@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { Download, Menu, X } from '@lucide/vue'
 import logoNavbar from '@/assets/logo-navbar.svg'
+import SettingsMenu from '@/components/layout/SettingsMenu.vue'
 import { useActiveSection } from '@/composables/useActiveSection'
 import { useScrollLock } from '@/composables/useScrollLock'
 import { useScrolled } from '@/composables/useScrolled'
@@ -105,6 +106,8 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
       </nav>
 
       <div class="flex items-center gap-3">
+        <SettingsMenu />
+
         <a
           href="/cv/jonathan-campos-cv.pdf"
           download
