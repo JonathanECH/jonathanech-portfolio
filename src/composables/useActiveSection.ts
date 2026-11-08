@@ -57,8 +57,11 @@ export function useActiveSection(sectionIds: readonly string[], topOffset = 120)
     }
   }
 
+  // `main.ts` mounts the app before the initial navigation resolves, so on a
+  // hard reload the route name changes from `undefined` to `home` while
+  // `fullPath` stays `/`. Watching both covers that case and route changes.
   watch(
-    () => route.fullPath,
+    () => `${String(route.name)}:${route.fullPath}`,
     () => {
       activeSection.value = sectionIds[0] ?? ''
       attempts = 0
