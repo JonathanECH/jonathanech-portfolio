@@ -1,6 +1,6 @@
 # Portfolio Views — Implementation Plan
 
-**Spec:** Obsidian Cyber Minimalist portfolio brief (HomeView + TilyShop ProjectDetailView).
+**Spec:** Motion Driven portfolio brief (HomeView + TilyShop ProjectDetailView).
 **Reference:** `stitch_motion_driven_developer_portfolio.zip` (DESIGN.md + HTML mockups).
 **Stack:** Vue 3.5 · TypeScript strict · Vite 8 · Tailwind CSS v4 · Pinia · vue-router 5 · pnpm.
 

@@ -10,7 +10,7 @@
   [![Tests](https://img.shields.io/badge/Tests-25%2F25_Passing-34D399?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
 
   <p align="center">
-    <strong>Portafolio de Ingeniería de Software con estética <i>Obsidian Cyber Minimalist</i>.</strong>
+    <strong>Portafolio de Ingeniería de Software con estética <i>Motion Driven</i>.</strong>
     <br />
     Home cinética interactiva, arquitectura modular, casos de estudio data-driven, doble tema y soporte multilingüe completo.
   </p>
@@ -33,7 +33,7 @@
 
 Este portafolio trasciende la plantilla estática convencional: está concebido y desarrollado como una **aplicación web de ingeniería** reactiva, tipada y de alto rendimiento.
 
-Combina una estética cyberpunk industrial (*Obsidian Cyber Minimalist*) con:
+Combina una estética cyberpunk industrial (*Motion Driven*) con:
 - 🌌 **Físicas y partículas interactivas** en tiempo real mediante HTML5 Canvas.
 - 🌓 **Sistema de diseño bitemático** con tokens CSS runtime (Oscuro Profundo y Claro Suave para descanso visual).
 - 🌐 **Internacionalización completa (i18n)** sin bibliotecas externas, tipada de extremo a extremo.
