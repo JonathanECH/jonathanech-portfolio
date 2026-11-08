@@ -1,16 +1,23 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { FileText, Gauge, MapPin, Terminal } from '@lucide/vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
-import { profile } from '@/data/portfolio'
+import { useI18n } from '@/i18n'
 
-const sectionCode = '// PROFILE // ABOUT_ME'
+const { content, t } = useI18n()
+const profile = computed(() => content.value.profile)
+const sectionCode = computed(() => t('about.code'))
 </script>
 
 <template>
   <section id="sobre-mi" class="relative border-t border-border/60 py-20 sm:py-24 lg:py-28">
     <div class="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-12">
       <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <SectionHeading :code="sectionCode" title="Arquitectura, lógica y" highlight="diseño" />
+        <SectionHeading
+          :code="sectionCode"
+          :title="t('about.title')"
+          :highlight="t('about.highlight')"
+        />
         <p class="max-w-sm font-mono text-[11px] leading-relaxed text-muted md:text-right">
           {{ profile.role }} // {{ profile.education }} // {{ profile.location }}
         </p>
@@ -37,7 +44,7 @@ const sectionCode = '// PROFILE // ABOUT_ME'
 
             <div class="p-5 sm:p-7">
               <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan-accent/80">
-                // BIOGRAFÍA &amp; FILOSOFÍA TÉCNICA
+                {{ t('about.bioLabel') }}
               </p>
 
               <p
@@ -87,9 +94,11 @@ const sectionCode = '// PROFILE // ABOUT_ME'
                 <Gauge :size="16" aria-hidden="true" />
               </span>
               <div>
-                <h3 class="font-sans text-sm font-semibold text-white">Auditoría &amp; rendimiento</h3>
+                <h3 class="font-sans text-sm font-semibold text-white">
+                  {{ t('about.performanceTitle') }}
+                </h3>
                 <p class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
-                  LIGHTHOUSE // BASELINE
+                  {{ t('about.performanceCode') }}
                 </p>
               </div>
             </div>
@@ -132,9 +141,11 @@ const sectionCode = '// PROFILE // ABOUT_ME'
                   <Terminal :size="16" aria-hidden="true" />
                 </span>
                 <div>
-                  <h3 class="font-sans text-sm font-semibold text-white">Entornos &amp; locus</h3>
+                  <h3 class="font-sans text-sm font-semibold text-white">
+                    {{ t('about.environmentTitle') }}
+                  </h3>
                   <p class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
-                    LOCUS // SYS_SPECS
+                    {{ t('about.environmentCode') }}
                   </p>
                 </div>
               </div>
@@ -142,7 +153,7 @@ const sectionCode = '// PROFILE // ABOUT_ME'
                 class="inline-flex shrink-0 items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-cyan-accent"
               >
                 <span class="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-cyan-accent" />
-                LIVE
+                {{ t('about.live') }}
               </span>
             </div>
 

@@ -1,22 +1,28 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
-import { projects } from '@/data/portfolio'
+import { useI18n } from '@/i18n'
 import { usePortfolioStore } from '@/stores/portfolio'
 import ProjectCard from './ProjectCard.vue'
 import ProjectQuickModal from './ProjectQuickModal.vue'
 
 const store = usePortfolioStore()
-const sectionCode = '// SELECTED_WORK // CASE_STUDIES'
+const { content, t } = useI18n()
+const projects = computed(() => content.value.projects)
+const sectionCode = computed(() => t('projects.code'))
 </script>
 
 <template>
   <section id="proyectos" class="relative border-t border-border/60 bg-surface/20 py-20 sm:py-24 lg:py-28">
     <div class="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-12">
       <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <SectionHeading :code="sectionCode" title="Ingeniería en" highlight="Práctica" />
+        <SectionHeading
+          :code="sectionCode"
+          :title="t('projects.title')"
+          :highlight="t('projects.highlight')"
+        />
         <p class="max-w-sm font-mono text-[11px] leading-relaxed text-muted md:text-right">
-          Arquitecturas desplegadas con foco en integridad transaccional, rendimiento y diseño
-          reactivo.
+          {{ t('projects.intro') }}
         </p>
       </div>
 

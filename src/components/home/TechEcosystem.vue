@@ -2,11 +2,13 @@
 import { computed } from 'vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 import TechCard from '@/components/home/TechCard.vue'
-import { techFilterOptions } from '@/data/portfolio'
+import { useI18n } from '@/i18n'
 import { usePortfolioStore } from '@/stores/portfolio'
 import type { TechFilter, Technology } from '@/types/portfolio'
 
 const store = usePortfolioStore()
+const { content, t } = useI18n()
+const techFilterOptions = computed(() => content.value.techFilterOptions)
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 const activeCategory = computed<TechFilter>(() => store.activeCategory)
@@ -15,8 +17,8 @@ const filteredTechnologies = computed<readonly Technology[]>(() => store.filtere
 
 const activeFilterLabel = computed(
   () =>
-    techFilterOptions.find((option) => option.value === activeCategory.value)?.label ??
-    'TODAS // ALL',
+    techFilterOptions.value.find((option) => option.value === activeCategory.value)?.label ??
+    t('tech.allFallback'),
 )
 
 function isActive(filter: TechFilter): boolean {
@@ -46,16 +48,16 @@ function cardDelay(index: number): string {
 
     <div class="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-12">
       <SectionHeading
-        code="// CORE TECHNOLOGIES &amp; TOOLCHAIN // SYS_SPECS"
-        title="Ecosistema Tecnológico"
-        highlight="&amp; Stack"
-        description="Herramientas, frameworks y protocolos dominados con sintaxis rigurosa para alta concurrencia y reactividad."
+        :code="t('tech.code')"
+        :title="t('tech.title')"
+        :highlight="t('tech.highlight')"
+        :description="t('tech.description')"
       />
 
       <div
         class="mt-8 flex flex-wrap items-center gap-2.5"
         role="group"
-        aria-label="Filtrar tecnologías por categoría"
+        :aria-label="t('tech.filterAria')"
       >
         <button
           v-for="option in techFilterOptions"
@@ -81,8 +83,12 @@ function cardDelay(index: number): string {
       </div>
 
       <p class="sr-only" aria-live="polite">
-        Mostrando {{ filteredTechnologies.length }} tecnologías en la categoría
-        {{ activeFilterLabel }}.
+        {{
+          t('tech.showing', {
+            count: filteredTechnologies.length,
+            category: activeFilterLabel,
+          })
+        }}
       </p>
 
       <div class="mt-8 grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -100,9 +106,9 @@ function cardDelay(index: number): string {
         class="mt-6 flex flex-wrap items-center justify-between gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-muted/50 sm:text-[10px]"
       >
         <span>
-          Modules loaded // {{ filteredTechnologies.length.toString().padStart(2, '0') }}
+          {{ t('tech.modulesLoaded', { count: filteredTechnologies.length.toString().padStart(2, '0') }) }}
         </span>
-        <span>Filter: {{ activeFilterLabel }}</span>
+        <span>{{ t('tech.filter', { category: activeFilterLabel }) }}</span>
       </div>
     </div>
   </section>

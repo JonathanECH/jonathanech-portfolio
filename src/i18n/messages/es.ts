@@ -77,6 +77,7 @@ export const esMessages = {
   'tech.description':
     'Herramientas, frameworks y protocolos dominados con sintaxis rigurosa para alta concurrencia y reactividad.',
   'tech.filterAria': 'Filtrar tecnologías por categoría',
+  'tech.allFallback': 'TODAS // ALL',
   'tech.showing': 'Mostrando {count} tecnologías en la categoría {category}.',
   'tech.modulesLoaded': 'Modules loaded // {count}',
   'tech.filter': 'Filter: {category}',

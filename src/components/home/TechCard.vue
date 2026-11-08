@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import TechIcon from '@/components/ui/TechIcon.vue'
+import { useI18n } from '@/i18n'
 import type { Technology } from '@/types/portfolio'
 
 const props = defineProps<{
   technology: Technology
   index: number
 }>()
+
+const { t } = useI18n()
 
 const paddedIndex = computed(() => String(props.index + 1).padStart(2, '0'))
 </script>
@@ -42,7 +45,7 @@ const paddedIndex = computed(() => String(props.index + 1).padStart(2, '0'))
     </h3>
 
     <div class="mt-auto flex items-end justify-between gap-3 pt-5">
-      <ul class="flex flex-wrap gap-1.5" aria-label="Especialidades">
+      <ul class="flex flex-wrap gap-1.5" :aria-label="t('tech.specialtiesAria')">
         <li
           v-for="specialty in technology.specialties"
           :key="specialty"

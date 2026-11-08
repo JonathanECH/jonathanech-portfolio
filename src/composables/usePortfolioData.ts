@@ -1,10 +1,5 @@
-import {
-  contactChannels,
-  profile,
-  projects,
-  techFilterOptions,
-  technologies,
-} from '@/data/portfolio'
+import { computed } from 'vue'
+import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
 interface ProjectNeighbors {
@@ -13,19 +8,28 @@ interface ProjectNeighbors {
 }
 
 export function usePortfolioData() {
+  const { content } = useI18n()
+
+  const technologies = computed(() => content.value.technologies)
+  const techFilterOptions = computed(() => content.value.techFilterOptions)
+  const projects = computed(() => content.value.projects)
+  const profile = computed(() => content.value.profile)
+  const contactChannels = computed(() => content.value.contactChannels)
+
   function getProjectBySlug(slug: string): Project | undefined {
-    return projects.find((project) => project.slug === slug)
+    return projects.value.find((project) => project.slug === slug)
   }
 
   function getProjectNeighbors(slug: string): ProjectNeighbors {
-    const index = projects.findIndex((project) => project.slug === slug)
+    const list = projects.value
+    const index = list.findIndex((project) => project.slug === slug)
 
     if (index === -1) {
       return { previous: null, next: null }
     }
 
-    const previous = projects[(index - 1 + projects.length) % projects.length] ?? null
-    const next = projects[(index + 1) % projects.length] ?? null
+    const previous = list[(index - 1 + list.length) % list.length] ?? null
+    const next = list[(index + 1) % list.length] ?? null
 
     return { previous, next }
   }

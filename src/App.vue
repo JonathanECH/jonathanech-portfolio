@@ -2,8 +2,10 @@
 import { RouterView, useRoute } from 'vue-router'
 import AppNavbar from '@/components/layout/AppNavbar.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
+import { useI18n } from '@/i18n'
 
 const route = useRoute()
+const { t } = useI18n()
 </script>
 
 <template>
@@ -12,7 +14,7 @@ const route = useRoute()
       href="#main-content"
       class="sr-only z-[100] rounded-md bg-cyan-accent px-4 py-2 font-mono text-xs font-bold text-black focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
     >
-      Saltar al contenido
+      {{ t('app.skipToContent') }}
     </a>
 
     <AppNavbar />

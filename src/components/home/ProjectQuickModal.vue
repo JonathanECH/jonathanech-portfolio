@@ -4,9 +4,11 @@ import { RouterLink } from 'vue-router'
 import { ArrowRight, X } from '@lucide/vue'
 import { useFocusTrap } from '@/composables/useFocusTrap'
 import { useScrollLock } from '@/composables/useScrollLock'
+import { useI18n } from '@/i18n'
 import { usePortfolioStore } from '@/stores/portfolio'
 
 const store = usePortfolioStore()
+const { t } = useI18n()
 
 const dialogRef = ref<HTMLElement | null>(null)
 const open = computed(() => store.isQuickViewOpen)
@@ -73,7 +75,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
               <button
                 type="button"
                 class="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-transparent text-muted transition-colors hover:border-border hover:text-white"
-                aria-label="Cerrar vista rápida"
+                :aria-label="t('projects.closeQuickView')"
                 @click="store.closeQuickView"
               >
                 <X :size="16" aria-hidden="true" />
@@ -119,7 +121,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
               <div class="mt-6 rounded-xl border border-border bg-background/50 p-4">
                 <div class="flex items-center justify-between gap-3">
                   <p class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted">
-                    AUDIT // LATENCY_REPORT
+                    {{ t('projects.auditLatency') }}
                   </p>
                   <span
                     class="rounded border border-border px-2 py-0.5 font-mono text-[9px] text-cyan-accent"
@@ -130,7 +132,9 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 
                 <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
                   <div>
-                    <p class="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">ANTES</p>
+                    <p class="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">
+                      {{ t('projects.before') }}
+                    </p>
                     <p class="mt-1 font-mono text-lg text-muted line-through">
                       {{ project.audit.latencyBefore }}
                     </p>
@@ -140,7 +144,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                     <ArrowRight :size="16" class="shrink-0 text-cyan-accent" aria-hidden="true" />
                     <div>
                       <p class="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">
-                        DESPUÉS
+                        {{ t('projects.after') }}
                       </p>
                       <p class="mt-1 font-mono text-lg text-[var(--accent)]">
                         {{ project.audit.latencyAfter }}
@@ -150,7 +154,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 
                   <div>
                     <p class="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">
-                      DISCREPANCIA
+                      {{ t('projects.discrepancy') }}
                     </p>
                     <p class="mt-1 font-mono text-lg text-cyan-accent">
                       {{ project.audit.discrepancy }}
@@ -169,14 +173,14 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                   class="inline-flex items-center justify-center rounded-lg border border-border px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-border-hover hover:text-white"
                   @click="store.closeQuickView"
                 >
-                  Cerrar
+                  {{ t('projects.close') }}
                 </button>
                 <RouterLink
                   :to="`/proyectos/${project.slug}`"
                   class="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-4 py-2.5 font-sans text-xs font-semibold text-black transition-all duration-300 hover:shadow-[0_0_24px_rgba(0,229,255,0.45)]"
                   @click="store.closeQuickView"
                 >
-                  Ver caso de estudio completo
+                  {{ t('projects.viewFull') }}
                   <ArrowRight :size="15" aria-hidden="true" />
                 </RouterLink>
               </div>

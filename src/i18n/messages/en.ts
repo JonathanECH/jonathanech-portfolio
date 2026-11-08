@@ -79,6 +79,7 @@ export const enMessages = {
   'tech.description':
     'Tools, frameworks and protocols mastered with rigorous syntax for high concurrency and reactivity.',
   'tech.filterAria': 'Filter technologies by category',
+  'tech.allFallback': 'ALL',
   'tech.showing': 'Showing {count} technologies in the {category} category.',
   'tech.modulesLoaded': 'Modules loaded // {count}',
   'tech.filter': 'Filter: {category}',

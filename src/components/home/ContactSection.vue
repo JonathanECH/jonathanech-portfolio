@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { ArrowRight, ArrowUpRight, Check, Copy, Send } from '@lucide/vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 import SocialIcon from '@/components/ui/SocialIcon.vue'
 import { useClipboard } from '@/composables/useClipboard'
-import { contactChannels } from '@/data/portfolio'
+import { useI18n } from '@/i18n'
 
 const { copy, isCopied } = useClipboard()
-const sectionCode = '// DIRECT_CHANNELS // NO_FORMS'
+const { content, t } = useI18n()
+const contactChannels = computed(() => content.value.contactChannels)
+const sectionCode = computed(() => t('contact.code'))
 
 function copyEmail(value: string): void {
   void copy(value, 'email')
@@ -25,10 +28,13 @@ function copyEmail(value: string): void {
 
         <div class="relative">
           <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <SectionHeading :code="sectionCode" title="Iniciemos un" highlight="proyecto" />
+            <SectionHeading
+              :code="sectionCode"
+              :title="t('contact.title')"
+              :highlight="t('contact.highlight')"
+            />
             <p class="max-w-sm text-sm leading-relaxed text-muted md:text-right">
-              Ya sea para una oportunidad formal, sumarme a tu equipo o auditar un requerimiento:
-              canales directos, sin formularios.
+              {{ t('contact.intro') }}
             </p>
           </div>
 
@@ -75,7 +81,7 @@ function copyEmail(value: string): void {
                   <Check v-if="isCopied('email')" :size="12" aria-hidden="true" />
                   <Copy v-else :size="12" aria-hidden="true" />
                   <span aria-live="polite" aria-atomic="true">
-                    {{ isCopied('email') ? '¡Copiado!' : 'Copiar correo' }}
+                    {{ isCopied('email') ? t('contact.copied') : t('contact.copyEmail') }}
                   </span>
                 </button>
               </div>
@@ -88,7 +94,10 @@ function copyEmail(value: string): void {
                 class="absolute inset-0 z-0 rounded-xl focus-visible:bg-cyan-accent/5 focus-visible:outline-offset-[-2px]"
                 :aria-label="
                   channel.external
-                    ? `${channel.actionLabel}: ${channel.value} (abre en nueva pestaña)`
+                    ? t('contact.externalAria', {
+                        action: channel.actionLabel,
+                        value: channel.value,
+                      })
                     : `${channel.actionLabel}: ${channel.value}`
                 "
               />
@@ -100,9 +109,9 @@ function copyEmail(value: string): void {
           >
             <span class="inline-flex items-center gap-2">
               <Send :size="12" class="shrink-0 text-cyan-accent" aria-hidden="true" />
-              Transmisión directa // sin formularios
+              {{ t('contact.transmission') }}
             </span>
-            <span class="text-muted/70">Respuesta &lt; 24h</span>
+            <span class="text-muted/70">{{ t('contact.response') }}</span>
           </div>
         </div>
       </div>

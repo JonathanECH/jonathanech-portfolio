@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { ArrowRight, Gauge } from '@lucide/vue'
+import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
 const props = defineProps<{
@@ -11,6 +12,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   'open-quick-view': [slug: string]
 }>()
+
+const { t } = useI18n()
 
 const BARS = [38, 62, 48, 76, 58, 90] as const
 
@@ -131,7 +134,7 @@ function openQuickView(): void {
         <span
           class="mt-4 inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-muted transition-colors group-hover:text-cyan-accent"
         >
-          Ver caso de estudio
+          {{ t('projects.viewCase') }}
           <ArrowRight
             :size="12"
             aria-hidden="true"
@@ -152,10 +155,10 @@ function openQuickView(): void {
           <button
             type="button"
             class="relative z-10 inline-flex shrink-0 items-center gap-1 rounded-md border border-border px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-muted transition-colors hover:border-border-hover hover:text-cyan-accent"
-            :aria-label="`Vista rápida: ${project.name}`"
+            :aria-label="t('projects.quickViewAria', { name: project.name })"
             @click.prevent.stop="openQuickView"
           >
-            Vista rápida
+            {{ t('projects.quickView') }}
           </button>
         </div>
       </div>
@@ -164,7 +167,7 @@ function openQuickView(): void {
       <RouterLink
         :to="`/proyectos/${project.slug}`"
         class="absolute inset-0 z-0 rounded-2xl focus-visible:bg-cyan-accent/5 focus-visible:outline-offset-[-2px]"
-        :aria-label="`Ver caso de estudio completo: ${project.name}`"
+        :aria-label="t('projects.viewFullAria', { name: project.name })"
       />
     </article>
   </div>

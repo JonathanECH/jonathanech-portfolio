@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { contactChannels } from '@/data/portfolio'
+import { computed } from 'vue'
+import { useI18n } from '@/i18n'
 
-const footerLinks = contactChannels.filter((channel) =>
-  ['github', 'linkedin', 'email'].includes(channel.id),
+const { content, t } = useI18n()
+
+const footerLinks = computed(() =>
+  content.value.contactChannels.filter((channel) =>
+    ['github', 'linkedin', 'email'].includes(channel.id),
+  ),
 )
 </script>
 
@@ -15,7 +20,10 @@ const footerLinks = contactChannels.filter((channel) =>
         © 2026 Jonathan Campos // Vue 3 • TypeScript • Tailwind CSS.
       </p>
 
-      <nav class="flex items-center gap-4 uppercase tracking-[0.16em]" aria-label="Enlaces sociales">
+      <nav
+        class="flex items-center gap-4 uppercase tracking-[0.16em]"
+        :aria-label="t('footer.ariaSocial')"
+      >
         <template v-for="(link, index) in footerLinks" :key="link.id">
           <span v-if="index > 0" class="text-border" aria-hidden="true">//</span>
           <a

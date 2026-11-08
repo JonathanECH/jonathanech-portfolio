@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { Activity, ArrowRight, Download, MapPin, Terminal } from '@lucide/vue'
-import { profile } from '@/data/portfolio'
+import { useI18n } from '@/i18n'
+
+const { content, t } = useI18n()
+const profile = computed(() => content.value.profile)
 
 interface HeroParticle {
   x: number
@@ -374,7 +377,7 @@ onBeforeUnmount(() => {
             class="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-cyan-accent"
             aria-hidden="true"
           />
-          Disponible para proyectos
+          {{ t('hero.available') }}
         </span>
       </div>
 
@@ -401,9 +404,7 @@ onBeforeUnmount(() => {
       <p
         class="mt-7 max-w-2xl text-balance text-sm leading-relaxed text-muted sm:text-base lg:text-[17px]"
       >
-        Construyo interfaces web escalables, reactivas y optimizadas. Especializado en el ecosistema
-        Vue, audito la lógica de negocio antes de escribir código para garantizar sistemas que no
-        fallan en silencio.
+        {{ t('hero.intro') }}
       </p>
 
       <div class="mt-9 flex w-full flex-col items-stretch justify-center gap-3 sm:w-auto sm:flex-row">
@@ -412,7 +413,7 @@ onBeforeUnmount(() => {
           class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-black shadow-[0_0_0_0_rgba(0,229,255,0)] transition-all duration-300 hover:shadow-[0_0_28px_rgba(0,229,255,0.45)] active:scale-[0.98] sm:text-xs"
         >
           <Terminal :size="16" aria-hidden="true" />
-          Explorar proyectos
+          {{ t('hero.explore') }}
           <ArrowRight
             :size="15"
             class="transition-transform duration-300 group-hover:translate-x-0.5"
@@ -430,7 +431,7 @@ onBeforeUnmount(() => {
             class="transition-transform duration-300 group-hover:translate-y-0.5"
             aria-hidden="true"
           />
-          Descargar CV
+          {{ t('nav.downloadCv') }}
         </a>
       </div>
 
@@ -439,7 +440,7 @@ onBeforeUnmount(() => {
           class="mb-3 flex items-center justify-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-muted/60 sm:text-[10px]"
         >
           <Activity :size="12" class="text-cyan-accent/70" aria-hidden="true" />
-          System metrics // verified
+          {{ t('hero.metrics') }}
         </div>
 
         <dl
@@ -462,7 +463,7 @@ onBeforeUnmount(() => {
         href="#stack"
         class="mt-10 inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-muted/60 transition-colors duration-300 hover:text-cyan-accent sm:text-[10px]"
       >
-        Scroll // Stack
+        {{ t('hero.scroll') }}
         <ArrowRight :size="13" class="rotate-90" aria-hidden="true" />
       </a>
     </div>

@@ -6,21 +6,23 @@ import logoNavbar from '@/assets/logo-navbar.svg'
 import { useActiveSection } from '@/composables/useActiveSection'
 import { useScrollLock } from '@/composables/useScrollLock'
 import { useScrolled } from '@/composables/useScrolled'
+import { useI18n } from '@/i18n'
 
 const route = useRoute()
+const { t } = useI18n()
 const { scrolled } = useScrolled()
 const { activeSection } = useActiveSection(['inicio', 'stack', 'proyectos', 'sobre-mi', 'contacto'])
 const mobileOpen = ref(false)
 
 useScrollLock(mobileOpen)
 
-const navLinks = [
-  { label: 'INICIO', hash: '#inicio', section: 'inicio' },
-  { label: 'STACK', hash: '#stack', section: 'stack' },
-  { label: 'PROYECTOS', hash: '#proyectos', section: 'proyectos' },
-  { label: 'SOBRE MÍ', hash: '#sobre-mi', section: 'sobre-mi' },
-  { label: 'CONTACTO', hash: '#contacto', section: 'contacto' },
-] as const
+const navLinks = computed(() => [
+  { label: t('nav.home'), hash: '#inicio', section: 'inicio' },
+  { label: t('nav.stack'), hash: '#stack', section: 'stack' },
+  { label: t('nav.projects'), hash: '#proyectos', section: 'proyectos' },
+  { label: t('nav.about'), hash: '#sobre-mi', section: 'sobre-mi' },
+  { label: t('nav.contact'), hash: '#contacto', section: 'contacto' },
+])
 
 const isHome = computed(() => route.name === 'home')
 
@@ -66,7 +68,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
       <RouterLink
         to="/"
         class="group relative flex items-center justify-center rounded-lg"
-        aria-label="ECH — Inicio"
+        :aria-label="t('nav.ariaHome')"
       >
         <span
           class="absolute inset-0 rounded-full bg-cyan-accent/20 opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-100"
@@ -81,10 +83,10 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
         />
       </RouterLink>
 
-      <nav class="hidden items-center gap-7 lg:flex" aria-label="Navegación principal">
+      <nav class="hidden items-center gap-7 lg:flex" :aria-label="t('nav.ariaPrimary')">
         <RouterLink
           v-for="link in navLinks"
-          :key="link.label"
+          :key="link.section"
           :to="{ path: '/', hash: link.hash }"
           class="group relative flex items-center gap-1.5 py-2 font-mono text-[11px] tracking-[0.18em] transition-colors duration-200"
           :class="isActive(link.section) ? 'text-white' : 'text-muted hover:text-white'"
@@ -103,18 +105,13 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
       </nav>
 
       <div class="flex items-center gap-3">
-        <span class="hidden items-center gap-2 font-mono text-[10px] tracking-[0.18em] text-muted xl:flex">
-          <span class="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-cyan-accent" />
-          DISPONIBLE
-        </span>
-
         <a
           href="/cv/jonathan-campos-cv.pdf"
           download
           class="hidden items-center gap-1.5 rounded-lg bg-cyan-accent px-4 py-2 font-sans text-xs font-semibold text-black transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,229,255,0.4)] sm:flex"
         >
           <Download :size="14" aria-hidden="true" />
-          Descargar CV
+          {{ t('nav.downloadCv') }}
         </a>
 
         <button
@@ -122,7 +119,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
           class="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-white transition-colors hover:border-border-hover hover:text-cyan-accent lg:hidden"
           :aria-expanded="mobileOpen"
           aria-controls="mobile-navigation"
-          :aria-label="mobileOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'"
+          :aria-label="mobileOpen ? t('nav.closeMenu') : t('nav.openMenu')"
           @click="mobileOpen = !mobileOpen"
         >
           <X v-if="mobileOpen" :size="18" aria-hidden="true" />
@@ -137,10 +134,10 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
         id="mobile-navigation"
         class="border-t border-border bg-background/95 px-5 pb-6 pt-4 backdrop-blur-xl lg:hidden"
       >
-        <nav class="flex flex-col gap-1" aria-label="Navegación móvil">
+        <nav class="flex flex-col gap-1" :aria-label="t('nav.ariaMobile')">
           <RouterLink
             v-for="link in navLinks"
-            :key="link.label"
+            :key="link.section"
             :to="{ path: '/', hash: link.hash }"
             class="flex items-center justify-between rounded-lg px-3 py-3 font-mono text-xs tracking-[0.18em] transition-colors"
             :class="isActive(link.section) ? 'bg-cyan-accent/10 text-cyan-accent' : 'text-muted hover:bg-surface-card hover:text-white'"
@@ -157,7 +154,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
           class="mt-4 flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-4 py-3 font-sans text-xs font-semibold text-black"
         >
           <Download :size="15" aria-hidden="true" />
-          Descargar CV
+          {{ t('nav.downloadCv') }}
         </a>
       </div>
     </Transition>
