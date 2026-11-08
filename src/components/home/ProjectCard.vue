@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ArrowRight, Gauge } from '@lucide/vue'
 import { useI18n } from '@/i18n'
@@ -17,6 +18,8 @@ const { t } = useI18n()
 
 const BARS = [38, 62, 48, 76, 58, 90] as const
 
+const previewSlide = computed(() => props.project.gallery.find((slide) => slide.image))
+
 function openQuickView(): void {
   emit('open-quick-view', props.project.slug)
 }
@@ -28,79 +31,126 @@ function openQuickView(): void {
       class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card/60 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:shadow-[0_18px_40px_-24px_rgba(var(--ech-accent-rgb),0.45)]"
       :style="`--accent: ${project.accent}`"
     >
-      <!-- Lightweight local CSS/SVG preview built from the project gallery -->
+      <!-- Real screenshot preview, with the CSS/SVG mockup as fallback -->
       <div class="relative h-48 overflow-hidden border-b border-border bg-background/70" aria-hidden="true">
-        <div class="absolute inset-0 bg-grid-fine opacity-50" />
-        <div
-          class="pointer-events-none absolute -right-12 -top-16 h-40 w-40 rounded-full opacity-20 blur-3xl"
-          :style="{ backgroundColor: project.accent }"
-        />
+        <template v-if="previewSlide">
+          <img
+            :src="previewSlide.image"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            class="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/30"
+          />
 
-        <div class="relative flex h-full flex-col gap-3 p-4">
-          <div class="flex items-center gap-1.5">
-            <span class="h-2 w-2 rounded-full bg-foreground/20" />
-            <span class="h-2 w-2 rounded-full bg-foreground/20" />
-            <span class="h-2 w-2 rounded-full bg-foreground/20" />
-            <span
-              class="ml-2 flex min-w-0 items-center gap-1 rounded border border-border/70 bg-surface/70 px-2 py-0.5 font-mono text-[9px] text-muted"
-            >
+          <div class="relative flex h-full flex-col justify-between p-3">
+            <div class="flex items-center gap-1.5">
               <span
-                class="h-1 w-1 shrink-0 rounded-full"
-                :style="{ backgroundColor: project.accent }"
-              />
-              <span class="truncate">{{ project.liveHost }}</span>
-            </span>
-          </div>
-
-          <div class="flex min-h-0 flex-1 gap-3">
-            <div
-              class="hidden w-24 shrink-0 flex-col gap-2 rounded-lg border border-border/60 bg-surface/40 p-2 sm:flex"
-            >
-              <span
-                v-for="(slide, slideIndex) in project.gallery"
-                :key="slide.id"
-                class="flex items-center gap-1.5"
+                class="flex min-w-0 items-center gap-1.5 rounded-full border border-border/70 bg-background/80 px-2.5 py-1 backdrop-blur-sm"
               >
-                <span
-                  class="h-1 w-1 shrink-0 rounded-full"
-                  :style="{
-                    backgroundColor: slideIndex === 0 ? project.accent : 'rgba(var(--ech-ink-rgb),0.22)',
-                  }"
-                />
-                <span
-                  class="h-1 min-w-0 flex-1 rounded-full"
-                  :class="slideIndex === 0 ? 'bg-foreground/30' : 'bg-foreground/10'"
-                />
+                <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/25" />
+                <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/25" />
+                <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/25" />
+                <span class="ml-1 flex min-w-0 items-center gap-1 font-mono text-[9px] text-muted">
+                  <span
+                    class="h-1 w-1 shrink-0 rounded-full"
+                    :style="{ backgroundColor: project.accent }"
+                  />
+                  <span class="truncate">{{ project.liveHost }}</span>
+                </span>
               </span>
             </div>
 
-            <div class="flex min-w-0 flex-1 flex-col gap-2">
-              <div
-                class="flex flex-1 items-end gap-1.5 rounded-lg border border-border/60 bg-surface/40 p-2.5"
+            <div class="flex items-end justify-between gap-2">
+              <span
+                class="min-w-0 truncate rounded border border-border/60 bg-background/80 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.1em] text-foreground backdrop-blur-sm"
+              >
+                {{ previewSlide.title }}
+              </span>
+              <span
+                class="shrink-0 rounded border border-border/60 bg-background/80 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.14em] text-[var(--accent)] backdrop-blur-sm"
+              >
+                {{ project.gallery.indexOf(previewSlide) + 1 }} / {{ project.gallery.length }}
+              </span>
+            </div>
+          </div>
+        </template>
+
+        <template v-else>
+          <div class="absolute inset-0 bg-grid-fine opacity-50" />
+          <div
+            class="pointer-events-none absolute -right-12 -top-16 h-40 w-40 rounded-full opacity-20 blur-3xl"
+            :style="{ backgroundColor: project.accent }"
+          />
+
+          <div class="relative flex h-full flex-col gap-3 p-4">
+            <div class="flex items-center gap-1.5">
+              <span class="h-2 w-2 rounded-full bg-foreground/20" />
+              <span class="h-2 w-2 rounded-full bg-foreground/20" />
+              <span class="h-2 w-2 rounded-full bg-foreground/20" />
+              <span
+                class="ml-2 flex min-w-0 items-center gap-1 rounded border border-border/70 bg-surface/70 px-2 py-0.5 font-mono text-[9px] text-muted"
               >
                 <span
-                  v-for="(bar, barIndex) in BARS"
-                  :key="barIndex"
-                  class="flex-1 rounded-sm"
-                  :style="{
-                    height: `${bar}%`,
-                    backgroundColor:
-                      barIndex === BARS.length - 1 ? project.accent : 'rgba(var(--ech-ink-rgb),0.14)',
-                  }"
+                  class="h-1 w-1 shrink-0 rounded-full"
+                  :style="{ backgroundColor: project.accent }"
                 />
-              </div>
-              <div class="flex gap-1.5 overflow-hidden">
+                <span class="truncate">{{ project.liveHost }}</span>
+              </span>
+            </div>
+
+            <div class="flex min-h-0 flex-1 gap-3">
+              <div
+                class="hidden w-24 shrink-0 flex-col gap-2 rounded-lg border border-border/60 bg-surface/40 p-2 sm:flex"
+              >
                 <span
-                  v-for="slide in project.gallery.slice(0, 3)"
+                  v-for="(slide, slideIndex) in project.gallery"
                   :key="slide.id"
-                  class="min-w-0 flex-1 truncate rounded border border-border/60 bg-surface/50 px-1.5 py-1 font-mono text-[8px] uppercase tracking-[0.08em] text-muted"
+                  class="flex items-center gap-1.5"
                 >
-                  {{ slide.title }}
+                  <span
+                    class="h-1 w-1 shrink-0 rounded-full"
+                    :style="{
+                      backgroundColor: slideIndex === 0 ? project.accent : 'rgba(var(--ech-ink-rgb),0.22)',
+                    }"
+                  />
+                  <span
+                    class="h-1 min-w-0 flex-1 rounded-full"
+                    :class="slideIndex === 0 ? 'bg-foreground/30' : 'bg-foreground/10'"
+                  />
                 </span>
+              </div>
+
+              <div class="flex min-w-0 flex-1 flex-col gap-2">
+                <div
+                  class="flex flex-1 items-end gap-1.5 rounded-lg border border-border/60 bg-surface/40 p-2.5"
+                >
+                  <span
+                    v-for="(bar, barIndex) in BARS"
+                    :key="barIndex"
+                    class="flex-1 rounded-sm"
+                    :style="{
+                      height: `${bar}%`,
+                      backgroundColor:
+                        barIndex === BARS.length - 1 ? project.accent : 'rgba(var(--ech-ink-rgb),0.14)',
+                    }"
+                  />
+                </div>
+                <div class="flex gap-1.5 overflow-hidden">
+                  <span
+                    v-for="slide in project.gallery.slice(0, 3)"
+                    :key="slide.id"
+                    class="min-w-0 flex-1 truncate rounded border border-border/60 bg-surface/50 px-1.5 py-1 font-mono text-[8px] uppercase tracking-[0.08em] text-muted"
+                  >
+                    {{ slide.title }}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </template>
       </div>
 
       <div class="flex flex-1 flex-col p-5 sm:p-6">
