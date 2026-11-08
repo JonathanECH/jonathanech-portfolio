@@ -3,6 +3,7 @@
 <div align="center">
 
   ![Portfolio Banner](https://img.shields.io/badge/ECH-Portfolio_v0.1.0-00E5FF?style=for-the-badge&logoColor=black)
+  [![Live Demo](https://img.shields.io/badge/Live_Demo-jonathanech--portfolio.vercel.app-0B0E14?style=for-the-badge&logo=vercel&logoColor=white)](https://jonathanech-portfolio.vercel.app)
   [![Vue.js](https://img.shields.io/badge/Vue.js_3.5-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white)](https://vuejs.org/)
   [![TypeScript](https://img.shields.io/badge/TypeScript_5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
   [![Vite](https://img.shields.io/badge/Vite_8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/)
@@ -16,6 +17,7 @@
   </p>
 
   <p align="center">
+    <a href="https://jonathanech-portfolio.vercel.app">🔗 Demo en vivo</a> •
     <a href="#-visión-general">Visión General</a> •
     <a href="#-características-principales">Características</a> •
     <a href="#-stack-tecnológico">Stack Tecnológico</a> •
@@ -34,6 +36,7 @@
 Este portafolio trasciende la plantilla estática convencional: está concebido y desarrollado como una **aplicación web de ingeniería** reactiva, tipada y de alto rendimiento.
 
 Combina una estética cyberpunk industrial (*Motion Driven*) con:
+- 🔗 **Demo en vivo**: [jonathanech-portfolio.vercel.app](https://jonathanech-portfolio.vercel.app) — build de producción desplegado en Vercel.
 - 🌌 **Físicas y partículas interactivas** en tiempo real mediante HTML5 Canvas.
 - 🌓 **Sistema de diseño bitemático** con tokens CSS runtime (Oscuro Profundo y Claro Suave para descanso visual).
 - 🌐 **Internacionalización completa (i18n)** sin bibliotecas externas, tipada de extremo a extremo.
@@ -150,7 +153,7 @@ El portafolio incluye 3 proyectos emblemáticos data-driven con páginas de deta
 ├── 📦 TilyShop Inventory  ── Sincronización offline-first, lotes y auditoría crítica de almacenes.
 │                           (Auditoría: 4,820 ms → 42 ms | Discrepancia: 0.00%)
 ├── 🏥 Gestión Médica      ── Plataforma clínica integral con agenda médica en tiempo real y triaje seguro.
-└── 📊 ERP Contable        ── Motor contable de doble partida, balance de comprobación y conciliación fiscal.
+└── 📊 ERP Lubriken        ── Motor contable de doble partida, balance de comprobación y conciliación fiscal.
 ```
 
 ---
@@ -173,6 +176,20 @@ src/
 ├── 📐 types/            # Contratos de interfaz para tecnologías, proyectos y preferencias
 └── 📄 views/            # HomeView, ProjectDetailView y NotFoundView (404)
 ```
+
+---
+
+## 🔗 Demo
+
+> [!TIP]
+> El portafolio está desplegado y disponible en producción: **[jonathanech-portfolio.vercel.app](https://jonathanech-portfolio.vercel.app)**
+
+| Entorno | URL |
+| :--- | :--- |
+| 🟢 Producción (Vercel) | [jonathanech-portfolio.vercel.app](https://jonathanech-portfolio.vercel.app) |
+| 💻 Desarrollo local | [localhost:5173](http://localhost:5173) con `pnpm dev` |
+
+El sitio desplegado corresponde al build de producción generado con `pnpm build`.
 
 ---
 
