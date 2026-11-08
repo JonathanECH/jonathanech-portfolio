@@ -3,24 +3,6 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-background: #0b0e14;
-  --color-surface: #11141c;
-  --color-surface-card: #161a24;
-  --color-surface-card-hover: #1c2130;
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-hover: rgba(0, 229, 255, 0.35);
-  --color-cyan-accent: #00e5ff;
-  --color-cyan-glow: rgba(0, 229, 255, 0.15);
-  --color-muted: #8a92a6;
-  --color-danger: #f87171;
-  --color-danger-soft: #fda4af;
-  --color-warning: #fbbf24;
-  --color-warning-soft: #fcd34d;
-  --color-success: #34d399;
-  --color-traffic-close: #ff5f57;
-  --color-traffic-minimize: #febc2e;
-  --color-traffic-maximize: #28c840;
-
   --font-sans:
     'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', Inter, ui-sans-serif, system-ui, sans-serif;
   --font-mono:
@@ -33,6 +15,104 @@
   --animate-scan: scan 7s linear infinite;
   --animate-cursor: cursor-blink 1.1s steps(2, start) infinite;
   --animate-float: float 7s ease-in-out infinite;
+}
+
+/*
+ * Runtime palette. `@theme inline` makes every Tailwind colour utility emit the
+ * `--ech-*` variable directly, so switching `.dark` / `.light` on <html> repaints
+ * the whole UI without rebuilding classes.
+ */
+@theme inline {
+  --color-background: var(--ech-background);
+  --color-surface: var(--ech-surface);
+  --color-surface-card: var(--ech-surface-card);
+  --color-surface-card-hover: var(--ech-surface-card-hover);
+  --color-border: var(--ech-border);
+  --color-border-hover: var(--ech-border-hover);
+  --color-cyan-accent: var(--ech-accent);
+  --color-cyan-glow: var(--ech-accent-glow);
+  --color-muted: var(--ech-muted);
+  --color-foreground: var(--ech-foreground);
+  --color-danger: var(--ech-danger);
+  --color-danger-soft: var(--ech-danger-soft);
+  --color-warning: var(--ech-warning);
+  --color-warning-soft: var(--ech-warning-soft);
+  --color-success: var(--ech-success);
+  --color-traffic-close: #ff5f57;
+  --color-traffic-minimize: #febc2e;
+  --color-traffic-maximize: #28c840;
+}
+
+:root {
+  color-scheme: dark;
+
+  --ech-background: #0b0e14;
+  --ech-surface: #11141c;
+  --ech-surface-card: #161a24;
+  --ech-surface-card-hover: #1c2130;
+  --ech-border: rgba(255, 255, 255, 0.08);
+  --ech-border-hover: rgba(0, 229, 255, 0.35);
+  --ech-accent: #00e5ff;
+  --ech-accent-rgb: 0, 229, 255;
+  --ech-accent-glow: rgba(0, 229, 255, 0.15);
+  --ech-muted: #8a92a6;
+  --ech-foreground: #ffffff;
+  --ech-foreground-soft: rgba(255, 255, 255, 0.9);
+  --ech-ink-rgb: 255, 255, 255;
+  --ech-danger: #f87171;
+  --ech-danger-soft: #fda4af;
+  --ech-warning: #fbbf24;
+  --ech-warning-soft: #fcd34d;
+  --ech-success: #34d399;
+  --ech-grid-line: rgba(255, 255, 255, 0.025);
+  --ech-grid-line-strong: rgba(0, 229, 255, 0.055);
+  --ech-grid-blend: normal;
+  --ech-particle-rgb: 0, 229, 255;
+  --ech-selection-bg: rgba(0, 229, 255, 0.28);
+  --ech-selection-color: #ffffff;
+  --ech-scrollbar-track: #0b0e14;
+  --ech-scrollbar-thumb: #232a3a;
+  --ech-scrollbar-thumb-hover: #303a4f;
+  --ech-glass: rgba(17, 20, 28, 0.72);
+  --ech-focus: rgba(0, 229, 255, 0.7);
+  --ech-spotlight-core: rgba(0, 229, 255, 0.14);
+  --ech-spotlight-mid: rgba(0, 210, 255, 0.04);
+}
+
+.light {
+  color-scheme: light;
+
+  --ech-background: #f6f8fc;
+  --ech-surface: #ffffff;
+  --ech-surface-card: #ffffff;
+  --ech-surface-card-hover: #eef3fb;
+  --ech-border: rgba(11, 14, 20, 0.1);
+  --ech-border-hover: rgba(0, 168, 198, 0.45);
+  --ech-accent: #00a8c6;
+  --ech-accent-rgb: 0, 168, 198;
+  --ech-accent-glow: rgba(0, 168, 198, 0.15);
+  --ech-muted: #5b6478;
+  --ech-foreground: #0b0e14;
+  --ech-foreground-soft: rgba(11, 14, 20, 0.9);
+  --ech-ink-rgb: 11, 14, 20;
+  --ech-danger: #dc2626;
+  --ech-danger-soft: #f43f5e;
+  --ech-warning: #b45309;
+  --ech-warning-soft: #d97706;
+  --ech-success: #059669;
+  --ech-grid-line: rgba(11, 14, 20, 0.05);
+  --ech-grid-line-strong: rgba(0, 168, 198, 0.09);
+  --ech-grid-blend: multiply;
+  --ech-particle-rgb: 0, 140, 170;
+  --ech-selection-bg: rgba(0, 168, 198, 0.22);
+  --ech-selection-color: #0b0e14;
+  --ech-scrollbar-track: #f6f8fc;
+  --ech-scrollbar-thumb: #c3cbd9;
+  --ech-scrollbar-thumb-hover: #a9b4c6;
+  --ech-glass: rgba(255, 255, 255, 0.78);
+  --ech-focus: rgba(0, 168, 198, 0.7);
+  --ech-spotlight-core: rgba(0, 168, 198, 0.12);
+  --ech-spotlight-mid: rgba(0, 168, 198, 0.04);
 }
 
 @keyframes fade-up {
@@ -59,11 +139,11 @@
   0%,
   100% {
     opacity: 1;
-    box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.35);
+    box-shadow: 0 0 0 0 rgba(var(--ech-accent-rgb), 0.35);
   }
   50% {
     opacity: 0.55;
-    box-shadow: 0 0 0 5px rgba(0, 229, 255, 0);
+    box-shadow: 0 0 0 5px rgba(var(--ech-accent-rgb), 0);
   }
 }
 
@@ -107,25 +187,21 @@
 }
 
 @layer base {
-  :root {
-    color-scheme: dark;
-  }
-
   * {
-    border-color: var(--color-border);
+    border-color: var(--ech-border);
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: var(--color-background);
+    background-color: var(--ech-background);
   }
 
   body {
     min-width: 320px;
     min-height: 100vh;
     margin: 0;
-    background-color: var(--color-background);
-    color: rgba(255, 255, 255, 0.9);
+    background-color: var(--ech-background);
+    color: var(--ech-foreground-soft);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -137,12 +213,12 @@
   }
 
   ::selection {
-    background: rgba(0, 229, 255, 0.28);
-    color: #ffffff;
+    background: var(--ech-selection-bg);
+    color: var(--ech-selection-color);
   }
 
   :focus-visible {
-    outline: 2px solid rgba(0, 229, 255, 0.7);
+    outline: 2px solid var(--ech-focus);
     outline-offset: 3px;
   }
 
@@ -152,46 +228,47 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #0b0e14;
+    background: var(--ech-scrollbar-track);
   }
 
   ::-webkit-scrollbar-thumb {
-    border: 2px solid #0b0e14;
+    border: 2px solid var(--ech-scrollbar-track);
     border-radius: 9999px;
-    background: #232a3a;
+    background: var(--ech-scrollbar-thumb);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #303a4f;
+    background: var(--ech-scrollbar-thumb-hover);
   }
 }
 
 @layer utilities {
   .text-glow {
     text-shadow:
-      0 0 30px rgba(0, 229, 255, 0.32),
-      0 0 90px rgba(0, 229, 255, 0.12);
+      0 0 30px rgba(var(--ech-accent-rgb), 0.32),
+      0 0 90px rgba(var(--ech-accent-rgb), 0.12);
   }
 
   .bg-grid {
     background-image:
-      linear-gradient(to right, rgba(0, 229, 255, 0.055) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 229, 255, 0.055) 1px, transparent 1px);
+      linear-gradient(to right, var(--ech-grid-line-strong) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--ech-grid-line-strong) 1px, transparent 1px);
     background-size: 44px 44px;
   }
 
   .bg-grid-fine {
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      linear-gradient(to right, var(--ech-grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--ech-grid-line) 1px, transparent 1px);
     background-size: 22px 22px;
+    mix-blend-mode: var(--ech-grid-blend);
   }
 
   .hero-spotlight {
     background: radial-gradient(
       650px circle at var(--mouse-x, 50%) var(--mouse-y, 45%),
-      rgba(0, 229, 255, 0.14),
-      rgba(0, 210, 255, 0.04) 40%,
+      var(--ech-spotlight-core),
+      var(--ech-spotlight-mid) 40%,
       transparent 75%
     );
     transition: opacity 500ms ease;
@@ -199,7 +276,7 @@
   }
 
   .glass-panel {
-    background: rgba(17, 20, 28, 0.72);
+    background: var(--ech-glass);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
   }

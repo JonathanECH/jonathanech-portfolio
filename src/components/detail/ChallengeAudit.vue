@@ -31,13 +31,13 @@ const accentStyle = computed<Record<string, string>>(() => ({
       <div class="lg:col-span-6">
         <h2
           id="challenge-title"
-          class="text-2xl font-bold tracking-[-0.03em] text-white sm:text-3xl"
+          class="text-2xl font-bold tracking-[-0.03em] text-foreground sm:text-3xl"
         >
           {{ t('detail.challengeTitle') }}
           <span class="text-cyan-accent">{{ t('detail.challengeHighlight') }}</span>
         </h2>
 
-        <p class="mt-4 text-sm leading-relaxed text-white/65 sm:text-[15px]">
+        <p class="mt-4 text-sm leading-relaxed text-foreground/65 sm:text-[15px]">
           {{ project.challenge.intro }}
         </p>
 
@@ -53,7 +53,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
             >
               0{{ index + 1 }}
             </span>
-            <p class="text-sm leading-relaxed text-white/70">
+            <p class="text-sm leading-relaxed text-foreground/70">
               {{ finding }}
             </p>
           </li>
@@ -78,7 +78,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
               <ShieldCheck :size="15" aria-hidden="true" />
               {{ t('detail.auditReport') }}
             </h3>
-            <span class="font-mono text-[9px] uppercase tracking-[0.18em] text-white/30">
+            <span class="font-mono text-[9px] uppercase tracking-[0.18em] text-foreground/30">
               {{ t('detail.audit', { year: project.year }) }}
             </span>
           </div>
@@ -92,7 +92,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
                 {{ t('detail.diagnosis') }}
               </p>
               <p
-                class="rounded bg-surface-card-hover/50 p-3 font-mono text-[11px] leading-relaxed text-white/70"
+                class="rounded bg-surface-card-hover/50 p-3 font-mono text-[11px] leading-relaxed text-foreground/70"
               >
                 {{ project.audit.diagnosis }}
               </p>
@@ -109,7 +109,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
                 {{ t('detail.resolution') }}
               </p>
               <p
-                class="rounded bg-surface-card-hover/50 p-3 font-mono text-[11px] leading-relaxed text-white/60"
+                class="rounded bg-surface-card-hover/50 p-3 font-mono text-[11px] leading-relaxed text-foreground/60"
               >
                 {{ project.audit.resolution }}
               </p>
@@ -141,7 +141,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
                 <p class="mt-1.5 font-mono text-sm font-semibold text-[color:var(--project-accent)]">
                   {{ project.audit.latencyAfter }}
                 </p>
-                <p class="mt-0.5 font-mono text-[9px] text-white/40">
+                <p class="mt-0.5 font-mono text-[9px] text-foreground/40">
                   {{ project.audit.latencyDelta }}
                 </p>
               </div>
@@ -150,13 +150,13 @@ const accentStyle = computed<Record<string, string>>(() => ({
                 <p class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
                   {{ t('detail.discrepancy') }}
                 </p>
-                <p class="mt-1.5 font-mono text-sm font-semibold text-white">
+                <p class="mt-1.5 font-mono text-sm font-semibold text-foreground">
                   {{ project.audit.discrepancy }}
                 </p>
               </div>
             </div>
 
-            <p class="flex items-start gap-2 font-mono text-[10px] leading-relaxed text-white/45">
+            <p class="flex items-start gap-2 font-mono text-[10px] leading-relaxed text-foreground/45">
               <CircleCheck
                 :size="13"
                 aria-hidden="true"

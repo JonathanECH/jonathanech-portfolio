@@ -42,7 +42,7 @@ function cardDelay(index: number): string {
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
       <div class="absolute inset-0 bg-grid-fine opacity-40" />
       <div
-        class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,229,255,0.06),transparent_55%)]"
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(var(--ech-accent-rgb),0.06),transparent_55%)]"
       />
     </div>
 
@@ -67,8 +67,8 @@ function cardDelay(index: number): string {
           class="inline-flex cursor-pointer items-center gap-2 rounded-lg border px-3.5 py-2 font-mono text-[10px] uppercase tracking-[0.14em] transition-all duration-200 sm:text-[11px]"
           :class="
             isActive(option.value)
-              ? 'border-cyan-accent bg-cyan-accent text-black shadow-[0_0_18px_rgba(0,229,255,0.28)]'
-              : 'border-border bg-surface-card/60 text-muted hover:border-border-hover hover:text-white'
+              ? 'border-cyan-accent bg-cyan-accent text-black shadow-[0_0_18px_rgba(var(--ech-accent-rgb),0.28)]'
+              : 'border-border bg-surface-card/60 text-muted hover:border-border-hover hover:text-foreground'
           "
           @click="setCategory(option.value)"
         >

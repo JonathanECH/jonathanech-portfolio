@@ -10,7 +10,7 @@ const { t } = useI18n()
     <p class="font-mono text-[11px] uppercase tracking-[0.24em] text-cyan-accent">
       {{ t('notFound.code') }}
     </p>
-    <h1 class="mt-5 font-sans text-4xl font-bold tracking-tight text-white sm:text-6xl">
+    <h1 class="mt-5 font-sans text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
       {{ t('notFound.title') }}<span class="text-cyan-accent">.</span>
     </h1>
     <p class="mt-5 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
@@ -18,7 +18,7 @@ const { t } = useI18n()
     </p>
     <RouterLink
       to="/"
-      class="mt-8 inline-flex items-center gap-2 rounded-lg bg-cyan-accent px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-black transition-all hover:shadow-[0_0_20px_rgba(0,229,255,0.45)]"
+      class="mt-8 inline-flex items-center gap-2 rounded-lg bg-cyan-accent px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-black transition-all hover:shadow-[0_0_20px_rgba(var(--ech-accent-rgb),0.45)]"
     >
       <ArrowLeft :size="16" aria-hidden="true" />
       {{ t('notFound.backHome') }}

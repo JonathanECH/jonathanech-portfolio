@@ -65,8 +65,8 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
             <!-- Terminal-style title bar -->
             <div class="flex shrink-0 items-center gap-3 border-b border-border bg-background/60 px-4 py-3">
               <div class="flex items-center gap-1.5" aria-hidden="true">
-                <span class="h-2.5 w-2.5 rounded-full bg-white/15" />
-                <span class="h-2.5 w-2.5 rounded-full bg-white/15" />
+                <span class="h-2.5 w-2.5 rounded-full bg-foreground/15" />
+                <span class="h-2.5 w-2.5 rounded-full bg-foreground/15" />
                 <span class="h-2.5 w-2.5 rounded-full" :style="{ backgroundColor: project.accent }" />
               </div>
               <p class="min-w-0 flex-1 truncate font-mono text-[10px] text-muted">
@@ -74,7 +74,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
               </p>
               <button
                 type="button"
-                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-transparent text-muted transition-colors hover:border-border hover:text-white"
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-transparent text-muted transition-colors hover:border-border hover:text-foreground"
                 :aria-label="t('projects.closeQuickView')"
                 @click="store.closeQuickView"
               >
@@ -99,7 +99,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 
               <h2
                 id="quick-view-title"
-                class="mt-3 font-sans text-2xl font-bold tracking-tight text-white sm:text-3xl"
+                class="mt-3 font-sans text-2xl font-bold tracking-tight text-foreground sm:text-3xl"
               >
                 {{ project.title }}
                 <span class="text-[var(--accent)]">{{ project.titleHighlight }}</span>
@@ -170,14 +170,14 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
               <div class="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-end">
                 <button
                   type="button"
-                  class="inline-flex items-center justify-center rounded-lg border border-border px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-border-hover hover:text-white"
+                  class="inline-flex items-center justify-center rounded-lg border border-border px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-border-hover hover:text-foreground"
                   @click="store.closeQuickView"
                 >
                   {{ t('projects.close') }}
                 </button>
                 <RouterLink
                   :to="`/proyectos/${project.slug}`"
-                  class="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-4 py-2.5 font-sans text-xs font-semibold text-black transition-all duration-300 hover:shadow-[0_0_24px_rgba(0,229,255,0.45)]"
+                  class="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-4 py-2.5 font-sans text-xs font-semibold text-black transition-all duration-300 hover:shadow-[0_0_24px_rgba(var(--ech-accent-rgb),0.45)]"
                   @click="store.closeQuickView"
                 >
                   {{ t('projects.viewFull') }}

@@ -43,7 +43,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
         >
           <RouterLink
             :to="{ path: '/', hash: '#proyectos' }"
-            class="group inline-flex items-center gap-2 text-muted transition-colors duration-200 hover:text-white"
+            class="group inline-flex items-center gap-2 text-muted transition-colors duration-200 hover:text-foreground"
           >
             <ArrowLeft
               :size="12"
@@ -52,8 +52,8 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             />
             <span>{{ t('detail.projects') }}</span>
           </RouterLink>
-          <span class="text-white/20" aria-hidden="true">/</span>
-          <span class="text-white/75">{{ project.name }}</span>
+          <span class="text-foreground/20" aria-hidden="true">/</span>
+          <span class="text-foreground/75">{{ project.name }}</span>
         </nav>
 
         <div class="flex flex-wrap items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.18em]">
@@ -80,13 +80,13 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
         </p>
 
         <h1
-          class="mt-4 font-sans text-[clamp(2.25rem,7vw,4.5rem)] font-extrabold leading-[0.95] tracking-[-0.04em] text-white"
+          class="mt-4 font-sans text-[clamp(2.25rem,7vw,4.5rem)] font-extrabold leading-[0.95] tracking-[-0.04em] text-foreground"
         >
           {{ project.title }}
           <span class="text-cyan-accent text-glow">{{ project.titleHighlight }}</span>
         </h1>
 
-        <p class="mt-6 max-w-3xl text-pretty text-base leading-relaxed text-white/70 sm:text-lg">
+        <p class="mt-6 max-w-3xl text-pretty text-base leading-relaxed text-foreground/70 sm:text-lg">
           {{ project.summary }}
         </p>
 
@@ -96,7 +96,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
           <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
             {{ t('detail.problem') }}
           </p>
-          <p class="mt-2 text-sm leading-relaxed text-white/60 sm:text-[15px]">
+          <p class="mt-2 text-sm leading-relaxed text-foreground/60 sm:text-[15px]">
             {{ project.problem }}
           </p>
         </div>
@@ -107,8 +107,8 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             :key="chip.label"
             class="inline-flex max-w-full items-baseline gap-2 rounded border border-border bg-surface/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em]"
           >
-            <span class="shrink-0 text-white/30">{{ chip.label }}</span>
-            <span class="min-w-0 text-white/75 normal-case tracking-normal">{{ chip.value }}</span>
+            <span class="shrink-0 text-foreground/30">{{ chip.label }}</span>
+            <span class="min-w-0 text-foreground/75 normal-case tracking-normal">{{ chip.value }}</span>
           </li>
         </ul>
 
@@ -121,7 +121,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             :href="project.links.demo"
             target="_blank"
             rel="noopener noreferrer"
-            class="group inline-flex items-center gap-2 rounded bg-cyan-accent px-5 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-black transition-all duration-300 hover:shadow-[0_0_28px_rgba(0,229,255,0.35)]"
+            class="group inline-flex items-center gap-2 rounded bg-cyan-accent px-5 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-black transition-all duration-300 hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.35)]"
           >
             {{ t('detail.demo') }}
             <ArrowUpRight
@@ -137,7 +137,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             :href="project.links.repo"
             target="_blank"
             rel="noopener noreferrer"
-            class="group inline-flex items-center gap-2 rounded border border-border bg-surface-card/60 px-5 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-white/85 transition-all duration-300 hover:border-border-hover hover:text-cyan-accent"
+            class="group inline-flex items-center gap-2 rounded border border-border bg-surface-card/60 px-5 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/85 transition-all duration-300 hover:border-border-hover hover:text-cyan-accent"
           >
             {{ t('detail.viewCode') }}
             <ExternalLink :size="14" aria-hidden="true" />
@@ -148,7 +148,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             v-if="project.links.whitepaper"
             :href="project.links.whitepaper"
             download
-            class="group inline-flex items-center gap-2 rounded border border-border bg-surface-card/60 px-5 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-white/70 transition-all duration-300 hover:border-border-hover hover:text-white"
+            class="group inline-flex items-center gap-2 rounded border border-border bg-surface-card/60 px-5 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/70 transition-all duration-300 hover:border-border-hover hover:text-foreground"
           >
             {{ t('detail.whitepaper') }}
             <FileText :size="14" aria-hidden="true" />

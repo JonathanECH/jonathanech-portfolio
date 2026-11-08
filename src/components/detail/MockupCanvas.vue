@@ -262,7 +262,7 @@ const analyticsAxis = computed(() =>
                 :style="
                   item === 1
                     ? { backgroundColor: `${accent}2e` }
-                    : { backgroundColor: 'rgba(255,255,255,0.04)' }
+                    : { backgroundColor: 'rgba(var(--ech-ink-rgb),0.04)' }
                 "
               />
             </aside>
@@ -280,12 +280,12 @@ const analyticsAxis = computed(() =>
                     {{ stat.label }}
                   </p>
                   <p
-                    class="mt-0.5 font-sans text-[11px] font-bold leading-none text-white sm:text-base"
+                    class="mt-0.5 font-sans text-[11px] font-bold leading-none text-foreground sm:text-base"
                     :style="stat.highlight ? { color: accent } : undefined"
                   >
                     {{ stat.value }}
                   </p>
-                  <div class="mt-1.5 h-0.5 w-full overflow-hidden rounded-full bg-white/5">
+                  <div class="mt-1.5 h-0.5 w-full overflow-hidden rounded-full bg-foreground/5">
                     <div
                       class="h-full rounded-full"
                       :style="{ width: stat.fill, backgroundColor: accent }"
@@ -308,9 +308,9 @@ const analyticsAxis = computed(() =>
                   :key="row.sku"
                   class="grid grid-cols-[1.4fr_0.5fr_0.5fr_0.9fr] items-center gap-1.5 border-b border-border/40 px-2 py-[5px] font-mono text-[6px] last:border-0 sm:text-[8px]"
                 >
-                  <span class="truncate text-white/80">{{ row.sku }}</span>
+                  <span class="truncate text-foreground/80">{{ row.sku }}</span>
                   <span class="text-muted">{{ row.size }}</span>
-                  <span class="text-white/70">{{ row.stock }}</span>
+                  <span class="text-foreground/70">{{ row.stock }}</span>
                   <span class="flex min-w-0 items-center gap-1">
                     <span
                       class="h-1 w-1 shrink-0 rounded-full"
@@ -321,7 +321,7 @@ const analyticsAxis = computed(() =>
                       :style="
                         row.warn
                           ? { color: 'var(--color-warning)' }
-                          : { color: 'rgba(255,255,255,0.55)' }
+                          : { color: 'rgba(var(--ech-ink-rgb),0.55)' }
                       "
                     >
                       {{ row.status }}
@@ -344,7 +344,7 @@ const analyticsAxis = computed(() =>
                 >
                   {{ t('mockup.periodBalance') }}
                 </p>
-                <p class="font-sans text-base font-bold leading-none text-white sm:text-2xl">
+                <p class="font-sans text-base font-bold leading-none text-foreground sm:text-2xl">
                   $ {{ ledgerTotal }}
                 </p>
               </div>
@@ -379,14 +379,14 @@ const analyticsAxis = computed(() =>
                   class="grid grid-cols-[0.4fr_1.5fr_0.8fr_0.8fr] items-center gap-1 border-b border-border/40 px-2 py-[5px] font-mono text-[6px] last:border-0 sm:text-[8px]"
                 >
                   <span class="text-muted">{{ pad(index + 1) }}</span>
-                  <span class="truncate text-white/80">{{ entry.account }}</span>
-                  <span class="truncate text-white/70">{{ entry.debit || '—' }}</span>
+                  <span class="truncate text-foreground/80">{{ entry.account }}</span>
+                  <span class="truncate text-foreground/70">{{ entry.debit || '—' }}</span>
                   <span
                     class="truncate"
                     :style="
                       entry.credit
                         ? { color: accent }
-                        : { color: 'rgba(255,255,255,0.35)' }
+                        : { color: 'rgba(var(--ech-ink-rgb),0.35)' }
                     "
                   >
                     {{ entry.credit || '—' }}
@@ -401,7 +401,7 @@ const analyticsAxis = computed(() =>
                   >
                     {{ t('mockup.blockHash') }}
                   </p>
-                  <p class="mt-0.5 font-mono text-[5px] leading-tight text-white/60 sm:text-[7px]">
+                  <p class="mt-0.5 font-mono text-[5px] leading-tight text-foreground/60 sm:text-[7px]">
                     a3f9…e21c
                   </p>
                 </div>
@@ -414,7 +414,7 @@ const analyticsAxis = computed(() =>
                     class="flex-1 rounded-t-[1px]"
                     :style="{
                       height: `${height}%`,
-                      backgroundColor: index % 3 === 0 ? accent : 'rgba(255,255,255,0.12)',
+                      backgroundColor: index % 3 === 0 ? accent : 'rgba(var(--ech-ink-rgb),0.12)',
                     }"
                   />
                 </div>
@@ -434,7 +434,7 @@ const analyticsAxis = computed(() =>
                 >
                   {{ t('mockup.rfTerminals') }}
                 </p>
-                <p class="font-sans text-[10px] font-bold leading-none text-white sm:text-sm">24</p>
+                <p class="font-sans text-[10px] font-bold leading-none text-foreground sm:text-sm">24</p>
               </div>
               <div class="rounded-sm border border-border bg-surface/70 px-1.5 py-1 sm:px-2">
                 <p
@@ -455,7 +455,7 @@ const analyticsAxis = computed(() =>
                 >
                   {{ t('mockup.syncQueue') }}
                 </p>
-                <p class="font-sans text-[10px] font-bold leading-none text-white sm:text-sm">00</p>
+                <p class="font-sans text-[10px] font-bold leading-none text-foreground sm:text-sm">00</p>
               </div>
             </div>
 
@@ -474,11 +474,11 @@ const analyticsAxis = computed(() =>
                   class="flex items-center gap-1.5"
                 >
                   <span
-                    class="w-9 shrink-0 truncate font-mono text-[6px] text-white/70 sm:w-12 sm:text-[8px]"
+                    class="w-9 shrink-0 truncate font-mono text-[6px] text-foreground/70 sm:w-12 sm:text-[8px]"
                   >
                     {{ batch.code }}
                   </span>
-                  <div class="h-1 flex-1 overflow-hidden rounded-full bg-white/5">
+                  <div class="h-1 flex-1 overflow-hidden rounded-full bg-foreground/5">
                     <div
                       class="h-full rounded-full"
                       :style="{ width: batch.progress, backgroundColor: accent }"
@@ -498,7 +498,7 @@ const analyticsAxis = computed(() =>
                 <svg
                   viewBox="0 0 120 48"
                   preserveAspectRatio="none"
-                  class="h-full w-full"
+                  class="h-full w-full text-foreground/10"
                   aria-hidden="true"
                 >
                   <line
@@ -508,7 +508,7 @@ const analyticsAxis = computed(() =>
                     :y1="y"
                     x2="120"
                     :y2="y"
-                    stroke="rgba(255,255,255,0.06)"
+                    stroke="currentColor"
                     stroke-width="0.5"
                   />
                   <path
@@ -561,13 +561,13 @@ const analyticsAxis = computed(() =>
                   :key="slot.time"
                   class="rounded-[2px] border px-1 py-0.5"
                   :style="{
-                    borderColor: slot.active ? `${accent}66` : 'rgba(255,255,255,0.06)',
-                    backgroundColor: slot.active ? `${accent}1f` : 'rgba(255,255,255,0.02)',
+                    borderColor: slot.active ? `${accent}66` : 'rgba(var(--ech-ink-rgb),0.06)',
+                    backgroundColor: slot.active ? `${accent}1f` : 'rgba(var(--ech-ink-rgb),0.02)',
                   }"
                 >
                   <p class="font-mono text-[5px] text-muted sm:text-[6px]">{{ slot.time }}</p>
                   <p
-                    class="truncate font-sans text-[6px] leading-tight text-white/80 sm:text-[8px]"
+                    class="truncate font-sans text-[6px] leading-tight text-foreground/80 sm:text-[8px]"
                   >
                     {{ slot.patient }}
                   </p>
@@ -596,7 +596,7 @@ const analyticsAxis = computed(() =>
                   :style="
                     line.total
                       ? { color: accent }
-                      : { color: 'rgba(255,255,255,0.72)' }
+                      : { color: 'rgba(var(--ech-ink-rgb),0.72)' }
                   "
                 >
                   {{ line.value }}
@@ -611,7 +611,7 @@ const analyticsAxis = computed(() =>
                   aria-hidden="true"
                 />
                 <span
-                  class="truncate font-mono text-[5px] uppercase tracking-wider text-white/70 sm:text-[7px]"
+                  class="truncate font-mono text-[5px] uppercase tracking-wider text-foreground/70 sm:text-[7px]"
                 >
                   {{ t('mockup.bankReconciliation') }}
                 </span>
@@ -632,7 +632,7 @@ const analyticsAxis = computed(() =>
                   :style="{
                     height: `${height}%`,
                     backgroundColor:
-                      index === erpBars.length - 1 ? accent : 'rgba(255,255,255,0.14)',
+                      index === erpBars.length - 1 ? accent : 'rgba(var(--ech-ink-rgb),0.14)',
                   }"
                 />
               </div>
@@ -668,7 +668,7 @@ const analyticsAxis = computed(() =>
                 >
                   {{ metric.value }}
                 </p>
-                <div class="mt-1 h-0.5 w-full overflow-hidden rounded-full bg-white/5">
+                <div class="mt-1 h-0.5 w-full overflow-hidden rounded-full bg-foreground/5">
                   <div
                     class="h-full rounded-full"
                     :style="{ width: metric.fill, backgroundColor: accent }"
@@ -683,7 +683,7 @@ const analyticsAxis = computed(() =>
               <svg
                 viewBox="0 0 240 80"
                 preserveAspectRatio="none"
-                class="h-full w-full"
+                class="h-full w-full text-foreground/10"
                 aria-hidden="true"
               >
                 <line
@@ -693,7 +693,7 @@ const analyticsAxis = computed(() =>
                   :y1="y"
                   x2="240"
                   :y2="y"
-                  stroke="rgba(255,255,255,0.06)"
+                  stroke="currentColor"
                   stroke-width="0.5"
                 />
                 <path

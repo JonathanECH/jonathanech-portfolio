@@ -42,7 +42,7 @@ function copyEmail(value: string): void {
             <article
               v-for="channel in contactChannels"
               :key="channel.id"
-              class="group relative flex flex-col rounded-xl border border-border bg-surface-card/70 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:shadow-[0_16px_32px_-24px_rgba(0,229,255,0.5)]"
+              class="group relative flex flex-col rounded-xl border border-border bg-surface-card/70 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:shadow-[0_16px_32px_-24px_rgba(var(--ech-accent-rgb),0.5)]"
             >
               <div class="flex items-start justify-between gap-3">
                 <span
@@ -62,7 +62,7 @@ function copyEmail(value: string): void {
               <h3 class="mt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
                 {{ channel.label }}
               </h3>
-              <p class="mt-1 break-words font-mono text-sm text-white">{{ channel.value }}</p>
+              <p class="mt-1 break-words font-mono text-sm text-foreground">{{ channel.value }}</p>
               <p class="mt-2 text-xs leading-relaxed text-muted">{{ channel.description }}</p>
 
               <div class="mt-auto pt-4">

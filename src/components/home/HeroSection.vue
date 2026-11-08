@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { Activity, ArrowRight, Download, MapPin, Terminal } from '@lucide/vue'
+import { usePreferences } from '@/composables/usePreferences'
 import { useI18n } from '@/i18n'
 
 const { content, t } = useI18n()
+const { resolvedTheme } = usePreferences()
 const profile = computed(() => content.value.profile)
 
 interface HeroParticle {
@@ -39,6 +41,40 @@ let resizeObserver: ResizeObserver | null = null
 let visibilityObserver: IntersectionObserver | null = null
 let prefersReducedMotion = false
 let isVisible = true
+let particleRgb = '0, 229, 255'
+let particleGlow = '#00E5FF'
+
+function syncParticleColor(): void {
+  const section = sectionRef.value
+
+  if (!section) {
+    return
+  }
+
+  const styles = getComputedStyle(section)
+  const rgb = styles.getPropertyValue('--ech-particle-rgb').trim()
+  const glow = styles.getPropertyValue('--ech-accent').trim()
+
+  if (rgb) {
+    particleRgb = rgb
+  }
+
+  if (glow) {
+    particleGlow = glow
+  }
+}
+
+watch(
+  resolvedTheme,
+  () => {
+    syncParticleColor()
+
+    if (prefersReducedMotion) {
+      drawFrame(false)
+    }
+  },
+  { flush: 'post' },
+)
 
 function createParticles(): void {
   const count = Math.min(Math.floor((width * 500) / 12000), MAX_PARTICLES)
@@ -78,9 +114,9 @@ function drawParticle(particle: HeroParticle): void {
 
   ctx.beginPath()
   ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2)
-  ctx.fillStyle = `rgba(0, 229, 255, ${particle.currentAlpha})`
+  ctx.fillStyle = `rgba(${particleRgb}, ${particle.currentAlpha})`
   ctx.shadowBlur = particle.radius > 2 ? 10 : 4
-  ctx.shadowColor = '#00E5FF'
+  ctx.shadowColor = particleGlow
   ctx.fill()
   ctx.shadowBlur = 0
 }
@@ -143,7 +179,7 @@ function drawConnections(): void {
       ctx.beginPath()
       ctx.moveTo(a.x, a.y)
       ctx.lineTo(b.x, b.y)
-      ctx.strokeStyle = `rgba(0, 229, 255, ${Math.min(alpha, 0.5)})`
+      ctx.strokeStyle = `rgba(${particleRgb}, ${Math.min(alpha, 0.5)})`
       ctx.lineWidth = glowMultiplier > 1 ? 0.9 : 0.6
       ctx.stroke()
     }
@@ -154,7 +190,7 @@ function drawConnections(): void {
       ctx.beginPath()
       ctx.moveTo(particles[i].x, particles[i].y)
       ctx.lineTo(pointerX, pointerY)
-      ctx.strokeStyle = `rgba(0, 229, 255, ${(1 - pointerDistance / POINTER_RADIUS) * 0.28})`
+      ctx.strokeStyle = `rgba(${particleRgb}, ${(1 - pointerDistance / POINTER_RADIUS) * 0.28})`
       ctx.lineWidth = 0.85
       ctx.stroke()
     }
@@ -248,6 +284,8 @@ function resizeCanvas(): void {
 
   ctx.setTransform(1, 0, 0, 1, 0, 0)
   ctx.scale(dpr, dpr)
+
+  syncParticleColor()
 
   pointerX = width * 0.5
   pointerY = height * 0.45
@@ -381,7 +419,7 @@ onBeforeUnmount(() => {
         </span>
       </div>
 
-      <p class="mt-7 font-mono text-xs tracking-[0.08em] text-white/65 sm:text-sm">
+      <p class="mt-7 font-mono text-xs tracking-[0.08em] text-foreground/65 sm:text-sm">
         {{ profile.name }}<span
           class="ml-0.5 inline-block h-3.5 w-[2px] translate-y-0.5 animate-cursor bg-cyan-accent align-middle"
           aria-hidden="true"
@@ -390,7 +428,7 @@ onBeforeUnmount(() => {
 
       <h1 class="mt-3 flex flex-col items-center gap-2">
         <span
-          class="block font-sans text-2xl font-bold uppercase leading-tight tracking-[-0.02em] text-white sm:text-3xl lg:text-4xl"
+          class="block font-sans text-2xl font-bold uppercase leading-tight tracking-[-0.02em] text-foreground sm:text-3xl lg:text-4xl"
         >
           {{ profile.headline[0] }}
         </span>
@@ -410,7 +448,7 @@ onBeforeUnmount(() => {
       <div class="mt-9 flex w-full flex-col items-stretch justify-center gap-3 sm:w-auto sm:flex-row">
         <a
           href="#proyectos"
-          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-black shadow-[0_0_0_0_rgba(0,229,255,0)] transition-all duration-300 hover:shadow-[0_0_28px_rgba(0,229,255,0.45)] active:scale-[0.98] sm:text-xs"
+          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-black shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] transition-all duration-300 hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] active:scale-[0.98] sm:text-xs"
         >
           <Terminal :size="16" aria-hidden="true" />
           {{ t('hero.explore') }}
@@ -424,7 +462,7 @@ onBeforeUnmount(() => {
         <a
           href="/cv/jonathan-campos-cv.pdf"
           download
-          class="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/60 px-6 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:border-border-hover hover:bg-surface-card hover:text-cyan-accent active:scale-[0.98] sm:text-xs"
+          class="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/60 px-6 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground transition-all duration-300 hover:border-border-hover hover:bg-surface-card hover:text-cyan-accent active:scale-[0.98] sm:text-xs"
         >
           <Download
             :size="16"
@@ -454,7 +492,7 @@ onBeforeUnmount(() => {
             <dt class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted/70 sm:text-[10px]">
               {{ stat.label }}
             </dt>
-            <dd class="mt-1 font-sans text-sm font-semibold text-white">{{ stat.value }}</dd>
+            <dd class="mt-1 font-sans text-sm font-semibold text-foreground">{{ stat.value }}</dd>
           </div>
         </dl>
       </div>

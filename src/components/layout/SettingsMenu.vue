@@ -117,7 +117,7 @@ onUnmounted(() => {
         class="absolute right-0 top-[calc(100%+0.6rem)] z-50 w-60 overflow-hidden rounded-xl border border-border bg-surface/95 shadow-[0_18px_50px_-12px_rgba(0,0,0,0.7)] backdrop-blur-xl focus:outline-none"
       >
         <div class="border-b border-border/70 px-4 py-3">
-          <p class="font-sans text-sm font-semibold text-white">{{ t('settings.title') }}</p>
+          <p class="font-sans text-sm font-semibold text-foreground">{{ t('settings.title') }}</p>
           <p class="mt-0.5 font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
             {{ t('settings.subtitle') }}
           </p>
@@ -138,7 +138,7 @@ onUnmounted(() => {
               :class="
                 localeMode === option.value
                   ? 'bg-cyan-accent/10 text-cyan-accent'
-                  : 'text-muted hover:bg-surface-card hover:text-white'
+                  : 'text-muted hover:bg-surface-card hover:text-foreground'
               "
               :aria-pressed="localeMode === option.value"
               @click="setLocale(option.value)"
@@ -172,7 +172,7 @@ onUnmounted(() => {
               :class="
                 themeMode === option.value
                   ? 'bg-cyan-accent/10 text-cyan-accent'
-                  : 'text-muted hover:bg-surface-card hover:text-white'
+                  : 'text-muted hover:bg-surface-card hover:text-foreground'
               "
               :aria-pressed="themeMode === option.value"
               @click="setTheme(option.value)"

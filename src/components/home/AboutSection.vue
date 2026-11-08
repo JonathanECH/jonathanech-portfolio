@@ -48,7 +48,7 @@ const sectionCode = computed(() => t('about.code'))
               </p>
 
               <p
-                class="mt-4 border-l-2 border-cyan-accent/40 pl-4 text-sm leading-relaxed text-white/80 sm:text-[15px]"
+                class="mt-4 border-l-2 border-cyan-accent/40 pl-4 text-sm leading-relaxed text-foreground/80 sm:text-[15px]"
               >
                 {{ profile.bio }}
               </p>
@@ -62,7 +62,7 @@ const sectionCode = computed(() => t('about.code'))
                   <p class="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">
                     {{ stat.label }}
                   </p>
-                  <p class="mt-1 truncate font-sans text-xs font-semibold text-white sm:text-sm">
+                  <p class="mt-1 truncate font-sans text-xs font-semibold text-foreground sm:text-sm">
                     {{ stat.value }}
                   </p>
                 </div>
@@ -94,7 +94,7 @@ const sectionCode = computed(() => t('about.code'))
                 <Gauge :size="16" aria-hidden="true" />
               </span>
               <div>
-                <h3 class="font-sans text-sm font-semibold text-white">
+                <h3 class="font-sans text-sm font-semibold text-foreground">
                   {{ t('about.performanceTitle') }}
                 </h3>
                 <p class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
@@ -109,12 +109,12 @@ const sectionCode = computed(() => t('about.code'))
                   class="flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.14em]"
                 >
                   <span class="text-muted">{{ metric.label }}</span>
-                  <span class="text-white">
+                  <span class="text-foreground">
                     {{ metric.value }}<span class="text-muted">/100</span>
                   </span>
                 </div>
                 <div
-                  class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/10"
+                  class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-foreground/10"
                   role="progressbar"
                   :aria-label="metric.label"
                   :aria-valuenow="metric.value"
@@ -141,7 +141,7 @@ const sectionCode = computed(() => t('about.code'))
                   <Terminal :size="16" aria-hidden="true" />
                 </span>
                 <div>
-                  <h3 class="font-sans text-sm font-semibold text-white">
+                  <h3 class="font-sans text-sm font-semibold text-foreground">
                     {{ t('about.environmentTitle') }}
                   </h3>
                   <p class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
@@ -166,7 +166,7 @@ const sectionCode = computed(() => t('about.code'))
                 <dt class="shrink-0 text-[9px] uppercase tracking-[0.16em] text-muted">
                   {{ item.label }}
                 </dt>
-                <dd class="truncate text-right text-white/80">{{ item.value }}</dd>
+                <dd class="truncate text-right text-foreground/80">{{ item.value }}</dd>
               </div>
             </dl>
           </div>

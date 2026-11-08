@@ -16,7 +16,7 @@ const paddedIndex = computed(() => String(props.index + 1).padStart(2, '0'))
 
 <template>
   <article
-    class="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-surface-card/60 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:bg-surface-card-hover hover:shadow-[0_0_30px_-8px_rgba(0,229,255,0.35)]"
+    class="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-surface-card/60 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:bg-surface-card-hover hover:shadow-[0_0_30px_-8px_rgba(var(--ech-accent-rgb),0.35)]"
   >
     <div
       aria-hidden="true"
@@ -39,7 +39,7 @@ const paddedIndex = computed(() => String(props.index + 1).padStart(2, '0'))
     </div>
 
     <h3
-      class="mt-4 font-mono text-base font-bold tracking-wide text-white transition-colors duration-300 group-hover:text-cyan-accent"
+      class="mt-4 font-mono text-base font-bold tracking-wide text-foreground transition-colors duration-300 group-hover:text-cyan-accent"
     >
       {{ technology.name }}
     </h3>

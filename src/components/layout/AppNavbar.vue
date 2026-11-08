@@ -90,12 +90,12 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
           :key="link.section"
           :to="{ path: '/', hash: link.hash }"
           class="group relative flex items-center gap-1.5 py-2 font-mono text-[11px] tracking-[0.18em] transition-colors duration-200"
-          :class="isActive(link.section) ? 'text-white' : 'text-muted hover:text-white'"
+          :class="isActive(link.section) ? 'text-foreground' : 'text-muted hover:text-foreground'"
           :aria-current="isActive(link.section) ? 'page' : undefined"
         >
           <span
             class="h-1 w-1 rounded-full bg-cyan-accent transition-all duration-300"
-            :class="isActive(link.section) ? 'opacity-100 shadow-[0_0_8px_#00E5FF]' : 'opacity-0'"
+            :class="isActive(link.section) ? 'opacity-100 shadow-[0_0_8px_var(--ech-accent)]' : 'opacity-0'"
           />
           {{ link.label }}
           <span
@@ -111,7 +111,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
         <a
           href="/cv/jonathan-campos-cv.pdf"
           download
-          class="hidden items-center gap-1.5 rounded-lg bg-cyan-accent px-4 py-2 font-sans text-xs font-semibold text-black transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,229,255,0.4)] sm:flex"
+          class="hidden items-center gap-1.5 rounded-lg bg-cyan-accent px-4 py-2 font-sans text-xs font-semibold text-black transition-all duration-300 hover:shadow-[0_0_15px_rgba(var(--ech-accent-rgb),0.4)] sm:flex"
         >
           <Download :size="14" aria-hidden="true" />
           {{ t('nav.downloadCv') }}
@@ -119,7 +119,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
 
         <button
           type="button"
-          class="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-white transition-colors hover:border-border-hover hover:text-cyan-accent lg:hidden"
+          class="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground transition-colors hover:border-border-hover hover:text-cyan-accent lg:hidden"
           :aria-expanded="mobileOpen"
           aria-controls="mobile-navigation"
           :aria-label="mobileOpen ? t('nav.closeMenu') : t('nav.openMenu')"
@@ -143,7 +143,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
             :key="link.section"
             :to="{ path: '/', hash: link.hash }"
             class="flex items-center justify-between rounded-lg px-3 py-3 font-mono text-xs tracking-[0.18em] transition-colors"
-            :class="isActive(link.section) ? 'bg-cyan-accent/10 text-cyan-accent' : 'text-muted hover:bg-surface-card hover:text-white'"
+            :class="isActive(link.section) ? 'bg-cyan-accent/10 text-cyan-accent' : 'text-muted hover:bg-surface-card hover:text-foreground'"
             :aria-current="isActive(link.section) ? 'page' : undefined"
           >
             {{ link.label }}

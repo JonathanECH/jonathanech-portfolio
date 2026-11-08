@@ -22,7 +22,7 @@ const { t } = useI18n()
           class="group flex items-center gap-4 bg-background p-5 transition-colors duration-300 hover:bg-surface-card sm:p-6"
         >
           <span
-            class="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-border text-white/60 transition-all duration-300 group-hover:-translate-x-1 group-hover:border-border-hover group-hover:text-cyan-accent"
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-border text-foreground/60 transition-all duration-300 group-hover:-translate-x-1 group-hover:border-border-hover group-hover:text-cyan-accent"
             aria-hidden="true"
           >
             <ArrowLeft :size="17" />
@@ -32,11 +32,11 @@ const { t } = useI18n()
               {{ t('pager.previous') }}
             </span>
             <span
-              class="mt-1 block text-base font-semibold leading-snug text-white transition-colors duration-200 group-hover:text-cyan-accent"
+              class="mt-1 block text-base font-semibold leading-snug text-foreground transition-colors duration-200 group-hover:text-cyan-accent"
             >
               {{ previous.name }}
             </span>
-            <span class="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-white/35">
+            <span class="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/35">
               {{ previous.sector }}
             </span>
           </span>
@@ -44,7 +44,7 @@ const { t } = useI18n()
 
         <div
           v-else
-          class="flex items-center gap-4 bg-background p-5 text-white/25 sm:p-6"
+          class="flex items-center gap-4 bg-background p-5 text-foreground/25 sm:p-6"
           aria-disabled="true"
         >
           <span
@@ -54,13 +54,13 @@ const { t } = useI18n()
             <ArrowLeft :size="17" />
           </span>
           <span class="min-w-0">
-            <span class="block font-mono text-[10px] uppercase tracking-[0.2em] text-white/25">
+            <span class="block font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/25">
               {{ t('pager.previous') }}
             </span>
-            <span class="mt-1 block text-base font-semibold leading-snug text-white/30">
+            <span class="mt-1 block text-base font-semibold leading-snug text-foreground/30">
               {{ t('pager.noPrevious') }}
             </span>
-            <span class="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-white/15">
+            <span class="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/15">
               {{ t('pager.start') }}
             </span>
           </span>
@@ -76,16 +76,16 @@ const { t } = useI18n()
               {{ t('pager.next') }}
             </span>
             <span
-              class="mt-1 block text-base font-semibold leading-snug text-white transition-colors duration-200 group-hover:text-cyan-accent"
+              class="mt-1 block text-base font-semibold leading-snug text-foreground transition-colors duration-200 group-hover:text-cyan-accent"
             >
               {{ next.name }}
             </span>
-            <span class="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-white/35">
+            <span class="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/35">
               {{ next.sector }}
             </span>
           </span>
           <span
-            class="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-border text-white/60 transition-all duration-300 group-hover:translate-x-1 group-hover:border-border-hover group-hover:text-cyan-accent"
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-border text-foreground/60 transition-all duration-300 group-hover:translate-x-1 group-hover:border-border-hover group-hover:text-cyan-accent"
             aria-hidden="true"
           >
             <ArrowRight :size="17" />
@@ -94,17 +94,17 @@ const { t } = useI18n()
 
         <div
           v-else
-          class="flex items-center justify-end gap-4 bg-background p-5 text-right text-white/25 sm:p-6"
+          class="flex items-center justify-end gap-4 bg-background p-5 text-right text-foreground/25 sm:p-6"
           aria-disabled="true"
         >
           <span class="min-w-0">
-            <span class="block font-mono text-[10px] uppercase tracking-[0.2em] text-white/25">
+            <span class="block font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/25">
               {{ t('pager.next') }}
             </span>
-            <span class="mt-1 block text-base font-semibold leading-snug text-white/30">
+            <span class="mt-1 block text-base font-semibold leading-snug text-foreground/30">
               {{ t('pager.noNext') }}
             </span>
-            <span class="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-white/15">
+            <span class="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/15">
               {{ t('pager.end') }}
             </span>
           </span>

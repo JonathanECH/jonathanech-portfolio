@@ -67,7 +67,7 @@ function formatCounter(index: number, total: number): string {
           >
             <component :is="moduleIcon(module.icon)" :size="18" aria-hidden="true" />
           </span>
-          <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-white/30">
+          <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/30">
             {{ t('detail.module', { counter: formatCounter(index, project.modules.length) }) }}
           </span>
         </div>
@@ -78,11 +78,11 @@ function formatCounter(index: number, total: number): string {
           {{ module.code }} // {{ module.title }}
         </p>
 
-        <h3 class="mt-2 text-lg font-bold leading-snug tracking-[-0.02em] text-white">
+        <h3 class="mt-2 text-lg font-bold leading-snug tracking-[-0.02em] text-foreground">
           {{ module.subtitle }}
         </h3>
 
-        <p class="mt-3 flex-1 text-sm leading-relaxed text-white/60">
+        <p class="mt-3 flex-1 text-sm leading-relaxed text-foreground/60">
           {{ module.description }}
         </p>
 
@@ -90,7 +90,7 @@ function formatCounter(index: number, total: number): string {
           <li
             v-for="point in module.points"
             :key="point"
-            class="flex items-start gap-2 font-mono text-[10px] leading-relaxed text-white/50 sm:text-[11px]"
+            class="flex items-start gap-2 font-mono text-[10px] leading-relaxed text-foreground/50 sm:text-[11px]"
           >
             <Check
               :size="12"

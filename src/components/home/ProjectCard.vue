@@ -25,7 +25,7 @@ function openQuickView(): void {
 <template>
   <div class="animate-fade-up" :style="`animation-delay: ${index * 70}ms`">
     <article
-      class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card/60 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:shadow-[0_18px_40px_-24px_rgba(0,229,255,0.45)]"
+      class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card/60 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:shadow-[0_18px_40px_-24px_rgba(var(--ech-accent-rgb),0.45)]"
       :style="`--accent: ${project.accent}`"
     >
       <!-- Lightweight local CSS/SVG preview built from the project gallery -->
@@ -38,9 +38,9 @@ function openQuickView(): void {
 
         <div class="relative flex h-full flex-col gap-3 p-4">
           <div class="flex items-center gap-1.5">
-            <span class="h-2 w-2 rounded-full bg-white/20" />
-            <span class="h-2 w-2 rounded-full bg-white/20" />
-            <span class="h-2 w-2 rounded-full bg-white/20" />
+            <span class="h-2 w-2 rounded-full bg-foreground/20" />
+            <span class="h-2 w-2 rounded-full bg-foreground/20" />
+            <span class="h-2 w-2 rounded-full bg-foreground/20" />
             <span
               class="ml-2 flex min-w-0 items-center gap-1 rounded border border-border/70 bg-surface/70 px-2 py-0.5 font-mono text-[9px] text-muted"
             >
@@ -64,12 +64,12 @@ function openQuickView(): void {
                 <span
                   class="h-1 w-1 shrink-0 rounded-full"
                   :style="{
-                    backgroundColor: slideIndex === 0 ? project.accent : 'rgba(255,255,255,0.22)',
+                    backgroundColor: slideIndex === 0 ? project.accent : 'rgba(var(--ech-ink-rgb),0.22)',
                   }"
                 />
                 <span
                   class="h-1 min-w-0 flex-1 rounded-full"
-                  :class="slideIndex === 0 ? 'bg-white/30' : 'bg-white/10'"
+                  :class="slideIndex === 0 ? 'bg-foreground/30' : 'bg-foreground/10'"
                 />
               </span>
             </div>
@@ -85,7 +85,7 @@ function openQuickView(): void {
                   :style="{
                     height: `${bar}%`,
                     backgroundColor:
-                      barIndex === BARS.length - 1 ? project.accent : 'rgba(255,255,255,0.14)',
+                      barIndex === BARS.length - 1 ? project.accent : 'rgba(var(--ech-ink-rgb),0.14)',
                   }"
                 />
               </div>
@@ -114,7 +114,7 @@ function openQuickView(): void {
           <span class="shrink-0 font-mono text-[10px] text-muted">{{ project.year }}</span>
         </div>
 
-        <h3 class="mt-4 font-sans text-lg font-bold tracking-tight text-white sm:text-xl">
+        <h3 class="mt-4 font-sans text-lg font-bold tracking-tight text-foreground sm:text-xl">
           {{ project.title }}
           <span class="text-[var(--accent)]">{{ project.titleHighlight }}</span>
         </h3>
@@ -147,7 +147,7 @@ function openQuickView(): void {
             class="flex min-w-0 items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.1em] text-muted"
           >
             <Gauge :size="12" class="shrink-0 text-cyan-accent" aria-hidden="true" />
-            <span class="truncate text-white">{{ project.audit.latencyAfter }}</span>
+            <span class="truncate text-foreground">{{ project.audit.latencyAfter }}</span>
             <span class="shrink-0 text-border">//</span>
             <span class="truncate">{{ project.audit.discrepancy }}</span>
           </div>

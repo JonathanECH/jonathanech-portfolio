@@ -25,7 +25,7 @@ withDefaults(
       {{ code }}
     </p>
     <h2
-      class="mt-3 max-w-3xl font-sans text-3xl font-bold tracking-[-0.03em] text-white sm:text-4xl"
+      class="mt-3 max-w-3xl font-sans text-3xl font-bold tracking-[-0.03em] text-foreground sm:text-4xl"
       :class="align === 'center' ? 'mx-auto' : ''"
     >
       {{ title }}

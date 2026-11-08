@@ -131,8 +131,8 @@ function announceCurrent(): void {
           class="min-w-0 truncate font-mono text-[9px] tracking-wide text-muted sm:text-[11px]"
         >
           {{ project.liveHost }}
-          <span class="text-white/20">//</span>
-          <span class="text-white/70">{{ currentPath }}</span>
+          <span class="text-foreground/20">//</span>
+          <span class="text-foreground/70">{{ currentPath }}</span>
         </span>
       </div>
 
@@ -180,7 +180,7 @@ function announceCurrent(): void {
         </span>
       </div>
 
-      <div class="absolute inset-x-0 bottom-0 h-[2px] overflow-hidden bg-white/10">
+      <div class="absolute inset-x-0 bottom-0 h-[2px] overflow-hidden bg-foreground/10">
         <div
           :key="progressKey"
           class="h-full w-full origin-left animate-carousel-progress"
@@ -224,7 +224,7 @@ function announceCurrent(): void {
 
       <button
         type="button"
-        class="absolute left-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-white/80 backdrop-blur-md transition-all hover:border-cyan-accent/70 hover:text-cyan-accent active:scale-95 sm:left-4 sm:h-10 sm:w-10"
+        class="absolute left-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-foreground/80 backdrop-blur-md transition-all hover:border-cyan-accent/70 hover:text-cyan-accent active:scale-95 sm:left-4 sm:h-10 sm:w-10"
         :aria-label="t('gallery.previous')"
         @click="handlePrev"
       >
@@ -233,7 +233,7 @@ function announceCurrent(): void {
 
       <button
         type="button"
-        class="absolute right-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-white/80 backdrop-blur-md transition-all hover:border-cyan-accent/70 hover:text-cyan-accent active:scale-95 sm:right-4 sm:h-10 sm:w-10"
+        class="absolute right-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-foreground/80 backdrop-blur-md transition-all hover:border-cyan-accent/70 hover:text-cyan-accent active:scale-95 sm:right-4 sm:h-10 sm:w-10"
         :aria-label="t('gallery.next')"
         @click="handleNext"
       >
@@ -248,7 +248,7 @@ function announceCurrent(): void {
           :key="slide.id"
           type="button"
           class="h-1.5 rounded-full transition-all duration-300"
-          :class="index === activeIndex ? 'w-6' : 'w-2 bg-white/25 hover:bg-white/50'"
+          :class="index === activeIndex ? 'w-6' : 'w-2 bg-foreground/25 hover:bg-foreground/50'"
           :style="index === activeIndex ? { backgroundColor: project.accent } : undefined"
           :aria-label="t('gallery.goTo', { index: index + 1, title: slide.title })"
           :aria-current="index === activeIndex ? 'true' : 'false'"

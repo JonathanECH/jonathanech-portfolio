@@ -68,11 +68,11 @@ const specs = computed<readonly SpecItem[]>(() => [
           {{ spec.label }}
         </p>
 
-        <p class="text-sm font-semibold leading-snug text-white sm:text-[15px]">
+        <p class="text-sm font-semibold leading-snug text-foreground sm:text-[15px]">
           {{ spec.value }}
         </p>
 
-        <p class="font-mono text-[10px] uppercase leading-relaxed tracking-[0.14em] text-white/35">
+        <p class="font-mono text-[10px] uppercase leading-relaxed tracking-[0.14em] text-foreground/35">
           {{ spec.detail }}
         </p>
       </div>
