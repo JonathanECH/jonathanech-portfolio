@@ -1,10 +1,40 @@
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+const MAX_OBSERVE_ATTEMPTS = 120
 
 export function useActiveSection(sectionIds: readonly string[], topOffset = 120) {
+  const route = useRoute()
   const activeSection = ref(sectionIds[0] ?? '')
   let observer: IntersectionObserver | null = null
+  let frame = 0
+  let attempts = 0
 
-  onMounted(() => {
+  function observeSections(): void {
+    cancelAnimationFrame(frame)
+    observer?.disconnect()
+
+    if (route.name !== 'home' || typeof IntersectionObserver === 'undefined') {
+      return
+    }
+
+    const elements: HTMLElement[] = []
+    for (const id of sectionIds) {
+      const element = document.getElementById(id)
+      if (element) {
+        elements.push(element)
+      }
+    }
+
+    if (elements.length === 0) {
+      if (attempts >= MAX_OBSERVE_ATTEMPTS) {
+        return
+      }
+      attempts += 1
+      frame = requestAnimationFrame(observeSections)
+      return
+    }
+
     observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -22,15 +52,27 @@ export function useActiveSection(sectionIds: readonly string[], topOffset = 120)
       },
     )
 
-    for (const id of sectionIds) {
-      const element = document.getElementById(id)
-      if (element) {
-        observer.observe(element)
-      }
+    for (const element of elements) {
+      observer.observe(element)
     }
+  }
+
+  watch(
+    () => route.fullPath,
+    () => {
+      activeSection.value = sectionIds[0] ?? ''
+      attempts = 0
+      observeSections()
+    },
+    { flush: 'post' },
+  )
+
+  onMounted(() => {
+    observeSections()
   })
 
   onUnmounted(() => {
+    cancelAnimationFrame(frame)
     observer?.disconnect()
   })
 

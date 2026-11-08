@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ArrowRight, X } from '@lucide/vue'
 import { useFocusTrap } from '@/composables/useFocusTrap'
@@ -12,8 +12,21 @@ const dialogRef = ref<HTMLElement | null>(null)
 const open = computed(() => store.isQuickViewOpen)
 const project = computed(() => store.quickViewProject)
 
-useScrollLock(open)
+const locked = ref(false)
+watch(
+  open,
+  (isOpen) => {
+    if (isOpen) locked.value = true
+  },
+  { immediate: true },
+)
+
+useScrollLock(locked)
 useFocusTrap(dialogRef, open)
+
+function handleAfterLeave(): void {
+  if (!open.value) locked.value = false
+}
 
 function onKeydown(event: KeyboardEvent): void {
   if (event.key === 'Escape' && store.isQuickViewOpen) {
@@ -28,7 +41,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 
 <template>
   <Teleport to="body">
-    <Transition name="modal">
+    <Transition name="modal" @after-leave="handleAfterLeave">
       <div
         v-if="open && project"
         class="fixed inset-0 z-[100] overflow-y-auto bg-background/80 backdrop-blur-md"

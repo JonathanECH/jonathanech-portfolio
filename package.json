@@ -13,11 +13,6 @@
     "test:watch": "vitest",
     "verify": "pnpm typecheck && pnpm test && vite build"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
-  },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
     "@fontsource-variable/plus-jakarta-sans": "^5.3.0",

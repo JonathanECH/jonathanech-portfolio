@@ -12,6 +12,14 @@
   --color-cyan-accent: #00e5ff;
   --color-cyan-glow: rgba(0, 229, 255, 0.15);
   --color-muted: #8a92a6;
+  --color-danger: #f87171;
+  --color-danger-soft: #fda4af;
+  --color-warning: #fbbf24;
+  --color-warning-soft: #fcd34d;
+  --color-success: #34d399;
+  --color-traffic-close: #ff5f57;
+  --color-traffic-minimize: #febc2e;
+  --color-traffic-maximize: #28c840;
 
   --font-sans:
     'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', Inter, ui-sans-serif, system-ui, sans-serif;

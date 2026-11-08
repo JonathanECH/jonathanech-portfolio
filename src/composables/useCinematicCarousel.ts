@@ -23,6 +23,7 @@ export interface CinematicCarouselControls {
   readonly activeSlide: ComputedRef<GallerySlide | undefined>
   readonly isPlaying: Ref<boolean>
   readonly progressKey: Ref<number>
+  readonly reducedMotion: Ref<boolean>
   readonly next: () => void
   readonly prev: () => void
   readonly goTo: (index: number) => void
@@ -56,7 +57,7 @@ export function useCinematicCarousel(
   let startedAt = 0
   let manuallyPaused = false
   let documentHidden = false
-  let reducedMotion = false
+  const reducedMotion = ref(false)
   let motionQuery: MediaQueryList | null = null
 
   function clearTimer(): void {
@@ -80,7 +81,7 @@ export function useCinematicCarousel(
       slides.length > 1 &&
       !manuallyPaused &&
       !documentHidden &&
-      !reducedMotion
+      !reducedMotion.value
     )
   }
 
@@ -169,8 +170,8 @@ export function useCinematicCarousel(
   }
 
   function handleMotionPreference(event: MediaQueryListEvent): void {
-    reducedMotion = event.matches
-    if (reducedMotion) {
+    reducedMotion.value = event.matches
+    if (reducedMotion.value) {
       stopClock()
       isPlaying.value = false
       return
@@ -205,7 +206,7 @@ export function useCinematicCarousel(
 
     documentHidden = document.visibilityState === 'hidden'
     motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    reducedMotion = motionQuery.matches
+    reducedMotion.value = motionQuery.matches
     motionQuery.addEventListener('change', handleMotionPreference)
     document.addEventListener('visibilitychange', handleVisibilityChange)
 
@@ -224,6 +225,7 @@ export function useCinematicCarousel(
     activeSlide,
     isPlaying,
     progressKey,
+    reducedMotion,
     next,
     prev,
     goTo,

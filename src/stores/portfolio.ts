@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { projects, technologies } from '@/data/portfolio'
-import type { Project, TechCategory, TechFilter, Technology } from '@/types/portfolio'
+import type { Project, TechFilter, Technology } from '@/types/portfolio'
 
 export const usePortfolioStore = defineStore('portfolio', () => {
   const activeCategory = ref<TechFilter>('all')
@@ -41,10 +41,6 @@ export const usePortfolioStore = defineStore('portfolio', () => {
     activeCategory.value = category
   }
 
-  function resetFilters(): void {
-    activeCategory.value = 'all'
-  }
-
   function openQuickView(slug: string): void {
     if (projects.some((project) => project.slug === slug)) {
       quickViewSlug.value = slug
@@ -55,10 +51,6 @@ export const usePortfolioStore = defineStore('portfolio', () => {
     quickViewSlug.value = null
   }
 
-  function countByCategory(category: TechCategory): number {
-    return categoryCounts.value[category]
-  }
-
   return {
     activeCategory,
     quickViewSlug,
@@ -67,9 +59,7 @@ export const usePortfolioStore = defineStore('portfolio', () => {
     quickViewProject,
     isQuickViewOpen,
     setCategory,
-    resetFilters,
     openQuickView,
     closeQuickView,
-    countByCategory,
   }
 })

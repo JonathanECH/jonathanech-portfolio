@@ -51,8 +51,7 @@ const brandColor = computed(() => props.color ?? `#${iconData.value.hex}`)
     :height="size"
     viewBox="0 0 24 24"
     fill="currentColor"
-    role="img"
-    :aria-label="iconData.title"
+    aria-hidden="true"
     class="shrink-0 transition-colors duration-300"
     :style="{ '--brand': brandColor }"
   >

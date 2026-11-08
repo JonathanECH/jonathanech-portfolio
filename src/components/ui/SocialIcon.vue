@@ -38,8 +38,7 @@ const brand = computed(() => {
     :height="size"
     viewBox="0 0 24 24"
     fill="currentColor"
-    role="img"
-    :aria-label="brand.title"
+    aria-hidden="true"
     class="shrink-0"
   >
     <path :d="brand.path" />

@@ -83,9 +83,9 @@ const accentStyle = computed<Record<string, string>>(() => ({
           <div class="space-y-5 pt-5">
             <div>
               <p
-                class="mb-1.5 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-rose-300/80"
+                class="mb-1.5 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-danger-soft/80"
               >
-                <span class="h-1.5 w-1.5 rounded-full bg-rose-300/80" aria-hidden="true" />
+                <span class="h-1.5 w-1.5 rounded-full bg-danger-soft/80" aria-hidden="true" />
                 DIAGNÓSTICO // HALLAZGO CRÍTICO
               </p>
               <p
@@ -117,7 +117,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
                 <p class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
                   LATENCIA PREVIA
                 </p>
-                <p class="mt-1.5 font-mono text-sm font-semibold text-rose-300/80">
+                <p class="mt-1.5 font-mono text-sm font-semibold text-danger-soft/80">
                   {{ project.audit.latencyBefore }}
                 </p>
               </div>

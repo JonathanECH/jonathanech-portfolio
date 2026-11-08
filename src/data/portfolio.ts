@@ -141,7 +141,8 @@ export const projects: readonly Project[] = [
     },
     liveHost: 'tilyshop-inventory.live',
     accent: '#00E5FF',
-    featured: true,
+    galleryDescription:
+      'Interfaces reales del flujo operativo: telemetría de almacén, conciliación transaccional y control de lotes en planta.',
     gallery: [
       {
         id: 'telemetry',
@@ -256,6 +257,8 @@ export const projects: readonly Project[] = [
     },
     liveHost: 'medicore-clinic.live',
     accent: '#5EEAD4',
+    galleryDescription:
+      'Interfaces reales del flujo clínico: agenda de consultorios, expediente unificado y telemetría de ocupación.',
     gallery: [
       {
         id: 'agenda',
@@ -370,6 +373,8 @@ export const projects: readonly Project[] = [
     },
     liveHost: 'erp-contable.live',
     accent: '#A78BFA',
+    galleryDescription:
+      'Interfaces reales del cierre contable: libro mayor de doble partida, consolidado financiero y telemetría de integridad.',
     gallery: [
       {
         id: 'ledger',

@@ -19,6 +19,7 @@ describe('portfolio data integrity', () => {
     expect(new Set(projects.map((project) => project.slug)).size).toBe(3)
 
     for (const project of projects) {
+      expect(project.galleryDescription.trim().length).toBeGreaterThan(0)
       expect(project.gallery.length).toBeGreaterThanOrEqual(3)
       expect(project.modules).toHaveLength(3)
       expect(project.challenge.findings.length).toBeGreaterThan(0)

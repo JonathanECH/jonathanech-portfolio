@@ -22,9 +22,9 @@ const sectionCode = '// PROFILE // ABOUT_ME'
           <div class="h-full overflow-hidden rounded-2xl border border-border bg-surface-card/60">
             <div class="flex items-center gap-3 border-b border-border bg-background/60 px-4 py-3">
               <div class="flex items-center gap-1.5" aria-hidden="true">
-                <span class="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/80" />
-                <span class="h-2.5 w-2.5 rounded-full bg-[#febc2e]/80" />
-                <span class="h-2.5 w-2.5 rounded-full bg-[#28c840]/80" />
+                <span class="h-2.5 w-2.5 rounded-full bg-traffic-close/80" />
+                <span class="h-2.5 w-2.5 rounded-full bg-traffic-minimize/80" />
+                <span class="h-2.5 w-2.5 rounded-full bg-traffic-maximize/80" />
               </div>
               <div class="flex min-w-0 flex-1 items-center gap-1.5 font-mono text-[10px] text-muted">
                 <Terminal :size="12" class="shrink-0 text-cyan-accent" aria-hidden="true" />

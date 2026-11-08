@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { ChevronLeft, ChevronRight, Lock, Pause, Play } from '@lucide/vue'
 import MockupCanvas from '@/components/detail/MockupCanvas.vue'
 import { useCinematicCarousel } from '@/composables/useCinematicCarousel'
-import type { GallerySlide, Project } from '@/types/portfolio'
+import type { Project } from '@/types/portfolio'
 
 const props = defineProps<{ project: Project }>()
 
-const gallerySlides = reactive<GallerySlide[]>([...props.project.gallery])
+const gallerySlides = props.project.gallery
 
 const {
   activeIndex,
   activeSlide,
   isPlaying,
   progressKey,
+  reducedMotion,
   next,
   prev,
   goTo,
@@ -21,14 +22,6 @@ const {
   resume,
   toggle,
 } = useCinematicCarousel(gallerySlides)
-
-watch(
-  () => props.project.slug,
-  () => {
-    gallerySlides.splice(0, gallerySlides.length, ...props.project.gallery)
-    goTo(0)
-  },
-)
 
 const total = computed(() => gallerySlides.length)
 const currentPath = computed(() => activeSlide.value?.path ?? 'overview')
@@ -38,6 +31,8 @@ function pad(value: number): string {
 }
 
 const counterLabel = computed(() => `${pad(activeIndex.value + 1)} / ${pad(total.value)}`)
+
+const manualAnnouncement = ref('')
 
 const stageRef = ref<HTMLElement | null>(null)
 const isHovered = ref(false)
@@ -89,16 +84,23 @@ function keepPausedWhileEngaged(): void {
 function handlePrev(): void {
   prev()
   keepPausedWhileEngaged()
+  announceCurrent()
 }
 
 function handleNext(): void {
   next()
   keepPausedWhileEngaged()
+  announceCurrent()
 }
 
 function handleGoTo(index: number): void {
   goTo(index)
   keepPausedWhileEngaged()
+  announceCurrent()
+}
+
+function announceCurrent(): void {
+  manualAnnouncement.value = `Captura ${activeIndex.value + 1} de ${total.value}: ${activeSlide.value?.title ?? ''}`
 }
 </script>
 
@@ -115,9 +117,9 @@ function handleGoTo(index: number): void {
     >
       <div class="flex min-w-0 flex-1 items-center gap-2">
         <div class="flex shrink-0 items-center gap-1.5" aria-hidden="true">
-          <span class="h-2.5 w-2.5 rounded-full bg-red-400/70" />
-          <span class="h-2.5 w-2.5 rounded-full bg-amber-300/70" />
-          <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
+          <span class="h-2.5 w-2.5 rounded-full bg-danger/70" />
+          <span class="h-2.5 w-2.5 rounded-full bg-warning-soft/70" />
+          <span class="h-2.5 w-2.5 rounded-full bg-success/70" />
         </div>
         <span
           class="min-w-0 truncate font-mono text-[9px] tracking-wide text-muted sm:text-[11px]"
@@ -132,15 +134,25 @@ function handleGoTo(index: number): void {
         <button
           type="button"
           class="flex h-6 items-center gap-1 rounded-sm border border-border bg-background/60 px-1.5 text-muted transition-colors hover:border-cyan-accent/50 hover:text-cyan-accent"
+          :class="
+            reducedMotion
+              ? 'cursor-not-allowed opacity-50 hover:border-border hover:text-muted'
+              : ''
+          "
+          :disabled="reducedMotion"
           :aria-label="
-            isPlaying ? 'Pausar reproducción automática' : 'Reanudar reproducción automática'
+            reducedMotion
+              ? 'Reproducción automática desactivada por movimiento reducido'
+              : isPlaying
+                ? 'Pausar reproducción automática'
+                : 'Reanudar reproducción automática'
           "
           @click="toggle"
         >
-          <Pause v-if="isPlaying" class="h-3 w-3" aria-hidden="true" />
+          <Pause v-if="reducedMotion || isPlaying" class="h-3 w-3" aria-hidden="true" />
           <Play v-else class="h-3 w-3" aria-hidden="true" />
           <span class="font-mono text-[8px] uppercase tracking-wider sm:text-[9px]">
-            {{ isPlaying ? 'AUTOPLAY' : 'PAUSA' }}
+            {{ reducedMotion ? 'SIN AUTOPLAY' : isPlaying ? 'AUTOPLAY' : 'PAUSA' }}
           </span>
         </button>
 
@@ -194,7 +206,7 @@ function handleGoTo(index: number): void {
           :key="`${project.slug}-${activeSlide.id}-${activeIndex}`"
           class="absolute inset-0"
         >
-          <MockupCanvas :slide="activeSlide" :accent="project.accent" />
+          <MockupCanvas :slide="activeSlide" :accent="project.accent" :project-slug="project.slug" />
         </div>
       </Transition>
 
@@ -235,7 +247,8 @@ function handleGoTo(index: number): void {
 
     <!-- Caption + badges -->
     <div class="border-t border-border bg-surface/60 px-4 py-3 sm:px-5 sm:py-4">
-      <div aria-live="polite" aria-atomic="true">
+      <p class="sr-only" aria-live="polite" aria-atomic="true">{{ manualAnnouncement }}</p>
+      <div>
         <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-cyan-accent/80">
           {{ activeSlide?.title ?? 'Sin captura' }}
         </p>

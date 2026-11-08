@@ -6,7 +6,10 @@ import type { GallerySlide, MockupVariant } from '@/types/portfolio'
 const props = defineProps<{
   slide: GallerySlide
   accent: string
+  projectSlug: string
 }>()
+
+const isErp = computed(() => props.projectSlug === 'erp-contable')
 
 const variantLabels: Record<MockupVariant, string> = {
   inventory: 'INVENTORY OPS',
@@ -17,7 +20,17 @@ const variantLabels: Record<MockupVariant, string> = {
   analytics: 'OCCUPANCY ANALYTICS',
 }
 
-const variantLabel = computed(() => variantLabels[props.slide.variant])
+const variantLabel = computed(() => {
+  if (props.slide.variant === 'ledger') {
+    return isErp.value ? 'GENERAL LEDGER' : 'LEDGER AUDIT'
+  }
+
+  if (props.slide.variant === 'analytics') {
+    return isErp.value ? 'CLOSE TELEMETRY' : 'OCCUPANCY ANALYTICS'
+  }
+
+  return variantLabels[props.slide.variant]
+})
 
 const glowStyle = computed(() => ({
   background: `radial-gradient(circle at 82% 8%, ${props.accent}22, transparent 62%)`,
@@ -62,13 +75,29 @@ interface LedgerEntry {
   readonly credit: string
 }
 
-const ledgerEntries: readonly LedgerEntry[] = [
+const inventoryLedgerEntries: readonly LedgerEntry[] = [
   { id: 'a1', account: 'Caja / Banco', debit: '24,800.00', credit: '' },
   { id: 'a2', account: 'Ventas B2B', debit: '', credit: '24,800.00' },
   { id: 'a3', account: 'Costo de venta', debit: '9,120.00', credit: '' },
   { id: 'a4', account: 'Inventario', debit: '', credit: '9,120.00' },
   { id: 'a5', account: 'Ajuste de lote', debit: '312.40', credit: '' },
+  { id: 'a6', account: 'Merma / ajuste', debit: '', credit: '312.40' },
 ]
+
+const erpLedgerEntries: readonly LedgerEntry[] = [
+  { id: 'a1', account: 'Caja / Banco', debit: '24,800.00', credit: '' },
+  { id: 'a2', account: 'Ingresos por servicios', debit: '', credit: '24,800.00' },
+  { id: 'a3', account: 'Gasto operativo', debit: '9,120.00', credit: '' },
+  { id: 'a4', account: 'Cuentas por pagar', debit: '', credit: '9,120.00' },
+  { id: 'a5', account: 'IVA crédito fiscal', debit: '312.40', credit: '' },
+  { id: 'a6', account: 'IVA por pagar', debit: '', credit: '312.40' },
+]
+
+const ledgerEntries = computed(() =>
+  isErp.value ? erpLedgerEntries : inventoryLedgerEntries,
+)
+
+const ledgerTotal = '34,232.40'
 
 const ledgerBars: readonly number[] = [30, 48, 42, 62, 54, 70, 64, 82, 76, 90, 84, 96]
 
@@ -145,11 +174,31 @@ interface AnalyticsMetric {
   readonly fill: string
 }
 
-const analyticsMetrics: readonly AnalyticsMetric[] = [
+const clinicAnalyticsMetrics: readonly AnalyticsMetric[] = [
   { label: 'Ocupación', value: '87%', fill: '87%' },
   { label: 'Espera media', value: '12m', fill: '42%' },
   { label: 'SLA cumplido', value: '96%', fill: '96%' },
 ]
+
+const erpAnalyticsMetrics: readonly AnalyticsMetric[] = [
+  { label: 'Latencia media', value: '64ms', fill: '64%' },
+  { label: 'Integridad', value: '100%', fill: '100%' },
+  { label: 'Transacciones', value: '8,412', fill: '84%' },
+]
+
+const analyticsMetrics = computed(() =>
+  isErp.value ? erpAnalyticsMetrics : clinicAnalyticsMetrics,
+)
+
+const analyticsOverlay = computed(() =>
+  isErp.value
+    ? { label: 'Latencia', value: '64ms' }
+    : { label: 'Ocupación', value: '87%' },
+)
+
+const analyticsAxis = computed(() =>
+  isErp.value ? ['S1', 'S2', 'S3', 'S4'] : ['08:00', '12:00', '16:00', '20:00'],
+)
 </script>
 
 <template>
@@ -262,13 +311,13 @@ const analyticsMetrics: readonly AnalyticsMetric[] = [
                   <span class="flex min-w-0 items-center gap-1">
                     <span
                       class="h-1 w-1 shrink-0 rounded-full"
-                      :style="{ backgroundColor: row.warn ? '#fbbf24' : accent }"
+                      :style="{ backgroundColor: row.warn ? 'var(--color-warning)' : accent }"
                     />
                     <span
                       class="truncate"
                       :style="
                         row.warn
-                          ? { color: '#fbbf24' }
+                          ? { color: 'var(--color-warning)' }
                           : { color: 'rgba(255,255,255,0.55)' }
                       "
                     >
@@ -293,7 +342,7 @@ const analyticsMetrics: readonly AnalyticsMetric[] = [
                   Balance del periodo
                 </p>
                 <p class="font-sans text-base font-bold leading-none text-white sm:text-2xl">
-                  $ 148,320.00
+                  $ {{ ledgerTotal }}
                 </p>
               </div>
               <div class="rounded-sm border border-border bg-surface/70 px-2 py-1 text-right">
@@ -662,15 +711,13 @@ const analyticsMetrics: readonly AnalyticsMetric[] = [
               <div
                 class="absolute left-2 top-1.5 font-mono text-[5px] uppercase tracking-wider text-muted sm:text-[7px]"
               >
-                Ocupación <span :style="{ color: accent }">87%</span>
+                {{ analyticsOverlay.label }}
+                <span :style="{ color: accent }">{{ analyticsOverlay.value }}</span>
               </div>
               <div
                 class="absolute bottom-1 left-2 flex gap-2 font-mono text-[5px] uppercase tracking-wider text-muted sm:text-[6px]"
               >
-                <span>08:00</span>
-                <span>12:00</span>
-                <span>16:00</span>
-                <span>20:00</span>
+                <span v-for="label in analyticsAxis" :key="label">{{ label }}</span>
               </div>
             </div>
           </div>

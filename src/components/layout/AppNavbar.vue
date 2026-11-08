@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { Download, Menu, X } from '@lucide/vue'
 import { useActiveSection } from '@/composables/useActiveSection'
@@ -41,6 +41,15 @@ watch(
 function isActive(section: string): boolean {
   return activeLink.value === section
 }
+
+function handleKeydown(event: KeyboardEvent): void {
+  if (event.key === 'Escape' && mobileOpen.value) {
+    mobileOpen.value = false
+  }
+}
+
+onMounted(() => document.addEventListener('keydown', handleKeydown))
+onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
 </script>
 
 <template>
@@ -102,7 +111,7 @@ function isActive(section: string): boolean {
           class="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-white transition-colors hover:border-border-hover hover:text-cyan-accent lg:hidden"
           :aria-expanded="mobileOpen"
           aria-controls="mobile-navigation"
-          aria-label="Abrir menú de navegación"
+          :aria-label="mobileOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'"
           @click="mobileOpen = !mobileOpen"
         >
           <X v-if="mobileOpen" :size="18" aria-hidden="true" />

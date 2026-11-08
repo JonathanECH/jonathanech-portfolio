@@ -21,9 +21,9 @@ const neighbors = computed(() => getProjectNeighbors(props.slug))
 const galleryCode = '// 00. REGISTRO VISUAL & CAPTURAS DE INTERFAZ'
 
 watchEffect(() => {
-  if (project.value) {
-    document.title = `${project.value.name} — Jonathan Campos`
-  }
+  document.title = project.value
+    ? `${project.value.name} — Jonathan Campos`
+    : 'Caso de estudio no encontrado — Jonathan Campos'
 })
 </script>
 
@@ -40,7 +40,7 @@ watchEffect(() => {
         :code="galleryCode"
         title="Capturas del"
         highlight="Sistema"
-        description="Interfaces reales del flujo operativo: telemetría de almacén, conciliación transaccional y control de lotes en planta."
+        :description="project.galleryDescription"
       />
       <div class="mt-8">
         <ProjectGallery :project="project" />

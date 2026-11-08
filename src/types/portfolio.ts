@@ -94,11 +94,11 @@ export interface Project {
   readonly links: ProjectLinks
   readonly liveHost: string
   readonly accent: string
+  readonly galleryDescription: string
   readonly gallery: readonly GallerySlide[]
   readonly challenge: ProjectChallenge
   readonly audit: AuditReport
   readonly modules: readonly ArchitectureModule[]
-  readonly featured?: boolean
 }
 
 export interface TechFilterOption {
