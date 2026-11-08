@@ -82,19 +82,19 @@
 .light {
   color-scheme: light;
 
-  --ech-background: #f6f8fc;
-  --ech-surface: #ffffff;
-  --ech-surface-card: #ffffff;
-  --ech-surface-card-hover: #eef3fb;
+  --ech-background: #edf0f8;
+  --ech-surface: #f5f7fa;
+  --ech-surface-card: #f5f7fa;
+  --ech-surface-card-hover: #e8edf6;
   --ech-border: rgba(11, 14, 20, 0.1);
   --ech-border-hover: rgba(0, 168, 198, 0.45);
   --ech-accent: #00a8c6;
   --ech-accent-rgb: 0, 168, 198;
   --ech-accent-glow: rgba(0, 168, 198, 0.15);
   --ech-muted: #5b6478;
-  --ech-foreground: #0b0e14;
-  --ech-foreground-soft: rgba(11, 14, 20, 0.9);
-  --ech-ink-rgb: 11, 14, 20;
+  --ech-foreground: #1a1f2e;
+  --ech-foreground-soft: rgba(26, 31, 46, 0.82);
+  --ech-ink-rgb: 26, 31, 46;
   --ech-danger: #dc2626;
   --ech-danger-soft: #f43f5e;
   --ech-warning: #b45309;
@@ -105,13 +105,13 @@
   --ech-grid-blend: multiply;
   --ech-particle-rgb: 0, 140, 170;
   --ech-selection-bg: rgba(0, 168, 198, 0.22);
-  --ech-selection-color: #0b0e14;
-  --ech-scrollbar-track: #f6f8fc;
+  --ech-selection-color: #1a1f2e;
+  --ech-scrollbar-track: #edf0f8;
   --ech-scrollbar-thumb: #c3cbd9;
   --ech-scrollbar-thumb-hover: #a9b4c6;
-  --ech-glass: rgba(255, 255, 255, 0.78);
+  --ech-glass: rgba(240, 243, 250, 0.85);
   --ech-focus: rgba(0, 168, 198, 0.7);
-  --ech-spotlight-core: rgba(0, 168, 198, 0.12);
+  --ech-spotlight-core: rgba(0, 168, 198, 0.07);
   --ech-spotlight-mid: rgba(0, 168, 198, 0.04);
 }
 
