@@ -2,6 +2,7 @@ node_modules
 dist
 dist-ssr
 coverage
+*.zip
 *.local
 *.tsbuildinfo
 .env
@@ -9,3 +10,4 @@ coverage
 !.env.example
 .DS_Store
 .superpowers/
+stitch_motion_driven_developer_portfolio.zip
