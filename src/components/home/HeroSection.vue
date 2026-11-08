@@ -1,66 +1,343 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { Activity, ArrowRight, Download, MapPin, Terminal } from '@lucide/vue'
 import { profile } from '@/data/portfolio'
 
-const sectionRef = ref<HTMLElement | null>(null)
-const spotlightX = ref(50)
-const spotlightY = ref(38)
-
-let rafId: number | null = null
-let pendingX = 50
-let pendingY = 38
-
-const spotlightStyle = computed(() => ({
-  '--mouse-x': `${spotlightX.value}%`,
-  '--mouse-y': `${spotlightY.value}%`,
-}))
-
-function commitSpotlight(): void {
-  spotlightX.value = pendingX
-  spotlightY.value = pendingY
-  rafId = null
+interface HeroParticle {
+  x: number
+  y: number
+  vx: number
+  vy: number
+  baseRadius: number
+  radius: number
+  alpha: number
+  currentAlpha: number
 }
 
-function handlePointerMove(event: PointerEvent): void {
-  const node = sectionRef.value
+const sectionRef = ref<HTMLElement | null>(null)
+const canvasRef = ref<HTMLCanvasElement | null>(null)
 
-  if (!node) {
+const POINTER_RADIUS = 180
+const CONNECT_DISTANCE = 115
+const MAX_PARTICLES = 55
+
+let ctx: CanvasRenderingContext2D | null = null
+let particles: HeroParticle[] = []
+let width = 0
+let height = 0
+let pointerX = 0
+let pointerY = 0
+let targetX = 0
+let targetY = 0
+let isHovered = false
+let clock = 0
+let rafId: number | null = null
+let resizeObserver: ResizeObserver | null = null
+let visibilityObserver: IntersectionObserver | null = null
+let prefersReducedMotion = false
+let isVisible = true
+
+function createParticles(): void {
+  const count = Math.min(Math.floor((width * 500) / 12000), MAX_PARTICLES)
+
+  particles = Array.from({ length: count }, () => {
+    const baseRadius = Math.random() * 1.5 + 0.8
+    const alpha = Math.random() * 0.45 + 0.2
+
+    return {
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.45,
+      vy: (Math.random() - 0.5) * 0.45,
+      baseRadius,
+      radius: baseRadius,
+      alpha,
+      currentAlpha: alpha,
+    }
+  })
+}
+
+function updateSpotlight(): void {
+  const section = sectionRef.value
+
+  if (!section || width === 0 || height === 0) {
     return
   }
 
-  const rect = node.getBoundingClientRect()
+  section.style.setProperty('--mouse-x', `${((pointerX / width) * 100).toFixed(2)}%`)
+  section.style.setProperty('--mouse-y', `${((pointerY / height) * 100).toFixed(2)}%`)
+}
+
+function drawParticle(particle: HeroParticle): void {
+  if (!ctx) {
+    return
+  }
+
+  ctx.beginPath()
+  ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2)
+  ctx.fillStyle = `rgba(0, 229, 255, ${particle.currentAlpha})`
+  ctx.shadowBlur = particle.radius > 2 ? 10 : 4
+  ctx.shadowColor = '#00E5FF'
+  ctx.fill()
+  ctx.shadowBlur = 0
+}
+
+function updateParticle(particle: HeroParticle): void {
+  particle.x += particle.vx
+  particle.y += particle.vy
+
+  if (particle.x < 0) {
+    particle.x = width
+  } else if (particle.x > width) {
+    particle.x = 0
+  }
+
+  if (particle.y < 0) {
+    particle.y = height
+  } else if (particle.y > height) {
+    particle.y = 0
+  }
+
+  const dx = pointerX - particle.x
+  const dy = pointerY - particle.y
+  const distance = Math.hypot(dx, dy)
+
+  if (distance < POINTER_RADIUS) {
+    const factor = (POINTER_RADIUS - distance) / POINTER_RADIUS
+    const angle = Math.atan2(dy, dx)
+
+    particle.x -= Math.cos(angle) * factor * 2.8
+    particle.y -= Math.sin(angle) * factor * 2.8
+    particle.radius = particle.baseRadius + factor * 2.2
+    particle.currentAlpha = Math.min(1, particle.alpha + factor * 0.6)
+  } else {
+    particle.radius = particle.baseRadius
+    particle.currentAlpha = particle.alpha
+  }
+}
+
+function drawConnections(): void {
+  if (!ctx) {
+    return
+  }
+
+  for (let i = 0; i < particles.length; i += 1) {
+    for (let j = i + 1; j < particles.length; j += 1) {
+      const a = particles[i]
+      const b = particles[j]
+      const distance = Math.hypot(a.x - b.x, a.y - b.y)
+
+      if (distance >= CONNECT_DISTANCE) {
+        continue
+      }
+
+      const midX = (a.x + b.x) / 2
+      const midY = (a.y + b.y) / 2
+      const nearPointer = Math.hypot(pointerX - midX, pointerY - midY) < POINTER_RADIUS
+      const glowMultiplier = nearPointer ? 2.2 : 1
+      const alpha = (1 - distance / CONNECT_DISTANCE) * 0.16 * glowMultiplier
+
+      ctx.beginPath()
+      ctx.moveTo(a.x, a.y)
+      ctx.lineTo(b.x, b.y)
+      ctx.strokeStyle = `rgba(0, 229, 255, ${Math.min(alpha, 0.5)})`
+      ctx.lineWidth = glowMultiplier > 1 ? 0.9 : 0.6
+      ctx.stroke()
+    }
+
+    const pointerDistance = Math.hypot(pointerX - particles[i].x, pointerY - particles[i].y)
+
+    if (pointerDistance < POINTER_RADIUS) {
+      ctx.beginPath()
+      ctx.moveTo(particles[i].x, particles[i].y)
+      ctx.lineTo(pointerX, pointerY)
+      ctx.strokeStyle = `rgba(0, 229, 255, ${(1 - pointerDistance / POINTER_RADIUS) * 0.28})`
+      ctx.lineWidth = 0.85
+      ctx.stroke()
+    }
+  }
+}
+
+function drawFrame(advance: boolean): void {
+  if (!ctx) {
+    return
+  }
+
+  ctx.clearRect(0, 0, width, height)
+
+  for (const particle of particles) {
+    if (advance) {
+      updateParticle(particle)
+    }
+
+    drawParticle(particle)
+  }
+
+  drawConnections()
+}
+
+function tick(): void {
+  rafId = null
+
+  if (!ctx || width === 0 || height === 0) {
+    return
+  }
+
+  clock += 0.018
+
+  if (!isHovered) {
+    targetX = width * 0.5 + Math.sin(clock * 0.7) * width * 0.25
+    targetY = height * 0.4 + Math.cos(clock * 0.5) * height * 0.15
+  }
+
+  pointerX += (targetX - pointerX) * 0.085
+  pointerY += (targetY - pointerY) * 0.085
+
+  updateSpotlight()
+  drawFrame(true)
+
+  rafId = window.requestAnimationFrame(tick)
+}
+
+function startAnimation(): void {
+  if (prefersReducedMotion || rafId !== null) {
+    return
+  }
+
+  rafId = window.requestAnimationFrame(tick)
+}
+
+function stopAnimation(): void {
+  if (rafId !== null) {
+    window.cancelAnimationFrame(rafId)
+    rafId = null
+  }
+}
+
+function resizeCanvas(): void {
+  const section = sectionRef.value
+  const canvas = canvasRef.value
+
+  if (!section || !canvas) {
+    return
+  }
+
+  const rect = section.getBoundingClientRect()
 
   if (rect.width === 0 || rect.height === 0) {
     return
   }
 
-  pendingX = ((event.clientX - rect.left) / rect.width) * 100
-  pendingY = ((event.clientY - rect.top) / rect.height) * 100
+  const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
-  if (rafId === null) {
-    rafId = window.requestAnimationFrame(commitSpotlight)
-  }
-}
+  width = rect.width
+  height = rect.height
+  canvas.width = Math.floor(width * dpr)
+  canvas.height = Math.floor(height * dpr)
+  canvas.style.width = `${width}px`
+  canvas.style.height = `${height}px`
 
-onMounted(() => {
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const hasFinePointer = window.matchMedia('(pointer: fine)').matches
+  ctx = canvas.getContext('2d')
 
-  if (prefersReducedMotion || !hasFinePointer) {
+  if (!ctx) {
     return
   }
 
-  sectionRef.value?.addEventListener('pointermove', handlePointerMove, { passive: true })
+  ctx.setTransform(1, 0, 0, 1, 0, 0)
+  ctx.scale(dpr, dpr)
+
+  pointerX = width * 0.5
+  pointerY = height * 0.45
+  targetX = pointerX
+  targetY = pointerY
+
+  createParticles()
+  updateSpotlight()
+
+  if (prefersReducedMotion) {
+    drawFrame(false)
+  }
+}
+
+function handlePointerMove(event: PointerEvent): void {
+  const section = sectionRef.value
+
+  if (!section) {
+    return
+  }
+
+  const rect = section.getBoundingClientRect()
+
+  if (rect.width === 0 || rect.height === 0) {
+    return
+  }
+
+  targetX = event.clientX - rect.left
+  targetY = event.clientY - rect.top
+  isHovered = true
+}
+
+function handlePointerEnter(): void {
+  isHovered = true
+}
+
+function handlePointerLeave(): void {
+  isHovered = false
+}
+
+onMounted(() => {
+  prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  resizeCanvas()
+
+  const section = sectionRef.value
+
+  if (!section) {
+    return
+  }
+
+  if (!prefersReducedMotion) {
+    section.addEventListener('pointerenter', handlePointerEnter, { passive: true })
+    section.addEventListener('pointermove', handlePointerMove, { passive: true })
+    section.addEventListener('pointerleave', handlePointerLeave, { passive: true })
+
+    visibilityObserver = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting
+
+      if (isVisible) {
+        startAnimation()
+      } else {
+        stopAnimation()
+      }
+    })
+    visibilityObserver.observe(section)
+  }
+
+  resizeObserver = new ResizeObserver(() => {
+    resizeCanvas()
+
+    if (!prefersReducedMotion && isVisible) {
+      startAnimation()
+    }
+  })
+  resizeObserver.observe(section)
 })
 
 onBeforeUnmount(() => {
-  sectionRef.value?.removeEventListener('pointermove', handlePointerMove)
+  stopAnimation()
 
-  if (rafId !== null) {
-    window.cancelAnimationFrame(rafId)
-    rafId = null
-  }
+  const section = sectionRef.value
+
+  section?.removeEventListener('pointerenter', handlePointerEnter)
+  section?.removeEventListener('pointermove', handlePointerMove)
+  section?.removeEventListener('pointerleave', handlePointerLeave)
+
+  resizeObserver?.disconnect()
+  visibilityObserver?.disconnect()
+  resizeObserver = null
+  visibilityObserver = null
+  ctx = null
+  particles = []
 })
 </script>
 
@@ -71,12 +348,10 @@ onBeforeUnmount(() => {
     class="relative flex min-h-screen w-full scroll-mt-20 items-center overflow-hidden border-b border-border/60 bg-background"
   >
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-      <div class="absolute inset-0 bg-grid opacity-50" />
-      <div
-        class="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(0,229,255,0.08),transparent_58%)]"
-      />
-      <div class="hero-spotlight absolute inset-0" :style="spotlightStyle" />
-      <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
+      <canvas ref="canvasRef" class="absolute inset-0 block h-full w-full" />
+      <div class="absolute inset-0 bg-grid opacity-[0.14] mix-blend-screen" />
+      <div class="hero-spotlight absolute inset-0" />
+      <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </div>
 
     <div

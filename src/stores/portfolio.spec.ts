@@ -5,13 +5,13 @@ import { usePortfolioStore } from '@/stores/portfolio'
 import { usePortfolioData } from '@/composables/usePortfolioData'
 
 describe('portfolio data integrity', () => {
-  it('exposes the eleven technologies across the four ecosystem categories', () => {
-    expect(technologies).toHaveLength(11)
-    expect(new Set(technologies.map((tech) => tech.id)).size).toBe(11)
-    expect(technologies.filter((tech) => tech.category === 'frontend')).toHaveLength(4)
-    expect(technologies.filter((tech) => tech.category === 'backend')).toHaveLength(3)
+  it('exposes the twenty-three technologies across the four ecosystem categories', () => {
+    expect(technologies).toHaveLength(23)
+    expect(new Set(technologies.map((tech) => tech.id)).size).toBe(23)
+    expect(technologies.filter((tech) => tech.category === 'frontend')).toHaveLength(8)
+    expect(technologies.filter((tech) => tech.category === 'backend')).toHaveLength(7)
     expect(technologies.filter((tech) => tech.category === 'database')).toHaveLength(2)
-    expect(technologies.filter((tech) => tech.category === 'devops')).toHaveLength(2)
+    expect(technologies.filter((tech) => tech.category === 'devops')).toHaveLength(6)
   })
 
   it('defines unique projects with complete case-study content', () => {
@@ -41,7 +41,15 @@ describe('portfolio data integrity', () => {
     expect(profile.headline).toEqual(['DESARROLLADOR WEB FRONTEND', 'ARQUITECTO DE SOFTWARE'])
     expect(profile.performance).toHaveLength(4)
     expect(contactChannels).toHaveLength(4)
-    expect(contactChannels.find((channel) => channel.id === 'email')?.copyValue).toBeTruthy()
+    expect(contactChannels.find((channel) => channel.id === 'email')?.copyValue).toBe(
+      'jonathancamposbusiness@gmail.com',
+    )
+    expect(contactChannels.find((channel) => channel.id === 'whatsapp')?.value).toBe(
+      '+58 4121966931',
+    )
+    expect(contactChannels.find((channel) => channel.id === 'whatsapp')?.href).toBe(
+      'https://wa.me/584121966931',
+    )
   })
 })
 
@@ -54,13 +62,13 @@ describe('portfolio store', () => {
     const store = usePortfolioStore()
 
     expect(store.activeCategory).toBe('all')
-    expect(store.filteredTechnologies).toHaveLength(11)
+    expect(store.filteredTechnologies).toHaveLength(23)
     expect(store.categoryCounts).toEqual({
-      all: 11,
-      frontend: 4,
-      backend: 3,
+      all: 23,
+      frontend: 8,
+      backend: 7,
       database: 2,
-      devops: 2,
+      devops: 6,
     })
   })
 
@@ -70,7 +78,7 @@ describe('portfolio store', () => {
     store.setCategory('backend')
 
     expect(store.activeCategory).toBe('backend')
-    expect(store.filteredTechnologies).toHaveLength(3)
+    expect(store.filteredTechnologies).toHaveLength(7)
     expect(store.filteredTechnologies.every((tech) => tech.category === 'backend')).toBe(true)
   })
 

@@ -189,10 +189,10 @@
 
   .hero-spotlight {
     background: radial-gradient(
-      680px circle at var(--mouse-x, 50%) var(--mouse-y, 38%),
-      rgba(0, 229, 255, 0.12),
-      rgba(0, 229, 255, 0.035) 40%,
-      transparent 74%
+      650px circle at var(--mouse-x, 50%) var(--mouse-y, 45%),
+      rgba(0, 229, 255, 0.14),
+      rgba(0, 210, 255, 0.04) 40%,
+      transparent 75%
     );
     transition: opacity 500ms ease;
     will-change: background;

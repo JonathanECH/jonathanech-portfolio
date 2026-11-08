@@ -2,6 +2,7 @@
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { Download, Menu, X } from '@lucide/vue'
+import logoNavbar from '@/assets/logo-navbar.svg'
 import { useActiveSection } from '@/composables/useActiveSection'
 import { useScrollLock } from '@/composables/useScrollLock'
 import { useScrolled } from '@/composables/useScrolled'
@@ -64,10 +65,20 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
     <div class="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-12">
       <RouterLink
         to="/"
-        class="group flex items-baseline gap-1 font-sans text-xl font-extrabold tracking-tight text-white"
+        class="group relative flex items-center justify-center rounded-lg"
         aria-label="ECH — Inicio"
       >
-        ECH<span class="text-cyan-accent transition-all duration-300 group-hover:drop-shadow-[0_0_10px_rgba(0,229,255,0.8)]">.</span>
+        <span
+          class="absolute inset-0 rounded-full bg-cyan-accent/20 opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-100"
+          aria-hidden="true"
+        />
+        <img
+          :src="logoNavbar"
+          alt=""
+          class="relative h-10 w-10 transition-transform duration-300 group-hover:scale-105"
+          width="40"
+          height="40"
+        />
       </RouterLink>
 
       <nav class="hidden items-center gap-7 lg:flex" aria-label="Navegación principal">
