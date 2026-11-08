@@ -1,0 +1,51 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 427 >>
+stream
+BT
+/F1 20 Tf
+72 770 Td
+(Jonathan Campos - CV) Tj
+/F1 11 Tf
+0 -32 Td
+(Desarrollador Web Frontend / Arquitecto de Software) Tj
+0 -18 Td
+(Barquisimeto, Venezuela / TSU en Informatica) Tj
+0 -18 Td
+() Tj
+0 -18 Td
+(Placeholder: reemplaza este PDF con el CV definitivo.) Tj
+0 -18 Td
+(Stack: Vue 3 / TypeScript / Pinia / Tailwind CSS / PostgreSQL) Tj
+0 -18 Td
+(Contacto: hola@jonathancampos.dev / github.com/jonathanech) Tj
+0 -18 Td
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000247 00000 n 
+0000000725 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+795
+%%EOF
