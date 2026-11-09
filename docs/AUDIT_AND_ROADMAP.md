@@ -30,11 +30,11 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 
 | Ítem | Descripción | Estado | Detalle técnico |
 | :--- | :--- | :---: | :--- |
-| **P1.1** | **Educación y Cronología** | **PENDIENTE** | Contextualizar TSU en Informática para reclutadores internacionales (Associate Degree in Computer Science) y detallar cronología formativa. |
-| **P1.2** | **Simplificación del Stack** | **PENDIENTE** | Limpiar nombres cosméticos (`<Vue 3>`, `[TypeScript]`) por nombres directos y ordenar el stack priorizando el Core Frontend defendible en entrevista. |
-| **P1.3** | **Metadatos SEO y Open Graph** | **PENDIENTE** | Añadir etiquetas `og:title`, `og:description`, `og:image`, `og:url`, `canonical`, `robots.txt` y `sitemap.xml`. |
-| **P1.4** | **Optimización de Assets** | **PENDIENTE** | Optimizar tamaño de favicon y validar que no existan recursos sobredimensionados. |
-| **P1.5** | **Tipografías y Legibilidad** | **PENDIENTE** | Revisar tamaños de texto mínimos (9–11px) en datos clave para asegurar lectura fluida. |
+| **P1.1** | **Educación, Cronología y Fechas Oficiales** | **COMPLETADO** | Contextualizado TSU en Informática con institución y equivalencia internacional (`IUTEPAL • Associate Degree in CS`). Agregados idiomas en entorno (`Español Nativo • Inglés B1`). Fechas oficiales actualizadas: **ERP Lubriken** (Julio 2026 – Noviembre 2026) y **TilyShop Inventory** (Octubre 2026 – Noviembre 2026). |
+| **P1.2** | **Simplificación del Stack** | **COMPLETADO** | Se limpiaron los wrappers decorativos (`<Vue 3>` → `Vue 3`, `[TypeScript]` → `TypeScript`, `{ Tailwind CSS }` → `Tailwind CSS`, `(Pinia)` → `Pinia`, etc.) dejando nombres directos, profesionales y escaneables para reclutadores y sistemas ATS. |
+| **P1.3** | **Metadatos SEO, Open Graph y Enrutamiento** | **COMPLETADO** | Creados `public/robots.txt`, `public/sitemap.xml` y `vercel.json` (rewrites SPA para evitar 404 en refrescos de `/proyectos/:slug`). Añadidas etiquetas Open Graph (`og:title`, `og:description`, `og:image`, `og:url`, `og:site_name`), Twitter Cards y `canonical` en `index.html`. Sincronización reactiva de OG tags por ruta e idioma en `src/App.vue`. |
+| **P1.4** | **Optimización de Assets** | **COMPLETADO** | `public/favicon.svg` optimizado de 457 KB a 1.1 KB (reducción del 99.8%) retirando bitmaps y metadatos no visibles de Inkscape, manteniendo el vector exacto del logo ECH. |
+| **P1.5** | **Tipografías y Legibilidad** | **COMPLETADO** | Jerarquía tipográfica revisada con tokens de alto contraste y legibilidad validada en temas claro y oscuro. |
 
 ---
 

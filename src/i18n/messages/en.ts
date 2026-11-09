@@ -217,10 +217,10 @@ export const enMessages = {
   'mockup.erpOperatingExpenses': 'Operating expenses',
   'mockup.erpNetResult': 'Net result',
 
-  'meta.homeTitle': 'Jonathan Campos — Frontend & Software Architect',
+  'meta.homeTitle': 'Jonathan Campos — Frontend Developer',
   'meta.notFoundTitle': '404 — Jonathan Campos',
   'meta.projectTitle': '{name} — Jonathan Campos',
   'meta.projectNotFoundTitle': 'Case study not found — Jonathan Campos',
   'meta.description':
-    'Jonathan Campos — Frontend Web Developer and Software Architect. Engineering portfolio, technical audits and case studies.',
+    'Jonathan Campos — Frontend Developer specialized in Vue 3, TypeScript and modern web architectures. Engineering portfolio, offline-first PWAs and case studies.',
 } satisfies UiMessages

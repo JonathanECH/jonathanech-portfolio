@@ -9,7 +9,7 @@ import type {
 export const technologies: readonly Technology[] = [
   {
     id: 'vue',
-    name: '<Vue 3>',
+    name: 'Vue 3',
     category: 'frontend',
     label: 'FRAMEWORK',
     specialties: ['Composition API', 'Pinia'],
@@ -18,7 +18,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'typescript',
-    name: '[TypeScript]',
+    name: 'TypeScript',
     category: 'frontend',
     label: 'LANGUAGE',
     specialties: ['Strict Typing', 'Generics'],
@@ -27,7 +27,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'tailwind',
-    name: '{ Tailwind CSS }',
+    name: 'Tailwind CSS',
     category: 'frontend',
     label: 'STYLING ENGINE',
     specialties: ['Design Tokens', 'Utility-First'],
@@ -36,7 +36,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'pinia',
-    name: '(Pinia)',
+    name: 'Pinia',
     category: 'frontend',
     label: 'STATE LAYER',
     specialties: ['Offline-First', 'Optimistic Locks'],
@@ -45,7 +45,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'angular',
-    name: '{ Angular }',
+    name: 'Angular',
     category: 'frontend',
     label: 'FRAMEWORK',
     specialties: ['RxJS', 'Modularity'],
@@ -54,7 +54,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'html',
-    name: '(HTML5)',
+    name: 'HTML5',
     category: 'frontend',
     label: 'MARKUP',
     specialties: ['Semantics', 'Accessibility'],
@@ -63,7 +63,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'css',
-    name: '{ CSS }',
+    name: 'CSS3',
     category: 'frontend',
     label: 'STYLING',
     specialties: ['Grid', 'Animations'],
@@ -72,7 +72,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'javascript',
-    name: '[JavaScript]',
+    name: 'JavaScript',
     category: 'frontend',
     label: 'LANGUAGE',
     specialties: ['ES2024', 'Async/Await'],
@@ -81,7 +81,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'node',
-    name: '<Node.js>',
+    name: 'Node.js',
     category: 'backend',
     label: 'RUNTIME',
     specialties: ['Async I/O', 'REST APIs'],
@@ -90,7 +90,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'express',
-    name: '[Express]',
+    name: 'Express',
     category: 'backend',
     label: 'FRAMEWORK',
     specialties: ['Middleware', 'Routing'],
@@ -99,7 +99,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'nestjs',
-    name: '{ NestJS }',
+    name: 'NestJS',
     category: 'backend',
     label: 'FRAMEWORK',
     specialties: ['DI Container', 'Modular Arch'],
@@ -108,7 +108,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'go',
-    name: '<Go>',
+    name: 'Go',
     category: 'backend',
     label: 'LANGUAGE',
     specialties: ['Goroutines', 'Channels'],
@@ -117,7 +117,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'php',
-    name: '[PHP]',
+    name: 'PHP',
     category: 'backend',
     label: 'LANGUAGE',
     specialties: ['PSR Standards', 'Composer'],
@@ -126,7 +126,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'c',
-    name: '<C>',
+    name: 'C',
     category: 'backend',
     label: 'LANGUAGE',
     specialties: ['Memory Control', 'Pointers'],
@@ -135,7 +135,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'csharp',
-    name: '[C#]',
+    name: 'C#',
     category: 'backend',
     label: 'LANGUAGE',
     specialties: ['.NET', 'LINQ'],
@@ -153,7 +153,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'prisma',
-    name: '[Prisma ORM]',
+    name: 'Prisma ORM',
     category: 'database',
     label: 'ORM',
     specialties: ['Type-Safe Client', 'Migrations'],
@@ -162,7 +162,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'docker',
-    name: '{ Docker }',
+    name: 'Docker',
     category: 'devops',
     label: 'CONTAINERS',
     specialties: ['Multi-stage Builds', 'Compose'],
@@ -171,7 +171,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'git',
-    name: '<Git>',
+    name: 'Git',
     category: 'devops',
     label: 'VERSION CONTROL',
     specialties: ['Trunk-Based', 'Code Review'],
@@ -180,7 +180,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'pnpm',
-    name: '(pnpm)',
+    name: 'pnpm',
     category: 'devops',
     label: 'PACKAGE MANAGER',
     specialties: ['Workspaces', 'Strict Deps'],
@@ -189,7 +189,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'postman',
-    name: '{ Postman }',
+    name: 'Postman',
     category: 'devops',
     label: 'API TESTING',
     specialties: ['Collections', 'Mock Servers'],
@@ -198,7 +198,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'vercel',
-    name: '<Vercel>',
+    name: 'Vercel',
     category: 'devops',
     label: 'DEPLOYMENT',
     specialties: ['Edge Network', 'Preview Deploys'],
@@ -207,7 +207,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'netlify',
-    name: '{ Netlify }',
+    name: 'Netlify',
     category: 'devops',
     label: 'DEPLOYMENT',
     specialties: ['CI/CD', 'Serverless'],
@@ -240,7 +240,7 @@ export const projects: readonly Project[] = [
     techTags: ['Vue 3', 'TypeScript', 'Pinia', 'PostgreSQL', 'Tailwind CSS'],
     role: 'Desarrollador Frontend & Arquitectura Offline-First',
     client: 'Punto de Venta / Comercio Textil',
-    duration: '12 Semanas // Q1-Q2 2026',
+    duration: '6 Semanas // Octubre 2026 – Noviembre 2026',
     stackKey: 'Vue 3 • TypeScript • PostgreSQL',
     links: {
       whitepaper: '/docs/tilyshop-whitepaper.pdf',
@@ -475,7 +475,7 @@ export const projects: readonly Project[] = [
     sector: 'TRANSACTIONAL ERP',
     title: 'ERP',
     titleHighlight: 'LUBRIKEN',
-    year: '2025',
+    year: '2026',
     status: 'CASO DE ESTUDIO',
     summary:
       'Plataforma contable full-stack con doble partida, conciliación bancaria y reportes financieros reproducibles sobre una base transaccional.',
@@ -484,7 +484,7 @@ export const projects: readonly Project[] = [
     techTags: ['Vue 3', 'Node.js', 'PostgreSQL', 'Docker'],
     role: 'Desarrollador Frontend & Lógica de Negocio',
     client: 'Distribución Comercial / Gestión ERP',
-    duration: '20 Semanas // Q1-Q2 2025',
+    duration: '16 Semanas // Julio 2026 – Noviembre 2026',
     stackKey: 'Vue 3 • Node.js • PostgreSQL',
     links: {},
     liveHost: 'erp.local',
@@ -627,7 +627,7 @@ export const profile: Profile = {
   role: 'Desarrollador Frontend',
   headline: ['DESARROLLADOR WEB', 'FRONTEND ENGINEER'],
   location: 'Barquisimeto, Venezuela (UTC-4)',
-  education: 'TSU en Informática (Técnico Superior Universitario)',
+  education: 'TSU en Informática (IUTEPAL • Associate Degree in CS)',
   bio: 'Desarrollador Frontend especializado en Vue 3, TypeScript y arquitecturas web modernas. Diseño interfaces reactivas, accesibles y de alto rendimiento con tipado estricto y foco en la experiencia de usuario. Abierto a oportunidades remotas o híbridas (Junior / Mid) con disponibilidad inmediata.',
   bioAi:
     'Utilizo la Inteligencia Artificial como multiplicador de productividad: acelerar flujos de desarrollo, validar casos de prueba, auditar accesibilidad y optimizar la experiencia de usuario.',
@@ -648,7 +648,7 @@ export const profile: Profile = {
     { label: 'EDITOR', value: 'VS Code + Vim' },
     { label: 'DISEÑO', value: 'Figma / Penpot' },
     { label: 'RUNTIME', value: 'Node 24 + pnpm' },
-    { label: 'CAFÉ', value: 'Espresso calibration lab' },
+    { label: 'IDIOMAS', value: 'Español (Nativo) • Inglés (B1)' },
   ],
 }
 

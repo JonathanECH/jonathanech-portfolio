@@ -31,7 +31,7 @@ const projects: readonly Project[] = [
     techTags: ['Vue 3', 'TypeScript', 'Pinia', 'PostgreSQL', 'Tailwind CSS'],
     role: 'Frontend Developer & Offline-First Architecture',
     client: 'Retail POS / Textile Distribution',
-    duration: '12 Weeks // Q1-Q2 2026',
+    duration: '6 Weeks // October 2026 – November 2026',
     stackKey: 'Vue 3 • TypeScript • PostgreSQL',
     links: {
       whitepaper: '/docs/tilyshop-whitepaper.pdf',
@@ -261,7 +261,7 @@ const projects: readonly Project[] = [
     sector: 'TRANSACTIONAL ERP',
     title: 'ERP',
     titleHighlight: 'LUBRIKEN',
-    year: '2025',
+    year: '2026',
     status: 'CASE STUDY',
     summary:
       'Full-stack accounting platform with double-entry bookkeeping, bank reconciliation and reproducible financial reports on a transactional database.',
@@ -270,7 +270,7 @@ const projects: readonly Project[] = [
     techTags: ['Vue 3', 'Node.js', 'PostgreSQL', 'Docker'],
     role: 'Frontend Developer & Business Logic',
     client: 'Commercial Distribution / ERP Case Study',
-    duration: '20 Weeks // Q1-Q2 2025',
+    duration: '16 Weeks // July 2026 – November 2026',
     stackKey: 'Vue 3 • Node.js • PostgreSQL',
     links: {},
     liveHost: 'erp.local',
@@ -411,7 +411,7 @@ const profile: Profile = {
   role: 'Frontend Developer',
   headline: ['WEB DEVELOPER', 'FRONTEND ENGINEER'],
   location: 'Barquisimeto, Venezuela (UTC-4)',
-  education: 'Associate Degree in Computer Science (TSU Informática)',
+  education: 'Associate Degree in Computer Science (TSU Informática • IUTEPAL)',
   bio: 'Frontend Developer specialized in Vue 3, TypeScript, and modern web architectures. I build reactive, accessible, and resilient interfaces with an offline-first approach and strict typing. Open to remote or hybrid opportunities (Junior / Mid) with immediate availability in UTC-4 timezone.',
   bioAi:
     'I use Artificial Intelligence as a productivity multiplier: accelerating workflows, validating edge cases, auditing accessibility, and polishing user experience.',
@@ -432,7 +432,7 @@ const profile: Profile = {
     { label: 'EDITOR', value: 'VS Code + Vim' },
     { label: 'DESIGN', value: 'Figma / Penpot' },
     { label: 'RUNTIME', value: 'Node 24 + pnpm' },
-    { label: 'COFFEE', value: 'Espresso calibration lab' },
+    { label: 'LANGUAGES', value: 'Spanish (Native) • English (B1)' },
   ],
 }
 

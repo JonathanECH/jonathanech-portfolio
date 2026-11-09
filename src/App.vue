@@ -10,25 +10,38 @@ const { content, t } = useI18n()
 
 watchEffect(() => {
   const name = route.name
+  let title = ''
 
   if (name === 'home') {
-    document.title = t('meta.homeTitle')
+    title = t('meta.homeTitle')
   } else if (name === 'not-found') {
-    document.title = t('meta.notFoundTitle')
+    title = t('meta.notFoundTitle')
   } else if (name === 'project-detail') {
     const slug = typeof route.params.slug === 'string' ? route.params.slug : ''
     const project = content.value.projects.find((item) => item.slug === slug)
 
-    document.title = project
+    title = project
       ? t('meta.projectTitle', { name: project.name })
       : t('meta.projectNotFoundTitle')
   }
 
-  const description = document.querySelector<HTMLMetaElement>('meta[name="description"]')
-
-  if (description) {
-    description.content = t('meta.description')
+  if (title) {
+    document.title = title
+    const ogTitle = document.querySelector<HTMLMetaElement>('meta[property="og:title"]')
+    if (ogTitle) ogTitle.content = title
+    const twTitle = document.querySelector<HTMLMetaElement>('meta[name="twitter:title"]')
+    if (twTitle) twTitle.content = title
   }
+
+  const descText = t('meta.description')
+  const description = document.querySelector<HTMLMetaElement>('meta[name="description"]')
+  if (description) {
+    description.content = descText
+  }
+  const ogDesc = document.querySelector<HTMLMetaElement>('meta[property="og:description"]')
+  if (ogDesc) ogDesc.content = descText
+  const twDesc = document.querySelector<HTMLMetaElement>('meta[name="twitter:description"]')
+  if (twDesc) twDesc.content = descText
 })
 </script>
 
