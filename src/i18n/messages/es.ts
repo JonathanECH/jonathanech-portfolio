@@ -147,7 +147,7 @@ export const esMessages = {
   'gallery.expandHint': 'Ampliar',
   'gallery.fullTitle': 'Captura ampliada de {name}: {title}',
   'gallery.closeFull': 'Cerrar captura ampliada',
-  'gallery.fullHint': 'Usa las flechas para navegar · Esc para cerrar',
+  'gallery.fullHint': 'Desliza o usa flechas para navegar · Esc para cerrar',
 
   'pager.aria': 'Navegación entre proyectos',
   'pager.previous': 'CASO ANTERIOR',

@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { ChevronLeft, ChevronRight, X } from '@lucide/vue'
 import { useFocusTrap } from '@/composables/useFocusTrap'
 import { useScrollLock } from '@/composables/useScrollLock'
+import { useSwipeNavigation } from '@/composables/useSwipeNavigation'
 import { useI18n } from '@/i18n'
 import type { GallerySlide } from '@/types/portfolio'
 
@@ -25,6 +26,13 @@ const { t } = useI18n()
 const dialogRef = ref<HTMLElement | null>(null)
 const locked = ref(false)
 
+const swipe = useSwipeNavigation({
+  threshold: 45,
+  enabled: computed(() => props.total > 1),
+  onNext: () => emit('next'),
+  onPrevious: () => emit('previous'),
+})
+
 watch(
   () => props.open,
   (isOpen) => {
@@ -35,13 +43,28 @@ watch(
   { immediate: true },
 )
 
+watch(
+  () => props.slide,
+  () => {
+    swipe.reset()
+  },
+)
+
 useScrollLock(locked)
 useFocusTrap(dialogRef, computed(() => props.open))
 
 function handleAfterLeave(): void {
   if (!props.open) {
     locked.value = false
+    swipe.reset()
   }
+}
+
+function handleBackdropClick(): void {
+  if (swipe.justSwiped.value) {
+    return
+  }
+  emit('close')
 }
 
 function onKeydown(event: KeyboardEvent): void {
@@ -77,7 +100,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
       <div
         v-if="open && slide"
         class="fixed inset-0 z-[120] bg-black/90 backdrop-blur-xl"
-        @click.self="emit('close')"
+        @click.self="handleBackdropClick"
       >
         <div
           ref="dialogRef"
@@ -111,34 +134,51 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
           </div>
 
           <div
-            class="relative flex min-h-0 flex-1 items-center justify-center px-2 py-2 sm:px-16 sm:py-4"
-            @click.self="emit('close')"
+            class="relative flex min-h-0 flex-1 select-none items-center justify-center px-2 py-2 sm:px-16 sm:py-4"
+            :class="total > 1 ? (swipe.isDragging.value ? 'cursor-grabbing' : 'cursor-grab') : ''"
+            style="touch-action: pan-y"
+            @pointerdown="swipe.onPointerDown"
+            @pointermove="swipe.onPointerMove"
+            @pointerup="swipe.onPointerUp"
+            @pointercancel="swipe.onPointerCancel"
+            @click.self="handleBackdropClick"
           >
             <button
               v-if="total > 1"
               type="button"
               class="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-sm transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-black active:scale-95 sm:left-5 sm:h-12 sm:w-12"
               :aria-label="t('gallery.previous')"
-              @click="emit('previous')"
+              @click.stop="emit('previous')"
             >
               <ChevronLeft :size="24" aria-hidden="true" />
             </button>
 
-            <img
-              :key="slide.id"
-              :src="slide.image"
-              :alt="slide.alt ?? slide.title"
-              draggable="false"
-              class="max-h-full w-full max-w-full select-none rounded-lg object-contain shadow-[0_24px_90px_-24px_rgba(0,0,0,0.95)] sm:w-auto"
-              style="touch-action: pinch-zoom"
-            />
+            <div
+              class="relative flex max-h-full max-w-full items-center justify-center will-change-transform"
+              :style="{
+                transform: `translateX(${swipe.offsetX.value}px)`,
+                transition: swipe.isDragging.value
+                  ? 'none'
+                  : 'transform 260ms cubic-bezier(0.16, 1, 0.3, 1), opacity 260ms ease',
+                opacity: 1 - Math.min(Math.abs(swipe.offsetX.value) / 800, 0.35),
+              }"
+            >
+              <img
+                :key="slide.id"
+                :src="slide.image"
+                :alt="slide.alt ?? slide.title"
+                draggable="false"
+                class="max-h-full w-full max-w-full select-none rounded-lg object-contain shadow-[0_24px_90px_-24px_rgba(0,0,0,0.95)] sm:w-auto"
+                style="touch-action: pan-y"
+              />
+            </div>
 
             <button
               v-if="total > 1"
               type="button"
               class="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-sm transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-black active:scale-95 sm:right-5 sm:h-12 sm:w-12"
               :aria-label="t('gallery.next')"
-              @click="emit('next')"
+              @click.stop="emit('next')"
             >
               <ChevronRight :size="24" aria-hidden="true" />
             </button>
@@ -154,7 +194,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
               >
                 <span aria-live="polite">{{ index + 1 }} / {{ total }}</span>
                 <span aria-hidden="true">//</span>
-                <span class="hidden sm:inline">{{ t('gallery.fullHint') }}</span>
+                <span>{{ t('gallery.fullHint') }}</span>
               </div>
             </div>
           </div>
