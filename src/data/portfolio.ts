@@ -9,7 +9,7 @@ import type {
 export const technologies: readonly Technology[] = [
   {
     id: 'vue',
-    name: '<Vue 3>',
+    name: 'Vue 3',
     category: 'frontend',
     label: 'FRAMEWORK',
     specialties: ['Composition API', 'Pinia'],
@@ -18,7 +18,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'typescript',
-    name: '[TypeScript]',
+    name: 'TypeScript',
     category: 'frontend',
     label: 'LANGUAGE',
     specialties: ['Strict Typing', 'Generics'],
@@ -27,7 +27,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'tailwind',
-    name: '{ Tailwind CSS }',
+    name: 'Tailwind CSS',
     category: 'frontend',
     label: 'STYLING ENGINE',
     specialties: ['Design Tokens', 'Utility-First'],
@@ -36,7 +36,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'pinia',
-    name: '(Pinia)',
+    name: 'Pinia',
     category: 'frontend',
     label: 'STATE LAYER',
     specialties: ['Offline-First', 'Optimistic Locks'],
@@ -45,7 +45,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'angular',
-    name: '{ Angular }',
+    name: 'Angular',
     category: 'frontend',
     label: 'FRAMEWORK',
     specialties: ['RxJS', 'Modularity'],
@@ -54,7 +54,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'html',
-    name: '(HTML5)',
+    name: 'HTML5',
     category: 'frontend',
     label: 'MARKUP',
     specialties: ['Semantics', 'Accessibility'],
@@ -63,7 +63,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'css',
-    name: '{ CSS }',
+    name: 'CSS3',
     category: 'frontend',
     label: 'STYLING',
     specialties: ['Grid', 'Animations'],
@@ -72,7 +72,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'javascript',
-    name: '[JavaScript]',
+    name: 'JavaScript',
     category: 'frontend',
     label: 'LANGUAGE',
     specialties: ['ES2024', 'Async/Await'],
@@ -81,7 +81,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'node',
-    name: '<Node.js>',
+    name: 'Node.js',
     category: 'backend',
     label: 'RUNTIME',
     specialties: ['Async I/O', 'REST APIs'],
@@ -90,7 +90,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'express',
-    name: '[Express]',
+    name: 'Express',
     category: 'backend',
     label: 'FRAMEWORK',
     specialties: ['Middleware', 'Routing'],
@@ -99,7 +99,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'nestjs',
-    name: '{ NestJS }',
+    name: 'NestJS',
     category: 'backend',
     label: 'FRAMEWORK',
     specialties: ['DI Container', 'Modular Arch'],
@@ -108,7 +108,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'go',
-    name: '<Go>',
+    name: 'Go',
     category: 'backend',
     label: 'LANGUAGE',
     specialties: ['Goroutines', 'Channels'],
@@ -117,7 +117,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'php',
-    name: '[PHP]',
+    name: 'PHP',
     category: 'backend',
     label: 'LANGUAGE',
     specialties: ['PSR Standards', 'Composer'],
@@ -126,7 +126,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'c',
-    name: '<C>',
+    name: 'C',
     category: 'backend',
     label: 'LANGUAGE',
     specialties: ['Memory Control', 'Pointers'],
@@ -135,7 +135,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'csharp',
-    name: '[C#]',
+    name: 'C#',
     category: 'backend',
     label: 'LANGUAGE',
     specialties: ['.NET', 'LINQ'],
@@ -153,7 +153,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'prisma',
-    name: '[Prisma ORM]',
+    name: 'Prisma ORM',
     category: 'database',
     label: 'ORM',
     specialties: ['Type-Safe Client', 'Migrations'],
@@ -162,7 +162,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'docker',
-    name: '{ Docker }',
+    name: 'Docker',
     category: 'devops',
     label: 'CONTAINERS',
     specialties: ['Multi-stage Builds', 'Compose'],
@@ -171,7 +171,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'git',
-    name: '<Git>',
+    name: 'Git',
     category: 'devops',
     label: 'VERSION CONTROL',
     specialties: ['Trunk-Based', 'Code Review'],
@@ -180,7 +180,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'pnpm',
-    name: '(pnpm)',
+    name: 'pnpm',
     category: 'devops',
     label: 'PACKAGE MANAGER',
     specialties: ['Workspaces', 'Strict Deps'],
@@ -189,7 +189,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'postman',
-    name: '{ Postman }',
+    name: 'Postman',
     category: 'devops',
     label: 'API TESTING',
     specialties: ['Collections', 'Mock Servers'],
@@ -198,7 +198,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'vercel',
-    name: '<Vercel>',
+    name: 'Vercel',
     category: 'devops',
     label: 'DEPLOYMENT',
     specialties: ['Edge Network', 'Preview Deploys'],
@@ -207,7 +207,7 @@ export const technologies: readonly Technology[] = [
   },
   {
     id: 'netlify',
-    name: '{ Netlify }',
+    name: 'Netlify',
     category: 'devops',
     label: 'DEPLOYMENT',
     specialties: ['CI/CD', 'Serverless'],
@@ -234,20 +234,18 @@ export const projects: readonly Project[] = [
     year: '2026',
     status: 'EN PRODUCCIÓN',
     summary:
-      'Rediseño integral del inventario textil B2B: trazabilidad atómica de lotes, auditoría transaccional y una capa reactiva offline-first para operaciones de almacén.',
+      'Sistema de inventario offline-first para puntos de venta: cálculo de stock efectivo en cliente, trazabilidad atómica de lotes y sincronización transaccional.',
     problem:
-      'El sistema previo conciliaba stock con procesos manuales y escrituras no atómicas: lotes duplicados, descuadres silenciosos y consultas críticas de hasta 4,820 ms.',
+      'Puntos de venta con conectividad inestable y riesgo de sobreventa por terminales concurrentes. El sistema previo no garantizaba atomicidad ni auditoría de ajustes.',
     techTags: ['Vue 3', 'TypeScript', 'Pinia', 'PostgreSQL', 'Tailwind CSS'],
-    role: 'Arquitecto Frontend & Auditor de Lógica de Negocio',
-    client: 'Industria Textil & Confección B2B',
-    duration: '12 Semanas // Q1-Q2 2026',
+    role: 'Desarrollador Frontend & Arquitectura Offline-First',
+    client: 'Punto de Venta / Comercio Textil',
+    duration: '6 Semanas // Octubre 2026 – Noviembre 2026',
     stackKey: 'Vue 3 • TypeScript • PostgreSQL',
     links: {
-      demo: 'https://tilyshop-inventory.demo',
-      repo: 'https://github.com/jonathanech/tilyshop-inventory',
       whitepaper: '/docs/tilyshop-whitepaper.pdf',
     },
-    liveHost: 'tilyshop-inventory.live',
+    liveHost: 'app.tilyshop.internal',
     accent: '#00E5FF',
     galleryDescription:
       'Interfaces reales del flujo operativo: panel general, administración de inventario, historial de ventas y seguridad del perfil.',
@@ -314,7 +312,7 @@ export const projects: readonly Project[] = [
       latencyAfter: '42 ms',
       latencyDelta: '−99.1%',
       discrepancy: '0.00%',
-      consistencyNote: 'Conciliación ACID verificada en 8,412 transacciones de auditoría.',
+      consistencyNote: 'Sincronización idempotente con client_txn_id y transacciones atómicas documentadas en whitepaper.',
     },
     modules: [
       {
@@ -365,21 +363,18 @@ export const projects: readonly Project[] = [
     title: 'SISTEMA DE GESTIÓN',
     titleHighlight: 'MÉDICA',
     year: '2025',
-    status: 'EN PRODUCCIÓN',
+    status: 'CASO DE ESTUDIO',
     summary:
       'SPA clínica para agenda, expedientes y triaje: flujos de atención sin fricción, estado reactivo y una interfaz accesible para personal médico.',
     problem:
-      'La clínica operaba con agendas paralelas y expedientes en papel; las citas se duplicaban y el personal perdía minutos por paciente en tareas repetitivas.',
+      'Gestión fragmentada entre agendas paralelas y registros manuales; duplicación de citas y necesidad de control de acceso por rol médico.',
     techTags: ['Vue 3', 'TypeScript', 'Supabase', 'Tailwind CSS'],
-    role: 'Desarrollador Full Stack & Diseñador de Interacción',
-    client: 'Red de Clínicas Privadas',
+    role: 'Desarrollador Frontend & Integración SPA',
+    client: 'Gestión Clínica / Consultorios Médicos',
     duration: '16 Semanas // Q3-Q4 2025',
     stackKey: 'Vue 3 • TypeScript • Supabase',
-    links: {
-      demo: 'https://medicore-clinic.demo',
-      repo: 'https://github.com/jonathanech/gestion-medica',
-    },
-    liveHost: 'medicore-clinic.live',
+    links: {},
+    liveHost: 'clinica.local',
     accent: '#5EEAD4',
     galleryDescription:
       'Interfaces reales del flujo clínico: agenda de consultorios, expediente unificado y telemetría de ocupación.',
@@ -430,7 +425,7 @@ export const projects: readonly Project[] = [
       latencyAfter: '58 ms',
       latencyDelta: '−98.2%',
       discrepancy: '0.02%',
-      consistencyNote: 'Trazabilidad de acceso verificada en 2,140 expedientes auditados.',
+      consistencyNote: 'Flujos clínicos y control de acceso por rol validados en entorno de pruebas.',
     },
     modules: [
       {
@@ -480,22 +475,19 @@ export const projects: readonly Project[] = [
     sector: 'TRANSACTIONAL ERP',
     title: 'ERP',
     titleHighlight: 'LUBRIKEN',
-    year: '2025',
+    year: '2026',
     status: 'CASO DE ESTUDIO',
     summary:
       'Plataforma contable full-stack con doble partida, conciliación bancaria y reportes financieros reproducibles sobre una base transaccional.',
     problem:
       'El cierre contable dependía de hojas de cálculo desconectadas; los asientos se duplicaban y la conciliación mensual consumía días de trabajo manual.',
     techTags: ['Vue 3', 'Node.js', 'PostgreSQL', 'Docker'],
-    role: 'Arquitecto Frontend & Integrador de Dominio Contable',
-    client: 'Lubriken C.A.',
-    duration: '20 Semanas // Q1-Q2 2025',
+    role: 'Desarrollador Frontend & Lógica de Negocio',
+    client: 'Distribución Comercial / Gestión ERP',
+    duration: '16 Semanas // Julio 2026 – Noviembre 2026',
     stackKey: 'Vue 3 • Node.js • PostgreSQL',
-    links: {
-      demo: 'https://erp-lubriken.demo',
-      repo: 'https://github.com/jonathanech/erp-lubriken',
-    },
-    liveHost: 'erp-lubriken.live',
+    links: {},
+    liveHost: 'erp.local',
     accent: '#A78BFA',
     galleryDescription:
       'Interfaces reales del ERP contable: dashboard financiero, libro diario, inventario, proveedores, auditoría y acceso.',
@@ -584,7 +576,7 @@ export const projects: readonly Project[] = [
       latencyAfter: '64 ms',
       latencyDelta: '−97.9%',
       discrepancy: '0.00%',
-      consistencyNote: 'Cierre mensual reproducido en 3 entornos con paridad transaccional.',
+      consistencyNote: 'Balance contable validado con reglas de doble partida y restricciones de integridad.',
     },
     modules: [
       {
@@ -632,18 +624,18 @@ export const projects: readonly Project[] = [
 
 export const profile: Profile = {
   name: 'Jonathan Campos',
-  role: 'Desarrollador Web Frontend',
-  headline: ['DESARROLLADOR WEB FRONTEND', 'ARQUITECTO DE SOFTWARE'],
-  location: 'Barquisimeto, Venezuela',
-  education: 'TSU en Informática',
-  bio: 'Soy estudiante de Informática (TSU) radicado en Barquisimeto, Venezuela. Combino interfaces modernas con una evaluación estricta de la lógica de negocio: audito cuellos de botella, prevengo errores logísticos en bases de datos y diseño sistemas que no fallan en silencio. Fuera del código, optimizo entornos Linux y calibro variables de extracción de espresso.',
+  role: 'Desarrollador Frontend',
+  headline: ['DESARROLLADOR WEB', 'FRONTEND ENGINEER'],
+  location: 'Barquisimeto, Venezuela (UTC-4)',
+  education: 'TSU en Informática (IUTEPAL • Associate Degree in CS)',
+  bio: 'Desarrollador Frontend especializado en Vue 3, TypeScript y arquitecturas web modernas. Diseño interfaces reactivas, accesibles y de alto rendimiento con tipado estricto y foco en la experiencia de usuario. Abierto a oportunidades remotas o híbridas (Junior / Mid) con disponibilidad inmediata.',
   bioAi:
-    'Utilizo la Inteligencia Artificial no solo como asistente de código, sino como una herramienta estratégica para optimizar flujos de desarrollo, mejorar la accesibilidad y elevar la experiencia final del usuario (UX).',
+    'Utilizo la Inteligencia Artificial como multiplicador de productividad: acelerar flujos de desarrollo, validar casos de prueba, auditar accesibilidad y optimizar la experiencia de usuario.',
   philosophyPath: '~/profile/philosophy.md',
   stats: [
-    { label: 'AUDITORÍA', value: 'TÉCNICA' },
-    { label: 'STACK', value: 'VUE 3 + TS' },
-    { label: 'BASE', value: 'BARQUISIMETO, VE' },
+    { label: 'ENFOQUE', value: 'FRONTEND & PWA' },
+    { label: 'STACK CORE', value: 'VUE 3 + TS' },
+    { label: 'ZONA / BASE', value: 'UTC-4 • REMOTO' },
   ],
   performance: [
     { label: 'RENDIMIENTO', value: 98 },
@@ -656,7 +648,7 @@ export const profile: Profile = {
     { label: 'EDITOR', value: 'VS Code + Vim' },
     { label: 'DISEÑO', value: 'Figma / Penpot' },
     { label: 'RUNTIME', value: 'Node 24 + pnpm' },
-    { label: 'CAFÉ', value: 'Espresso calibration lab' },
+    { label: 'IDIOMAS', value: 'Español (Nativo) • Inglés (B1)' },
   ],
 }
 

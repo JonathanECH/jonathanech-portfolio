@@ -52,7 +52,7 @@ describe('localized content', () => {
   })
 
   it('translates the English profile and project copy', () => {
-    expect(enContent.profile.role).toBe('Frontend Web Developer')
+    expect(enContent.profile.role).toBe('Frontend Developer')
     expect(enContent.projects[0]?.summary).not.toBe(esContent.projects[0]?.summary)
     expect(enContent.contactChannels[0]?.description).not.toBe(
       esContent.contactChannels[0]?.description,

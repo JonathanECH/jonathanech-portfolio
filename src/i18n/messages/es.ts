@@ -215,10 +215,10 @@ export const esMessages = {
   'mockup.erpOperatingExpenses': 'Gastos operativos',
   'mockup.erpNetResult': 'Resultado neto',
 
-  'meta.homeTitle': 'Jonathan Campos — Frontend & Software Architect',
+  'meta.homeTitle': 'Jonathan Campos — Desarrollador Frontend',
   'meta.notFoundTitle': '404 — Jonathan Campos',
   'meta.projectTitle': '{name} — Jonathan Campos',
   'meta.projectNotFoundTitle': 'Caso de estudio no encontrado — Jonathan Campos',
   'meta.description':
-    'Jonathan Campos — Desarrollador Web Frontend y Arquitecto de Software. Portafolio de ingeniería, auditoría técnica y casos de estudio.',
+    'Jonathan Campos — Desarrollador Frontend especializado en Vue 3, TypeScript y arquitecturas web modernas. Portafolio de ingeniería, PWA offline-first y casos de estudio.',
 } as const
