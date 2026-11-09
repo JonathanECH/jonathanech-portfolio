@@ -143,6 +143,11 @@ export const esMessages = {
   'gallery.goTo': 'Ver captura {index}: {title}',
   'gallery.noCapture': 'Sin captura',
   'gallery.secure': 'HTTPS // SECURE',
+  'gallery.openFull': 'Ver captura completa: {title}',
+  'gallery.expandHint': 'Ampliar',
+  'gallery.fullTitle': 'Captura ampliada de {name}: {title}',
+  'gallery.closeFull': 'Cerrar captura ampliada',
+  'gallery.fullHint': 'Usa las flechas para navegar · Esc para cerrar',
 
   'pager.aria': 'Navegación entre proyectos',
   'pager.previous': 'CASO ANTERIOR',

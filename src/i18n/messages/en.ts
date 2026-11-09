@@ -145,6 +145,11 @@ export const enMessages = {
   'gallery.goTo': 'View capture {index}: {title}',
   'gallery.noCapture': 'No capture',
   'gallery.secure': 'HTTPS // SECURE',
+  'gallery.openFull': 'View full capture: {title}',
+  'gallery.expandHint': 'Enlarge',
+  'gallery.fullTitle': 'Enlarged capture of {name}: {title}',
+  'gallery.closeFull': 'Close enlarged capture',
+  'gallery.fullHint': 'Use the arrow keys to navigate · Esc to close',
 
   'pager.aria': 'Project navigation',
   'pager.previous': 'PREVIOUS CASE',

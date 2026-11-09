@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { ChevronLeft, ChevronRight, Lock, Pause, Play } from '@lucide/vue'
+import { computed, ref, watch } from 'vue'
+import { ChevronLeft, ChevronRight, Lock, Maximize2, Pause, Play } from '@lucide/vue'
+import GalleryLightbox from '@/components/detail/GalleryLightbox.vue'
 import MockupCanvas from '@/components/detail/MockupCanvas.vue'
 import { useCinematicCarousel } from '@/composables/useCinematicCarousel'
+import { useGalleryLightbox } from '@/composables/useGalleryLightbox'
 import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
@@ -28,6 +30,33 @@ const {
 const total = computed(() => gallerySlides.length)
 const currentPath = computed(() => activeSlide.value?.path ?? 'overview')
 
+const {
+  isOpen: isLightboxOpen,
+  activeSlide: lightboxSlide,
+  activeIndex: lightboxIndex,
+  imageSlides: lightboxSlides,
+  canOpen: canOpenLightbox,
+  open: openLightbox,
+  close: closeLightbox,
+  next: nextLightboxSlide,
+  previous: previousLightboxSlide,
+} = useGalleryLightbox(gallerySlides)
+
+function openActiveSlide(): void {
+  if (canOpenLightbox(activeSlide.value)) {
+    openLightbox(activeSlide.value)
+  }
+}
+
+watch(isLightboxOpen, (isOpen) => {
+  if (isOpen) {
+    pause({ manual: false })
+    return
+  }
+
+  syncStagePause()
+})
+
 function pad(value: number): string {
   return String(value).padStart(2, '0')
 }
@@ -41,7 +70,7 @@ const isHovered = ref(false)
 const isFocused = ref(false)
 
 function syncStagePause(): void {
-  if (isHovered.value || isFocused.value) {
+  if (isLightboxOpen.value || isHovered.value || isFocused.value) {
     pause({ manual: false })
     return
   }
@@ -223,6 +252,23 @@ function announceCurrent(): void {
       </Transition>
 
       <button
+        v-if="activeSlide?.image"
+        type="button"
+        class="absolute inset-0 z-10 cursor-zoom-in focus-visible:bg-cyan-accent/5 focus-visible:outline-offset-[-3px]"
+        :aria-label="t('gallery.openFull', { title: activeSlide.title })"
+        @click="openActiveSlide"
+      />
+
+      <span
+        v-if="activeSlide?.image"
+        aria-hidden="true"
+        class="pointer-events-none absolute bottom-2 right-2 z-20 inline-flex items-center gap-1.5 rounded-sm border border-border bg-background/80 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.14em] text-muted backdrop-blur-md sm:text-[9px]"
+      >
+        <Maximize2 class="h-3 w-3" />
+        <span class="hidden sm:inline">{{ t('gallery.expandHint') }}</span>
+      </span>
+
+      <button
         type="button"
         class="absolute left-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-foreground/80 backdrop-blur-md transition-all hover:border-cyan-accent/70 hover:text-cyan-accent active:scale-95 sm:left-4 sm:h-10 sm:w-10"
         :aria-label="t('gallery.previous')"
@@ -279,6 +325,17 @@ function announceCurrent(): void {
         </span>
       </div>
     </div>
+
+    <GalleryLightbox
+      :open="isLightboxOpen"
+      :slide="lightboxSlide"
+      :index="lightboxIndex"
+      :total="lightboxSlides.length"
+      :project-name="project.name"
+      @close="closeLightbox"
+      @previous="previousLightboxSlide"
+      @next="nextLightboxSlide"
+    />
   </section>
 </template>
 
