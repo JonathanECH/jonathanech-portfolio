@@ -99,7 +99,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
     <Transition name="lightbox" @after-leave="handleAfterLeave">
       <div
         v-if="open && slide"
-        class="fixed inset-0 z-[120] bg-black/90 backdrop-blur-xl"
+        class="fixed inset-0 z-[120] flex h-dvh w-screen flex-col overflow-hidden bg-black/95 backdrop-blur-xl"
         @click.self="handleBackdropClick"
       >
         <div
@@ -108,16 +108,18 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
           aria-modal="true"
           :aria-label="t('gallery.fullTitle', { title: slide.title, name: projectName })"
           tabindex="-1"
-          class="lightbox-panel flex h-full min-h-0 flex-col focus:outline-none"
+          class="lightbox-panel flex h-full min-h-0 w-full flex-col justify-between overflow-hidden focus:outline-none"
         >
-          <div class="flex shrink-0 items-start justify-between gap-3 px-4 pb-2 pt-4 sm:px-6">
+          <div
+            class="flex shrink-0 items-center justify-between gap-4 border-b border-white/10 bg-black/40 px-4 py-3 sm:px-8 sm:py-4"
+          >
             <div class="min-w-0">
-              <p class="truncate font-mono text-[10px] uppercase tracking-[0.18em] text-white/60">
+              <p class="truncate font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-accent">
                 {{ projectName }} // {{ index + 1 }} / {{ total }}
               </p>
               <h2
                 id="detail-lightbox-title"
-                class="mt-1 truncate font-sans text-sm font-bold text-white sm:text-lg"
+                class="mt-0.5 truncate font-sans text-sm font-bold text-white sm:text-base md:text-lg"
               >
                 {{ slide.title }}
               </h2>
@@ -125,16 +127,16 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 
             <button
               type="button"
-              class="flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-black focus-visible:outline-white active:scale-95"
+              class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-black focus-visible:outline-white active:scale-95 sm:h-11 sm:w-11"
               :aria-label="t('gallery.closeFull')"
               @click="emit('close')"
             >
-              <X :size="22" aria-hidden="true" />
+              <X :size="20" aria-hidden="true" />
             </button>
           </div>
 
           <div
-            class="relative flex min-h-0 flex-1 select-none items-center justify-center px-2 py-2 sm:px-16 sm:py-4"
+            class="relative flex min-h-0 flex-1 select-none items-center justify-center overflow-hidden px-3 py-2 sm:px-16 md:px-20 lg:px-24"
             :class="total > 1 ? (swipe.isDragging.value ? 'cursor-grabbing' : 'cursor-grab') : ''"
             style="touch-action: pan-y"
             @pointerdown="swipe.onPointerDown"
@@ -146,7 +148,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
             <button
               v-if="total > 1"
               type="button"
-              class="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-sm transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-black active:scale-95 sm:left-5 sm:h-12 sm:w-12"
+              class="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-sm transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-black active:scale-95 sm:left-5 sm:h-12 sm:w-12"
               :aria-label="t('gallery.previous')"
               @click.stop="emit('previous')"
             >
@@ -154,7 +156,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
             </button>
 
             <div
-              class="relative flex max-h-full max-w-full items-center justify-center will-change-transform"
+              class="relative flex h-full max-h-full w-full max-w-full min-h-0 min-w-0 items-center justify-center will-change-transform"
               :style="{
                 transform: `translateX(${swipe.offsetX.value}px)`,
                 transition: swipe.isDragging.value
@@ -168,7 +170,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                 :src="slide.image"
                 :alt="slide.alt ?? slide.title"
                 draggable="false"
-                class="max-h-full w-full max-w-full select-none rounded-lg object-contain shadow-[0_24px_90px_-24px_rgba(0,0,0,0.95)] sm:w-auto"
+                class="max-h-[50vh] sm:max-h-[56vh] lg:max-h-[60vh] xl:max-h-[64vh] max-w-[92vw] sm:max-w-[85vw] lg:max-w-4xl xl:max-w-5xl h-auto w-auto max-h-full max-w-full select-none rounded-xl border border-white/10 object-contain shadow-[0_24px_70px_-20px_rgba(0,0,0,0.9)]"
                 style="touch-action: pan-y"
               />
             </div>
@@ -176,7 +178,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
             <button
               v-if="total > 1"
               type="button"
-              class="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-sm transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-black active:scale-95 sm:right-5 sm:h-12 sm:w-12"
+              class="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-sm transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-black active:scale-95 sm:right-5 sm:h-12 sm:w-12"
               :aria-label="t('gallery.next')"
               @click.stop="emit('next')"
             >
@@ -184,13 +186,15 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
             </button>
           </div>
 
-          <div class="shrink-0 px-4 pb-5 pt-1 sm:px-6">
+          <div class="shrink-0 border-t border-white/10 bg-black/40 px-4 py-3 sm:px-8 sm:py-4">
             <div
-              class="mx-auto flex max-w-4xl flex-col items-center gap-2 border-t border-white/10 pt-3 text-center"
+              class="mx-auto flex max-w-3xl flex-col items-center gap-1.5 text-center"
             >
-              <p class="text-sm leading-relaxed text-white/85">{{ slide.caption }}</p>
+              <p class="font-sans text-xs leading-relaxed text-white/90 sm:text-sm md:text-base">
+                {{ slide.caption }}
+              </p>
               <div
-                class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.16em] text-white/60"
+                class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.16em] text-white/55 sm:text-xs"
               >
                 <span aria-live="polite">{{ index + 1 }} / {{ total }}</span>
                 <span aria-hidden="true">//</span>
