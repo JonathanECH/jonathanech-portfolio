@@ -42,7 +42,35 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 
 | Ítem | Descripción | Estado | Detalle técnico |
 | :--- | :--- | :---: | :--- |
-| **P2.1** | **Enlaces a Repositorios Públicos Reales** | **PENDIENTE** | Enlazar proyectos públicos del usuario como complementos de código visible. |
-| **P2.2** | **CV en PDF Actualizado** | **PENDIENTE** | Asegurar coherencia entre el CV descargable y los datos de la web. |
-| **P2.3** | **Verificación Integral CI/Local** | **PENDIENTE** | Ejecutar pipeline `pnpm verify` y script de verificación de enlaces. |
+| **P2.1** | **Enlaces a Repositorios Públicos Reales** | **PLANIFICADO** | Se acordó integrar repositorios públicos en una próxima fase cuando estén listos los proyectos: `clima-vue` y el nuevo `CRM desde cero`. |
+| **P2.2** | **CV en PDF Actualizado** | **CONSERVADO** | Se mantiene temporalmente el archivo actual `public/cv/jonathan-campos-cv.pdf` a petición del usuario. Se actualizará en una iteración posterior. |
+| **P2.3** | **Verificación Integral CI/Local** | **COMPLETADO** | Pipeline `pnpm verify` pasando al 100%: 0 errores de typecheck, 35/35 pruebas unitarias en Vitest y build de producción optimizado en Vite. |
+
+---
+
+## Próximos Proyectos a Integrar (Roadmap Futuro)
+
+Cuando los proyectos estén listos en GitHub, se integrarán siguiendo esta estructura estándar:
+
+### 1. `clima-vue`
+- **Tipo:** Aplicación de consumo de APIs climáticas en tiempo real con geolocalización.
+- **Objetivo:** Mostrar manejo de APIs asíncronas REST, caché local, reactividad avanzada y diseño limpio de interfaz.
+- **Enlaces a incluir:**
+  - `repo`: Enlace al repositorio público en `github.com/jonathanech/clima-vue`.
+  - `demo`: Enlace al despliegue en vivo en Vercel/Netlify.
+
+### 2. `CRM (Creado desde cero)`
+- **Tipo:** Plataforma CRM completa full-stack / frontend moderna.
+- **Objetivo:** Mostrar arquitectura empresarial limpia, gestión de leads, pipeline comercial, autenticación, estado global con Pinia y tipado estricto con TypeScript.
+- **Enlaces a incluir:**
+  - `repo`: Enlace al repositorio público en GitHub con código legible para reclutadores.
+  - `demo`: Despliegue interactivo con datos de demostración (demo sandbox).
+
+### Checklist de Integración para Nuevos Proyectos:
+1. **Datos en Español:** Añadir objeto `Project` en `src/data/portfolio.ts` (slug, sector, techTags, role, client, duration, links con `demo` y `repo`, gallery con imágenes `.webp`, challenge, audit y modules).
+2. **Datos en Inglés:** Añadir la traducción exacta en `src/data/portfolio.en.ts` manteniendo paridad de campos y slugs.
+3. **Imágenes y Mockups:** Añadir capturas de pantalla optimizadas en `public/projects/<slug>/` en formato WebP.
+4. **Sitemap:** Registrar la nueva URL en `public/sitemap.xml`.
+5. **Pruebas:** Actualizar la expectativa de cantidad de proyectos en `src/stores/portfolio.spec.ts` y `src/i18n/i18n.spec.ts` (`toHaveLength(4)` o `toHaveLength(5)`).
+6. **Validación:** Ejecutar `pnpm verify` confirmando que typecheck, tests y build pasen.
 
