@@ -232,7 +232,7 @@ export const projects: readonly Project[] = [
     title: 'TILYSHOP',
     titleHighlight: 'INVENTORY',
     year: '2026',
-    status: 'CASO DE ESTUDIO',
+    status: 'EN PRODUCCIÓN',
     summary:
       'Sistema de inventario offline-first para puntos de venta: cálculo de stock efectivo en cliente, trazabilidad atómica de lotes y sincronización transaccional.',
     problem:

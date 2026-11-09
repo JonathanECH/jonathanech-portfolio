@@ -23,7 +23,7 @@ const projects: readonly Project[] = [
     title: 'TILYSHOP',
     titleHighlight: 'INVENTORY',
     year: '2026',
-    status: 'CASE STUDY',
+    status: 'IN PRODUCTION',
     summary:
       'Offline-first inventory system for retail POS: client-side effective stock calculation, atomic batch traceability and transactional synchronization.',
     problem:
