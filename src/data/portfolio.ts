@@ -232,22 +232,20 @@ export const projects: readonly Project[] = [
     title: 'TILYSHOP',
     titleHighlight: 'INVENTORY',
     year: '2026',
-    status: 'EN PRODUCCIÓN',
+    status: 'CASO DE ESTUDIO',
     summary:
-      'Rediseño integral del inventario textil B2B: trazabilidad atómica de lotes, auditoría transaccional y una capa reactiva offline-first para operaciones de almacén.',
+      'Sistema de inventario offline-first para puntos de venta: cálculo de stock efectivo en cliente, trazabilidad atómica de lotes y sincronización transaccional.',
     problem:
-      'El sistema previo conciliaba stock con procesos manuales y escrituras no atómicas: lotes duplicados, descuadres silenciosos y consultas críticas de hasta 4,820 ms.',
+      'Puntos de venta con conectividad inestable y riesgo de sobreventa por terminales concurrentes. El sistema previo no garantizaba atomicidad ni auditoría de ajustes.',
     techTags: ['Vue 3', 'TypeScript', 'Pinia', 'PostgreSQL', 'Tailwind CSS'],
-    role: 'Arquitecto Frontend & Auditor de Lógica de Negocio',
-    client: 'Industria Textil & Confección B2B',
+    role: 'Desarrollador Frontend & Arquitectura Offline-First',
+    client: 'Punto de Venta / Comercio Textil',
     duration: '12 Semanas // Q1-Q2 2026',
     stackKey: 'Vue 3 • TypeScript • PostgreSQL',
     links: {
-      demo: 'https://tilyshop-inventory.demo',
-      repo: 'https://github.com/jonathanech/tilyshop-inventory',
       whitepaper: '/docs/tilyshop-whitepaper.pdf',
     },
-    liveHost: 'tilyshop-inventory.live',
+    liveHost: 'app.tilyshop.internal',
     accent: '#00E5FF',
     galleryDescription:
       'Interfaces reales del flujo operativo: panel general, administración de inventario, historial de ventas y seguridad del perfil.',
@@ -314,7 +312,7 @@ export const projects: readonly Project[] = [
       latencyAfter: '42 ms',
       latencyDelta: '−99.1%',
       discrepancy: '0.00%',
-      consistencyNote: 'Conciliación ACID verificada en 8,412 transacciones de auditoría.',
+      consistencyNote: 'Sincronización idempotente con client_txn_id y transacciones atómicas documentadas en whitepaper.',
     },
     modules: [
       {
@@ -365,21 +363,18 @@ export const projects: readonly Project[] = [
     title: 'SISTEMA DE GESTIÓN',
     titleHighlight: 'MÉDICA',
     year: '2025',
-    status: 'EN PRODUCCIÓN',
+    status: 'CASO DE ESTUDIO',
     summary:
       'SPA clínica para agenda, expedientes y triaje: flujos de atención sin fricción, estado reactivo y una interfaz accesible para personal médico.',
     problem:
-      'La clínica operaba con agendas paralelas y expedientes en papel; las citas se duplicaban y el personal perdía minutos por paciente en tareas repetitivas.',
+      'Gestión fragmentada entre agendas paralelas y registros manuales; duplicación de citas y necesidad de control de acceso por rol médico.',
     techTags: ['Vue 3', 'TypeScript', 'Supabase', 'Tailwind CSS'],
-    role: 'Desarrollador Full Stack & Diseñador de Interacción',
-    client: 'Red de Clínicas Privadas',
+    role: 'Desarrollador Frontend & Integración SPA',
+    client: 'Gestión Clínica / Consultorios Médicos',
     duration: '16 Semanas // Q3-Q4 2025',
     stackKey: 'Vue 3 • TypeScript • Supabase',
-    links: {
-      demo: 'https://medicore-clinic.demo',
-      repo: 'https://github.com/jonathanech/gestion-medica',
-    },
-    liveHost: 'medicore-clinic.live',
+    links: {},
+    liveHost: 'clinica.local',
     accent: '#5EEAD4',
     galleryDescription:
       'Interfaces reales del flujo clínico: agenda de consultorios, expediente unificado y telemetría de ocupación.',
@@ -430,7 +425,7 @@ export const projects: readonly Project[] = [
       latencyAfter: '58 ms',
       latencyDelta: '−98.2%',
       discrepancy: '0.02%',
-      consistencyNote: 'Trazabilidad de acceso verificada en 2,140 expedientes auditados.',
+      consistencyNote: 'Flujos clínicos y control de acceso por rol validados en entorno de pruebas.',
     },
     modules: [
       {
@@ -487,15 +482,12 @@ export const projects: readonly Project[] = [
     problem:
       'El cierre contable dependía de hojas de cálculo desconectadas; los asientos se duplicaban y la conciliación mensual consumía días de trabajo manual.',
     techTags: ['Vue 3', 'Node.js', 'PostgreSQL', 'Docker'],
-    role: 'Arquitecto Frontend & Integrador de Dominio Contable',
-    client: 'Lubriken C.A.',
+    role: 'Desarrollador Frontend & Lógica de Negocio',
+    client: 'Distribución Comercial / Gestión ERP',
     duration: '20 Semanas // Q1-Q2 2025',
     stackKey: 'Vue 3 • Node.js • PostgreSQL',
-    links: {
-      demo: 'https://erp-lubriken.demo',
-      repo: 'https://github.com/jonathanech/erp-lubriken',
-    },
-    liveHost: 'erp-lubriken.live',
+    links: {},
+    liveHost: 'erp.local',
     accent: '#A78BFA',
     galleryDescription:
       'Interfaces reales del ERP contable: dashboard financiero, libro diario, inventario, proveedores, auditoría y acceso.',
@@ -584,7 +576,7 @@ export const projects: readonly Project[] = [
       latencyAfter: '64 ms',
       latencyDelta: '−97.9%',
       discrepancy: '0.00%',
-      consistencyNote: 'Cierre mensual reproducido en 3 entornos con paridad transaccional.',
+      consistencyNote: 'Balance contable validado con reglas de doble partida y restricciones de integridad.',
     },
     modules: [
       {
@@ -632,18 +624,18 @@ export const projects: readonly Project[] = [
 
 export const profile: Profile = {
   name: 'Jonathan Campos',
-  role: 'Desarrollador Web Frontend',
-  headline: ['DESARROLLADOR WEB FRONTEND', 'ARQUITECTO DE SOFTWARE'],
-  location: 'Barquisimeto, Venezuela',
-  education: 'TSU en Informática',
-  bio: 'Soy estudiante de Informática (TSU) radicado en Barquisimeto, Venezuela. Combino interfaces modernas con una evaluación estricta de la lógica de negocio: audito cuellos de botella, prevengo errores logísticos en bases de datos y diseño sistemas que no fallan en silencio. Fuera del código, optimizo entornos Linux y calibro variables de extracción de espresso.',
+  role: 'Desarrollador Frontend',
+  headline: ['DESARROLLADOR WEB', 'FRONTEND ENGINEER'],
+  location: 'Barquisimeto, Venezuela (UTC-4)',
+  education: 'TSU en Informática (Técnico Superior Universitario)',
+  bio: 'Desarrollador Frontend especializado en Vue 3, TypeScript y arquitecturas web modernas. Diseño interfaces reactivas, accesibles y de alto rendimiento con tipado estricto y foco en la experiencia de usuario. Abierto a oportunidades remotas o híbridas (Junior / Mid) con disponibilidad inmediata.',
   bioAi:
-    'Utilizo la Inteligencia Artificial no solo como asistente de código, sino como una herramienta estratégica para optimizar flujos de desarrollo, mejorar la accesibilidad y elevar la experiencia final del usuario (UX).',
+    'Utilizo la Inteligencia Artificial como multiplicador de productividad: acelerar flujos de desarrollo, validar casos de prueba, auditar accesibilidad y optimizar la experiencia de usuario.',
   philosophyPath: '~/profile/philosophy.md',
   stats: [
-    { label: 'AUDITORÍA', value: 'TÉCNICA' },
-    { label: 'STACK', value: 'VUE 3 + TS' },
-    { label: 'BASE', value: 'BARQUISIMETO, VE' },
+    { label: 'ENFOQUE', value: 'FRONTEND & PWA' },
+    { label: 'STACK CORE', value: 'VUE 3 + TS' },
+    { label: 'ZONA / BASE', value: 'UTC-4 • REMOTO' },
   ],
   performance: [
     { label: 'RENDIMIENTO', value: 98 },

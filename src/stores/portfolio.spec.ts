@@ -39,7 +39,7 @@ describe('portfolio data integrity', () => {
   })
 
   it('exposes a complete profile and four direct contact channels', () => {
-    expect(profile.headline).toEqual(['DESARROLLADOR WEB FRONTEND', 'ARQUITECTO DE SOFTWARE'])
+    expect(profile.headline).toEqual(['DESARROLLADOR WEB', 'FRONTEND ENGINEER'])
     expect(profile.performance).toHaveLength(4)
     expect(contactChannels).toHaveLength(4)
     expect(contactChannels.find((channel) => channel.id === 'email')?.copyValue).toBe(
@@ -55,10 +55,10 @@ describe('portfolio data integrity', () => {
 
   it('frames artificial intelligence as a strategic tool in both locales', () => {
     expect(profile.bioAi).toContain(
-      'Utilizo la Inteligencia Artificial no solo como asistente de código, sino como una herramienta estratégica para optimizar flujos de desarrollo, mejorar la accesibilidad y elevar la experiencia final del usuario (UX).',
+      'Utilizo la Inteligencia Artificial como multiplicador de productividad',
     )
     expect(enContent.profile.bioAi).toContain(
-      'I use Artificial Intelligence not only as a coding assistant, but as a strategic tool to optimize development workflows, improve accessibility and elevate the final user experience (UX).',
+      'I use Artificial Intelligence as a productivity multiplier',
     )
   })
 })

@@ -23,22 +23,20 @@ const projects: readonly Project[] = [
     title: 'TILYSHOP',
     titleHighlight: 'INVENTORY',
     year: '2026',
-    status: 'IN PRODUCTION',
+    status: 'CASE STUDY',
     summary:
-      'End-to-end redesign of the B2B textile inventory: atomic batch traceability, transactional auditing and an offline-first reactive layer for warehouse operations.',
+      'Offline-first inventory system for retail POS: client-side effective stock calculation, atomic batch traceability and transactional synchronization.',
     problem:
-      'The previous system reconciled stock through manual processes and non-atomic writes: duplicated batches, silent mismatches and critical queries taking up to 4,820 ms.',
+      'Retail POS points with unstable connectivity and overselling risks across concurrent terminals. The previous setup lacked atomicity and audit trails for stock adjustments.',
     techTags: ['Vue 3', 'TypeScript', 'Pinia', 'PostgreSQL', 'Tailwind CSS'],
-    role: 'Frontend Architect & Business Logic Auditor',
-    client: 'Textile & Apparel B2B Industry',
+    role: 'Frontend Developer & Offline-First Architecture',
+    client: 'Retail POS / Textile Distribution',
     duration: '12 Weeks // Q1-Q2 2026',
     stackKey: 'Vue 3 • TypeScript • PostgreSQL',
     links: {
-      demo: 'https://tilyshop-inventory.demo',
-      repo: 'https://github.com/jonathanech/tilyshop-inventory',
       whitepaper: '/docs/tilyshop-whitepaper.pdf',
     },
-    liveHost: 'tilyshop-inventory.live',
+    liveHost: 'app.tilyshop.internal',
     accent: '#00E5FF',
     galleryDescription:
       'Real interfaces from the operational flow: overview panel, inventory administration, sales history and profile security.',
@@ -105,7 +103,7 @@ const projects: readonly Project[] = [
       latencyAfter: '42 ms',
       latencyDelta: '−99.1%',
       discrepancy: '0.00%',
-      consistencyNote: 'ACID reconciliation verified across 8,412 audit transactions.',
+      consistencyNote: 'Idempotent synchronization with client_txn_id and atomic transactions documented in whitepaper.',
     },
     modules: [
       {
@@ -156,21 +154,18 @@ const projects: readonly Project[] = [
     title: 'MEDICAL',
     titleHighlight: 'MANAGEMENT SYSTEM',
     year: '2025',
-    status: 'IN PRODUCTION',
+    status: 'CASE STUDY',
     summary:
       'Clinical SPA for scheduling, records and triage: frictionless care flows, reactive state and an accessible interface for medical staff.',
     problem:
-      'The clinic operated with parallel schedules and paper records; appointments were duplicated and staff lost minutes per patient on repetitive tasks.',
+      'Fragmented workflow across paper records and isolated schedules; duplicate bookings and need for strict role-based access control.',
     techTags: ['Vue 3', 'TypeScript', 'Supabase', 'Tailwind CSS'],
-    role: 'Full Stack Developer & Interaction Designer',
-    client: 'Private Clinic Network',
+    role: 'Frontend Developer & SPA Integration',
+    client: 'Healthcare / Clinic Administration',
     duration: '16 Weeks // Q3-Q4 2025',
     stackKey: 'Vue 3 • TypeScript • Supabase',
-    links: {
-      demo: 'https://medicore-clinic.demo',
-      repo: 'https://github.com/jonathanech/gestion-medica',
-    },
-    liveHost: 'medicore-clinic.live',
+    links: {},
+    liveHost: 'clinica.local',
     accent: '#5EEAD4',
     galleryDescription:
       'Real interfaces from the clinical flow: consultation scheduling, unified records and occupancy telemetry.',
@@ -220,7 +215,7 @@ const projects: readonly Project[] = [
       latencyAfter: '58 ms',
       latencyDelta: '−98.2%',
       discrepancy: '0.02%',
-      consistencyNote: 'Access traceability verified across 2,140 audited records.',
+      consistencyNote: 'Clinical workflows and role-based access control validated in testing environment.',
     },
     modules: [
       {
@@ -273,15 +268,12 @@ const projects: readonly Project[] = [
     problem:
       'Accounting close depended on disconnected spreadsheets; entries were duplicated and monthly reconciliation consumed days of manual work.',
     techTags: ['Vue 3', 'Node.js', 'PostgreSQL', 'Docker'],
-    role: 'Frontend Architect & Accounting Domain Integrator',
-    client: 'Lubriken C.A.',
+    role: 'Frontend Developer & Business Logic',
+    client: 'Commercial Distribution / ERP Case Study',
     duration: '20 Weeks // Q1-Q2 2025',
     stackKey: 'Vue 3 • Node.js • PostgreSQL',
-    links: {
-      demo: 'https://erp-lubriken.demo',
-      repo: 'https://github.com/jonathanech/erp-lubriken',
-    },
-    liveHost: 'erp-lubriken.live',
+    links: {},
+    liveHost: 'erp.local',
     accent: '#A78BFA',
     galleryDescription:
       'Real interfaces from the accounting ERP: financial dashboard, general ledger, inventory, suppliers, audit and login.',
@@ -368,7 +360,7 @@ const projects: readonly Project[] = [
       latencyAfter: '64 ms',
       latencyDelta: '−97.9%',
       discrepancy: '0.00%',
-      consistencyNote: 'Monthly close reproduced across 3 environments with transactional parity.',
+      consistencyNote: 'Double-entry balance validated with accounting rules and integrity constraints.',
     },
     modules: [
       {
@@ -416,18 +408,18 @@ const projects: readonly Project[] = [
 
 const profile: Profile = {
   name: 'Jonathan Campos',
-  role: 'Frontend Web Developer',
-  headline: ['FRONTEND WEB DEVELOPER', 'SOFTWARE ARCHITECT'],
-  location: 'Barquisimeto, Venezuela',
-  education: 'Computer Science (TSU)',
-  bio: 'I am a Computer Science student (TSU) based in Barquisimeto, Venezuela. I combine modern interfaces with strict business-logic evaluation: I audit bottlenecks, prevent logistics errors in databases and design systems that do not fail silently. Outside code, I optimize Linux environments and calibrate espresso extraction variables.',
+  role: 'Frontend Developer',
+  headline: ['WEB DEVELOPER', 'FRONTEND ENGINEER'],
+  location: 'Barquisimeto, Venezuela (UTC-4)',
+  education: 'Associate Degree in Computer Science (TSU Informática)',
+  bio: 'Frontend Developer specialized in Vue 3, TypeScript, and modern web architectures. I build reactive, accessible, and resilient interfaces with an offline-first approach and strict typing. Open to remote or hybrid opportunities (Junior / Mid) with immediate availability in UTC-4 timezone.',
   bioAi:
-    'I use Artificial Intelligence not only as a coding assistant, but as a strategic tool to optimize development workflows, improve accessibility and elevate the final user experience (UX).',
+    'I use Artificial Intelligence as a productivity multiplier: accelerating workflows, validating edge cases, auditing accessibility, and polishing user experience.',
   philosophyPath: '~/profile/philosophy.md',
   stats: [
-    { label: 'AUDIT', value: 'TECHNICAL' },
-    { label: 'STACK', value: 'VUE 3 + TS' },
-    { label: 'BASE', value: 'BARQUISIMETO, VE' },
+    { label: 'FOCUS', value: 'FRONTEND & PWA' },
+    { label: 'CORE STACK', value: 'VUE 3 + TS' },
+    { label: 'TIMEZONE', value: 'UTC-4 • REMOTE' },
   ],
   performance: [
     { label: 'PERFORMANCE', value: 98 },
