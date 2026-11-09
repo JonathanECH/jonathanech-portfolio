@@ -113,11 +113,11 @@ onUnmounted(() => {
         ref="panelRef"
         role="dialog"
         tabindex="-1"
-        :aria-label="t('settings.title')"
+        aria-labelledby="settings-panel-title"
         class="absolute right-0 top-[calc(100%+0.6rem)] z-50 w-60 overflow-hidden rounded-xl border border-border bg-surface/95 shadow-[0_18px_50px_-12px_rgba(0,0,0,0.7)] backdrop-blur-xl focus:outline-none"
       >
         <div class="border-b border-border/70 px-4 py-3">
-          <p class="font-sans text-sm font-semibold text-foreground">{{ t('settings.title') }}</p>
+          <p id="settings-panel-title" class="font-sans text-sm font-semibold text-foreground">{{ t('settings.title') }}</p>
           <p class="mt-0.5 font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
             {{ t('settings.subtitle') }}
           </p>

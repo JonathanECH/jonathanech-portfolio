@@ -421,6 +421,8 @@ const profile: Profile = {
   location: 'Barquisimeto, Venezuela',
   education: 'Computer Science (TSU)',
   bio: 'I am a Computer Science student (TSU) based in Barquisimeto, Venezuela. I combine modern interfaces with strict business-logic evaluation: I audit bottlenecks, prevent logistics errors in databases and design systems that do not fail silently. Outside code, I optimize Linux environments and calibrate espresso extraction variables.',
+  bioAi:
+    'I use Artificial Intelligence not only as a coding assistant, but as a strategic tool to optimize development workflows, improve accessibility and elevate the final user experience (UX).',
   philosophyPath: '~/profile/philosophy.md',
   stats: [
     { label: 'AUDIT', value: 'TECHNICAL' },

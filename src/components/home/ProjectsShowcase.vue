@@ -30,6 +30,7 @@ const sectionCode = computed(() => t('projects.code'))
         <ProjectCard
           v-for="(project, index) in projects"
           :key="project.slug"
+          v-reveal="index * 80"
           :project="project"
           :index="index"
           @open-quick-view="store.openQuickView"

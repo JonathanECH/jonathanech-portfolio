@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { contactChannels, profile, projects, technologies } from '@/data/portfolio'
+import { enContent } from '@/data/portfolio.en'
 import { usePortfolioStore } from '@/stores/portfolio'
 import { usePortfolioData } from '@/composables/usePortfolioData'
 
@@ -49,6 +50,15 @@ describe('portfolio data integrity', () => {
     )
     expect(contactChannels.find((channel) => channel.id === 'whatsapp')?.href).toBe(
       'https://wa.me/584121966931',
+    )
+  })
+
+  it('frames artificial intelligence as a strategic tool in both locales', () => {
+    expect(profile.bioAi).toContain(
+      'Utilizo la Inteligencia Artificial no solo como asistente de código, sino como una herramienta estratégica para optimizar flujos de desarrollo, mejorar la accesibilidad y elevar la experiencia final del usuario (UX).',
+    )
+    expect(enContent.profile.bioAi).toContain(
+      'I use Artificial Intelligence not only as a coding assistant, but as a strategic tool to optimize development workflows, improve accessibility and elevate the final user experience (UX).',
     )
   })
 })
@@ -103,6 +113,48 @@ describe('portfolio store', () => {
 
     expect(store.isQuickViewOpen).toBe(false)
     expect(store.quickViewProject).toBeNull()
+  })
+
+  it('collapses the all-technologies grid to the first four items', () => {
+    const store = usePortfolioStore()
+
+    expect(store.visibleTechnologies).toHaveLength(4)
+    expect(store.canToggleTechGrid).toBe(true)
+    expect(store.isTechGridExpanded).toBe(false)
+  })
+
+  it('expands and collapses the all-technologies grid', () => {
+    const store = usePortfolioStore()
+
+    store.toggleTechGrid()
+
+    expect(store.isTechGridExpanded).toBe(true)
+    expect(store.visibleTechnologies).toHaveLength(23)
+
+    store.toggleTechGrid()
+
+    expect(store.isTechGridExpanded).toBe(false)
+    expect(store.visibleTechnologies).toHaveLength(4)
+  })
+
+  it('shows every technology of a category and hides the toggle', () => {
+    const store = usePortfolioStore()
+
+    store.setCategory('backend')
+
+    expect(store.visibleTechnologies).toHaveLength(7)
+    expect(store.canToggleTechGrid).toBe(false)
+  })
+
+  it('resets the expansion when the category changes', () => {
+    const store = usePortfolioStore()
+
+    store.toggleTechGrid()
+    store.setCategory('frontend')
+    store.setCategory('all')
+
+    expect(store.isTechGridExpanded).toBe(false)
+    expect(store.visibleTechnologies).toHaveLength(4)
   })
 })
 

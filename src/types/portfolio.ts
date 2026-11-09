@@ -153,6 +153,7 @@ export interface Profile {
   readonly location: string
   readonly education: string
   readonly bio: string
+  readonly bioAi: string
   readonly philosophyPath: string
   readonly stats: readonly ProfileStat[]
   readonly performance: readonly PerformanceMetric[]

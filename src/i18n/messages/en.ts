@@ -84,6 +84,9 @@ export const enMessages = {
   'tech.modulesLoaded': 'Modules loaded // {count}',
   'tech.filter': 'Filter: {category}',
   'tech.specialtiesAria': 'Specialties',
+  'tech.showMore': 'Show more',
+  'tech.showLess': 'Show less',
+  'tech.gridAria': 'Technology ecosystem',
 
   'detail.breadcrumbAria': 'Breadcrumbs',
   'detail.projects': 'PROJECTS',

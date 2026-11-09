@@ -3,11 +3,14 @@ import { defineStore } from 'pinia'
 import { useI18n } from '@/i18n'
 import type { Project, TechFilter, Technology } from '@/types/portfolio'
 
+const TECH_PREVIEW_COUNT = 4
+
 export const usePortfolioStore = defineStore('portfolio', () => {
   const { content } = useI18n()
 
   const activeCategory = ref<TechFilter>('all')
   const quickViewSlug = ref<string | null>(null)
+  const isTechGridExpanded = ref(false)
 
   const technologies = computed<readonly Technology[]>(() => content.value.technologies)
   const projects = computed<readonly Project[]>(() => content.value.projects)
@@ -42,8 +45,25 @@ export const usePortfolioStore = defineStore('portfolio', () => {
 
   const isQuickViewOpen = computed(() => quickViewProject.value !== null)
 
+  const visibleTechnologies = computed<readonly Technology[]>(() => {
+    if (activeCategory.value !== 'all' || isTechGridExpanded.value) {
+      return filteredTechnologies.value
+    }
+
+    return filteredTechnologies.value.slice(0, TECH_PREVIEW_COUNT)
+  })
+
+  const canToggleTechGrid = computed(
+    () => activeCategory.value === 'all' && filteredTechnologies.value.length > TECH_PREVIEW_COUNT,
+  )
+
   function setCategory(category: TechFilter): void {
     activeCategory.value = category
+    isTechGridExpanded.value = false
+  }
+
+  function toggleTechGrid(): void {
+    isTechGridExpanded.value = !isTechGridExpanded.value
   }
 
   function openQuickView(slug: string): void {
@@ -59,11 +79,15 @@ export const usePortfolioStore = defineStore('portfolio', () => {
   return {
     activeCategory,
     quickViewSlug,
+    isTechGridExpanded,
     filteredTechnologies,
+    visibleTechnologies,
     categoryCounts,
+    canToggleTechGrid,
     quickViewProject,
     isQuickViewOpen,
     setCategory,
+    toggleTechGrid,
     openQuickView,
     closeQuickView,
   }

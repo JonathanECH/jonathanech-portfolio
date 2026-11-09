@@ -82,6 +82,9 @@ export const esMessages = {
   'tech.modulesLoaded': 'Modules loaded // {count}',
   'tech.filter': 'Filter: {category}',
   'tech.specialtiesAria': 'Especialidades',
+  'tech.showMore': 'Ver más',
+  'tech.showLess': 'Ver menos',
+  'tech.gridAria': 'Tecnologías del ecosistema',
 
   'detail.breadcrumbAria': 'Migas de pan',
   'detail.projects': 'PROYECTOS',

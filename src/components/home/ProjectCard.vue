@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { ArrowRight, Gauge } from '@lucide/vue'
+import { ArrowRight, ArrowUpRight, Gauge } from '@lucide/vue'
 import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
@@ -26,13 +26,13 @@ function openQuickView(): void {
 </script>
 
 <template>
-  <div class="animate-fade-up" :style="`animation-delay: ${index * 70}ms`">
+  <div class="reveal">
     <article
       class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card/60 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:shadow-[0_18px_40px_-24px_rgba(var(--ech-accent-rgb),0.45)]"
       :style="`--accent: ${project.accent}`"
     >
       <!-- Real screenshot preview, with the CSS/SVG mockup as fallback -->
-      <div class="relative h-48 overflow-hidden border-b border-border bg-background/70" aria-hidden="true">
+      <div class="relative h-48 overflow-hidden border-b border-border bg-background/70">
         <template v-if="previewSlide">
           <img
             :src="previewSlide.image"
@@ -76,6 +76,13 @@ function openQuickView(): void {
               </span>
             </div>
           </div>
+
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/25 bg-black/45 text-white shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:bg-black/65 sm:opacity-85"
+          >
+            <ArrowUpRight :size="14" />
+          </span>
         </template>
 
         <template v-else>

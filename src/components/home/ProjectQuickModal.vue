@@ -58,6 +58,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
             role="dialog"
             aria-modal="true"
             aria-labelledby="quick-view-title"
+            aria-describedby="quick-view-summary"
             tabindex="-1"
             class="modal-panel relative flex max-h-[calc(100dvh-2rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-surface-card shadow-[0_32px_80px_-32px_rgba(0,0,0,0.9)] sm:max-h-[calc(100dvh-3rem)]"
             :style="`--accent: ${project.accent}`"
@@ -105,7 +106,9 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                 <span class="text-[var(--accent)]">{{ project.titleHighlight }}</span>
               </h2>
 
-              <p class="mt-3 text-sm leading-relaxed text-muted">{{ project.summary }}</p>
+              <p id="quick-view-summary" class="mt-3 text-sm leading-relaxed text-muted">
+                {{ project.summary }}
+              </p>
 
               <div class="mt-5 flex flex-wrap gap-1.5">
                 <span

@@ -31,6 +31,11 @@ const footerLinks = computed(() =>
             :target="link.external ? '_blank' : undefined"
             :rel="link.external ? 'noopener noreferrer' : undefined"
             class="transition-colors hover:text-cyan-accent"
+            :aria-label="
+              link.external
+                ? t('contact.externalAria', { action: link.label, value: link.value })
+                : `${link.label}: ${link.value}`
+            "
           >
             {{ link.id === 'email' ? 'EMAIL' : link.id === 'github' ? 'GITHUB' : 'LINKEDIN' }}
           </a>

@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { ChevronDown } from '@lucide/vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 import TechCard from '@/components/home/TechCard.vue'
 import { useI18n } from '@/i18n'
 import { usePortfolioStore } from '@/stores/portfolio'
-import type { TechFilter, Technology } from '@/types/portfolio'
+import type { TechFilter } from '@/types/portfolio'
 
 const store = usePortfolioStore()
 const { content, t } = useI18n()
 const techFilterOptions = computed(() => content.value.techFilterOptions)
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 const activeCategory = computed<TechFilter>(() => store.activeCategory)
 const categoryCounts = computed(() => store.categoryCounts)
-const filteredTechnologies = computed<readonly Technology[]>(() => store.filteredTechnologies)
+const filteredTechnologies = computed(() => store.filteredTechnologies)
+const visibleTechnologies = computed(() => store.visibleTechnologies)
+const canToggleTechGrid = computed(() => store.canToggleTechGrid)
+const isTechGridExpanded = computed(() => store.isTechGridExpanded)
 
 const activeFilterLabel = computed(
   () =>
@@ -29,8 +32,8 @@ function setCategory(filter: TechFilter): void {
   store.setCategory(filter)
 }
 
-function cardDelay(index: number): string {
-  return prefersReducedMotion ? '0ms' : `${index * 55}ms`
+function toggleTechGrid(): void {
+  store.toggleTechGrid()
 }
 </script>
 
@@ -91,15 +94,39 @@ function cardDelay(index: number): string {
         }}
       </p>
 
-      <div class="mt-8 grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <TransitionGroup
+        id="tech-grid"
+        tag="div"
+        name="tech"
+        role="list"
+        :aria-label="t('tech.gridAria')"
+        class="mt-8 grid grid-cols-2 gap-3.5 lg:grid-cols-3 xl:grid-cols-4"
+      >
         <TechCard
-          v-for="(technology, index) in filteredTechnologies"
+          v-for="(technology, index) in visibleTechnologies"
           :key="`${activeCategory}-${technology.id}`"
+          v-reveal="Math.min(index, 6) * 45"
           :technology="technology"
           :index="index"
-          class="animate-fade-up"
-          :style="{ animationDelay: cardDelay(index) }"
         />
+      </TransitionGroup>
+
+      <div v-if="canToggleTechGrid" class="mt-7 flex justify-center">
+        <button
+          type="button"
+          class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-surface-card/60 px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted transition-all duration-300 hover:border-border-hover hover:text-cyan-accent active:scale-[0.98] active:border-cyan-accent active:text-cyan-accent sm:text-[11px]"
+          :aria-expanded="isTechGridExpanded"
+          aria-controls="tech-grid"
+          @click="toggleTechGrid"
+        >
+          {{ isTechGridExpanded ? t('tech.showLess') : t('tech.showMore') }}
+          <ChevronDown
+            :size="14"
+            aria-hidden="true"
+            class="transition-transform duration-300"
+            :class="isTechGridExpanded ? 'rotate-180' : ''"
+          />
+        </button>
       </div>
 
       <div
@@ -113,3 +140,20 @@ function cardDelay(index: number): string {
     </div>
   </section>
 </template>
+
+<style scoped>
+.tech-move {
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tech-leave-active {
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.tech-leave-to {
+  opacity: 0;
+  transform: scale(0.97);
+}
+</style>

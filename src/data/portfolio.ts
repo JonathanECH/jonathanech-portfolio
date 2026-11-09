@@ -637,6 +637,8 @@ export const profile: Profile = {
   location: 'Barquisimeto, Venezuela',
   education: 'TSU en Informática',
   bio: 'Soy estudiante de Informática (TSU) radicado en Barquisimeto, Venezuela. Combino interfaces modernas con una evaluación estricta de la lógica de negocio: audito cuellos de botella, prevengo errores logísticos en bases de datos y diseño sistemas que no fallan en silencio. Fuera del código, optimizo entornos Linux y calibro variables de extracción de espresso.',
+  bioAi:
+    'Utilizo la Inteligencia Artificial no solo como asistente de código, sino como una herramienta estratégica para optimizar flujos de desarrollo, mejorar la accesibilidad y elevar la experiencia final del usuario (UX).',
   philosophyPath: '~/profile/philosophy.md',
   stats: [
     { label: 'AUDITORÍA', value: 'TÉCNICA' },

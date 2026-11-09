@@ -53,6 +53,12 @@ const sectionCode = computed(() => t('about.code'))
                 {{ profile.bio }}
               </p>
 
+              <p
+                class="mt-4 border-l-2 border-cyan-accent/20 pl-4 text-sm leading-relaxed text-muted sm:text-[15px]"
+              >
+                {{ profile.bioAi }}
+              </p>
+
               <div class="mt-6 grid grid-cols-3 gap-2.5 sm:gap-3">
                 <div
                   v-for="stat in profile.stats"

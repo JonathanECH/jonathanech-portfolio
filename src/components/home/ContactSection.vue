@@ -75,7 +75,8 @@ function copyEmail(value: string): void {
                 <button
                   v-if="channel.copyValue"
                   type="button"
-                  class="relative z-10 mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-md border border-border bg-background/60 px-2.5 py-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-border-hover hover:text-cyan-accent"
+                  class="relative z-10 mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-md border border-border bg-background/60 px-2.5 py-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-border-hover hover:text-cyan-accent active:border-cyan-accent active:text-cyan-accent"
+                  :aria-label="`${t('contact.copyEmail')}: ${channel.value}`"
                   @click.stop="copyEmail(channel.copyValue ?? channel.value)"
                 >
                   <Check v-if="isCopied('email')" :size="12" aria-hidden="true" />

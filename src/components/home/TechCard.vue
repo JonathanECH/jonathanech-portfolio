@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 import TechIcon from '@/components/ui/TechIcon.vue'
 import { useI18n } from '@/i18n'
 import type { Technology } from '@/types/portfolio'
@@ -12,11 +12,46 @@ const props = defineProps<{
 const { t } = useI18n()
 
 const paddedIndex = computed(() => String(props.index + 1).padStart(2, '0'))
+
+// iOS does not apply :active to non-interactive elements, so the tap feedback
+// is driven by pointerdown and kept visible briefly after the touch ends.
+const pressed = ref(false)
+let pressTimer: number | undefined
+
+function triggerTapFeedback(): void {
+  pressed.value = true
+
+  if (pressTimer !== undefined) {
+    window.clearTimeout(pressTimer)
+  }
+
+  pressTimer = window.setTimeout(() => {
+    pressed.value = false
+  }, 280)
+}
+
+onBeforeUnmount(() => {
+  if (pressTimer !== undefined) {
+    window.clearTimeout(pressTimer)
+  }
+})
 </script>
 
 <template>
   <article
-    class="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-surface-card/60 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:bg-surface-card-hover hover:shadow-[0_0_30px_-8px_rgba(var(--ech-accent-rgb),0.35)]"
+    role="listitem"
+    class="reveal group relative flex h-full touch-manipulation select-none flex-col overflow-hidden rounded-xl border border-border bg-surface-card/60 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:bg-surface-card-hover hover:shadow-[0_0_30px_-8px_rgba(var(--ech-accent-rgb),0.35)] active:border-cyan-accent active:bg-cyan-accent/10"
+    :style="
+      pressed
+        ? {
+            borderColor: 'var(--ech-accent)',
+            backgroundColor: 'rgba(var(--ech-accent-rgb), 0.1)',
+            boxShadow: '0 0 26px -8px rgba(var(--ech-accent-rgb), 0.45)',
+            transform: 'translateY(-1px) scale(0.99)',
+          }
+        : undefined
+    "
+    @pointerdown="triggerTapFeedback"
   >
     <div
       aria-hidden="true"
