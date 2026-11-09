@@ -149,7 +149,7 @@ export const enMessages = {
   'gallery.expandHint': 'Enlarge',
   'gallery.fullTitle': 'Enlarged capture of {name}: {title}',
   'gallery.closeFull': 'Close enlarged capture',
-  'gallery.fullHint': 'Use the arrow keys to navigate · Esc to close',
+  'gallery.fullHint': 'Swipe or use arrow keys to navigate · Esc to close',
 
   'pager.aria': 'Project navigation',
   'pager.previous': 'PREVIOUS CASE',
