@@ -24,18 +24,19 @@ describe('portfolio data integrity', () => {
       expect(project.gallery.length).toBeGreaterThanOrEqual(3)
       expect(project.modules).toHaveLength(3)
       expect(project.challenge.findings.length).toBeGreaterThan(0)
-      expect(project.audit.discrepancy).toMatch(/%$/)
+      expect(project.audit.metrics).toHaveLength(3)
+      expect(project.audit.badge.trim().length).toBeGreaterThan(0)
       expect(project.techTags.length).toBeGreaterThan(0)
     }
   })
 
-  it('keeps the TilyShop audit metrics aligned with the brief', () => {
+  it('keeps the TilyShop audit metrics aligned with the verifiable architecture brief', () => {
     const tilyshop = projects.find((project) => project.slug === 'tilyshop-inventory')
 
     expect(tilyshop?.name).toBe('TilyShop Inventory')
-    expect(tilyshop?.audit.latencyBefore).toBe('4,820 ms')
-    expect(tilyshop?.audit.latencyAfter).toBe('42 ms')
-    expect(tilyshop?.audit.discrepancy).toBe('0.00%')
+    expect(tilyshop?.audit.badge).toBe('ARQUITECTURA VERIFICADA')
+    expect(tilyshop?.audit.metrics[0].value).toBe('0.00% Descuadre')
+    expect(tilyshop?.audit.consistencyNote).toContain('whitepaper')
   })
 
   it('exposes a complete profile and four direct contact channels', () => {

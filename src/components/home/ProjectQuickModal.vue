@@ -129,38 +129,24 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                   <span
                     class="rounded border border-border px-2 py-0.5 font-mono text-[9px] text-cyan-accent"
                   >
-                    {{ project.audit.latencyDelta }}
+                    {{ project.audit.badge }}
                   </span>
                 </div>
 
-                <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                  <div>
+                <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                  <div
+                    v-for="metric in project.audit.metrics"
+                    :key="metric.label"
+                    class="rounded-lg border border-border/70 bg-surface/60 p-3"
+                  >
                     <p class="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">
-                      {{ t('projects.before') }}
+                      {{ metric.label }}
                     </p>
-                    <p class="mt-1 font-mono text-lg text-muted line-through">
-                      {{ project.audit.latencyBefore }}
+                    <p class="mt-1 font-mono text-base font-semibold text-[var(--accent)]">
+                      {{ metric.value }}
                     </p>
-                  </div>
-
-                  <div class="flex items-center gap-2">
-                    <ArrowRight :size="16" class="shrink-0 text-cyan-accent" aria-hidden="true" />
-                    <div>
-                      <p class="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">
-                        {{ t('projects.after') }}
-                      </p>
-                      <p class="mt-1 font-mono text-lg text-[var(--accent)]">
-                        {{ project.audit.latencyAfter }}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div>
-                    <p class="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">
-                      {{ t('projects.discrepancy') }}
-                    </p>
-                    <p class="mt-1 font-mono text-lg text-cyan-accent">
-                      {{ project.audit.discrepancy }}
+                    <p v-if="metric.detail" class="mt-0.5 font-mono text-[9px] text-foreground/50">
+                      {{ metric.detail }}
                     </p>
                   </div>
                 </div>

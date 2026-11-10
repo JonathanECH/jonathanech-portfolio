@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ArrowRight, CircleCheck, ShieldCheck } from '@lucide/vue'
+import { CircleCheck, ShieldCheck } from '@lucide/vue'
 import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
@@ -78,8 +78,8 @@ const accentStyle = computed<Record<string, string>>(() => ({
               <ShieldCheck :size="15" aria-hidden="true" />
               {{ t('detail.auditReport') }}
             </h3>
-            <span class="font-mono text-[9px] uppercase tracking-[0.18em] text-foreground/30">
-              {{ t('detail.audit', { year: project.year }) }}
+            <span class="font-mono text-[9px] uppercase tracking-[0.18em] text-cyan-accent">
+              {{ project.audit.badge }}
             </span>
           </div>
 
@@ -116,42 +116,19 @@ const accentStyle = computed<Record<string, string>>(() => ({
             </div>
 
             <div class="grid grid-cols-1 gap-2 border-t border-border pt-5 sm:grid-cols-3">
-              <div class="rounded border border-border bg-surface/70 px-3 py-3">
-                <p class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
-                  {{ t('detail.latencyBefore') }}
-                </p>
-                <p class="mt-1.5 font-mono text-sm font-semibold text-danger-soft/80">
-                  {{ project.audit.latencyBefore }}
-                </p>
-              </div>
-
               <div
-                class="rounded border border-[color:var(--project-accent)]/30 bg-[color:var(--project-accent)]/10 px-3 py-3"
+                v-for="metric in project.audit.metrics"
+                :key="metric.label"
+                class="rounded border border-border bg-surface/70 px-3 py-3"
               >
-                <p
-                  class="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-muted"
-                >
-                  <ArrowRight
-                    :size="10"
-                    aria-hidden="true"
-                    class="text-[color:var(--project-accent)]"
-                  />
-                  {{ t('detail.postRefactor') }}
+                <p class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
+                  {{ metric.label }}
                 </p>
                 <p class="mt-1.5 font-mono text-sm font-semibold text-[color:var(--project-accent)]">
-                  {{ project.audit.latencyAfter }}
+                  {{ metric.value }}
                 </p>
-                <p class="mt-0.5 font-mono text-[9px] text-foreground/40">
-                  {{ project.audit.latencyDelta }}
-                </p>
-              </div>
-
-              <div class="rounded border border-border bg-surface/70 px-3 py-3">
-                <p class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
-                  {{ t('detail.discrepancy') }}
-                </p>
-                <p class="mt-1.5 font-mono text-sm font-semibold text-foreground">
-                  {{ project.audit.discrepancy }}
+                <p v-if="metric.detail" class="mt-0.5 font-mono text-[9px] text-foreground/45">
+                  {{ metric.detail }}
                 </p>
               </div>
             </div>

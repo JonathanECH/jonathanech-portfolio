@@ -71,13 +71,17 @@ export interface GallerySlide {
   readonly alt?: string
 }
 
+export interface AuditMetric {
+  readonly label: string
+  readonly value: string
+  readonly detail?: string
+}
+
 export interface AuditReport {
   readonly diagnosis: string
   readonly resolution: string
-  readonly latencyBefore: string
-  readonly latencyAfter: string
-  readonly latencyDelta: string
-  readonly discrepancy: string
+  readonly badge: string
+  readonly metrics: readonly AuditMetric[]
   readonly consistencyNote: string
 }
 

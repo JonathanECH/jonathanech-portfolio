@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { ArrowRight, ArrowUpRight, Gauge } from '@lucide/vue'
+import { ArrowRight, ArrowUpRight, ShieldCheck } from '@lucide/vue'
 import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
@@ -203,10 +203,10 @@ function openQuickView(): void {
           <div
             class="flex min-w-0 items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.1em] text-muted"
           >
-            <Gauge :size="12" class="shrink-0 text-cyan-accent" aria-hidden="true" />
-            <span class="truncate text-foreground">{{ project.audit.latencyAfter }}</span>
+            <ShieldCheck :size="12" class="shrink-0 text-cyan-accent" aria-hidden="true" />
+            <span class="truncate text-foreground">{{ project.audit.metrics[0].value }}</span>
             <span class="shrink-0 text-border">//</span>
-            <span class="truncate">{{ project.audit.discrepancy }}</span>
+            <span class="truncate">{{ project.audit.metrics[1].value }}</span>
           </div>
 
           <button

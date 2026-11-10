@@ -66,7 +66,7 @@ export const enMessages = {
   'projects.quickViewAria': 'Quick view: {name}',
   'projects.viewFullAria': 'View full case study: {name}',
   'projects.closeQuickView': 'Close quick view',
-  'projects.auditLatency': 'AUDIT // LATENCY_REPORT',
+  'projects.auditLatency': 'AUDIT // VERIFIED GUARANTEES & METRICS',
   'projects.before': 'BEFORE',
   'projects.after': 'AFTER',
   'projects.discrepancy': 'DISCREPANCY',

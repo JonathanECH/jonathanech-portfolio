@@ -64,7 +64,7 @@ export const esMessages = {
   'projects.quickViewAria': 'Vista rápida: {name}',
   'projects.viewFullAria': 'Ver caso de estudio completo: {name}',
   'projects.closeQuickView': 'Cerrar vista rápida',
-  'projects.auditLatency': 'AUDIT // LATENCY_REPORT',
+  'projects.auditLatency': 'AUDIT // GARANTÍAS Y MÉTRICAS VERIFICADAS',
   'projects.before': 'ANTES',
   'projects.after': 'DESPUÉS',
   'projects.discrepancy': 'DISCREPANCIA',

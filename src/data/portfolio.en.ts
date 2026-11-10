@@ -99,11 +99,26 @@ const projects: readonly Project[] = [
         'The previous inventory reconciled stock through manual processes and non-atomic writes. Batches were grouped by reference, without size granularity, and concurrent operations overwrote stock without optimistic locking.',
       resolution:
         'The data model was redesigned with atomic batches per SKU and size, an immutable transactional ledger and an offline-first reactive layer with optimistic locks. Critical queries were indexed and N+1 reads were eliminated.',
-      latencyBefore: '4,820 ms',
-      latencyAfter: '42 ms',
-      latencyDelta: '−99.1%',
-      discrepancy: '0.00%',
-      consistencyNote: 'Idempotent synchronization with client_txn_id and atomic transactions documented in whitepaper.',
+      badge: 'VERIFIED ARCHITECTURE',
+      metrics: [
+        {
+          label: 'STOCK INTEGRITY',
+          value: '0.00% Discrepancy',
+          detail: 'Immutable transactional ledger',
+        },
+        {
+          label: 'POS CONCURRENCY',
+          value: 'Optimistic Locks',
+          detail: 'Idempotency via client_txn_id',
+        },
+        {
+          label: 'PERSISTENCE',
+          value: 'PostgreSQL ACID',
+          detail: 'Indexed queries without N+1',
+        },
+      ],
+      consistencyNote:
+        'Idempotent synchronization with client_txn_id and atomic transactions validated locally and documented in the repository technical whitepaper.',
     },
     modules: [
       {
@@ -251,11 +266,26 @@ const projects: readonly Project[] = [
         'Previous clinic workflows lacked strict token-level role controls, allowed hard deletes without audit trails and suffered high query latency across unindexed tables.',
       resolution:
         'Engineered a reactive Angular 19 SPA with Signals and functional RoleGuards, backed by a Node.js/PostgreSQL API with Zod, real-time active user JWT checks and mandatory soft deletes for legal compliance.',
-      latencyBefore: '3,240 ms',
-      latencyAfter: '48 ms',
-      latencyDelta: '−98.5%',
-      discrepancy: '0.00%',
-      consistencyNote: 'Clinical workflows, RoleGuards and IDOR hardening verified with Vitest unit tests and integration suites.',
+      badge: 'VERIFIED QA & SECURITY',
+      metrics: [
+        {
+          label: 'UNIT TESTING',
+          value: 'Vitest Passing',
+          detail: 'Components, guards and services',
+        },
+        {
+          label: 'ACCESS CONTROL',
+          value: '0 IDOR Breaches',
+          detail: 'RoleGuard + strict JWT scoping',
+        },
+        {
+          label: 'LEGAL AUDITING',
+          value: '100% Soft Deletes',
+          detail: 'Zero physical DELETEs in DB',
+        },
+      ],
+      consistencyNote:
+        'Reactive clinical workflows, Zod validation and RBAC control verified with Vitest test suites and integration tests executed in a local test environment.',
     },
     modules: [
       {
@@ -400,11 +430,26 @@ const projects: readonly Project[] = [
         'Lubriken operated with a fragmented accounting model: spreadsheets, manual imports and ad hoc reports. There was no idempotency or common audit trail between banks and the general ledger.',
       resolution:
         'A double-entry ledger with hash-based idempotency, assisted reconciliation and reports generated from the same transactional source was implemented. Docker guarantees parity between close and production environments.',
-      latencyBefore: '2,980 ms',
-      latencyAfter: '64 ms',
-      latencyDelta: '−97.9%',
-      discrepancy: '0.00%',
-      consistencyNote: 'Double-entry balance validated with accounting rules and integrity constraints.',
+      badge: 'VERIFIED ACCOUNTING INTEGRITY',
+      metrics: [
+        {
+          label: 'LEDGER BALANCE',
+          value: 'Double-Entry',
+          detail: 'Debits = Credits constraint',
+        },
+        {
+          label: 'IDEMPOTENCY',
+          value: '0 Duplicates',
+          detail: 'Unique transaction hash',
+        },
+        {
+          label: 'DEVOPS PARITY',
+          value: 'Docker Parity',
+          detail: 'Reproducible financial close',
+        },
+      ],
+      consistencyNote:
+        'General ledger integrity guaranteed via foreign keys, PostgreSQL ACID transactions and accounting rules validated in a local Docker environment.',
     },
     modules: [
       {
