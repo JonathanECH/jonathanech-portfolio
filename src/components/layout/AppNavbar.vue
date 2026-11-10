@@ -80,9 +80,11 @@ onUnmounted(() => {
     ref="navbarRef"
     class="fixed inset-x-0 top-0 z-50 border-b transition-all duration-300"
     :class="
-      scrolled || mobileOpen
-        ? 'border-border bg-background/85 backdrop-blur-xl'
-        : 'border-transparent bg-background/40 backdrop-blur-md'
+      mobileOpen
+        ? 'border-border bg-background'
+        : (scrolled
+            ? 'border-border bg-background/85 backdrop-blur-xl'
+            : 'border-transparent bg-transparent')
     "
   >
     <div class="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-12">
@@ -166,7 +168,7 @@ onUnmounted(() => {
       <div
         v-if="mobileOpen"
         id="mobile-navigation"
-        class="border-t border-border bg-background/95 px-5 pb-6 pt-4 backdrop-blur-xl lg:hidden"
+        class="border-t border-border bg-background px-5 pb-6 pt-4 lg:hidden"
       >
         <nav class="flex flex-col gap-1" :aria-label="t('nav.ariaMobile')">
           <RouterLink
