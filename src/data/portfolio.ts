@@ -237,11 +237,11 @@ export const projects: readonly Project[] = [
       'Sistema de inventario offline-first para puntos de venta: cálculo de stock efectivo en cliente, trazabilidad atómica de lotes y sincronización transaccional.',
     problem:
       'Puntos de venta con conectividad inestable y riesgo de sobreventa por terminales concurrentes. El sistema previo no garantizaba atomicidad ni auditoría de ajustes.',
-    techTags: ['Vue 3', 'TypeScript', 'Pinia', 'PostgreSQL', 'Tailwind CSS'],
-    role: 'Desarrollador Frontend & Arquitectura Offline-First',
+    techTags: ['Vue 3', 'TypeScript', 'Node.js', 'PostgreSQL', 'Pinia', 'Tailwind CSS'],
+    role: 'Desarrollador Full-Stack (Frontend, Backend & Base de Datos)',
     client: 'Confecciones TilyShop',
     duration: '6 Semanas // Octubre 2026 – Noviembre 2026',
-    stackKey: 'Vue 3 • TypeScript • PostgreSQL',
+    stackKey: 'Vue 3 • Node.js • PostgreSQL',
     links: {
       whitepaper: '/docs/tilyshop-whitepaper.pdf',
     },

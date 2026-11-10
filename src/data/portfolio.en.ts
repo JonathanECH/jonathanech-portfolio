@@ -28,11 +28,11 @@ const projects: readonly Project[] = [
       'Offline-first inventory system for retail POS: client-side effective stock calculation, atomic batch traceability and transactional synchronization.',
     problem:
       'Retail POS points with unstable connectivity and overselling risks across concurrent terminals. The previous setup lacked atomicity and audit trails for stock adjustments.',
-    techTags: ['Vue 3', 'TypeScript', 'Pinia', 'PostgreSQL', 'Tailwind CSS'],
-    role: 'Frontend Developer & Offline-First Architecture',
+    techTags: ['Vue 3', 'TypeScript', 'Node.js', 'PostgreSQL', 'Pinia', 'Tailwind CSS'],
+    role: 'Full-Stack Developer (Frontend, Backend & Database Architecture)',
     client: 'Confecciones TilyShop',
     duration: '6 Weeks // October 2026 – November 2026',
-    stackKey: 'Vue 3 • TypeScript • PostgreSQL',
+    stackKey: 'Vue 3 • Node.js • PostgreSQL',
     links: {
       whitepaper: '/docs/tilyshop-whitepaper.pdf',
     },
