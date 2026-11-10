@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { projects } from '@/data/portfolio'
 import { useGalleryLightbox } from '@/composables/useGalleryLightbox'
+import type { GallerySlide } from '@/types/portfolio'
 
 function projectGallery(slug: string) {
   const project = projects.find((item) => item.slug === slug)
@@ -33,12 +34,19 @@ describe('useGalleryLightbox', () => {
   })
 
   it('ignores slides without an image', () => {
-    const gallery = projectGallery('gestion-medica')
-    const lightbox = useGalleryLightbox(gallery)
+    const slideWithoutImage: GallerySlide = {
+      id: 'mock-no-image',
+      title: 'Mock Slide Without Image',
+      caption: 'Mock caption',
+      path: 'mock/path',
+      variant: 'medical',
+      badges: ['Mock'],
+    }
+    const lightbox = useGalleryLightbox([slideWithoutImage])
 
-    expect(lightbox.canOpen(gallery[0])).toBe(false)
+    expect(lightbox.canOpen(slideWithoutImage)).toBe(false)
 
-    lightbox.open(gallery[0])
+    lightbox.open(slideWithoutImage)
 
     expect(lightbox.isOpen.value).toBe(false)
     expect(lightbox.activeSlide.value).toBeNull()

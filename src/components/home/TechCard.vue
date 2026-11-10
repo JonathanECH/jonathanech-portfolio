@@ -68,7 +68,7 @@ onBeforeUnmount(() => {
           :icon="technology.iconKey"
           :color="technology.brandColor"
           :size="24"
-          class="text-muted transition-colors duration-300 group-hover:text-[var(--brand)]"
+          class="text-muted transition-colors duration-300 [@media(hover:hover)]:group-hover:text-[var(--brand)] group-active:text-[var(--brand)]"
         />
       </span>
     </div>
