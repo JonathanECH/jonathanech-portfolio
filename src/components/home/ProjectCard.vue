@@ -176,6 +176,10 @@ function openQuickView(): void {
           <span class="text-[var(--accent)]">{{ project.titleHighlight }}</span>
         </h3>
 
+        <p class="mt-1 font-mono text-[10px] text-foreground/50 truncate">
+          // {{ project.role }}
+        </p>
+
         <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">{{ project.summary }}</p>
 
         <div class="mt-4 flex flex-wrap gap-1.5">

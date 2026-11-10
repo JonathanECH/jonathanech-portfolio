@@ -61,6 +61,9 @@ export const enMessages = {
   'projects.highlight': 'Practice',
   'projects.intro':
     'Deployed architectures focused on transactional integrity, performance and reactive design.',
+  'projects.filterAll': 'ALL',
+  'projects.filterLabel': 'Filter projects by technology',
+  'projects.emptyFiltered': 'No projects found with this technology.',
   'projects.viewCase': 'View case study',
   'projects.quickView': 'Quick view',
   'projects.quickViewAria': 'Quick view: {name}',

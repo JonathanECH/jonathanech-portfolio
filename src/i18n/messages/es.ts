@@ -59,6 +59,9 @@ export const esMessages = {
   'projects.highlight': 'Práctica',
   'projects.intro':
     'Arquitecturas desplegadas con foco en integridad transaccional, rendimiento y diseño reactivo.',
+  'projects.filterAll': 'TODOS',
+  'projects.filterLabel': 'Filtrar proyectos por tecnología',
+  'projects.emptyFiltered': 'No se encontraron proyectos con esta tecnología.',
   'projects.viewCase': 'Ver caso de estudio',
   'projects.quickView': 'Vista rápida',
   'projects.quickViewAria': 'Vista rápida: {name}',

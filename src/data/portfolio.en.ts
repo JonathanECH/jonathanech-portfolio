@@ -179,7 +179,9 @@ const projects: readonly Project[] = [
     client: 'Hospital Management / Clínica Razetti',
     duration: '8 Weeks // April 2, 2026 – May 28, 2026',
     stackKey: 'Angular • TypeScript • PostgreSQL',
-    links: {},
+    links: {
+      repo: 'https://github.com/JonathanECH',
+    },
     liveHost: 'razetti.hospital',
     accent: '#5EEAD4',
     galleryDescription:
@@ -346,7 +348,9 @@ const projects: readonly Project[] = [
     client: 'Commercial Distribution / ERP Case Study',
     duration: '16 Weeks // July 2026 – November 2026',
     stackKey: 'Vue 3 • Node.js • PostgreSQL',
-    links: {},
+    links: {
+      repo: 'https://github.com/JonathanECH',
+    },
     liveHost: 'erp.local',
     accent: '#A78BFA',
     galleryDescription:
