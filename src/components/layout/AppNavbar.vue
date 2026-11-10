@@ -14,6 +14,7 @@ const { t } = useI18n()
 const { scrolled } = useScrolled()
 const { activeSection } = useActiveSection(['inicio', 'stack', 'proyectos', 'sobre-mi', 'contacto'])
 const mobileOpen = ref(false)
+const navbarRef = ref<HTMLElement | null>(null)
 
 useScrollLock(mobileOpen)
 
@@ -52,12 +53,31 @@ function handleKeydown(event: KeyboardEvent): void {
   }
 }
 
-onMounted(() => document.addEventListener('keydown', handleKeydown))
-onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
+function onDocumentPointerDown(event: PointerEvent): void {
+  if (!mobileOpen.value || !navbarRef.value) {
+    return
+  }
+
+  const target = event.target
+  if (target instanceof Node && !navbarRef.value.contains(target)) {
+    mobileOpen.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('keydown', handleKeydown)
+  document.addEventListener('pointerdown', onDocumentPointerDown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
+  document.removeEventListener('pointerdown', onDocumentPointerDown)
+})
 </script>
 
 <template>
   <header
+    ref="navbarRef"
     class="fixed inset-x-0 top-0 z-50 border-b transition-all duration-300"
     :class="
       scrolled || mobileOpen
@@ -119,15 +139,26 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
 
         <button
           type="button"
-          class="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground transition-colors hover:border-border-hover hover:text-cyan-accent lg:hidden"
+          class="relative flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground transition-colors hover:border-border-hover hover:text-cyan-accent lg:hidden"
           :aria-expanded="mobileOpen"
           aria-controls="mobile-navigation"
           :aria-label="mobileOpen ? t('nav.closeMenu') : t('nav.openMenu')"
           @click="mobileOpen = !mobileOpen"
         >
-          <X v-if="mobileOpen" :size="18" aria-hidden="true" />
-          <Menu v-else :size="18" aria-hidden="true" />
+          <Transition
+            mode="out-in"
+            enter-active-class="transition duration-200 ease-out"
+            enter-from-class="transform scale-90 opacity-0"
+            enter-to-class="transform scale-100 opacity-100"
+            leave-active-class="transition duration-150 ease-in"
+            leave-from-class="transform scale-100 opacity-100"
+            leave-to-class="transform scale-90 opacity-0"
+          >
+            <X v-if="mobileOpen" :size="18" aria-hidden="true" />
+            <Menu v-else :size="18" aria-hidden="true" />
+          </Transition>
         </button>
+
       </div>
     </div>
 
@@ -161,6 +192,25 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
         </a>
       </div>
     </Transition>
+
+    <!-- Backdrop for mobile menu -->
+    <Teleport to="body">
+      <Transition
+        enter-active-class="transition-opacity duration-200 ease-out"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition-opacity duration-150 ease-in"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <div
+          v-if="mobileOpen"
+          class="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs lg:hidden"
+          aria-hidden="true"
+          @click="mobileOpen = false"
+        />
+      </Transition>
+    </Teleport>
   </header>
 </template>
 
