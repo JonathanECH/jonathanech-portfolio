@@ -30,7 +30,7 @@ const projects: readonly Project[] = [
       'Retail POS points with unstable connectivity and overselling risks across concurrent terminals. The previous setup lacked atomicity and audit trails for stock adjustments.',
     techTags: ['Vue 3', 'TypeScript', 'Pinia', 'PostgreSQL', 'Tailwind CSS'],
     role: 'Frontend Developer & Offline-First Architecture',
-    client: 'Retail POS / Textile Distribution',
+    client: 'Confecciones TilyShop',
     duration: '6 Weeks // October 2026 – November 2026',
     stackKey: 'Vue 3 • TypeScript • PostgreSQL',
     links: {
@@ -168,7 +168,7 @@ const projects: readonly Project[] = [
     sector: 'HOSPITAL MANAGEMENT',
     title: 'CLÍNICA',
     titleHighlight: 'RAZETTI',
-    year: '2025',
+    year: '2026',
     status: 'CASE STUDY',
     summary:
       'Full-stack hospital management application for patients, specialists, clinical schedules and reports: reactive architecture with Angular 19 Signals, strict RBAC security and PDF medical records.',
@@ -177,7 +177,7 @@ const projects: readonly Project[] = [
     techTags: ['Angular 19', 'TypeScript', 'Node.js', 'PostgreSQL', 'SCSS'],
     role: 'Frontend Developer & UI Architecture (Signals)',
     client: 'Hospital Management / Clínica Razetti',
-    duration: '16 Weeks // 2025',
+    duration: '8 Weeks // April 2, 2026 – May 28, 2026',
     stackKey: 'Angular • TypeScript • PostgreSQL',
     links: {},
     liveHost: 'razetti.hospital',

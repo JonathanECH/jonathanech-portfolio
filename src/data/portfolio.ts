@@ -239,7 +239,7 @@ export const projects: readonly Project[] = [
       'Puntos de venta con conectividad inestable y riesgo de sobreventa por terminales concurrentes. El sistema previo no garantizaba atomicidad ni auditoría de ajustes.',
     techTags: ['Vue 3', 'TypeScript', 'Pinia', 'PostgreSQL', 'Tailwind CSS'],
     role: 'Desarrollador Frontend & Arquitectura Offline-First',
-    client: 'Punto de Venta / Comercio Textil',
+    client: 'Confecciones TilyShop',
     duration: '6 Semanas // Octubre 2026 – Noviembre 2026',
     stackKey: 'Vue 3 • TypeScript • PostgreSQL',
     links: {
@@ -377,7 +377,7 @@ export const projects: readonly Project[] = [
     sector: 'HOSPITAL MANAGEMENT',
     title: 'CLÍNICA',
     titleHighlight: 'RAZETTI',
-    year: '2025',
+    year: '2026',
     status: 'CASO DE ESTUDIO',
     summary:
       'Aplicación hospitalaria full-stack para administración de pacientes, especialistas, agendas clínicas y reportes: reactividad con Signals en Angular 19, blindaje RBAC y exportación de expedientes en PDF.',
@@ -386,7 +386,7 @@ export const projects: readonly Project[] = [
     techTags: ['Angular 19', 'TypeScript', 'Node.js', 'PostgreSQL', 'SCSS'],
     role: 'Desarrollador Frontend & Arquitectura UI (Signals)',
     client: 'Gestión Hospitalaria / Clínica Razetti',
-    duration: '16 Semanas // 2025',
+    duration: '8 Semanas // 2 de abril 2026 – 28 de mayo 2026',
     stackKey: 'Angular • TypeScript • PostgreSQL',
     links: {},
     liveHost: 'razetti.hospital',
