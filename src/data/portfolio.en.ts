@@ -525,7 +525,7 @@ const profile: Profile = {
     { label: 'EDITOR', value: 'VS Code + Vim' },
     { label: 'DESIGN', value: 'Figma / Penpot' },
     { label: 'RUNTIME', value: 'Node 24 + pnpm' },
-    { label: 'LANGUAGES', value: 'Spanish (Native) • English (B1)' },
+    { label: 'LANGUAGES', value: 'Spanish (Native) • English (A2, technical reading)' },
   ],
 }
 

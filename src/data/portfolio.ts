@@ -736,7 +736,7 @@ export const profile: Profile = {
     { label: 'EDITOR', value: 'VS Code + Vim' },
     { label: 'DISEÑO', value: 'Figma / Penpot' },
     { label: 'RUNTIME', value: 'Node 24 + pnpm' },
-    { label: 'IDIOMAS', value: 'Español (Nativo) • Inglés (B1)' },
+    { label: 'IDIOMAS', value: 'Español (Nativo) • Inglés (A2, lectura técnica)' },
   ],
 }
 
