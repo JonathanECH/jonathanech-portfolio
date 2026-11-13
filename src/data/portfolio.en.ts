@@ -163,6 +163,143 @@ const projects: readonly Project[] = [
     ],
   },
   {
+    slug: 'clima-vue',
+    name: 'Clima Vue',
+    sector: 'WEATHER API',
+    title: 'CLIMA',
+    titleHighlight: 'VUE',
+    year: '2026',
+    status: 'DEPLOYED',
+    summary:
+      'Real-time weather web app: city autocomplete with the Geocoding API, validated GPS geolocation, local search history and explicit error handling on top of OpenWeatherMap data.',
+    problem:
+      'Weather lookup required typing the exact city name, with no suggestions, location validation or history; network or permission errors left the interface without a useful response.',
+    techTags: ['Vue 3', 'JavaScript', 'Vite', 'Tailwind CSS', 'Axios', 'OpenWeatherMap'],
+    role: 'Frontend Developer',
+    client: 'Personal Project',
+    duration: 'Personal Project // 2026',
+    stackKey: 'Vue 3 • Vite • OpenWeatherMap',
+    links: {
+      demo: 'https://clima-vue-vert.vercel.app/',
+      repo: 'https://github.com/JonathanECH/clima-vue',
+    },
+    liveHost: 'clima-vue-vert.vercel.app',
+    accent: '#38BDF8',
+    galleryDescription:
+      'Main interface, city autocomplete and mobile view of the weather lookup flow.',
+    gallery: [
+      {
+        id: 'home',
+        title: 'Current Weather',
+        caption:
+          'Temperature, description, humidity, feels-like, min/max and wind in a single view.',
+        path: 'home',
+        variant: 'analytics',
+        badges: ['Current Weather', 'OpenWeatherMap', 'Glassmorphism'],
+        image: '/projects/clima-vue/home-clima-vue.webp',
+        alt: 'Clima Vue main view with current temperature and weather metrics',
+      },
+      {
+        id: 'search',
+        title: 'Search & Autocomplete',
+        caption:
+          'Real-time suggestions by city, region and country with a 350 ms debounce.',
+        path: 'search',
+        variant: 'analytics',
+        badges: ['Geocoding', '350 ms Debounce', 'History'],
+        image: '/projects/clima-vue/search-clima-vue.webp',
+        alt: 'City autocomplete with suggestions by region and country',
+      },
+      {
+        id: 'mobile',
+        title: 'Responsive Mobile View',
+        caption:
+          'Adaptive layout with form, weather cards and error states on small screens.',
+        path: 'mobile',
+        variant: 'analytics',
+        badges: ['Responsive', 'Mobile First', 'Error States'],
+        image: '/projects/clima-vue/mobile-clima-vue.webp',
+        alt: 'Clima Vue mobile view with form and weather cards',
+      },
+    ],
+    challenge: {
+      intro:
+        'The first version resolved search with a direct free-text request. Without debounce or validation, ambiguous names produced inconsistent results and every interaction could trigger multiple API calls.',
+      findings: [
+        'Free-text search without autocomplete: ambiguous names and unsupported countries produced inconsistent results.',
+        'Unvalidated geolocation: invalid or unsupported coordinates filled the location without checking the reverse geocoding result.',
+        'Silent errors and scattered state: city not found, permission denied, timeout or lack of browser support left the UI without a clear message or reusable history.',
+      ],
+    },
+    audit: {
+      diagnosis:
+        'Lookups were made with a direct request by city name, with no debounce, no suggestions and no validation of the GPS-derived location. Loading, error and history state lived scattered across components.',
+      resolution:
+        'The flow was centralized in the useClima composable: a 350 ms debounce for autocomplete, OpenWeatherMap Geocoding and current weather via Axios, reverse geocoding to validate GPS, localStorage history (max 5) and explicit messages for every error scenario.',
+      badge: 'VERIFIED API & UX',
+      metrics: [
+        {
+          label: 'AUTOCOMPLETE',
+          value: '350 ms Debounce',
+          detail: 'Real-time Geocoding API',
+        },
+        {
+          label: 'LOCAL HISTORY',
+          value: '5 Searches',
+          detail: 'localStorage, no backend',
+        },
+        {
+          label: 'TESTING',
+          value: 'Vitest',
+          detail: 'useClima composable',
+        },
+      ],
+      consistencyNote:
+        'OpenWeatherMap flow, location validation and local persistence implemented client-side; the useClima composable is covered by Vitest tests.',
+    },
+    modules: [
+      {
+        code: 'MOD-A',
+        title: 'Reactivity',
+        subtitle: 'Reactive Layer with Vue 3 & Composition API',
+        description:
+          'The useClima composable centralizes search, loading, error and current weather; the UI only consumes derived state and avoids duplicate requests.',
+        points: [
+          'UseClima composable with clear responsibility',
+          '350 ms debounce on autocomplete',
+          'Explicit loading and error state',
+        ],
+        icon: 'reactivity',
+      },
+      {
+        code: 'MOD-B',
+        title: 'API Integration',
+        subtitle: 'OpenWeatherMap Current Weather & Geocoding',
+        description:
+          'Axios requests against the weather and geocoding APIs, with reverse geocoding to validate the GPS location and filter supported countries.',
+        points: [
+          'Current Weather + Geocoding',
+          'Reverse geocoding for GPS',
+          'Supported-country validation',
+        ],
+        icon: 'state',
+      },
+      {
+        code: 'MOD-C',
+        title: 'Local Persistence',
+        subtitle: 'History and Client-Side Privacy',
+        description:
+          'History of the last five searches in localStorage, with no backend and no coordinates stored on a server.',
+        points: [
+          'History capped at 5 searches',
+          'LocalStorage as the only persistence',
+          'GPS processed only in the browser',
+        ],
+        icon: 'database',
+      },
+    ],
+  },
+  {
     slug: 'gestion-medica',
     name: 'Clínica Razetti',
     sector: 'HOSPITAL MANAGEMENT',

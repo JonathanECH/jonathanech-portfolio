@@ -372,6 +372,143 @@ export const projects: readonly Project[] = [
     ],
   },
   {
+    slug: 'clima-vue',
+    name: 'Clima Vue',
+    sector: 'WEATHER API',
+    title: 'CLIMA',
+    titleHighlight: 'VUE',
+    year: '2026',
+    status: 'DESPLEGADO',
+    summary:
+      'Aplicación web de clima en tiempo real: autocompletado de ciudades con la API de Geocoding, geolocalización GPS validada, historial local y manejo explícito de errores sobre datos de OpenWeatherMap.',
+    problem:
+      'La consulta climática dependía de escribir el nombre exacto de la ciudad, sin sugerencias, validación de ubicación ni historial; los errores de red o permisos dejaban la interfaz sin respuesta útil.',
+    techTags: ['Vue 3', 'JavaScript', 'Vite', 'Tailwind CSS', 'Axios', 'OpenWeatherMap'],
+    role: 'Desarrollador Frontend',
+    client: 'Proyecto Personal',
+    duration: 'Proyecto Personal // 2026',
+    stackKey: 'Vue 3 • Vite • OpenWeatherMap',
+    links: {
+      demo: 'https://clima-vue-vert.vercel.app/',
+      repo: 'https://github.com/JonathanECH/clima-vue',
+    },
+    liveHost: 'clima-vue-vert.vercel.app',
+    accent: '#38BDF8',
+    galleryDescription:
+      'Interfaz principal, autocompletado de ciudades y vista móvil del flujo de consulta climática.',
+    gallery: [
+      {
+        id: 'home',
+        title: 'Consulta Actual',
+        caption:
+          'Temperatura, descripción, humedad, sensación térmica, mínima/máxima y viento en una sola vista.',
+        path: 'home',
+        variant: 'analytics',
+        badges: ['Clima Actual', 'OpenWeatherMap', 'Glassmorphism'],
+        image: '/projects/clima-vue/home-clima-vue.webp',
+        alt: 'Vista principal de Clima Vue con temperatura actual y métricas meteorológicas',
+      },
+      {
+        id: 'search',
+        title: 'Búsqueda & Autocompletado',
+        caption:
+          'Sugerencias en tiempo real por ciudad, región y país con debounce de 350 ms.',
+        path: 'search',
+        variant: 'analytics',
+        badges: ['Geocoding', 'Debounce 350 ms', 'Historial'],
+        image: '/projects/clima-vue/search-clima-vue.webp',
+        alt: 'Autocompletado de ciudades con sugerencias por región y país',
+      },
+      {
+        id: 'mobile',
+        title: 'Vista Móvil Responsive',
+        caption:
+          'Layout adaptativo con formulario, tarjetas de clima y estados de error en pantalla pequeña.',
+        path: 'mobile',
+        variant: 'analytics',
+        badges: ['Responsive', 'Mobile First', 'Estados de Error'],
+        image: '/projects/clima-vue/mobile-clima-vue.webp',
+        alt: 'Vista móvil de Clima Vue con formulario y tarjetas de clima',
+      },
+    ],
+    challenge: {
+      intro:
+        'La primera versión resolvía la búsqueda con una petición directa por texto libre. Sin debounce ni validación, los nombres ambiguos generaban resultados inconsistentes y cada interacción podía disparar múltiples llamadas a la API.',
+      findings: [
+        'Búsqueda por texto libre sin autocompletado: nombres ambiguos y países fuera de cobertura producían resultados inconsistentes.',
+        'Geolocalización sin validación: coordenadas inválidas o no soportadas rellenaban la ubicación sin verificar el resultado del reverse geocoding.',
+        'Errores silenciosos y estado disperso: ciudad no encontrada, permiso denegado, timeout o falta de soporte dejaban la UI sin un mensaje claro ni historial reutilizable.',
+      ],
+    },
+    audit: {
+      diagnosis:
+        'La consulta se hacía con una petición directa por nombre de ciudad, sin debounce, sin sugerencias y sin validar la ubicación obtenida por GPS. El estado de carga, error e historial vivía disperso en los componentes.',
+      resolution:
+        'Se centralizó el flujo en el composable useClima: debounce de 350 ms para el autocompletado, Geocoding y current weather de OpenWeatherMap vía Axios, reverse geocoding para validar el GPS, historial en localStorage (máximo 5) y mensajes explícitos para cada escenario de error.',
+      badge: 'API & UX VALIDADAS',
+      metrics: [
+        {
+          label: 'AUTOCOMPLETADO',
+          value: '350 ms Debounce',
+          detail: 'Geocoding API en tiempo real',
+        },
+        {
+          label: 'HISTORIAL LOCAL',
+          value: '5 Búsquedas',
+          detail: 'localStorage, sin backend',
+        },
+        {
+          label: 'PRUEBAS',
+          value: 'Vitest',
+          detail: 'Composable useClima',
+        },
+      ],
+      consistencyNote:
+        'Flujo de OpenWeatherMap, validación de ubicación y persistencia local implementados en el cliente; el composable useClima está cubierto por pruebas con Vitest.',
+    },
+    modules: [
+      {
+        code: 'MOD-A',
+        title: 'Reactividad',
+        subtitle: 'Capa Reactiva con Vue 3 & Composition API',
+        description:
+          'El composable useClima concentra búsqueda, carga, error y clima actual; la UI solo consume estado derivado y evita peticiones duplicadas.',
+        points: [
+          'Composable useClima por responsabilidad',
+          'Debounce de 350 ms en el autocompletado',
+          'Estado de carga y error explícito',
+        ],
+        icon: 'reactivity',
+      },
+      {
+        code: 'MOD-B',
+        title: 'Integración API',
+        subtitle: 'OpenWeatherMap Current Weather & Geocoding',
+        description:
+          'Consumo de Axios contra las APIs de clima y geocodificación, con reverse geocoding para validar la ubicación GPS y filtrar países soportados.',
+        points: [
+          'Current Weather + Geocoding',
+          'Reverse geocoding para GPS',
+          'Validación de país soportado',
+        ],
+        icon: 'state',
+      },
+      {
+        code: 'MOD-C',
+        title: 'Persistencia Local',
+        subtitle: 'Historial y Privacidad en el Cliente',
+        description:
+          'Historial de las últimas cinco búsquedas en localStorage, sin backend ni almacenamiento de coordenadas en servidor.',
+        points: [
+          'Historial máximo de 5 búsquedas',
+          'LocalStorage como única persistencia',
+          'GPS procesado solo en el navegador',
+        ],
+        icon: 'database',
+      },
+    ],
+  },
+  {
     slug: 'gestion-medica',
     name: 'Clínica Razetti',
     sector: 'HOSPITAL MANAGEMENT',

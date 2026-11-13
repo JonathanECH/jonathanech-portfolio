@@ -16,8 +16,8 @@ describe('portfolio data integrity', () => {
   })
 
   it('defines unique projects with complete case-study content', () => {
-    expect(projects).toHaveLength(3)
-    expect(new Set(projects.map((project) => project.slug)).size).toBe(3)
+    expect(projects).toHaveLength(4)
+    expect(new Set(projects.map((project) => project.slug)).size).toBe(4)
 
     for (const project of projects) {
       expect(project.galleryDescription.trim().length).toBeGreaterThan(0)
@@ -37,6 +37,20 @@ describe('portfolio data integrity', () => {
     expect(tilyshop?.audit.badge).toBe('ARQUITECTURA VERIFICADA')
     expect(tilyshop?.audit.metrics[0].value).toBe('0.00% Descuadre')
     expect(tilyshop?.audit.consistencyNote).toContain('whitepaper')
+  })
+
+  it('exposes Clima Vue as a deployed project with real links and verifiable metrics', () => {
+    const clima = projects.find((project) => project.slug === 'clima-vue')
+
+    expect(clima?.name).toBe('Clima Vue')
+    expect(clima?.status).toBe('DESPLEGADO')
+    expect(clima?.links.demo).toBe('https://clima-vue-vert.vercel.app/')
+    expect(clima?.links.repo).toBe('https://github.com/JonathanECH/clima-vue')
+    expect(clima?.gallery).toHaveLength(3)
+    expect(clima?.gallery.every((slide) => Boolean(slide.image))).toBe(true)
+    expect(clima?.techTags).toContain('OpenWeatherMap')
+    expect(clima?.audit.metrics[0].value).toBe('350 ms Debounce')
+    expect(clima?.audit.metrics[1].value).toBe('5 Búsquedas')
   })
 
   it('exposes a complete profile and four direct contact channels', () => {
@@ -167,7 +181,11 @@ describe('usePortfolioData', () => {
 
     const first = getProjectNeighbors('tilyshop-inventory')
     expect(first.previous?.slug).toBe('erp-contable')
-    expect(first.next?.slug).toBe('gestion-medica')
+    expect(first.next?.slug).toBe('clima-vue')
+
+    const clima = getProjectNeighbors('clima-vue')
+    expect(clima.previous?.slug).toBe('tilyshop-inventory')
+    expect(clima.next?.slug).toBe('gestion-medica')
 
     const last = getProjectNeighbors('erp-contable')
     expect(last.previous?.slug).toBe('gestion-medica')

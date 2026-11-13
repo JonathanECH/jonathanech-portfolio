@@ -13,6 +13,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://jonathanech-portfolio.vercel.app/proyectos/clima-vue</loc>
+    <lastmod>2026-11-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://jonathanech-portfolio.vercel.app/proyectos/gestion-medica</loc>
     <lastmod>2026-11-09</lastmod>
     <changefreq>monthly</changefreq>
