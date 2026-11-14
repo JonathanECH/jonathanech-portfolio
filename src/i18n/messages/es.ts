@@ -150,7 +150,10 @@ export const esMessages = {
   'gallery.expandHint': 'Ampliar',
   'gallery.fullTitle': 'Captura ampliada de {name}: {title}',
   'gallery.closeFull': 'Cerrar captura ampliada',
-  'gallery.fullHint': 'Desliza o usa flechas para navegar · Esc para cerrar',
+  'gallery.zoomIn': 'Acercar imagen',
+  'gallery.zoomOut': 'Alejar imagen',
+  'gallery.fullHint':
+    'Desliza para navegar · Pellizca o haz doble toque para ampliar · Esc para cerrar',
 
   'pager.aria': 'Navegación entre proyectos',
   'pager.previous': 'CASO ANTERIOR',
