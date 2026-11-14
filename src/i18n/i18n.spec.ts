@@ -40,7 +40,7 @@ describe('localized content', () => {
 
   it('keeps the expected content shape', () => {
     for (const content of [esContent, enContent]) {
-      expect(content.projects).toHaveLength(3)
+      expect(content.projects).toHaveLength(4)
       expect(content.technologies).toHaveLength(23)
       expect(content.technologies.filter((tech) => tech.category === 'frontend')).toHaveLength(8)
       expect(content.technologies.filter((tech) => tech.category === 'backend')).toHaveLength(7)

@@ -5,7 +5,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9_(Strict)-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8.3-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vite.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Vitest](https://img.shields.io/badge/Vitest-25%2F25_passed-6E9F18?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev/)
+[![Vitest](https://img.shields.io/badge/Vitest-44%2F44_passed-6E9F18?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev/)
 [![pnpm](https://img.shields.io/badge/pnpm-12-F69220?style=flat-square&logo=pnpm&logoColor=white)](https://pnpm.io/)
 
 Portafolio profesional de ingeniería de software orientado al desarrollo frontend moderno. Desarrollado como una aplicación web SPA de alto rendimiento con arquitectura modular, sistema bilingüe (ES/EN), soporte para tema claro/oscuro con tokens en tiempo de ejecución, y casos de estudio técnicos data-driven.
@@ -103,12 +103,17 @@ El portafolio expone proyectos orientados a la resolución de problemas técnico
 - **Desafíos resueltos:** Reducción de latencia en consultas masivas mediante indexación local, gestión de colas de mutaciones pendientes y conciliación de estados.
 - **Stack:** Vue 3, TypeScript, IndexedDB local, Tailwind CSS.
 
-### 2. Gestión Médica — Plataforma Clínica y Expediente Electrónico
+### 2. Clima Vue — Clima en Tiempo Real y Geolocalización
+- **Enfoque:** Aplicación de consulta climática con autocompletado de ciudades vía Geocoding API, geolocalización GPS validada y diseño glassmorphism responsive.
+- **Desafíos resueltos:** Centralización del consumo de APIs en un composable, debounce de búsquedas, validación de ubicación y manejo explícito de errores de red y permisos.
+- **Stack:** Vue 3, JavaScript, Vite, Tailwind CSS, Axios, OpenWeatherMap API.
+
+### 3. Gestión Médica — Plataforma Clínica y Expediente Electrónico
 - **Enfoque:** Interfaz clínica modular para agenda médica en tiempo real, gestión de turnos y visualización de historias clínicas.
 - **Desafíos resueltos:** Formularios clínicos dinámicos con validaciones estrictas, seguridad en el manejo de datos de pacientes y vistas optimizadas para consulta rápida.
 - **Stack:** Vue 3, Composition API, Pinia, REST APIs.
 
-### 3. ERP Contable / Lubriken — Motor de Doble Partida y Conciliación Fiscal
+### 4. ERP Contable / Lubriken — Motor de Doble Partida y Conciliación Fiscal
 - **Enfoque:** Aplicación de contabilidad empresarial con libro mayor, balance de sumas y saldos, y módulo de conciliación bancaria.
 - **Desafíos resueltos:** Renderizado de tablas financieras densas, precisión en operaciones numéricas decimales y exportación de reportes estructurados.
 - **Stack:** Vue 3, TypeScript, Pinia, Tailwind CSS.
