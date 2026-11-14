@@ -65,7 +65,7 @@ const router = createRouter({
     if (to.hash) {
       const behavior = prefersReducedMotion() ? 'auto' : 'smooth'
       return waitForHashTarget(to.hash).then((element) =>
-        element ? { el: element, top: 96, behavior } : { top: 0 },
+        element ? { el: element, top: 72, behavior } : { top: 0 },
       )
     }
     return { top: 0 }
