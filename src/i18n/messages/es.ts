@@ -59,6 +59,9 @@ export const esMessages = {
   'projects.highlight': 'Práctica',
   'projects.intro':
     'Arquitecturas desplegadas con foco en integridad transaccional, rendimiento y diseño reactivo.',
+  'projects.problemLabel': 'PROBLEMA',
+  'projects.solutionLabel': 'SOLUCIÓN TÉCNICA',
+  'projects.impactLabel': 'IMPACTO',
   'projects.filterAll': 'TODOS',
   'projects.filterLabel': 'Filtrar proyectos por tecnología',
   'projects.emptyFiltered': 'No se encontraron proyectos con esta tecnología.',
@@ -93,6 +96,8 @@ export const esMessages = {
   'detail.projects': 'PROYECTOS',
   'detail.year': 'AÑO // {year}',
   'detail.problem': '// PROBLEMA',
+  'detail.solution': '// STACK TÉCNICO',
+  'detail.impact': '// IMPACTO',
   'detail.metadataAria': 'Metadatos del proyecto',
   'detail.role': 'ROL',
   'detail.client': 'CLIENTE',
@@ -221,10 +226,12 @@ export const esMessages = {
   'mockup.erpOperatingExpenses': 'Gastos operativos',
   'mockup.erpNetResult': 'Resultado neto',
 
-  'meta.homeTitle': 'Jonathan Campos — Desarrollador Frontend',
+  'meta.homeTitle': 'Jonathan Campos — Desarrollador Web Frontend (Vue 3)',
   'meta.notFoundTitle': '404 — Jonathan Campos',
-  'meta.projectTitle': '{name} — Jonathan Campos',
+  'meta.projectTitle': '{name} — Caso de estudio | Jonathan Campos',
   'meta.projectNotFoundTitle': 'Caso de estudio no encontrado — Jonathan Campos',
+  'meta.notFoundDescription':
+    'La ruta solicitada no existe en jonathanech.dev. Explora el portafolio de Jonathan Campos para ver los casos de estudio disponibles.',
   'meta.description':
-    'Jonathan Campos — Desarrollador Frontend especializado en Vue 3, TypeScript y arquitecturas web modernas. Portafolio de ingeniería, PWA offline-first y casos de estudio.',
+    'Jonathan Campos es un Desarrollador Web Frontend especializado en Vue 3, Tailwind CSS y TypeScript, con base en Barquisimeto, Venezuela. Portafolio con casos de estudio de arquitectura frontend, PWA offline-first, accesibilidad y SEO técnico.',
 } as const

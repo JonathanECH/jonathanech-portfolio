@@ -10,7 +10,6 @@ import ProjectPager from '@/components/detail/ProjectPager.vue'
 import ProjectSpecs from '@/components/detail/ProjectSpecs.vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 import { usePortfolioData } from '@/composables/usePortfolioData'
-import { useProjectSeo } from '@/composables/useProjectSeo'
 import { useI18n } from '@/i18n'
 
 const props = defineProps<{ slug: string }>()
@@ -21,13 +20,11 @@ const { t } = useI18n()
 const project = computed(() => getProjectBySlug(props.slug))
 const neighbors = computed(() => getProjectNeighbors(props.slug))
 
-useProjectSeo(project)
-
 const galleryCode = computed(() => t('detail.galleryCode'))
 </script>
 
 <template>
-  <div v-if="project" class="relative">
+  <article v-if="project" class="relative">
     <ProjectHeader :project="project" />
     <ProjectSpecs :project="project" />
 
@@ -49,7 +46,7 @@ const galleryCode = computed(() => t('detail.galleryCode'))
     <ChallengeAudit :project="project" />
     <ArchitectureModules :project="project" />
     <ProjectPager :previous="neighbors.previous" :next="neighbors.next" />
-  </div>
+  </article>
 
   <section
     v-else

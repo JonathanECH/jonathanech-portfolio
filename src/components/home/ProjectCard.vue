@@ -26,7 +26,7 @@ function openQuickView(): void {
 </script>
 
 <template>
-  <div class="reveal">
+  <li class="reveal">
     <article
       class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card/60 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:shadow-[0_18px_40px_-24px_rgba(var(--ech-accent-rgb),0.45)]"
       :style="`--accent: ${project.accent}`"
@@ -36,7 +36,7 @@ function openQuickView(): void {
         <template v-if="previewSlide">
           <img
             :src="previewSlide.image"
-            alt=""
+            :alt="previewSlide.alt ?? `${project.name}: ${previewSlide.title}`"
             loading="lazy"
             decoding="async"
             class="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
@@ -180,38 +180,59 @@ function openQuickView(): void {
           // {{ project.role }}
         </p>
 
-        <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">{{ project.summary }}</p>
+        <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-muted">{{ project.summary }}</p>
 
-        <div class="mt-4 flex flex-wrap gap-1.5">
-          <span
-            v-for="tag in project.techTags.slice(0, 4)"
-            :key="tag"
-            class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-cyan-accent/90"
-          >
-            {{ tag }}
-          </span>
-        </div>
+        <dl class="mt-4 space-y-3 border-t border-border/60 pt-4">
+          <div>
+            <dt class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted/70">
+              {{ t('projects.problemLabel') }}
+            </dt>
+            <dd class="mt-1 line-clamp-2 text-xs leading-relaxed text-muted">
+              {{ project.problem }}
+            </dd>
+          </div>
 
-        <span
-          class="mt-4 inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-muted transition-colors group-hover:text-cyan-accent"
-        >
-          {{ t('projects.viewCase') }}
-          <ArrowRight
-            :size="12"
-            aria-hidden="true"
-            class="transition-transform duration-300 group-hover:translate-x-1"
-          />
-        </span>
+          <div>
+            <dt class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted/70">
+              {{ t('projects.solutionLabel') }}
+            </dt>
+            <dd class="mt-1.5 flex flex-wrap gap-1.5">
+              <span
+                v-for="tag in project.techTags.slice(0, 4)"
+                :key="tag"
+                class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-cyan-accent/90"
+              >
+                {{ tag }}
+              </span>
+            </dd>
+          </div>
+
+          <div>
+            <dt
+              class="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-muted/70"
+            >
+              <ShieldCheck :size="11" class="text-cyan-accent" aria-hidden="true" />
+              {{ t('projects.impactLabel') }}
+            </dt>
+            <dd class="mt-1 flex min-w-0 flex-wrap items-center gap-x-1.5 font-mono text-[10px] text-muted">
+              <span class="truncate text-foreground">{{ project.audit.metrics[0].value }}</span>
+              <span class="text-border" aria-hidden="true">//</span>
+              <span class="truncate">{{ project.audit.metrics[1].value }}</span>
+            </dd>
+          </div>
+        </dl>
 
         <div class="mt-auto flex items-center justify-between gap-3 border-t border-border/60 pt-4">
-          <div
-            class="flex min-w-0 items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.1em] text-muted"
+          <span
+            class="inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-muted transition-colors group-hover:text-cyan-accent"
           >
-            <ShieldCheck :size="12" class="shrink-0 text-cyan-accent" aria-hidden="true" />
-            <span class="truncate text-foreground">{{ project.audit.metrics[0].value }}</span>
-            <span class="shrink-0 text-border">//</span>
-            <span class="truncate">{{ project.audit.metrics[1].value }}</span>
-          </div>
+            {{ t('projects.viewCase') }}
+            <ArrowRight
+              :size="12"
+              aria-hidden="true"
+              class="transition-transform duration-300 group-hover:translate-x-1"
+            />
+          </span>
 
           <button
             type="button"
@@ -231,5 +252,5 @@ function openQuickView(): void {
         :aria-label="t('projects.viewFullAria', { name: project.name })"
       />
     </article>
-  </div>
+  </li>
 </template>

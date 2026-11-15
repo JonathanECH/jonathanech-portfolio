@@ -642,9 +642,9 @@ const profile: Profile = {
   headline: ['WEB DEVELOPER', 'FRONTEND ENGINEER'],
   location: 'Barquisimeto, Venezuela (UTC-4)',
   education: 'Associate Degree in Computer Science (TSU Informática • IUTEPAL)',
-  bio: 'Frontend Developer specialized in Vue 3, TypeScript, and modern web architectures. I build reactive, accessible, and resilient interfaces with an offline-first approach and strict typing. Open to remote or hybrid opportunities (Junior / Mid) with immediate availability in UTC-4 timezone.',
+  bio: 'Frontend Web Developer specializing in Vue 3, Tailwind CSS, and TypeScript, based in Barquisimeto, Venezuela (UTC-4). I design and build reactive, accessible, high-performance interfaces with modular architecture and strict typing. Seeking corporate internships and Junior / Mid-level roles, on-site or remote, with immediate availability.',
   bioAi:
-    'I use Artificial Intelligence as a productivity multiplier: accelerating workflows, validating edge cases, auditing accessibility, and polishing user experience.',
+    'I use Artificial Intelligence as a productivity multiplier: auditing accessibility, validating edge cases, documenting technical decisions and accelerating the delivery of measurable interfaces.',
   philosophyPath: '~/profile/philosophy.md',
   stats: [
     { label: 'FOCUS', value: 'FRONTEND & PWA' },

@@ -90,16 +90,53 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
           {{ project.summary }}
         </p>
 
-        <div
-          class="mt-7 max-w-3xl border-l-2 border-[color:var(--project-accent)]/60 bg-surface-card/40 px-4 py-3 sm:px-5"
-        >
-          <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
-            {{ t('detail.problem') }}
-          </p>
-          <p class="mt-2 text-sm leading-relaxed text-foreground/60 sm:text-[15px]">
-            {{ project.problem }}
-          </p>
-        </div>
+        <dl class="mt-8 grid max-w-4xl grid-cols-1 gap-5 sm:grid-cols-2">
+          <div
+            class="border-l-2 border-[color:var(--project-accent)]/60 bg-surface-card/40 px-4 py-3 sm:col-span-2 sm:px-5"
+          >
+            <dt class="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+              {{ t('detail.problem') }}
+            </dt>
+            <dd class="mt-2 text-sm leading-relaxed text-foreground/60 sm:text-[15px]">
+              {{ project.problem }}
+            </dd>
+          </div>
+
+          <div class="rounded border border-border bg-surface-card/40 px-4 py-3">
+            <dt class="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+              {{ t('detail.solution') }}
+            </dt>
+            <dd class="mt-2">
+              <ul class="flex flex-wrap gap-1.5">
+                <li
+                  v-for="tag in project.techTags"
+                  :key="tag"
+                  class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-cyan-accent/90"
+                >
+                  {{ tag }}
+                </li>
+              </ul>
+            </dd>
+          </div>
+
+          <div class="rounded border border-border bg-surface-card/40 px-4 py-3">
+            <dt class="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+              {{ t('detail.impact') }}
+            </dt>
+            <dd class="mt-2">
+              <ul class="space-y-1.5">
+                <li
+                  v-for="metric in project.audit.metrics"
+                  :key="metric.label"
+                  class="font-mono text-[10px] leading-relaxed"
+                >
+                  <span class="text-foreground">{{ metric.value }}</span>
+                  <span class="text-muted"> — {{ metric.label }}</span>
+                </li>
+              </ul>
+            </dd>
+          </div>
+        </dl>
 
         <ul class="mt-8 flex flex-wrap gap-2" :aria-label="t('detail.metadataAria')">
           <li

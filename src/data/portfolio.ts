@@ -853,9 +853,9 @@ export const profile: Profile = {
   headline: ['DESARROLLADOR WEB', 'FRONTEND ENGINEER'],
   location: 'Barquisimeto, Venezuela (UTC-4)',
   education: 'TSU en Informática (IUTEPAL • Associate Degree in CS)',
-  bio: 'Desarrollador Frontend especializado en Vue 3, TypeScript y arquitecturas web modernas. Diseño interfaces reactivas, accesibles y de alto rendimiento con tipado estricto y foco en la experiencia de usuario. Abierto a oportunidades remotas o híbridas (Junior / Mid) con disponibilidad inmediata.',
+  bio: 'Desarrollador Web Frontend especializado en Vue 3, Tailwind CSS y TypeScript, con base en Barquisimeto, Venezuela (UTC-4). Diseño y construyo interfaces reactivas, accesibles y de alto rendimiento, con arquitectura modular y tipado estricto. Busco pasantías corporativas y oportunidades Junior / Mid, presenciales o remotas, con disponibilidad inmediata.',
   bioAi:
-    'Utilizo la Inteligencia Artificial como multiplicador de productividad: acelerar flujos de desarrollo, validar casos de prueba, auditar accesibilidad y optimizar la experiencia de usuario.',
+    'Utilizo la Inteligencia Artificial como multiplicador de productividad: audito accesibilidad, valido casos de prueba, documento decisiones técnicas y acelero la entrega de interfaces medibles.',
   philosophyPath: '~/profile/philosophy.md',
   stats: [
     { label: 'ENFOQUE', value: 'FRONTEND & PWA' },
