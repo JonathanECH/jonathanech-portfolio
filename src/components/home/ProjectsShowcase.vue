@@ -70,7 +70,7 @@ const filteredProjects = computed(() => {
         </button>
       </div>
 
-      <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <ul class="mt-8 grid list-none grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <ProjectCard
           v-for="(project, index) in filteredProjects"
           :key="project.slug"
@@ -79,7 +79,7 @@ const filteredProjects = computed(() => {
           :index="index"
           @open-quick-view="store.openQuickView"
         />
-      </div>
+      </ul>
 
       <div
         v-if="filteredProjects.length === 0"

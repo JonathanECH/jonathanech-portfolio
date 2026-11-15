@@ -1,18 +1,24 @@
-import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { ViteSSG } from 'vite-ssg'
 import '@fontsource-variable/plus-jakarta-sans'
 import '@fontsource-variable/jetbrains-mono'
 import './styles/main.css'
 import App from './App.vue'
-import router from './router'
 import { initPreferences } from './composables/usePreferences'
 import { reveal } from './directives/reveal'
+import { routes, scrollBehavior } from './router'
 
-initPreferences()
+// `ViteSSG` creates the app, installs the router (memory history while
+// prerendering, web history in the browser) and installs the unhead client.
+export const createApp = ViteSSG(
+  App,
+  { routes, scrollBehavior },
+  ({ app }) => {
+    app.directive('reveal', reveal)
+    app.use(createPinia())
 
-const app = createApp(App)
-
-app.directive('reveal', reveal)
-app.use(createPinia())
-app.use(router)
-app.mount('#app')
+    if (!import.meta.env.SSR) {
+      initPreferences()
+    }
+  },
+)

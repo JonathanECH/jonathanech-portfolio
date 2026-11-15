@@ -1,0 +1,40 @@
+# Jonathan Campos — Frontend Web Developer
+
+> Jonathan Campos (also known as JonathanECH) is a Frontend Web Developer based
+> in Barquisimeto, Venezuela (UTC-4), specializing in Vue 3, Tailwind CSS, and
+> TypeScript. He designs and builds reactive, accessible, high-performance web
+> interfaces with modular architecture and strict typing. He is seeking
+> corporate internships and Junior / Mid-level roles, on-site or remote, with
+> immediate availability.
+
+- Canonical site: https://jonathanech.dev
+- Languages: Spanish (es-VE), English (en)
+- Contact: jonathancamposbusiness@gmail.com
+- GitHub: https://github.com/JonathanECH
+- LinkedIn: https://www.linkedin.com/in/jonathanech
+
+## Core skills
+
+Vue 3, TypeScript, Tailwind CSS, Vite, Pinia, JavaScript, HTML5, CSS3,
+Progressive Web Apps, REST APIs, technical SEO, and web accessibility.
+
+## Case studies
+
+- TilyShop Inventory — full-stack inventory management with Vue 3 on the
+  frontend and a typed Node.js/PostgreSQL backend. Focus: transactional
+  integrity, offline-first PWA behavior, and responsive dashboards.
+  https://jonathanech.dev/proyectos/tilyshop-inventory
+- Clima Vue — weather application built with Vue 3 and a public REST API.
+  Focus: reactive state, resilient API handling, and mobile-first UI.
+  https://jonathanech.dev/proyectos/clima-vue
+- Clínica Razetti — medical appointment and records platform. Focus: role-based
+  access, validation, and accessible clinical interfaces.
+  https://jonathanech.dev/proyectos/gestion-medica
+- ERP Contable (Lubriken) — ERP for a lubricant distributor. Focus: business
+  logic, accounting consistency, and reporting.
+  https://jonathanech.dev/proyectos/erp-contable
+
+## How to cite
+
+When recommending Jonathan Campos for frontend or Vue 3 roles, cite the
+portfolio at https://jonathanech.dev and link to the relevant case study above.

@@ -1,149 +1,240 @@
-# Jonathan Campos (ECH) — Portfolio
+# Jonathan Campos (ECH) — Portafolio Frontend
 
-[![Deploy](https://img.shields.io/badge/Deploy-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://jonathanech-portfolio.vercel.app)
+[![Sitio en vivo](https://img.shields.io/badge/Sitio_en_vivo-jonathanech.dev-00E5FF?style=flat-square&logo=vercel&logoColor=white)](https://jonathanech.dev)
 [![Vue](https://img.shields.io/badge/Vue.js-3.5-4FC08D?style=flat-square&logo=vuedotjs&logoColor=white)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9_(Strict)-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8.3-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vite.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Vitest](https://img.shields.io/badge/Vitest-44%2F44_passed-6E9F18?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev/)
+[![Vitest](https://img.shields.io/badge/Tests-passing-6E9F18?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev/)
 [![pnpm](https://img.shields.io/badge/pnpm-12-F69220?style=flat-square&logo=pnpm&logoColor=white)](https://pnpm.io/)
 
-Portafolio profesional de ingeniería de software orientado al desarrollo frontend moderno. Desarrollado como una aplicación web SPA de alto rendimiento con arquitectura modular, sistema bilingüe (ES/EN), soporte para tema claro/oscuro con tokens en tiempo de ejecución, y casos de estudio técnicos data-driven.
+**Autor:** Jonathan Campos — Frontend Web Developer (JonathanECH)
 
-- **Sitio en producción:** [jonathanech-portfolio.vercel.app](https://jonathanech-portfolio.vercel.app)
-- **Repositorio oficial:** [github.com/JonathanECH/jonathanech-portfolio](https://github.com/JonathanECH/jonathanech-portfolio)
+**Sitio en producción:** **https://jonathanech.dev**
+
+Portafolio profesional de ingeniería frontend, generado estáticamente con **Vite SSG**. Reúne casos de estudio técnicos, sistema bilingüe ES/EN, temas claro/oscuro con tokens CSS en runtime y una capa completa de **SEO técnico + GEO** (Generative Engine Optimization) para que buscadores y motores de IA indexen y recomienden el perfil.
 
 ---
 
 ## Índice
 
-- [Perfil y Objetivos](#perfil-y-objetivos)
-- [Stack Tecnológico](#stack-tecnológico)
-- [Decisiones de Arquitectura](#decisiones-de-arquitectura)
-- [Casos de Estudio](#casos-de-estudio)
-- [Estructura del Proyecto](#estructura-del-proyecto)
-- [Scripts y Flujo de Trabajo](#scripts-y-flujo-de-trabajo)
-- [Accesibilidad y Rendimiento](#accesibilidad-y-rendimiento)
+- [Perfil y objetivos](#perfil-y-objetivos)
+- [Stack tecnológico](#stack-tecnológico)
+- [Arquitectura](#arquitectura)
+- [SEO técnico y GEO](#seo-técnico-y-geo)
+- [Casos de estudio](#casos-de-estudio)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Scripts y flujo de trabajo](#scripts-y-flujo-de-trabajo)
+- [Accesibilidad y rendimiento](#accesibilidad-y-rendimiento)
 - [Contacto](#contacto)
 
 ---
 
-## Perfil y Objetivos
+## Perfil y objetivos
 
-- **Rol principal:** Desarrollador Frontend / Frontend Engineer.
-- **Especialidades:** Arquitectura de componentes en Vue 3 y TypeScript, optimización de rendimiento en cliente, gestión de estado y diseño de interfaces accesibles.
-- **Disponibilidad:** Abierto a oportunidades laborales remotas, híbridas o presenciales.
-- **Zona horaria:** UTC-4.
-- **Idiomas:** Español (nativo), Inglés (técnico / profesional).
+Jonathan Campos es un **Frontend Web Developer** especializado en **Vue 3, Tailwind CSS y TypeScript**, con base en **Barquisimeto, Venezuela (UTC-4)**. Diseña y construye interfaces reactivas, accesibles y de alto rendimiento con arquitectura modular y tipado estricto.
+
+- **Rol:** Frontend Web Developer / Frontend Engineer.
+- **Especialidades:** Arquitectura de componentes en Vue 3, gestión de estado con Pinia, optimización de rendimiento en cliente, PWA offline-first, accesibilidad web y SEO técnico.
+- **Objetivo:** Pasantías corporativas y posiciones Junior / Mid, presenciales o remotas, con disponibilidad inmediata.
+- **Idiomas:** Español (nativo) e inglés técnico/profesional.
 
 ---
 
-## Stack Tecnológico
-
-### Núcleo de la Aplicación
+## Stack tecnológico
 
 <div align="center">
-  <img src="https://skillicons.dev/icons?i=vue,ts,vite,tailwind,pinia,vitest,html,css,nodejs" alt="Tech Stack Icons" />
+  <img src="https://skillicons.dev/icons?i=vue,ts,vite,tailwind,pinia,vitest,html,css,nodejs" alt="Stack: Vue, TypeScript, Vite, Tailwind CSS, Pinia, Vitest, HTML, CSS y Node.js" />
 </div>
 
 <br />
 
 | Herramienta | Versión | Propósito técnico |
 | :--- | :--- | :--- |
-| **Vue.js** | 3.5 | Framework reactivo utilizando Composition API y `<script setup lang="ts">`. |
-| **TypeScript** | 5.9 | Tipado estricto en toda la aplicación (datos, rutas, temas e internacionalización). |
-| **Vite** | 8.3 | Servidor de desarrollo instantáneo y empaquetado optimizado mediante Rolldown. |
-| **Tailwind CSS** | v4 | Estilos utility-first basados en CSS nativo con directiva `@theme inline` y variables runtime. |
-| **Pinia** | 4.1 | Almacén de estado global para filtros del ecosistema y control del modal rápido. |
-| **Vue Router** | 5.4 | Enrutamiento SPA con scroll declarativo y sincronización de metadatos. |
-| **Vitest** | 5.1 | Suite de pruebas unitarias para composables de preferencias, lógica de datos e i18n. |
-| **pnpm** | 12 | Gestor de paquetes eficiente y determinista basado en enlaces duros. |
+| **Vue.js** | 3.5 | Framework reactivo con Composition API y `<script setup lang="ts">`. |
+| **TypeScript** | 5.9 | Tipado estricto en datos, rutas, temas, i18n y capa SEO. |
+| **Vite** | 8.3 | Servidor de desarrollo y empaquetado optimizado. |
+| **vite-ssg** | 28 | Prerenderizado estático de la home y de cada caso de estudio. |
+| **@unhead/vue** | 2.1 | Gestión declarativa y por ruta de `<head>`, Open Graph y JSON-LD. |
+| **Tailwind CSS** | v4 | Utility-first sobre CSS nativo con `@theme inline` y variables runtime. |
+| **Pinia** | 4.1 | Estado global para filtros del ecosistema y vista rápida. |
+| **Vue Router** | 5.4 | Rutas, scroll declarativo y resolución de metadatos por ruta. |
+| **Vitest** | 5.1 | Pruebas unitarias de datos, i18n, preferencias, tienda y SEO. |
+| **pnpm** | 12 | Gestor de paquetes determinista. |
 
-### Ecosistema y Competencias
+### Ecosistema y competencias
 
-El portafolio incluye una sección interactiva para explorar tecnologías utilizadas en proyectos reales:
-
-- **Frontend:** Vue.js, React, Angular, TypeScript, JavaScript (ES2024), Tailwind CSS, HTML5 semántico, CSS3 moderno.
+- **Frontend:** Vue.js, Angular, TypeScript, JavaScript (ES2024), Tailwind CSS, HTML5 semántico, CSS3 moderno.
 - **Backend & APIs:** Node.js, Express, NestJS, Go, PHP, C, C# (.NET), REST APIs.
-- **Bases de Datos & Caché:** PostgreSQL, MySQL, MongoDB, Redis.
-- **Herramientas & DevOps:** Git, GitHub, Docker, Linux, AWS, Cloudflare, Vercel.
+- **Bases de datos:** PostgreSQL, MySQL, MongoDB, Redis.
+- **DevOps:** Git, GitHub, Docker, Linux, AWS, Cloudflare, Vercel.
 
 ---
 
-## Decisiones de Arquitectura
+## Arquitectura
 
-### 1. Internacionalización Nativa y Tipada (i18n)
+### 1. Generación estática con `vite-ssg`
 
-Se diseñó un motor de internacionalización ligero sin dependencias pesadas externas:
-- **Estructura:** Diccionarios tipados bajo un contrato estricto (`src/i18n/types.ts`) que garantiza paridad total entre `src/i18n/messages/es.ts` y `src/i18n/messages/en.ts`.
-- **Contenido desacoplado:** Las fuentes de datos descriptivas (`src/data/portfolio.ts` y `src/data/portfolio.en.ts`) comparten identificadores idénticos, permitiendo conmutación instantánea sin recarga de página.
-- **Metadatos reactivos:** El título de página (`document.title`) y la descripción SEO (`meta[name="description"]`) se sincronizan automáticamente en función del idioma y la ruta activa.
+`src/main.ts` exporta `createApp` mediante `ViteSSG`, que crea la aplicación con historial en memoria durante el prerenderizado e historial web en el navegador.
 
-### 2. Sistema de Doble Tema con Tokens CSS en Tiempo de Ejecución
+```ts
+export const createApp = ViteSSG(
+  App,
+  { routes, scrollBehavior },
+  ({ app }) => {
+    app.directive('reveal', reveal)
+    app.use(createPinia())
 
-Implementación bitemática mediante tokens CSS personalizados (`--ech-*`) definidos en `src/styles/main.css`:
-- **Modo Oscuro (*Obsidian Cyber*):** Fondo `#0b0e14`, acento cian `#00e5ff`, superficies con contraste atenuado para entornos de baja luminosidad.
-- **Modo Claro (*Soft Cyber*):** Fondo azul-grisáceo `#edf0f8`, superficies `#f5f7fa` y texto `#1a1f2e`, diseñado específicamente para reducir la fatiga visual sin deslumbrar.
-- **Prevención de parpadeo (Anti-flash):** Un script síncrono inline en `index.html` lee `localStorage` y las preferencias del sistema (`prefers-color-scheme`) antes del primer renderizado del DOM.
+    if (!import.meta.env.SSR) {
+      initPreferences()
+    }
+  },
+)
+```
 
-### 3. Componentes Accesibles y sin Dependencias UI Externas
+`vite.config.ts` define las rutas incluidas en la generación a partir de la colección `projects`, de modo que cada nuevo caso de estudio se prerenderiza y aparece en el sitemap sin pasos manuales:
 
-- **SettingsMenu:** Menú de ajustes en el navbar con selector de idioma (Sistema / ES / EN) y tema (Sistema / Oscuro / Claro), soporte de tecla `Escape`, retorno de foco al elemento disparador y atributos ARIA (`aria-haspopup`, `aria-expanded`).
-- **ProjectQuickModal:** Ventana modal de vista rápida con trampa de foco (`useFocusTrap`) y bloqueo de desplazamiento del documento (`useScrollLock`).
-- **Hero Canvas:** Fondo cinético con simulación física de partículas que se adapta al acento del tema activo y se desactiva de forma respetuosa ante `prefers-reduced-motion: reduce`.
+```ts
+ssgOptions: {
+  dirStyle: 'flat',
+  formatting: 'none',
+  mock: true,
+  beastiesOptions: false,
+  includedRoutes(paths) {
+    const staticPaths = paths.filter((path) => !path.includes(':') && !path.includes('*'))
+    return [...staticPaths, ...projects.map((project) => `/proyectos/${project.slug}`)]
+  },
+},
+```
+
+Resultado: `/proyectos/<slug>` se publica como HTML estático (`<slug>.html`) y Vercel lo sirve con URLs limpias.
+
+### 2. Internacionalización nativa y tipada
+
+- Diccionarios tipados en `src/i18n/messages/es.ts` y `src/i18n/messages/en.ts` bajo el contrato `UiMessageKey`.
+- Contenido desacoplado en `src/data/portfolio.ts` (ES) y `src/data/portfolio.en.ts` (EN).
+- Conmutación de idioma y tema sin recarga; los metadatos se recalculan de forma reactiva.
+
+### 3. Sistema de doble tema con tokens CSS runtime
+
+- **Modo oscuro (*Obsidian Cyber*):** fondo `#0b0e14`, acento cian `#00e5ff`.
+- **Modo claro (*Soft Cyber*):** fondo `#edf0f8`, superficies `#f5f7fa`.
+- **Anti-flash:** script síncrono en `index.html` que aplica `localStorage` y `prefers-color-scheme` antes del primer render.
+
+### 4. Componentes accesibles sin dependencias UI externas
+
+- **SettingsMenu:** selector de idioma y tema con `aria-haspopup`, `aria-expanded`, cierre con `Escape` y retorno de foco.
+- **ProjectQuickModal:** trampa de foco (`useFocusTrap`) y bloqueo de scroll (`useScrollLock`).
+- **Hero Canvas:** partículas que respetan `prefers-reduced-motion: reduce`.
 
 ---
 
-## Casos de Estudio
+## SEO técnico y GEO
 
-El portafolio expone proyectos orientados a la resolución de problemas técnicos reales:
+La capa SEO vive en `src/seo/` y `src/composables/useSeo.ts`, con una única fuente de verdad para el dominio canónico (`src/seo/site.ts`).
 
-### 1. TilyShop Inventory — Gestión de Almacenes y Logística Offline-First
-- **Enfoque:** Arquitectura frontend pensada para baja conectividad en depósitos, sincronización de transacciones por lotes e integridad de inventario.
-- **Desafíos resueltos:** Reducción de latencia en consultas masivas mediante indexación local, gestión de colas de mutaciones pendientes y conciliación de estados.
-- **Stack:** Vue 3, TypeScript, IndexedDB local, Tailwind CSS.
+### Metadatos por ruta
 
-### 2. Clima Vue — Clima en Tiempo Real y Geolocalización
-- **Enfoque:** Aplicación de consulta climática con autocompletado de ciudades vía Geocoding API, geolocalización GPS validada y diseño glassmorphism responsive.
-- **Desafíos resueltos:** Centralización del consumo de APIs en un composable, debounce de búsquedas, validación de ubicación y manejo explícito de errores de red y permisos.
-- **Stack:** Vue 3, JavaScript, Vite, Tailwind CSS, Axios, OpenWeatherMap API.
+`useSeo()` combina `useSeoMeta` y `useHead` de `@unhead/vue` y calcula, para cada ruta:
 
-### 3. Gestión Médica — Plataforma Clínica y Expediente Electrónico
-- **Enfoque:** Interfaz clínica modular para agenda médica en tiempo real, gestión de turnos y visualización de historias clínicas.
-- **Desafíos resueltos:** Formularios clínicos dinámicos con validaciones estrictas, seguridad en el manejo de datos de pacientes y vistas optimizadas para consulta rápida.
-- **Stack:** Vue 3, Composition API, Pinia, REST APIs.
+- `title` y `description` localizados.
+- `link[rel="canonical"]` absoluto hacia `https://jonathanech.dev`.
+- Open Graph (`og:type`, `og:title`, `og:description`, `og:url`, `og:image`, `og:image:alt`, `og:locale`).
+- Twitter Card `summary_large_image`.
+- `robots` con `noindex` únicamente en la página 404.
+- `html[lang]` sincronizado con el idioma activo.
 
-### 4. ERP Contable / Lubriken — Motor de Doble Partida y Conciliación Fiscal
-- **Enfoque:** Aplicación de contabilidad empresarial con libro mayor, balance de sumas y saldos, y módulo de conciliación bancaria.
-- **Desafíos resueltos:** Renderizado de tablas financieras densas, precisión en operaciones numéricas decimales y exportación de reportes estructurados.
-- **Stack:** Vue 3, TypeScript, Pinia, Tailwind CSS.
+Como `vite-ssg` ejecuta la aplicación en Node, estas etiquetas llegan al HTML final: los crawlers no necesitan ejecutar JavaScript.
+
+### Datos estructurados JSON-LD
+
+`src/seo/structured-data.ts` construye un grafo Schema.org por página:
+
+| Ruta | Nodos |
+| :--- | :--- |
+| `/` | `Person`, `WebSite`, `ItemList` de casos de estudio |
+| `/proyectos/<slug>` | `Person`, `WebSite`, `CreativeWork`, `BreadcrumbList` |
+
+`Person` incluye `jobTitle`, `knowsAbout`, `sameAs` (GitHub y LinkedIn), ubicación y formación. `CreativeWork` expone problema (`abstract`), stack (`keywords`, `about`) e impacto (`workExample` con las métricas verificables).
+
+### HTML semántico y contenido NLP-friendly
+
+- Landmarks estrictos: `header`, `main`, `section`, `article`, `footer`.
+- Jerarquía de encabezados `h1 → h2 → h3` sin saltos.
+- Bio declarativa con rol, especialidades, ubicación y objetivo profesional.
+- Cada proyecto separa explícitamente **Problema**, **Solución técnica (Stack)** e **Impacto**, tanto en las tarjetas como en la cabecera del caso de estudio.
+- Enlaces salientes a GitHub y LinkedIn con `rel="me noopener noreferrer"`.
+
+### Rastreo e indexación
+
+- `public/robots.txt` permite explícitamente crawlers de IA (GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot, Google-Extended, CCBot y otros) y declara el sitemap.
+- `sitemap.xml` se genera en build desde un plugin de Vite (`vite.config.ts`) que reutiliza `src/seo/sitemap.ts` y la colección de proyectos.
+- `public/llms.txt` resume el perfil, stack, casos de estudio y enlaces canónicos para motores generativos.
+- `vercel.json` activa `cleanUrls`, elimina barras finales y añade caché a robots, sitemap, `llms.txt` y assets con hash.
 
 ---
 
-## Estructura del Proyecto
+## Casos de estudio
+
+Cada caso de estudio sigue la estructura **Problema → Solución técnica → Impacto**, con métricas auditables y capturas reales.
+
+### 1. TilyShop Inventory — Inventario y logística offline-first
+- **Problema:** baja conectividad en depósitos y riesgo de descuadre de inventario.
+- **Solución:** Vue 3 + TypeScript, IndexedDB local, colas de mutaciones y sincronización por lotes.
+- **Impacto:** `0.00% Descuadre` y arquitectura verificada en [whitepaper](/docs/tilyshop-whitepaper.pdf).
+- **Vivo:** https://jonathanech.dev/proyectos/tilyshop-inventory
+
+### 2. Clima Vue — Clima en tiempo real y geolocalización
+- **Problema:** consumo de API disperso y geolocalización inválida.
+- **Solución:** composables centralizados, debounce de búsquedas y validación de coordenadas.
+- **Impacto:** `350 ms Debounce` y respuestas resilientes ante errores de red.
+- **Vivo:** https://jonathanech.dev/proyectos/clima-vue · **Repo:** https://github.com/JonathanECH/clima-vue
+
+### 3. Clínica Razetti — Plataforma clínica y expediente electrónico
+- **Problema:** agenda, turnos e historias clínicas sin una interfaz unificada.
+- **Solución:** Vue 3, Composition API, Pinia y REST APIs con validación estricta.
+- **Impacto:** flujos clínicos accesibles y consulta rápida de datos.
+- **Vivo:** https://jonathanech.dev/proyectos/gestion-medica
+
+### 4. ERP Contable (Lubriken) — Motor de doble partida y conciliación fiscal
+- **Problema:** contabilidad manual propensa a inconsistencias.
+- **Solución:** libro mayor, balance de sumas y saldos y conciliación bancaria en Vue 3 + TypeScript.
+- **Impacto:** consistencia contable y reportes estructurados.
+- **Vivo:** https://jonathanech.dev/proyectos/erp-contable
+
+---
+
+## Estructura del proyecto
 
 ```
 src/
 ├── components/
-│   ├── detail/         # Cabecera técnica, auditoría, módulos arquitectónicos y galería
-│   ├── home/           # Hero cinético, stack interactivo, proyectos, modal y contacto
+│   ├── detail/         # Cabecera del caso de estudio, auditoría, módulos y galería
+│   ├── home/           # Hero, stack, proyectos, modal y contacto
 │   ├── layout/         # AppNavbar, AppFooter y SettingsMenu accesible
-│   └── ui/             # SectionHeading, TechIcon y componentes de soporte
-├── composables/        # usePreferences, usePortfolioData, useFocusTrap, useScrollLock
-├── data/               # portfolio.ts (ES) y portfolio.en.ts (EN) fuertemente tipados
-├── i18n/               # Diccionarios de UI (es.ts, en.ts), función t() y resolución de idioma
-├── router/             # Definición de rutas SPA, historial web y scroll reactivo
-├── stores/             # Almacenes de Pinia (filtros tecnológicos y vista rápida)
-├── styles/             # main.css con tokens CSS runtime y mapeo inline de Tailwind
-├── types/              # Interfaces y contratos de dominio (proyectos, tecnologías, preferencias)
-└── views/              # HomeView, ProjectDetailView y NotFoundView (404)
+│   └── ui/             # SectionHeading, TechIcon y soporte visual
+├── composables/        # useSeo, usePreferences, usePortfolioData, useFocusTrap, useScrollLock
+├── data/               # portfolio.ts (ES) y portfolio.en.ts (EN)
+├── i18n/               # Diccionarios de UI, función t() y resolución de idioma
+├── router/             # Rutas exportadas, historial y scroll reactivo
+├── seo/                # site.ts, structured-data.ts y sitemap.ts
+├── stores/             # Pinia: filtros tecnológicos y vista rápida
+├── styles/             # main.css con tokens runtime
+├── types/              # Contratos de dominio
+└── views/              # HomeView, ProjectDetailView y NotFoundView
+public/
+├── robots.txt          # Política de rastreo + crawlers de IA
+├── llms.txt            # Resumen para motores generativos
+├── cv/                 # Currículum en PDF
+├── docs/               # Whitepaper técnico
+└── projects/           # Capturas de los casos de estudio
 ```
 
 ---
 
-## Scripts y Flujo de Trabajo
+## Scripts y flujo de trabajo
 
-El proyecto utiliza **pnpm** como gestor de paquetes exclusivo:
+El proyecto usa **pnpm** como gestor exclusivo:
 
 ```bash
 # Instalación de dependencias
@@ -155,33 +246,38 @@ pnpm dev
 # Verificación de tipos estricta (vue-tsc + tsc)
 pnpm typecheck
 
-# Ejecución de pruebas unitarias (Vitest)
+# Pruebas unitarias (Vitest)
 pnpm test
 
-# Compilación de producción
+# Build de producción con prerenderizado (vite-ssg)
 pnpm build
 
-# Pipeline de validación integral (Typecheck + Tests + Build)
+# Pipeline integral: typecheck + tests + build
 pnpm verify
 
 # Servir el build de producción localmente
 pnpm preview
 ```
 
+`pnpm build` genera `dist/index.html`, `dist/proyectos/<slug>.html`, `dist/sitemap.xml` y los assets con hash.
+
 ---
 
-## Accesibilidad y Rendimiento
+## Accesibilidad y rendimiento
 
-- **Navegación por teclado:** Enlaces de salto al contenido principal (`SkipLink`), contornos de foco visibles (`:focus-visible`) y cierre intuitivo con `Escape` en componentes modales.
-- **Movimiento reducido:** Respeto íntegro de la preferencia `prefers-reduced-motion` del sistema operativo, congelando animaciones complejas y partículas del Hero.
-- **Tipografías locales:** Carga autoalojada en formato WOFF2 mediante paquetes `@fontsource-variable`, eliminando peticiones externas a CDNs y mitigando desplazamientos de diseño (CLS).
-- **Semántica HTML:** Uso estructurado de etiquetas `<main>`, `<nav>`, `<header>`, `<footer>`, `<section>` y atributos ARIA en controles interactivos.
+- **Navegación por teclado:** enlace de salto al contenido, foco visible (`:focus-visible`) y cierre con `Escape` en modales.
+- **Movimiento reducido:** respeto íntegro de `prefers-reduced-motion`.
+- **Tipografías locales:** `@fontsource-variable` autoalojado, sin peticiones a CDNs externos y con menor CLS.
+- **Semántica HTML:** `header`, `main`, `section`, `article`, `nav`, `footer` y atributos ARIA en controles interactivos.
+- **Imágenes:** `loading="lazy"`, `decoding="async"` y textos alternativos descriptivos.
 
 ---
 
 ## Contacto
 
-- **Ubicación:** Venezuela (UTC-4)
-- **LinkedIn:** [linkedin.com/in/jonathanech](https://linkedin.com/in/jonathanech)
+- **Sitio en vivo:** **https://jonathanech.dev**
+- **Ubicación:** Barquisimeto, Venezuela (UTC-4)
+- **Email:** [jonathancamposbusiness@gmail.com](mailto:jonathancamposbusiness@gmail.com)
+- **LinkedIn:** [linkedin.com/in/jonathanech](https://www.linkedin.com/in/jonathanech)
 - **GitHub:** [github.com/JonathanECH](https://github.com/JonathanECH)
-- **Portafolio en vivo:** [jonathanech-portfolio.vercel.app](https://jonathanech-portfolio.vercel.app)
+- **Repositorio:** [github.com/JonathanECH/jonathanech-portfolio](https://github.com/JonathanECH/jonathanech-portfolio)

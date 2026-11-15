@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import type { RouteRecordRaw, RouterScrollBehavior } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 
 function prefersReducedMotion(): boolean {
@@ -38,38 +38,46 @@ function waitForHashTarget(hash: string, timeout = 1200): Promise<Element | null
   })
 }
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/proyectos/:slug',
-      name: 'project-detail',
-      component: () => import('@/views/ProjectDetailView.vue'),
-      props: true,
-    },
-    {
-      path: '/:pathMatch(.*)*',
-      name: 'not-found',
-      component: () => import('@/views/NotFoundView.vue'),
-    },
-  ],
-  scrollBehavior(to, _from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    }
-    if (to.hash) {
-      const behavior = prefersReducedMotion() ? 'auto' : 'smooth'
-      return waitForHashTarget(to.hash).then((element) =>
-        element ? { el: element, top: 72, behavior } : { top: 0 },
-      )
-    }
-    return { top: 0 }
+/**
+ * Route table shared by the SPA and by `vite-ssg`.
+ *
+ * The router instance is created by `ViteSSG` so the same routes can be
+ * rendered with a memory history during static generation and with the web
+ * history in the browser.
+ */
+export const routes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView,
   },
-})
+  {
+    path: '/proyectos/:slug',
+    name: 'project-detail',
+    component: () => import('@/views/ProjectDetailView.vue'),
+    props: true,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: () => import('@/views/NotFoundView.vue'),
+  },
+]
 
-export default router
+export const scrollBehavior: RouterScrollBehavior = (to, _from, savedPosition) => {
+  // Scrolling is meaningless while prerendering and jsdom does not implement it.
+  if (import.meta.env.SSR) {
+    return false
+  }
+
+  if (savedPosition) {
+    return savedPosition
+  }
+  if (to.hash) {
+    const behavior = prefersReducedMotion() ? 'auto' : 'smooth'
+    return waitForHashTarget(to.hash).then((element) =>
+      element ? { el: element, top: 72, behavior } : { top: 0 },
+    )
+  }
+  return { top: 0 }
+}
