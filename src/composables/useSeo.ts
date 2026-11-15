@@ -6,6 +6,8 @@ import { buildStructuredData } from '@/seo/structured-data'
 import {
   DEFAULT_OG_IMAGE,
   DEFAULT_OG_IMAGE_ALT,
+  HOME_SOCIAL_DESCRIPTION,
+  HOME_SOCIAL_TITLE,
   SITE_AUTHOR,
   SITE_LOCALE,
   SITE_LOCALE_ALTERNATE,
@@ -93,6 +95,14 @@ export function useSeo(): void {
     project.value ? projectImage(project.value) : DEFAULT_OG_IMAGE,
   )
 
+  const socialTitle = computed(() =>
+    isHome.value ? HOME_SOCIAL_TITLE : title.value,
+  )
+
+  const socialDescription = computed(() =>
+    isHome.value ? HOME_SOCIAL_DESCRIPTION : description.value,
+  )
+
   const socialImageAlt = computed(() =>
     project.value
       ? `${project.value.name} — ${project.value.audit.badge}`
@@ -110,15 +120,15 @@ export function useSeo(): void {
     robots,
     ogType: computed(() => (project.value ? 'article' : 'website')),
     ogSiteName: SITE_NAME,
-    ogTitle: title,
-    ogDescription: description,
+    ogTitle: socialTitle,
+    ogDescription: socialDescription,
     ogUrl: canonicalUrl,
     ogImage: socialImage,
     ogImageAlt: socialImageAlt,
     ogLocale: computed(() => (locale.value === 'es' ? SITE_LOCALE : SITE_LOCALE_ALTERNATE)),
     twitterCard: 'summary_large_image',
-    twitterTitle: title,
-    twitterDescription: description,
+    twitterTitle: socialTitle,
+    twitterDescription: socialDescription,
     twitterImage: socialImage,
     twitterImageAlt: socialImageAlt,
   })
@@ -126,6 +136,7 @@ export function useSeo(): void {
   useHead(() => ({
     htmlAttrs: { lang: locale.value },
     link: [{ rel: 'canonical', href: canonicalUrl.value }],
+    meta: [{ name: 'twitter:url', content: canonicalUrl.value }],
     script: buildStructuredData({
       profile: content.value.profile,
       projects: content.value.projects,
