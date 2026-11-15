@@ -26,11 +26,18 @@ export const SOCIAL_PROFILES = {
   linkedin: 'https://www.linkedin.com/in/jonathanech',
 } as const
 
-export const DEFAULT_OG_IMAGE =
-  `${SITE_URL}/projects/tilyshop-inventory/dashboard-tilyshop-inventory.webp`
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`
 
 export const DEFAULT_OG_IMAGE_ALT =
-  'Panel de TilyShop Inventory, caso de estudio de Jonathan Campos'
+  'Jonathan Campos — Desarrollador Web Frontend especializado en Vue 3, Tailwind CSS y TypeScript'
+
+/**
+ * Social copy used for the home page. The static tags in `index.html` mirror
+ * these values so crawlers that do not execute JavaScript still get a card.
+ */
+export const HOME_SOCIAL_TITLE = 'Jonathan Campos - Desarrollador Web Frontend'
+export const HOME_SOCIAL_DESCRIPTION =
+  'Portafolio profesional. Especialista en Vue 3, Tailwind CSS y TypeScript.'
 
 export function absoluteUrl(path = '/'): string {
   if (path.startsWith('http://') || path.startsWith('https://')) {
