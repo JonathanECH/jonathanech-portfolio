@@ -131,11 +131,6 @@ export const esMessages = {
   'detail.galleryTitle': 'Capturas del',
   'detail.galleryHighlight': 'Sistema',
   'detail.galleryAria': 'Capturas del sistema',
-  'detail.notFoundCode': '// CASE_STUDY // NOT_FOUND',
-  'detail.notFoundTitle': 'Caso de estudio no encontrado',
-  'detail.notFoundDescription':
-    'El proyecto solicitado no está registrado en el sistema. Explora los casos de estudio disponibles desde el portafolio.',
-  'detail.backToProjects': 'Volver a proyectos',
 
   'gallery.regionAria': 'Galería de capturas de {name}',
   'gallery.autoplayDisabled': 'Reproducción automática desactivada por movimiento reducido',
@@ -168,11 +163,32 @@ export const esMessages = {
   'pager.start': 'INICIO DE LA SERIE',
   'pager.end': 'FIN DE LA SERIE',
 
-  'notFound.code': '// ERROR_404 // ROUTE_NOT_FOUND',
-  'notFound.title': 'Esta ruta no existe',
+  'notFound.code': '// STATUS: 404 // ROUTE_NOT_FOUND // TRACE_ERR: 0x7E4',
+  'notFound.sysTag': 'SYS.ROUTER_ERR',
+  'notFound.coordinate': '[COORDINATE: NULL]',
+  'notFound.latLng': 'LAT: 0.000 // LNG: 0.000',
+  'notFound.rulerLabel': 'SYS_DISCONNECT',
+  'notFound.title': 'Destino no encontrado',
   'notFound.description':
-    'El recurso solicitado no está registrado en el sistema. Vuelve al portafolio para explorar los casos de estudio disponibles.',
+    'El recurso solicitado no está disponible. Es posible que la ruta haya sido reestructurada durante la última optimización de arquitectura.',
+  'notFound.terminalAria': 'Registro de diagnóstico de ruta',
+  'notFound.streamLive': 'STREAM: LIVE',
+  'notFound.logOrigin': '[ORIGIN: DIRECT_DISPATCH]',
+  'notFound.logProtocol': '[HTTP/2.0 • TLS 1.3 • SPA_ROUTER]',
+  'notFound.logResolution':
+    'No se pudo resolver el nodo contra la topología del sitemap y el árbol de rutas',
+  'notFound.logDiagnostic':
+    'Mecanismo de respaldo sin caída activado. Telemetría de ruta capturada.',
+  'notFound.logAction': 'Redirigir al origen seguro (Inicio / Proyectos)',
   'notFound.backHome': 'Volver al inicio',
+  'notFound.exploreProjects': 'Explorar proyectos',
+  'notFound.recommendedRoutes': '// RUTAS RECOMENDADAS',
+  'notFound.recommendedAria': 'Rutas recomendadas del portafolio',
+  'notFound.routeHome': 'Inicio',
+  'notFound.routeStack': 'Stack Tecnológico',
+  'notFound.routeProjects': 'Proyectos',
+  'notFound.routeAbout': 'Sobre Mí',
+  'notFound.routeContact': 'Contacto Directo',
 
   'mockup.visualAria': 'Representación visual de {title}',
   'mockup.stock': 'Existencias',

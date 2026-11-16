@@ -66,7 +66,7 @@ const config = {
     beastiesOptions: false,
     includedRoutes(paths: string[]): string[] {
       const staticPaths = paths.filter((path) => !path.includes(':') && !path.includes('*'))
-      return [...staticPaths, ...projects.map((project) => `/proyectos/${project.slug}`)]
+      return [...staticPaths, '/404', ...projects.map((project) => `/proyectos/${project.slug}`)]
     },
   },
 }

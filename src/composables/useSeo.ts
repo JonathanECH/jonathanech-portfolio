@@ -2,20 +2,18 @@ import { computed } from 'vue'
 import { useHead, useSeoMeta } from '@unhead/vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from '@/i18n'
-import { buildStructuredData } from '@/seo/structured-data'
+import { buildStructuredData, serializeJsonLd } from '@/seo/structured-data'
 import {
-  DEFAULT_OG_IMAGE,
-  DEFAULT_OG_IMAGE_ALT,
-  HOME_SOCIAL_DESCRIPTION,
-  HOME_SOCIAL_TITLE,
+  HOME_SOCIAL_COPY,
   SITE_AUTHOR,
   SITE_LOCALE,
   SITE_LOCALE_ALTERNATE,
-  SITE_NAME,
   SITE_URL,
   absoluteUrl,
-  projectImage,
+  defaultOgImageAlt,
   projectUrl,
+  resolveSocialImageMeta,
+  siteName,
 } from '@/seo/site'
 import type { Project } from '@/types/portfolio'
 
@@ -91,22 +89,26 @@ export function useSeo(): void {
     return absoluteUrl(route.path)
   })
 
-  const socialImage = computed(() =>
-    project.value ? projectImage(project.value) : DEFAULT_OG_IMAGE,
-  )
+  const socialImageMeta = computed(() => resolveSocialImageMeta(project.value))
+  const socialImage = computed(() => socialImageMeta.value.url)
+  const socialImageType = computed(() => socialImageMeta.value.type)
+  const socialImageWidth = computed(() => socialImageMeta.value.width)
+  const socialImageHeight = computed(() => socialImageMeta.value.height)
+
+  const homeSocialCopy = computed(() => HOME_SOCIAL_COPY[locale.value])
 
   const socialTitle = computed(() =>
-    isHome.value ? HOME_SOCIAL_TITLE : title.value,
+    isHome.value ? homeSocialCopy.value.title : title.value,
   )
 
   const socialDescription = computed(() =>
-    isHome.value ? HOME_SOCIAL_DESCRIPTION : description.value,
+    isHome.value ? homeSocialCopy.value.description : description.value,
   )
 
   const socialImageAlt = computed(() =>
     project.value
       ? `${project.value.name} — ${project.value.audit.badge}`
-      : DEFAULT_OG_IMAGE_ALT,
+      : defaultOgImageAlt(locale.value),
   )
 
   const robots = computed(() =>
@@ -119,13 +121,18 @@ export function useSeo(): void {
     author: SITE_AUTHOR,
     robots,
     ogType: computed(() => (project.value ? 'article' : 'website')),
-    ogSiteName: SITE_NAME,
+    ogSiteName: computed(() => siteName(locale.value)),
     ogTitle: socialTitle,
     ogDescription: socialDescription,
     ogUrl: canonicalUrl,
     ogImage: socialImage,
+    ogImageWidth: socialImageWidth,
+    ogImageHeight: socialImageHeight,
     ogImageAlt: socialImageAlt,
     ogLocale: computed(() => (locale.value === 'es' ? SITE_LOCALE : SITE_LOCALE_ALTERNATE)),
+    ogLocaleAlternate: computed(() =>
+      locale.value === 'es' ? [SITE_LOCALE_ALTERNATE] : [SITE_LOCALE],
+    ),
     twitterCard: 'summary_large_image',
     twitterTitle: socialTitle,
     twitterDescription: socialDescription,
@@ -135,18 +142,25 @@ export function useSeo(): void {
 
   useHead(() => ({
     htmlAttrs: { lang: locale.value },
-    link: [{ rel: 'canonical', href: canonicalUrl.value }],
-    meta: [{ name: 'twitter:url', content: canonicalUrl.value }],
-    script: buildStructuredData({
-      profile: content.value.profile,
-      projects: content.value.projects,
-      project: project.value,
-      isHome: isHome.value,
-      locale: locale.value,
-    }).map((node, index) => ({
-      type: 'application/ld+json',
-      key: `portfolio-jsonld-${index}`,
-      innerHTML: JSON.stringify(node),
-    })),
+    link:
+      isNotFound.value || isMissingProject.value
+        ? []
+        : [{ rel: 'canonical', href: canonicalUrl.value }],
+    meta: [{ property: 'og:image:type', content: socialImageType.value }],
+    script: [
+      {
+        type: 'application/ld+json',
+        key: 'portfolio-jsonld',
+        innerHTML: serializeJsonLd(
+          buildStructuredData({
+            profile: content.value.profile,
+            projects: content.value.projects,
+            project: project.value,
+            isHome: isHome.value,
+            locale: locale.value,
+          }),
+        ),
+      },
+    ],
   }))
 }

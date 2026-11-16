@@ -207,7 +207,7 @@ function openQuickView(): void {
             </dd>
           </div>
 
-          <div>
+          <div v-if="project.audit.metrics.length > 0">
             <dt
               class="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-muted/70"
             >
@@ -215,9 +215,11 @@ function openQuickView(): void {
               {{ t('projects.impactLabel') }}
             </dt>
             <dd class="mt-1 flex min-w-0 flex-wrap items-center gap-x-1.5 font-mono text-[10px] text-muted">
-              <span class="truncate text-foreground">{{ project.audit.metrics[0].value }}</span>
-              <span class="text-border" aria-hidden="true">//</span>
-              <span class="truncate">{{ project.audit.metrics[1].value }}</span>
+              <span class="truncate text-foreground">{{ project.audit.metrics[0]?.value }}</span>
+              <template v-if="project.audit.metrics[1]">
+                <span class="text-border" aria-hidden="true">//</span>
+                <span class="truncate">{{ project.audit.metrics[1].value }}</span>
+              </template>
             </dd>
           </div>
         </dl>

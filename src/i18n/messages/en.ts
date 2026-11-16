@@ -133,11 +133,6 @@ export const enMessages = {
   'detail.galleryTitle': 'System',
   'detail.galleryHighlight': 'Captures',
   'detail.galleryAria': 'System captures',
-  'detail.notFoundCode': '// CASE_STUDY // NOT_FOUND',
-  'detail.notFoundTitle': 'Case study not found',
-  'detail.notFoundDescription':
-    'The requested project is not registered in the system. Explore the available case studies from the portfolio.',
-  'detail.backToProjects': 'Back to projects',
 
   'gallery.regionAria': 'Screenshot gallery of {name}',
   'gallery.autoplayDisabled': 'Autoplay disabled due to reduced motion',
@@ -170,11 +165,32 @@ export const enMessages = {
   'pager.start': 'START OF SERIES',
   'pager.end': 'END OF SERIES',
 
-  'notFound.code': '// ERROR_404 // ROUTE_NOT_FOUND',
-  'notFound.title': 'This route does not exist',
+  'notFound.code': '// STATUS: 404 // ROUTE_NOT_FOUND // TRACE_ERR: 0x7E4',
+  'notFound.sysTag': 'SYS.ROUTER_ERR',
+  'notFound.coordinate': '[COORDINATE: NULL]',
+  'notFound.latLng': 'LAT: 0.000 // LNG: 0.000',
+  'notFound.rulerLabel': 'SYS_DISCONNECT',
+  'notFound.title': 'Destination not found',
   'notFound.description':
-    'The requested resource is not registered in the system. Return to the portfolio to explore the available case studies.',
+    'The requested resource is unavailable. The route may have been restructured during the latest architecture optimization.',
+  'notFound.terminalAria': 'Route diagnostic log',
+  'notFound.streamLive': 'STREAM: LIVE',
+  'notFound.logOrigin': '[ORIGIN: DIRECT_DISPATCH]',
+  'notFound.logProtocol': '[HTTP/2.0 • TLS 1.3 • SPA_ROUTER]',
+  'notFound.logResolution':
+    'Failed to resolve node against sitemap topology & route registry tree',
+  'notFound.logDiagnostic':
+    'Zero-downtime fallback mechanism armed. Route telemetry captured.',
+  'notFound.logAction': 'Dispatch redirection to safe origin (Home / Projects)',
   'notFound.backHome': 'Back to home',
+  'notFound.exploreProjects': 'Explore projects',
+  'notFound.recommendedRoutes': '// RECOMMENDED ROUTES',
+  'notFound.recommendedAria': 'Recommended portfolio routes',
+  'notFound.routeHome': 'Home',
+  'notFound.routeStack': 'Tech Stack',
+  'notFound.routeProjects': 'Projects',
+  'notFound.routeAbout': 'About Me',
+  'notFound.routeContact': 'Direct Contact',
 
   'mockup.visualAria': 'Visual representation of {title}',
   'mockup.stock': 'Stock',

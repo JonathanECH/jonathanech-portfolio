@@ -50,7 +50,6 @@ User-agent: Amazonbot
 Allow: /
 
 User-agent: *
-
 Allow: /
 
 Sitemap: https://jonathanech.dev/sitemap.xml

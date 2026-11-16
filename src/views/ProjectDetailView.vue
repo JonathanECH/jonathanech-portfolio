@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { RouterLink } from 'vue-router'
-import { ArrowLeft } from '@lucide/vue'
+import { computed, defineAsyncComponent } from 'vue'
 import ArchitectureModules from '@/components/detail/ArchitectureModules.vue'
 import ChallengeAudit from '@/components/detail/ChallengeAudit.vue'
 import ProjectGallery from '@/components/detail/ProjectGallery.vue'
@@ -11,6 +9,8 @@ import ProjectSpecs from '@/components/detail/ProjectSpecs.vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 import { usePortfolioData } from '@/composables/usePortfolioData'
 import { useI18n } from '@/i18n'
+
+const NotFoundView = defineAsyncComponent(() => import('@/views/NotFoundView.vue'))
 
 const props = defineProps<{ slug: string }>()
 
@@ -48,25 +48,5 @@ const galleryCode = computed(() => t('detail.galleryCode'))
     <ProjectPager :previous="neighbors.previous" :next="neighbors.next" />
   </article>
 
-  <section
-    v-else
-    class="mx-auto flex min-h-[70vh] w-full max-w-4xl flex-col items-start justify-center px-5 py-24 sm:px-6"
-  >
-    <p class="font-mono text-[11px] uppercase tracking-[0.24em] text-cyan-accent">
-      {{ t('detail.notFoundCode') }}
-    </p>
-    <h1 class="mt-5 font-sans text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
-      {{ t('detail.notFoundTitle') }}<span class="text-cyan-accent">.</span>
-    </h1>
-    <p class="mt-5 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
-      {{ t('detail.notFoundDescription') }}
-    </p>
-    <RouterLink
-      :to="{ path: '/', hash: '#proyectos' }"
-      class="mt-8 inline-flex items-center gap-2 rounded-lg bg-cyan-accent px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-black transition-all hover:shadow-[0_0_20px_rgba(var(--ech-accent-rgb),0.45)]"
-    >
-      <ArrowLeft :size="16" aria-hidden="true" />
-      {{ t('detail.backToProjects') }}
-    </RouterLink>
-  </section>
+  <NotFoundView v-else />
 </template>

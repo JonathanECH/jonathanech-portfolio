@@ -1,3 +1,4 @@
+import { inject } from '@vercel/analytics'
 import { createPinia } from 'pinia'
 import { ViteSSG } from 'vite-ssg'
 import '@fontsource-variable/plus-jakarta-sans'
@@ -19,6 +20,7 @@ export const createApp = ViteSSG(
 
     if (!import.meta.env.SSR) {
       initPreferences()
+      inject({ mode: import.meta.env.PROD ? 'production' : 'development' })
     }
   },
 )
