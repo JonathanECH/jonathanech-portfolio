@@ -130,6 +130,9 @@ export function useSeo(): void {
     ogImageHeight: socialImageHeight,
     ogImageAlt: socialImageAlt,
     ogLocale: computed(() => (locale.value === 'es' ? SITE_LOCALE : SITE_LOCALE_ALTERNATE)),
+    ogLocaleAlternate: computed(() =>
+      locale.value === 'es' ? [SITE_LOCALE_ALTERNATE] : [SITE_LOCALE],
+    ),
     twitterCard: 'summary_large_image',
     twitterTitle: socialTitle,
     twitterDescription: socialDescription,
@@ -143,10 +146,7 @@ export function useSeo(): void {
       isNotFound.value || isMissingProject.value
         ? []
         : [{ rel: 'canonical', href: canonicalUrl.value }],
-    meta: [
-      { property: 'og:image:type', content: socialImageType.value },
-      { name: 'twitter:url', content: canonicalUrl.value },
-    ],
+    meta: [{ property: 'og:image:type', content: socialImageType.value }],
     script: [
       {
         type: 'application/ld+json',

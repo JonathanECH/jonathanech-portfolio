@@ -153,7 +153,7 @@ describe('JSON-LD builders', () => {
     expect((node.itemListElement as { url: string }[])[0].url).toBe(projectUrl(firstProject.slug))
   })
 
-  it('exposes problem, stack and impact with valid CreativeWork properties', () => {
+  it('exposes only valid CreativeWork properties', () => {
     const node = buildProjectJsonLd(firstProject, 'es')
 
     expect(node['@type']).toBe('CreativeWork')
@@ -166,7 +166,7 @@ describe('JSON-LD builders', () => {
     expect(node.copyrightYear).toBe(Number(firstProject.year))
     expect(node).not.toHaveProperty('dateCreated')
     expect(node).not.toHaveProperty('workExample')
-    expect((node.additionalProperty as unknown[]).length).toBe(firstProject.audit.metrics.length)
+    expect(node).not.toHaveProperty('additionalProperty')
   })
 
   it('builds a three-level breadcrumb ending on the case study', () => {

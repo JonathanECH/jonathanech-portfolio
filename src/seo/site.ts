@@ -7,7 +7,6 @@ import type { Project, ResolvedLocale } from '@/types/portfolio'
  * derived from these constants so the domain only has to change here.
  */
 export const SITE_URL = 'https://jonathanech.dev'
-export const SITE_NAME = 'Jonathan Campos'
 export const SITE_AUTHOR = 'Jonathan Campos'
 export const SITE_AUTHOR_ALTERNATE = 'JonathanECH'
 export const SITE_JOB_TITLE = 'Frontend Web Developer'

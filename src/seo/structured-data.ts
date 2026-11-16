@@ -146,12 +146,6 @@ export function buildProjectJsonLd(project: Project, locale: ResolvedLocale): Js
     about: project.techTags.map((tag) => ({ '@type': 'Thing', name: tag })),
     ...(project.links.repo ? { codeRepository: project.links.repo } : {}),
     ...(project.links.demo ? { sameAs: [project.links.demo] } : {}),
-    additionalProperty: project.audit.metrics.map((metric) => ({
-      '@type': 'PropertyValue',
-      name: metric.label,
-      value: metric.value,
-      ...(metric.detail ? { description: metric.detail } : {}),
-    })),
   }
 }
 
