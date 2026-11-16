@@ -2,19 +2,18 @@ import { computed } from 'vue'
 import { useHead, useSeoMeta } from '@unhead/vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from '@/i18n'
-import { buildStructuredData } from '@/seo/structured-data'
+import { buildStructuredData, serializeJsonLd } from '@/seo/structured-data'
 import {
-  DEFAULT_OG_IMAGE_ALT,
-  HOME_SOCIAL_DESCRIPTION,
-  HOME_SOCIAL_TITLE,
+  HOME_SOCIAL_COPY,
   SITE_AUTHOR,
   SITE_LOCALE,
   SITE_LOCALE_ALTERNATE,
-  SITE_NAME,
   SITE_URL,
   absoluteUrl,
+  defaultOgImageAlt,
   projectUrl,
   resolveSocialImageMeta,
+  siteName,
 } from '@/seo/site'
 import type { Project } from '@/types/portfolio'
 
@@ -96,18 +95,20 @@ export function useSeo(): void {
   const socialImageWidth = computed(() => socialImageMeta.value.width)
   const socialImageHeight = computed(() => socialImageMeta.value.height)
 
+  const homeSocialCopy = computed(() => HOME_SOCIAL_COPY[locale.value])
+
   const socialTitle = computed(() =>
-    isHome.value ? HOME_SOCIAL_TITLE : title.value,
+    isHome.value ? homeSocialCopy.value.title : title.value,
   )
 
   const socialDescription = computed(() =>
-    isHome.value ? HOME_SOCIAL_DESCRIPTION : description.value,
+    isHome.value ? homeSocialCopy.value.description : description.value,
   )
 
   const socialImageAlt = computed(() =>
     project.value
       ? `${project.value.name} — ${project.value.audit.badge}`
-      : DEFAULT_OG_IMAGE_ALT,
+      : defaultOgImageAlt(locale.value),
   )
 
   const robots = computed(() =>
@@ -120,7 +121,7 @@ export function useSeo(): void {
     author: SITE_AUTHOR,
     robots,
     ogType: computed(() => (project.value ? 'article' : 'website')),
-    ogSiteName: SITE_NAME,
+    ogSiteName: computed(() => siteName(locale.value)),
     ogTitle: socialTitle,
     ogDescription: socialDescription,
     ogUrl: canonicalUrl,
@@ -146,16 +147,20 @@ export function useSeo(): void {
       { property: 'og:image:type', content: socialImageType.value },
       { name: 'twitter:url', content: canonicalUrl.value },
     ],
-    script: buildStructuredData({
-      profile: content.value.profile,
-      projects: content.value.projects,
-      project: project.value,
-      isHome: isHome.value,
-      locale: locale.value,
-    }).map((node, index) => ({
-      type: 'application/ld+json',
-      key: `portfolio-jsonld-${index}`,
-      innerHTML: JSON.stringify(node),
-    })),
+    script: [
+      {
+        type: 'application/ld+json',
+        key: 'portfolio-jsonld',
+        innerHTML: serializeJsonLd(
+          buildStructuredData({
+            profile: content.value.profile,
+            projects: content.value.projects,
+            project: project.value,
+            isHome: isHome.value,
+            locale: locale.value,
+          }),
+        ),
+      },
+    ],
   }))
 }

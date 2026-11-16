@@ -6,15 +6,20 @@ import {
   SITE_AUTHOR_ALTERNATE,
   SITE_EMAIL,
   SITE_JOB_TITLE,
-  SITE_NAME,
   SITE_URL,
   SOCIAL_PROFILES,
   absoluteUrl,
   projectImage,
   projectUrl,
+  siteName,
 } from './site'
 
 export type JsonLdNode = Record<string, unknown> & { '@type': string }
+
+export interface JsonLdGraph {
+  readonly '@context': 'https://schema.org'
+  readonly '@graph': JsonLdNode[]
+}
 
 const PERSON_ID = `${SITE_URL}/#person`
 const WEBSITE_ID = `${SITE_URL}/#website`
@@ -86,7 +91,7 @@ export function buildWebSiteJsonLd(locale: ResolvedLocale): JsonLdNode {
   return {
     '@type': 'WebSite',
     '@id': WEBSITE_ID,
-    name: SITE_NAME,
+    name: siteName(locale),
     alternateName: localized(locale, 'Portafolio de Jonathan Campos', 'Jonathan Campos Portfolio'),
     url: SITE_URL,
     description: localized(
@@ -124,12 +129,12 @@ export function buildProjectJsonLd(project: Project, locale: ResolvedLocale): Js
     '@type': 'CreativeWork',
     '@id': `${projectUrl(project.slug)}#case-study`,
     name: project.name,
-    headline: `${project.title}${project.titleHighlight}`,
+    headline: `${project.title} ${project.titleHighlight}`,
     description: project.summary,
     abstract: project.problem,
     url: projectUrl(project.slug),
     image: projectImage(project),
-    dateCreated: project.year,
+    copyrightYear: Number(project.year),
     creativeWorkStatus: project.status,
     inLanguage: locale === 'es' ? 'es-VE' : 'en',
     keywords: project.techTags.join(', '),
@@ -141,7 +146,7 @@ export function buildProjectJsonLd(project: Project, locale: ResolvedLocale): Js
     about: project.techTags.map((tag) => ({ '@type': 'Thing', name: tag })),
     ...(project.links.repo ? { codeRepository: project.links.repo } : {}),
     ...(project.links.demo ? { sameAs: [project.links.demo] } : {}),
-    workExample: project.audit.metrics.map((metric) => ({
+    additionalProperty: project.audit.metrics.map((metric) => ({
       '@type': 'PropertyValue',
       name: metric.label,
       value: metric.value,
@@ -184,7 +189,7 @@ export interface StructuredDataInput {
   readonly locale: ResolvedLocale
 }
 
-export function buildStructuredData(input: StructuredDataInput): JsonLdNode[] {
+export function buildStructuredData(input: StructuredDataInput): JsonLdGraph {
   const nodes: JsonLdNode[] = [
     buildPersonJsonLd(input.profile, input.locale),
     buildWebSiteJsonLd(input.locale),
@@ -201,5 +206,18 @@ export function buildStructuredData(input: StructuredDataInput): JsonLdNode[] {
     )
   }
 
-  return nodes
+  return {
+    '@context': 'https://schema.org',
+    '@graph': nodes,
+  }
+}
+
+/**
+ * Serializes JSON-LD for inline `<script>` tags.
+ *
+ * Escaping `<` prevents a `</script>` sequence inside any content string from
+ * terminating the script element early while keeping the JSON valid.
+ */
+export function serializeJsonLd(graph: JsonLdGraph): string {
+  return JSON.stringify(graph).replace(/</g, '\\u003c')
 }

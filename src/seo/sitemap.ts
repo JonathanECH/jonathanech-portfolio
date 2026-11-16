@@ -10,15 +10,11 @@ export interface SitemapEntry {
   readonly priority?: number
 }
 
-export function buildSitemapEntries(
-  projects: readonly Project[],
-  lastmod = new Date().toISOString().slice(0, 10),
-): SitemapEntry[] {
+export function buildSitemapEntries(projects: readonly Project[]): SitemapEntry[] {
   return [
-    { url: `${SITE_URL}/`, lastmod, changefreq: 'monthly', priority: 1 },
+    { url: `${SITE_URL}/`, changefreq: 'monthly', priority: 1 },
     ...projects.map((project) => ({
       url: projectUrl(project.slug),
-      lastmod,
       changefreq: 'monthly' as const,
       priority: 0.8,
     })),
@@ -55,9 +51,6 @@ export function renderSitemap(entries: readonly SitemapEntry[]): string {
   ].join('\n')
 }
 
-export function buildSitemap(
-  projects: readonly Project[],
-  lastmod = new Date().toISOString().slice(0, 10),
-): string {
-  return renderSitemap(buildSitemapEntries(projects, lastmod))
+export function buildSitemap(projects: readonly Project[]): string {
+  return renderSitemap(buildSitemapEntries(projects))
 }

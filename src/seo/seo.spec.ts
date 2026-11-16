@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import robotsTxt from '../../public/robots.txt?raw'
 import { profile, projects } from '@/data/portfolio'
@@ -6,12 +8,18 @@ import {
   DEFAULT_OG_IMAGE_HEIGHT,
   DEFAULT_OG_IMAGE_TYPE,
   DEFAULT_OG_IMAGE_WIDTH,
+  HOME_SOCIAL_COPY,
+  PROJECT_OG_IMAGE_HEIGHT,
+  PROJECT_OG_IMAGE_WIDTH,
   SITE_URL,
   SOCIAL_PROFILES,
   absoluteUrl,
+  defaultOgImageAlt,
   projectImage,
+  projectSocialImage,
   projectUrl,
   resolveSocialImageMeta,
+  siteName,
 } from '@/seo/site'
 import {
   buildBreadcrumbJsonLd,
@@ -20,10 +28,35 @@ import {
   buildProjectsItemList,
   buildStructuredData,
   buildWebSiteJsonLd,
+  serializeJsonLd,
 } from '@/seo/structured-data'
 import { buildSitemap, buildSitemapEntries, renderSitemap } from '@/seo/sitemap'
 
 const firstProject = projects[0]
+
+/** Reads the frame dimensions from a JPEG's Start Of Frame marker. */
+function readJpegSize(buffer: Buffer): { width: number; height: number } {
+  let offset = 2
+
+  while (offset + 9 < buffer.length) {
+    if (buffer[offset] !== 0xff) {
+      offset += 1
+      continue
+    }
+
+    const marker = buffer[offset + 1]
+    if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+      return {
+        width: buffer.readUInt16BE(offset + 7),
+        height: buffer.readUInt16BE(offset + 5),
+      }
+    }
+
+    offset += 2 + buffer.readUInt16BE(offset + 2)
+  }
+
+  throw new Error('JPEG frame dimensions not found')
+}
 
 describe('site URL helpers', () => {
   it('resolves relative and absolute URLs against the canonical domain', () => {
@@ -35,35 +68,57 @@ describe('site URL helpers', () => {
     expect(projectUrl('clima-vue')).toBe('https://jonathanech.dev/proyectos/clima-vue')
   })
 
-  it('derives a social image from the project gallery with a safe fallback', () => {
+  it('derives the structured-data image from the project gallery with a safe fallback', () => {
     expect(projectImage(firstProject)).toBe(
       `https://jonathanech.dev${firstProject.gallery.find((slide) => slide.image)?.image}`,
     )
-    expect(
-      projectImage({ ...firstProject, gallery: [] }),
-    ).toBe(DEFAULT_OG_IMAGE)
+    expect(projectImage({ ...firstProject, gallery: [] })).toBe(DEFAULT_OG_IMAGE)
   })
 
-  it('resolves social image dimensions and mime type for home and project routes', () => {
-    expect(resolveSocialImageMeta(null)).toEqual({
-      url: DEFAULT_OG_IMAGE,
-      type: DEFAULT_OG_IMAGE_TYPE,
+  it('resolves every project social card as a 1200×630 JPEG asset', () => {
+    for (const project of projects) {
+      const galleryImage = project.gallery.find((slide) => slide.image)?.image ?? ''
+      const directory = galleryImage.slice(0, galleryImage.lastIndexOf('/'))
+      const url = `${SITE_URL}${directory}/og-${project.slug}.jpg`
+      const file = fileURLToPath(
+        new URL(`../../public${directory}/og-${project.slug}.jpg`, import.meta.url),
+      )
+      const buffer = readFileSync(file)
+
+      expect(projectSocialImage(project)).toBe(url)
+      expect(buffer.subarray(0, 3)).toEqual(Buffer.from([0xff, 0xd8, 0xff]))
+      expect(readJpegSize(buffer)).toEqual({
+        width: PROJECT_OG_IMAGE_WIDTH,
+        height: PROJECT_OG_IMAGE_HEIGHT,
+      })
+      expect(resolveSocialImageMeta(project)).toEqual({
+        url,
+        type: 'image/jpeg',
+        width: PROJECT_OG_IMAGE_WIDTH,
+        height: PROJECT_OG_IMAGE_HEIGHT,
+      })
+    }
+
+    const defaultFile = fileURLToPath(new URL('../../public/og-image.jpg', import.meta.url))
+    expect(readJpegSize(readFileSync(defaultFile))).toEqual({
       width: DEFAULT_OG_IMAGE_WIDTH,
       height: DEFAULT_OG_IMAGE_HEIGHT,
     })
-
-    const projectMeta = resolveSocialImageMeta(firstProject)
-    expect(projectMeta.url).toBe(projectImage(firstProject))
-    expect(projectMeta.type).toBe('image/webp')
-    expect(projectMeta.width).toBeGreaterThan(0)
-    expect(projectMeta.height).toBeGreaterThan(0)
-
     expect(resolveSocialImageMeta({ ...firstProject, gallery: [] })).toEqual({
       url: DEFAULT_OG_IMAGE,
       type: DEFAULT_OG_IMAGE_TYPE,
       width: DEFAULT_OG_IMAGE_WIDTH,
       height: DEFAULT_OG_IMAGE_HEIGHT,
     })
+  })
+
+  it('localizes home social copy, site name and default image alt text', () => {
+    expect(siteName('es')).toBe('Jonathan Campos — Portafolio Frontend')
+    expect(siteName('en')).toBe('Jonathan Campos — Frontend Portfolio')
+    expect(HOME_SOCIAL_COPY.es.title).toContain('Desarrollador Web Frontend')
+    expect(HOME_SOCIAL_COPY.en.title).toContain('Frontend Web Developer')
+    expect(defaultOgImageAlt('es')).toContain('Desarrollador Web Frontend')
+    expect(defaultOgImageAlt('en')).toContain('Frontend Web Developer')
   })
 })
 
@@ -79,10 +134,11 @@ describe('JSON-LD builders', () => {
     expect(node.address).toMatchObject({ addressLocality: 'Barquisimeto', addressCountry: 'VE' })
   })
 
-  it('publishes the portfolio as a WebSite linked to the Person node', () => {
+  it('publishes the portfolio as a localized WebSite linked to the Person node', () => {
     const node = buildWebSiteJsonLd('en')
 
     expect(node['@type']).toBe('WebSite')
+    expect(node.name).toBe(siteName('en'))
     expect(node.url).toBe(SITE_URL)
     expect(node.inLanguage).toBe('en')
     expect(node.author).toEqual({ '@id': `${SITE_URL}/#person` })
@@ -97,15 +153,20 @@ describe('JSON-LD builders', () => {
     expect((node.itemListElement as { url: string }[])[0].url).toBe(projectUrl(firstProject.slug))
   })
 
-  it('exposes problem, stack and impact on the CreativeWork node', () => {
+  it('exposes problem, stack and impact with valid CreativeWork properties', () => {
     const node = buildProjectJsonLd(firstProject, 'es')
 
     expect(node['@type']).toBe('CreativeWork')
+    expect(node.headline).toBe(`${firstProject.title} ${firstProject.titleHighlight}`)
+    expect(node.headline).not.toBe(`${firstProject.title}${firstProject.titleHighlight}`)
     expect(node.description).toBe(firstProject.summary)
     expect(node.abstract).toBe(firstProject.problem)
     expect(node.keywords).toBe(firstProject.techTags.join(', '))
     expect(node.image).toBe(projectImage(firstProject))
-    expect((node.workExample as unknown[]).length).toBe(firstProject.audit.metrics.length)
+    expect(node.copyrightYear).toBe(Number(firstProject.year))
+    expect(node).not.toHaveProperty('dateCreated')
+    expect(node).not.toHaveProperty('workExample')
+    expect((node.additionalProperty as unknown[]).length).toBe(firstProject.audit.metrics.length)
   })
 
   it('builds a three-level breadcrumb ending on the case study', () => {
@@ -117,7 +178,7 @@ describe('JSON-LD builders', () => {
     expect(items[2].item).toBe(projectUrl(firstProject.slug))
   })
 
-  it('composes the full graph for home and project routes', () => {
+  it('composes one schema.org graph for home and project routes', () => {
     const home = buildStructuredData({
       profile,
       projects,
@@ -133,28 +194,55 @@ describe('JSON-LD builders', () => {
       locale: 'en',
     })
 
-    expect(home.map((node) => node['@type'])).toEqual(['Person', 'WebSite', 'ItemList'])
-    expect(detail.map((node) => node['@type'])).toEqual([
+    expect(home['@context']).toBe('https://schema.org')
+    expect(detail['@context']).toBe('https://schema.org')
+    expect(home['@graph'].map((node) => node['@type'])).toEqual([
+      'Person',
+      'WebSite',
+      'ItemList',
+    ])
+    expect(detail['@graph'].map((node) => node['@type'])).toEqual([
       'Person',
       'WebSite',
       'CreativeWork',
       'BreadcrumbList',
     ])
   })
+
+  it('serializes JSON-LD without allowing a script-closing sequence', () => {
+    const json = serializeJsonLd({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'Thing',
+          name: '</script><script>alert("xss")</script>',
+        },
+      ],
+    })
+
+    expect(json).not.toContain('</script>')
+    expect(json).toContain('\\u003c/script>')
+    expect(JSON.parse(json)).toMatchObject({
+      '@context': 'https://schema.org',
+      '@graph': [{ '@type': 'Thing' }],
+    })
+  })
 })
 
 describe('sitemap generation', () => {
-  it('includes the home page and every case study', () => {
-    const entries = buildSitemapEntries(projects, '2026-11-15')
+  it('includes the home page and every case study without a build-date lastmod', () => {
+    const entries = buildSitemapEntries(projects)
+    const xml = buildSitemap(projects)
 
     expect(entries).toHaveLength(projects.length + 1)
     expect(entries[0].url).toBe('https://jonathanech.dev/')
-    expect(entries.every((entry) => entry.lastmod === '2026-11-15')).toBe(true)
+    expect(entries.every((entry) => entry.lastmod === undefined)).toBe(true)
     expect(entries.map((entry) => entry.url)).toContain(projectUrl(firstProject.slug))
+    expect(xml).not.toContain('<lastmod>')
   })
 
   it('renders valid XML with escaped values and priorities', () => {
-    const xml = buildSitemap(projects, '2026-11-15')
+    const xml = buildSitemap(projects)
 
     expect(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>')).toBe(true)
     expect(xml).toContain('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
