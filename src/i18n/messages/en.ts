@@ -176,9 +176,8 @@ export const enMessages = {
   'notFound.latLng': 'LAT: 0.000 // LNG: 0.000',
   'notFound.rulerLabel': 'SYS_DISCONNECT',
   'notFound.title': 'Destination not found',
-  'notFound.titleHighlight': '// 404',
   'notFound.description':
-    'The requested route or resource does not exist on the current nodes, or was restructured or migrated during the latest system architecture optimization.',
+    'The requested resource is unavailable. The route may have been restructured during the latest architecture optimization.',
   'notFound.terminalAria': 'Route diagnostic log',
   'notFound.streamLive': 'STREAM: LIVE',
   'notFound.logOrigin': '[ORIGIN: DIRECT_DISPATCH]',

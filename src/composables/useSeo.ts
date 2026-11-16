@@ -4,7 +4,6 @@ import { useRoute } from 'vue-router'
 import { useI18n } from '@/i18n'
 import { buildStructuredData } from '@/seo/structured-data'
 import {
-  DEFAULT_OG_IMAGE,
   DEFAULT_OG_IMAGE_ALT,
   HOME_SOCIAL_DESCRIPTION,
   HOME_SOCIAL_TITLE,
@@ -14,8 +13,8 @@ import {
   SITE_NAME,
   SITE_URL,
   absoluteUrl,
-  projectImage,
   projectUrl,
+  resolveSocialImageMeta,
 } from '@/seo/site'
 import type { Project } from '@/types/portfolio'
 
@@ -91,9 +90,11 @@ export function useSeo(): void {
     return absoluteUrl(route.path)
   })
 
-  const socialImage = computed(() =>
-    project.value ? projectImage(project.value) : DEFAULT_OG_IMAGE,
-  )
+  const socialImageMeta = computed(() => resolveSocialImageMeta(project.value))
+  const socialImage = computed(() => socialImageMeta.value.url)
+  const socialImageType = computed(() => socialImageMeta.value.type)
+  const socialImageWidth = computed(() => socialImageMeta.value.width)
+  const socialImageHeight = computed(() => socialImageMeta.value.height)
 
   const socialTitle = computed(() =>
     isHome.value ? HOME_SOCIAL_TITLE : title.value,
@@ -124,6 +125,8 @@ export function useSeo(): void {
     ogDescription: socialDescription,
     ogUrl: canonicalUrl,
     ogImage: socialImage,
+    ogImageWidth: socialImageWidth,
+    ogImageHeight: socialImageHeight,
     ogImageAlt: socialImageAlt,
     ogLocale: computed(() => (locale.value === 'es' ? SITE_LOCALE : SITE_LOCALE_ALTERNATE)),
     twitterCard: 'summary_large_image',
@@ -135,8 +138,14 @@ export function useSeo(): void {
 
   useHead(() => ({
     htmlAttrs: { lang: locale.value },
-    link: [{ rel: 'canonical', href: canonicalUrl.value }],
-    meta: [{ name: 'twitter:url', content: canonicalUrl.value }],
+    link:
+      isNotFound.value || isMissingProject.value
+        ? []
+        : [{ rel: 'canonical', href: canonicalUrl.value }],
+    meta: [
+      { property: 'og:image:type', content: socialImageType.value },
+      { name: 'twitter:url', content: canonicalUrl.value },
+    ],
     script: buildStructuredData({
       profile: content.value.profile,
       projects: content.value.projects,

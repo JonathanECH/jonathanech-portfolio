@@ -174,9 +174,8 @@ export const esMessages = {
   'notFound.latLng': 'LAT: 0.000 // LNG: 0.000',
   'notFound.rulerLabel': 'SYS_DISCONNECT',
   'notFound.title': 'Destino no encontrado',
-  'notFound.titleHighlight': '// 404',
   'notFound.description':
-    'La ruta o recurso solicitado no existe en los nodos actuales, fue reestructurada o migrada durante la última optimización de arquitectura del sistema.',
+    'El recurso solicitado no está disponible. Es posible que la ruta haya sido reestructurada durante la última optimización de arquitectura.',
   'notFound.terminalAria': 'Registro de diagnóstico de ruta',
   'notFound.streamLive': 'STREAM: LIVE',
   'notFound.logOrigin': '[ORIGIN: DIRECT_DISPATCH]',

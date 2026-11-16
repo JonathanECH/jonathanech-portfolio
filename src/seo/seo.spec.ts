@@ -1,12 +1,17 @@
 import { describe, expect, it } from 'vitest'
+import robotsTxt from '../../public/robots.txt?raw'
 import { profile, projects } from '@/data/portfolio'
 import {
   DEFAULT_OG_IMAGE,
+  DEFAULT_OG_IMAGE_HEIGHT,
+  DEFAULT_OG_IMAGE_TYPE,
+  DEFAULT_OG_IMAGE_WIDTH,
   SITE_URL,
   SOCIAL_PROFILES,
   absoluteUrl,
   projectImage,
   projectUrl,
+  resolveSocialImageMeta,
 } from '@/seo/site'
 import {
   buildBreadcrumbJsonLd,
@@ -37,6 +42,28 @@ describe('site URL helpers', () => {
     expect(
       projectImage({ ...firstProject, gallery: [] }),
     ).toBe(DEFAULT_OG_IMAGE)
+  })
+
+  it('resolves social image dimensions and mime type for home and project routes', () => {
+    expect(resolveSocialImageMeta(null)).toEqual({
+      url: DEFAULT_OG_IMAGE,
+      type: DEFAULT_OG_IMAGE_TYPE,
+      width: DEFAULT_OG_IMAGE_WIDTH,
+      height: DEFAULT_OG_IMAGE_HEIGHT,
+    })
+
+    const projectMeta = resolveSocialImageMeta(firstProject)
+    expect(projectMeta.url).toBe(projectImage(firstProject))
+    expect(projectMeta.type).toBe('image/webp')
+    expect(projectMeta.width).toBeGreaterThan(0)
+    expect(projectMeta.height).toBeGreaterThan(0)
+
+    expect(resolveSocialImageMeta({ ...firstProject, gallery: [] })).toEqual({
+      url: DEFAULT_OG_IMAGE,
+      type: DEFAULT_OG_IMAGE_TYPE,
+      width: DEFAULT_OG_IMAGE_WIDTH,
+      height: DEFAULT_OG_IMAGE_HEIGHT,
+    })
   })
 })
 
@@ -144,5 +171,10 @@ describe('sitemap generation', () => {
     expect(xml).toContain('&amp;')
     expect(xml).toContain('&quot;')
     expect(xml).not.toContain('b="2"')
+  })
+
+  it('keeps robots.txt free of blank lines inside User-agent record groups (RFC 9309)', () => {
+    expect(robotsTxt).not.toMatch(/User-agent:[^\r\n]+\r?\n\r?\n(Allow|Disallow):/)
+    expect(robotsTxt).toContain('Sitemap: https://jonathanech.dev/sitemap.xml')
   })
 })

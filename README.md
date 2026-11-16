@@ -259,7 +259,7 @@ pnpm verify
 pnpm preview
 ```
 
-`pnpm build` genera `dist/index.html`, `dist/proyectos/<slug>.html`, `dist/sitemap.xml` y los assets con hash.
+`pnpm build` genera `dist/index.html`, `dist/404.html`, `dist/proyectos/<slug>.html`, `dist/sitemap.xml` y los assets con hash.
 
 ---
 

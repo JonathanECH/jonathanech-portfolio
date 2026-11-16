@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { RouterLink, useRoute, type RouteLocationRaw } from 'vue-router'
 import { ArrowRight, Home, Terminal } from '@lucide/vue'
 import { useI18n, type UiMessageKey } from '@/i18n'
@@ -7,7 +7,17 @@ import { useI18n, type UiMessageKey } from '@/i18n'
 const route = useRoute()
 const { t } = useI18n()
 
+const isMounted = ref(false)
+
+onMounted(() => {
+  isMounted.value = true
+})
+
 const requestedPath = computed(() => {
+  if (!isMounted.value) {
+    return '/404'
+  }
+
   const candidate = route.fullPath || route.path
   return candidate && candidate !== '/' ? candidate : '/404'
 })
@@ -137,7 +147,6 @@ const quickRoutes: readonly QuickRoute[] = [
           class="font-sans text-2xl font-bold tracking-[-0.03em] text-foreground sm:text-3xl md:text-4xl"
         >
           {{ t('notFound.title') }}
-          <span class="text-cyan-accent text-glow">{{ t('notFound.titleHighlight') }}</span>
         </h1>
 
         <p
@@ -149,7 +158,7 @@ const quickRoutes: readonly QuickRoute[] = [
 
       <!-- Diagnostics Terminal Console (sys_router.log) -->
       <div
-        class="relative mt-8 w-full max-w-2xl overflow-hidden rounded-xl border border-border bg-surface-card/75 text-left shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:mt-9"
+        class="relative mt-8 w-full max-w-xl overflow-hidden rounded-xl border border-border bg-surface-card/75 text-left shadow-[0_18px_40px_-20px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:mt-9"
         role="region"
         :aria-label="t('notFound.terminalAria')"
       >
@@ -208,12 +217,12 @@ const quickRoutes: readonly QuickRoute[] = [
 
           <div class="flex flex-wrap items-baseline gap-2">
             <span class="font-semibold text-cyan-accent">&gt; RESOLUTION:</span>
-            <span class="text-muted">{{ t('notFound.logResolution') }}</span>
+            <span class="text-foreground/90">{{ t('notFound.logResolution') }}</span>
           </div>
 
           <div class="flex flex-wrap items-baseline gap-2">
             <span class="font-semibold text-warning-soft">&gt; DIAGNOSTIC:</span>
-            <span class="text-foreground/80">{{ t('notFound.logDiagnostic') }}</span>
+            <span class="text-foreground/90">{{ t('notFound.logDiagnostic') }}</span>
           </div>
 
           <div class="flex flex-wrap items-baseline gap-2 pt-0.5">
@@ -229,19 +238,11 @@ const quickRoutes: readonly QuickRoute[] = [
 
       <!-- Call to Actions -->
       <div
-        class="mt-9 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center"
+        class="mt-12 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center"
       >
         <RouterLink
-          to="/"
-          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-black shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] transition-all duration-300 hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] active:scale-[0.98] sm:text-xs"
-        >
-          <Home :size="16" aria-hidden="true" />
-          {{ t('notFound.backHome') }}
-        </RouterLink>
-
-        <RouterLink
           :to="{ path: '/', hash: '#proyectos' }"
-          class="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/60 px-6 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground transition-all duration-300 hover:border-border-hover hover:bg-surface-card hover:text-cyan-accent active:scale-[0.98] sm:text-xs"
+          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-black shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] transition-all duration-300 hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] active:scale-[0.98] sm:text-xs"
         >
           <Terminal :size="16" aria-hidden="true" />
           {{ t('notFound.exploreProjects') }}
@@ -250,6 +251,14 @@ const quickRoutes: readonly QuickRoute[] = [
             class="transition-transform duration-300 group-hover:translate-x-0.5"
             aria-hidden="true"
           />
+        </RouterLink>
+
+        <RouterLink
+          to="/"
+          class="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/60 px-6 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground transition-all duration-300 hover:border-border-hover hover:bg-surface-card hover:text-cyan-accent active:scale-[0.98] sm:text-xs"
+        >
+          <Home :size="16" aria-hidden="true" />
+          {{ t('notFound.backHome') }}
         </RouterLink>
       </div>
 
