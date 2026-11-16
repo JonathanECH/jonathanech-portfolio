@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
 import ArchitectureModules from '@/components/detail/ArchitectureModules.vue'
 import ChallengeAudit from '@/components/detail/ChallengeAudit.vue'
 import ProjectGallery from '@/components/detail/ProjectGallery.vue'
@@ -9,7 +9,8 @@ import ProjectSpecs from '@/components/detail/ProjectSpecs.vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 import { usePortfolioData } from '@/composables/usePortfolioData'
 import { useI18n } from '@/i18n'
-import NotFoundView from '@/views/NotFoundView.vue'
+
+const NotFoundView = defineAsyncComponent(() => import('@/views/NotFoundView.vue'))
 
 const props = defineProps<{ slug: string }>()
 

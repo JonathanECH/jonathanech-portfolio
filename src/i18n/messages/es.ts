@@ -131,11 +131,6 @@ export const esMessages = {
   'detail.galleryTitle': 'Capturas del',
   'detail.galleryHighlight': 'Sistema',
   'detail.galleryAria': 'Capturas del sistema',
-  'detail.notFoundCode': '// CASE_STUDY // NOT_FOUND',
-  'detail.notFoundTitle': 'Caso de estudio no encontrado',
-  'detail.notFoundDescription':
-    'El proyecto solicitado no está registrado en el sistema. Explora los casos de estudio disponibles desde el portafolio.',
-  'detail.backToProjects': 'Volver a proyectos',
 
   'gallery.regionAria': 'Galería de capturas de {name}',
   'gallery.autoplayDisabled': 'Reproducción automática desactivada por movimiento reducido',

@@ -133,11 +133,6 @@ export const enMessages = {
   'detail.galleryTitle': 'System',
   'detail.galleryHighlight': 'Captures',
   'detail.galleryAria': 'System captures',
-  'detail.notFoundCode': '// CASE_STUDY // NOT_FOUND',
-  'detail.notFoundTitle': 'Case study not found',
-  'detail.notFoundDescription':
-    'The requested project is not registered in the system. Explore the available case studies from the portfolio.',
-  'detail.backToProjects': 'Back to projects',
 
   'gallery.regionAria': 'Screenshot gallery of {name}',
   'gallery.autoplayDisabled': 'Autoplay disabled due to reduced motion',

@@ -13,13 +13,17 @@ onMounted(() => {
   isMounted.value = true
 })
 
+const MAX_DISPLAY_PATH_LENGTH = 64
+
 const requestedPath = computed(() => {
   if (!isMounted.value) {
     return '/404'
   }
 
-  const candidate = route.fullPath || route.path
-  return candidate && candidate !== '/' ? candidate : '/404'
+  const candidate = route.path && route.path !== '/' ? route.path : '/404'
+  return candidate.length > MAX_DISPLAY_PATH_LENGTH
+    ? `${candidate.slice(0, MAX_DISPLAY_PATH_LENGTH)}…`
+    : candidate
 })
 
 interface QuickRoute {
@@ -90,7 +94,7 @@ const quickRoutes: readonly QuickRoute[] = [
         </span>
 
         <span
-          class="hidden border-l border-border pl-2.5 font-mono text-[10px] tracking-[0.14em] text-muted/70 sm:inline"
+          class="hidden border-l border-border pl-2.5 font-mono text-[10px] tracking-[0.14em] text-muted sm:inline"
         >
           {{ t('notFound.sysTag') }}
         </span>
@@ -116,24 +120,24 @@ const quickRoutes: readonly QuickRoute[] = [
         <div
           class="absolute -right-2 top-3 flex flex-col items-start gap-0.5 rounded border border-border bg-surface/85 px-2.5 py-1 backdrop-blur-md sm:-right-4 sm:top-7 md:top-10"
         >
-          <span class="font-mono text-[9px] tracking-[0.18em] text-cyan-accent sm:text-[10px]">
+          <span class="font-mono text-[10px] tracking-[0.18em] text-cyan-accent">
             {{ t('notFound.coordinate') }}
           </span>
-          <span class="font-mono text-[8px] tracking-[0.12em] text-muted sm:text-[9px]">
+          <span class="font-mono text-[10px] tracking-[0.12em] text-muted">
             {{ t('notFound.latLng') }}
           </span>
         </div>
 
         <!-- Left Technical Micro-Ruler -->
         <div
-          class="absolute -left-8 top-1/2 hidden -translate-y-1/2 flex-col items-end gap-1.5 opacity-45 md:flex"
+          class="absolute -left-8 top-1/2 hidden -translate-y-1/2 flex-col items-end gap-1.5 opacity-60 md:flex"
         >
           <span class="h-px w-6 bg-cyan-accent" />
           <span class="h-px w-3 bg-muted" />
           <span class="h-px w-4 bg-cyan-accent" />
           <span class="h-px w-2 bg-muted" />
           <span
-            class="mt-2 rotate-180 font-mono text-[8px] tracking-[0.22em] text-cyan-accent [writing-mode:vertical-rl]"
+            class="mt-2 rotate-180 font-mono text-[10px] tracking-[0.22em] text-cyan-accent [writing-mode:vertical-rl]"
           >
             {{ t('notFound.rulerLabel') }}
           </span>
@@ -188,7 +192,7 @@ const quickRoutes: readonly QuickRoute[] = [
           <div class="flex shrink-0 items-center gap-1.5">
             <span class="h-1.5 w-1.5 rounded-full bg-danger" aria-hidden="true" />
             <span
-              class="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-muted sm:text-[10px]"
+              class="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-muted"
             >
               {{ t('notFound.streamLive') }}
             </span>
@@ -199,20 +203,20 @@ const quickRoutes: readonly QuickRoute[] = [
         <div
           class="space-y-2.5 p-4 font-mono text-[11px] leading-relaxed text-foreground/85 sm:p-5 sm:text-xs"
         >
-          <div class="flex flex-wrap items-baseline gap-2">
+          <div class="flex min-w-0 flex-wrap items-baseline gap-2">
             <span class="font-semibold text-cyan-accent">&gt; REQUEST_URI:</span>
             <code
-              class="rounded border border-border bg-background/70 px-2 py-0.5 font-mono text-[11px] text-foreground"
+              class="max-w-full truncate break-all rounded border border-border bg-background/70 px-2 py-0.5 font-mono text-[11px] text-foreground"
             >
               {{ requestedPath }}
             </code>
-            <span class="text-[10px] text-muted/70">{{ t('notFound.logOrigin') }}</span>
+            <span class="text-[10px] text-muted">{{ t('notFound.logOrigin') }}</span>
           </div>
 
           <div class="flex flex-wrap items-baseline gap-2">
             <span class="font-semibold text-danger">&gt; STATUS:</span>
             <span class="font-semibold text-danger">404 NOT_FOUND</span>
-            <span class="text-[10px] text-muted/70">{{ t('notFound.logProtocol') }}</span>
+            <span class="text-[10px] text-muted">{{ t('notFound.logProtocol') }}</span>
           </div>
 
           <div class="flex flex-wrap items-baseline gap-2">
@@ -267,7 +271,7 @@ const quickRoutes: readonly QuickRoute[] = [
         class="mt-11 flex w-full max-w-2xl flex-col items-center border-t border-border/60 pt-7"
         :aria-label="t('notFound.recommendedAria')"
       >
-        <p class="mb-3.5 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-muted/75">
+        <p class="mb-3.5 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-muted">
           {{ t('notFound.recommendedRoutes') }}
         </p>
 
@@ -277,7 +281,7 @@ const quickRoutes: readonly QuickRoute[] = [
               :to="item.to"
               class="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface-card/60 px-3 py-1.5 font-mono text-[11px] text-muted transition-all duration-200 hover:-translate-y-0.5 hover:border-border-hover hover:bg-surface-card-hover hover:text-cyan-accent"
             >
-              <span class="text-[10px] text-cyan-accent/80">{{ item.code }}</span>
+              <span class="text-[10px] text-cyan-accent">{{ item.code }}</span>
               <span>{{ t(item.labelKey) }}</span>
             </RouterLink>
           </li>
