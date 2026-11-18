@@ -79,6 +79,8 @@
   --ech-focus: rgba(0, 229, 255, 0.7);
   --ech-spotlight-core: rgba(0, 229, 255, 0.14);
   --ech-spotlight-mid: rgba(0, 210, 255, 0.04);
+  /* Project accent: bright teal reads on dark surfaces. */
+  --ech-razetti-accent: #5eead4;
 }
 
 .light {
@@ -117,6 +119,8 @@
   --ech-focus: rgba(0, 115, 138, 0.7);
   --ech-spotlight-core: rgba(0, 115, 138, 0.07);
   --ech-spotlight-mid: rgba(0, 115, 138, 0.04);
+  /* Project accent: deep teal keeps small text above 4.5:1 on light surfaces. */
+  --ech-razetti-accent: #0f766e;
 }
 
 @keyframes fade-up {

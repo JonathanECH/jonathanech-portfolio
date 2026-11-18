@@ -36,7 +36,7 @@ const variantLabel = computed(() => {
 })
 
 const glowStyle = computed(() => ({
-  background: `radial-gradient(circle at 82% 8%, ${props.accent}22, transparent 62%)`,
+  background: `radial-gradient(circle at 82% 8%, color-mix(in srgb, ${props.accent} 13%, transparent), transparent 62%)`,
 }))
 
 function pad(value: number): string {
@@ -264,7 +264,7 @@ const analyticsAxis = computed(() =>
                 class="h-4 rounded-sm"
                 :style="
                   item === 1
-                    ? { backgroundColor: `${accent}2e` }
+                    ? { backgroundColor: `color-mix(in srgb, ${accent} 18%, transparent)` }
                     : { backgroundColor: 'rgba(var(--ech-ink-rgb),0.04)' }
                 "
               />
@@ -516,13 +516,13 @@ const analyticsAxis = computed(() =>
                   />
                   <path
                     d="M0,38 L12,30 L24,33 L36,22 L48,26 L60,14 L72,18 L84,10 L96,16 L108,8 L120,12 L120,48 L0,48 Z"
-                    :fill="accent"
+                    :style="{ fill: accent }"
                     opacity="0.14"
                   />
                   <path
                     d="M0,38 L12,30 L24,33 L36,22 L48,26 L60,14 L72,18 L84,10 L96,16 L108,8 L120,12"
                     fill="none"
-                    :stroke="accent"
+                    :style="{ stroke: accent }"
                     stroke-width="1.2"
                     stroke-linejoin="round"
                   />
@@ -564,8 +564,12 @@ const analyticsAxis = computed(() =>
                   :key="slot.time"
                   class="rounded-[2px] border px-1 py-0.5"
                   :style="{
-                    borderColor: slot.active ? `${accent}66` : 'rgba(var(--ech-ink-rgb),0.06)',
-                    backgroundColor: slot.active ? `${accent}1f` : 'rgba(var(--ech-ink-rgb),0.02)',
+                    borderColor: slot.active
+                      ? `color-mix(in srgb, ${accent} 40%, transparent)`
+                      : 'rgba(var(--ech-ink-rgb),0.06)',
+                    backgroundColor: slot.active
+                      ? `color-mix(in srgb, ${accent} 12%, transparent)`
+                      : 'rgba(var(--ech-ink-rgb),0.02)',
                   }"
                 >
                   <p class="font-mono text-[5px] text-muted sm:text-[6px]">{{ slot.time }}</p>
@@ -701,18 +705,18 @@ const analyticsAxis = computed(() =>
                 />
                 <path
                   d="M0,64 L20,58 L40,60 L60,44 L80,48 L100,32 L120,38 L140,24 L160,30 L180,16 L200,22 L220,12 L240,18 L240,80 L0,80 Z"
-                  :fill="accent"
+                  :style="{ fill: accent }"
                   opacity="0.16"
                 />
                 <path
                   d="M0,64 L20,58 L40,60 L60,44 L80,48 L100,32 L120,38 L140,24 L160,30 L180,16 L200,22 L220,12 L240,18"
                   fill="none"
-                  :stroke="accent"
+                  :style="{ stroke: accent }"
                   stroke-width="1.2"
                   stroke-linejoin="round"
                 />
-                <circle cx="180" cy="16" r="2.4" :fill="accent" />
-                <circle cx="220" cy="12" r="2.4" :fill="accent" />
+                <circle cx="180" cy="16" r="2.4" :style="{ fill: accent }" />
+                <circle cx="220" cy="12" r="2.4" :style="{ fill: accent }" />
               </svg>
               <div
                 class="absolute left-2 top-1.5 font-mono text-[5px] uppercase tracking-wider text-muted sm:text-[7px]"

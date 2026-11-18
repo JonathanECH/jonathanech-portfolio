@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { contactChannels, profile, projects, technologies } from '@/data/portfolio'
@@ -75,6 +77,48 @@ describe('portfolio data integrity', () => {
     expect(enContent.profile.bioAi).toContain(
       'I use Artificial Intelligence as a productivity multiplier',
     )
+  })
+
+  it('keeps the Clinica Razetti accent legible in both themes and locales', () => {
+    const css = readFileSync(
+      fileURLToPath(new URL('../styles/main.css', import.meta.url)),
+      'utf8',
+    )
+    const accentFor = (selector: string): string => {
+      const block = css.match(new RegExp(`${selector}\\s*\\{([\\s\\S]*?)\\}`))?.[1] ?? ''
+      return block.match(/--ech-razetti-accent:\s*(#[0-9a-f]{6})/i)?.[1] ?? ''
+    }
+    const relativeLuminance = (hex: string): number => {
+      const channels = hex
+        .slice(1)
+        .match(/../g)!
+        .map((value) => parseInt(value, 16) / 255)
+        .map((value) => (value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4))
+
+      return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2]
+    }
+    const contrastRatio = (hex: string, background: string): number => {
+      const [lighter, darker] = [relativeLuminance(hex), relativeLuminance(background)].sort(
+        (a, b) => b - a,
+      )
+      return (lighter + 0.05) / (darker + 0.05)
+    }
+
+    for (const localeProjects of [projects, enContent.projects]) {
+      expect(localeProjects.find((project) => project.slug === 'gestion-medica')?.accent).toBe(
+        'var(--ech-razetti-accent)',
+      )
+    }
+
+    const darkAccent = accentFor(':root')
+    const lightAccent = accentFor('\\.light')
+
+    expect(darkAccent).toMatch(/^#[0-9a-f]{6}$/i)
+    expect(lightAccent).toMatch(/^#[0-9a-f]{6}$/i)
+    expect(contrastRatio(darkAccent, '#0b0e14')).toBeGreaterThanOrEqual(4.5)
+    expect(contrastRatio(darkAccent, '#161a24')).toBeGreaterThanOrEqual(4.5)
+    expect(contrastRatio(lightAccent, '#edf0f8')).toBeGreaterThanOrEqual(4.5)
+    expect(contrastRatio(lightAccent, '#f5f7fa')).toBeGreaterThanOrEqual(4.5)
   })
 })
 

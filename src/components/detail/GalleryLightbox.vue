@@ -218,18 +218,18 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
       <Transition name="lightbox" @after-leave="handleAfterLeave">
         <div
           v-if="open && slide"
-          class="flex h-screen h-dvh w-screen flex-col overflow-hidden bg-black/95 backdrop-blur-xl"
+          class="flex h-screen h-dvh w-screen flex-col overflow-hidden bg-background/95 backdrop-blur-xl"
           @click.self="handleBackdropClick"
         >
           <div class="lightbox-panel flex h-full min-h-0 w-full flex-col justify-between overflow-hidden focus:outline-none">
-            <div class="flex shrink-0 items-center justify-between gap-3 border-b border-white/10 bg-black/40 px-4 py-3 sm:px-8 sm:py-4">
+            <div class="flex shrink-0 items-center justify-between gap-3 border-b border-border bg-surface/80 px-4 py-3 sm:px-8 sm:py-4">
               <div class="min-w-0">
                 <p class="truncate font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-accent">
                   {{ projectName }} // {{ index + 1 }} / {{ total }}
                 </p>
                 <h2
                   id="detail-lightbox-title"
-                  class="mt-0.5 truncate font-sans text-sm font-bold text-white sm:text-base md:text-lg"
+                  class="mt-0.5 truncate font-sans text-sm font-bold text-foreground sm:text-base md:text-lg"
                 >
                   {{ slide.title }}
                 </h2>
@@ -238,7 +238,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
               <div class="flex shrink-0 items-center gap-2">
                 <button
                   type="button"
-                  class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast focus-visible:outline-white active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-white/20 disabled:hover:bg-white/10 disabled:hover:text-white disabled:active:scale-100 sm:h-11 sm:w-11"
+                  class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground shadow-lg transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-border disabled:hover:bg-surface/80 disabled:hover:text-foreground disabled:active:scale-100 sm:h-11 sm:w-11"
                   :aria-label="t('gallery.zoomOut')"
                   :disabled="!zoom.canZoomOut.value"
                   autofocus
@@ -249,7 +249,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 
                 <button
                   type="button"
-                  class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast focus-visible:outline-white active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-white/20 disabled:hover:bg-white/10 disabled:hover:text-white disabled:active:scale-100 sm:h-11 sm:w-11"
+                  class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground shadow-lg transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-border disabled:hover:bg-surface/80 disabled:hover:text-foreground disabled:active:scale-100 sm:h-11 sm:w-11"
                   :aria-label="t('gallery.zoomIn')"
                   :disabled="!zoom.canZoomIn.value"
                   @click="zoom.zoomIn"
@@ -259,7 +259,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 
                 <button
                   type="button"
-                  class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast focus-visible:outline-white active:scale-95 sm:h-11 sm:w-11"
+                  class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground shadow-lg transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast active:scale-95 sm:h-11 sm:w-11"
                   :aria-label="t('gallery.closeFull')"
                   @click="emit('close')"
                 >
@@ -272,7 +272,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
               <button
                 v-if="total > 1 && !zoom.isZoomed.value"
                 type="button"
-                class="absolute left-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-sm transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast active:scale-95 sm:left-5 sm:h-12 sm:w-12"
+                class="absolute left-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground backdrop-blur-sm transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast active:scale-95 sm:left-5 sm:h-12 sm:w-12"
                 :aria-label="t('gallery.previous')"
                 @click.stop="goPrevious"
               >
@@ -282,7 +282,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
               <button
                 v-if="total > 1 && !zoom.isZoomed.value"
                 type="button"
-                class="absolute right-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-sm transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast active:scale-95 sm:right-5 sm:h-12 sm:w-12"
+                class="absolute right-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground backdrop-blur-sm transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast active:scale-95 sm:right-5 sm:h-12 sm:w-12"
                 :aria-label="t('gallery.next')"
                 @click.stop="goNext"
               >
@@ -314,19 +314,19 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                     :alt="slide.alt ?? slide.title"
                     draggable="false"
                     decoding="async"
-                    class="block h-auto w-auto max-h-[50vh] max-w-[92vw] select-none rounded-xl border border-white/10 object-contain shadow-[0_24px_70px_-20px_rgba(0,0,0,0.9)] will-change-transform sm:max-h-[56vh] sm:max-w-[85vw] lg:max-h-[60vh] lg:max-w-4xl xl:max-h-[64vh] xl:max-w-5xl"
+                    class="block h-auto w-auto max-h-[50vh] max-w-[92vw] select-none rounded-xl border border-border object-contain shadow-[0_24px_70px_-20px_rgba(0,0,0,0.9)] will-change-transform sm:max-h-[56vh] sm:max-w-[85vw] lg:max-h-[60vh] lg:max-w-4xl xl:max-h-[64vh] xl:max-w-5xl"
                     :style="imageStyle"
                   />
                 </div>
               </div>
             </div>
 
-            <div class="shrink-0 border-t border-white/10 bg-black/40 px-4 py-3 sm:px-8 sm:py-4">
-              <div class="mx-auto flex max-w-3xl flex-col items-center gap-1.5 text-center">
-                <p class="font-sans text-xs leading-relaxed text-white/90 sm:text-sm md:text-base">
+            <div class="shrink-0 border-t border-border bg-surface/80 px-4 py-3 sm:px-8 sm:py-4">
+              <div class="mx-auto flex max-w-3xl flex-col items-center gap-1.5 text-center selection:bg-cyan-accent/30 selection:text-foreground dark:selection:text-white">
+                <p class="font-sans text-xs leading-relaxed text-foreground sm:text-sm md:text-base">
                   {{ slide.caption }}
                 </p>
-                <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.16em] text-white/55 sm:text-xs">
+                <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted sm:text-xs">
                   <span aria-live="polite">{{ index + 1 }} / {{ total }}</span>
                   <span aria-hidden="true">//</span>
                   <span>{{ t('gallery.fullHint') }}</span>
@@ -359,6 +359,10 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 
 .lightbox-dialog::backdrop {
   background: rgba(0, 0, 0, 0.85);
+}
+
+:root.light .lightbox-dialog::backdrop {
+  background: rgba(11, 14, 20, 0.5);
 }
 </style>
 

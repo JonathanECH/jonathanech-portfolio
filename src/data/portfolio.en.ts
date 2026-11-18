@@ -320,7 +320,7 @@ const projects: readonly Project[] = [
       repo: 'https://github.com/JonathanECH',
     },
     liveHost: 'razetti.hospital',
-    accent: '#5EEAD4',
+    accent: 'var(--ech-razetti-accent)',
     galleryDescription:
       'Real interfaces from the hospital workflow: admin dashboard, specialist and schedule management, dynamic patient registration, clinical reports hub and secure authentication.',
     gallery: [

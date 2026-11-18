@@ -529,7 +529,7 @@ export const projects: readonly Project[] = [
       repo: 'https://github.com/JonathanECH',
     },
     liveHost: 'razetti.hospital',
-    accent: '#5EEAD4',
+    accent: 'var(--ech-razetti-accent)',
     galleryDescription:
       'Interfaces reales del flujo hospitalario: panel general, gestión de especialistas y horarios, registro dinámico de pacientes, hub de reportes clínicos y autenticación segura.',
     gallery: [
