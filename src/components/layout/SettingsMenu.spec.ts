@@ -30,4 +30,9 @@ describe('settings menu trigger', () => {
     expect(openingTag).not.toMatch(/\bhidden\b/)
     expect(trigger).toContain('<Settings')
   })
+
+  it('syncs the popover through the DOM-aware helper', () => {
+    expect(settingsMenuSource).toContain("from '@/composables/usePopoverPanel'")
+    expect(settingsMenuSource).toContain('syncPopoverPanel(isOpen, panelRef, nextTick)')
+  })
 })

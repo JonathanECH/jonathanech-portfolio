@@ -2,6 +2,7 @@
 import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { Check, Globe, Monitor, Moon, Settings, Sun } from '@lucide/vue'
 import type { Component } from 'vue'
+import { syncPopoverPanel } from '@/composables/usePopoverPanel'
 import { usePreferences } from '@/composables/usePreferences'
 import { useI18n } from '@/i18n'
 import type { LocaleMode, ThemeMode } from '@/types/portfolio'
@@ -72,22 +73,7 @@ function onDocumentKeydown(event: KeyboardEvent): void {
   }
 }
 
-watch(open, async (isOpen) => {
-  const panel = panelRef.value
-
-  if (isOpen) {
-    await nextTick()
-    if (typeof panel?.showPopover === 'function' && !panel.matches(':popover-open')) {
-      panel.showPopover()
-    }
-    panel?.focus()
-    return
-  }
-
-  if (typeof panel?.hidePopover === 'function' && panel.matches(':popover-open')) {
-    panel.hidePopover()
-  }
-})
+watch(open, (isOpen) => syncPopoverPanel(isOpen, panelRef, nextTick))
 
 /** Keeps Vue state in sync with Popover light dismiss. */
 function handlePopoverToggle(event: Event): void {
