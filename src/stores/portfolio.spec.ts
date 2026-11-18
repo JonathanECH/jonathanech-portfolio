@@ -70,6 +70,20 @@ describe('portfolio data integrity', () => {
     )
   })
 
+  it('keeps the bio recruiter-focused without internship or junior-seeking language', () => {
+    const bios = [profile.bio, enContent.profile.bio]
+
+    for (const bio of bios) {
+      expect(bio).not.toMatch(/\bpasant/i)
+      expect(bio).not.toMatch(/\binternships?\b/i)
+      expect(bio).not.toMatch(/junior/i)
+      expect(bio).not.toMatch(/busco|seeking/i)
+    }
+
+    expect(profile.bio).toContain('equipos remotos e internacionales')
+    expect(enContent.profile.bio).toContain('remote and international teams')
+  })
+
   it('frames artificial intelligence as a strategic tool in both locales', () => {
     expect(profile.bioAi).toContain(
       'Utilizo la Inteligencia Artificial como multiplicador de productividad',
