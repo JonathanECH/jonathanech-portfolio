@@ -33,7 +33,10 @@ const filteredProjects = computed(() => {
 </script>
 
 <template>
-  <section id="proyectos" class="relative border-t border-border/60 bg-surface/20 py-20 sm:py-24 lg:py-28">
+  <section
+    id="proyectos"
+    class="deferred-section relative border-t border-border/60 bg-surface/20 py-20 sm:py-24 lg:py-28"
+  >
     <div class="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-12">
       <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <SectionHeading
@@ -46,18 +49,17 @@ const filteredProjects = computed(() => {
         </p>
       </div>
 
-      <!-- Tech Filter Tabs -->
+      <!-- Tech filters -->
       <div
         class="mt-8 flex flex-wrap items-center gap-2"
-        role="tablist"
+        role="group"
         :aria-label="t('projects.filterLabel')"
       >
         <button
           v-for="opt in filterOptions"
           :key="opt.id"
           type="button"
-          role="tab"
-          :aria-selected="activeFilter === opt.id"
+          :aria-pressed="activeFilter === opt.id"
           class="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] transition-all duration-200"
           :class="
             activeFilter === opt.id

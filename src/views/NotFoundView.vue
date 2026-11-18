@@ -231,7 +231,7 @@ const quickRoutes: readonly QuickRoute[] = [
 
           <div class="flex flex-wrap items-baseline gap-2 pt-0.5">
             <span class="font-semibold text-cyan-accent">&gt; ACTION:</span>
-            <span class="text-cyan-accent/90">{{ t('notFound.logAction') }}</span>
+            <span class="text-cyan-accent">{{ t('notFound.logAction') }}</span>
             <span
               class="ml-0.5 inline-block h-3.5 w-[2px] translate-y-0.5 animate-cursor bg-cyan-accent align-middle"
               aria-hidden="true"
@@ -246,7 +246,7 @@ const quickRoutes: readonly QuickRoute[] = [
       >
         <RouterLink
           :to="{ path: '/', hash: '#proyectos' }"
-          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-black shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] transition-all duration-300 hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] active:scale-[0.98] sm:text-xs"
+          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-accent-contrast shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] transition-all duration-300 hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] active:scale-[0.98] sm:text-xs"
         >
           <Terminal :size="16" aria-hidden="true" />
           {{ t('notFound.exploreProjects') }}

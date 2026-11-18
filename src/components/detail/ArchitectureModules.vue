@@ -36,7 +36,7 @@ function formatCounter(index: number, total: number): string {
   >
     <div class="mb-8 flex items-center gap-3">
       <span
-        class="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan-accent/80 sm:text-[11px]"
+        class="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan-accent sm:text-[11px]"
       >
         {{ t('detail.architectureCode') }}
       </span>
@@ -82,7 +82,7 @@ function formatCounter(index: number, total: number): string {
           {{ module.subtitle }}
         </h3>
 
-        <p class="mt-3 flex-1 text-sm leading-relaxed text-foreground/60">
+        <p class="mt-3 flex-1 text-sm leading-relaxed text-muted">
           {{ module.description }}
         </p>
 
@@ -90,7 +90,7 @@ function formatCounter(index: number, total: number): string {
           <li
             v-for="point in module.points"
             :key="point"
-            class="flex items-start gap-2 font-mono text-[10px] leading-relaxed text-foreground/50 sm:text-[11px]"
+            class="flex items-start gap-2 font-mono text-[10px] leading-relaxed text-muted sm:text-[11px]"
           >
             <Check
               :size="12"

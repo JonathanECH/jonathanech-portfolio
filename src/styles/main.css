@@ -30,6 +30,7 @@
   --color-border: var(--ech-border);
   --color-border-hover: var(--ech-border-hover);
   --color-cyan-accent: var(--ech-accent);
+  --color-accent-contrast: var(--ech-accent-contrast);
   --color-cyan-glow: var(--ech-accent-glow);
   --color-muted: var(--ech-muted);
   --color-foreground: var(--ech-foreground);
@@ -54,6 +55,7 @@
   --ech-border-hover: rgba(0, 229, 255, 0.35);
   --ech-accent: #00e5ff;
   --ech-accent-rgb: 0, 229, 255;
+  --ech-accent-contrast: #000000;
   --ech-accent-glow: rgba(0, 229, 255, 0.15);
   --ech-muted: #8a92a6;
   --ech-foreground: #ffffff;
@@ -71,8 +73,8 @@
   --ech-selection-bg: rgba(0, 229, 255, 0.28);
   --ech-selection-color: #ffffff;
   --ech-scrollbar-track: #0b0e14;
-  --ech-scrollbar-thumb: #232a3a;
-  --ech-scrollbar-thumb-hover: #303a4f;
+  --ech-scrollbar-thumb: #566684;
+  --ech-scrollbar-thumb-hover: #6b7a9c;
   --ech-glass: rgba(17, 20, 28, 0.72);
   --ech-focus: rgba(0, 229, 255, 0.7);
   --ech-spotlight-core: rgba(0, 229, 255, 0.14);
@@ -87,10 +89,12 @@
   --ech-surface-card: #f5f7fa;
   --ech-surface-card-hover: #e8edf6;
   --ech-border: rgba(11, 14, 20, 0.1);
-  --ech-border-hover: rgba(0, 168, 198, 0.45);
-  --ech-accent: #00a8c6;
-  --ech-accent-rgb: 0, 168, 198;
-  --ech-accent-glow: rgba(0, 168, 198, 0.15);
+  --ech-border-hover: rgba(0, 115, 138, 0.45);
+  /* Darker cyan keeps small text above 4.5:1 on light surfaces. */
+  --ech-accent: #00738a;
+  --ech-accent-rgb: 0, 115, 138;
+  --ech-accent-contrast: #ffffff;
+  --ech-accent-glow: rgba(0, 115, 138, 0.15);
   --ech-muted: #5b6478;
   --ech-foreground: #1a1f2e;
   --ech-foreground-soft: rgba(26, 31, 46, 0.82);
@@ -103,16 +107,16 @@
   --ech-grid-line: rgba(11, 14, 20, 0.05);
   --ech-grid-line-strong: rgba(0, 168, 198, 0.09);
   --ech-grid-blend: multiply;
-  --ech-particle-rgb: 0, 140, 170;
-  --ech-selection-bg: rgba(0, 168, 198, 0.22);
+  --ech-particle-rgb: 0, 115, 138;
+  --ech-selection-bg: rgba(0, 115, 138, 0.22);
   --ech-selection-color: #1a1f2e;
   --ech-scrollbar-track: #edf0f8;
-  --ech-scrollbar-thumb: #c3cbd9;
-  --ech-scrollbar-thumb-hover: #a9b4c6;
+  --ech-scrollbar-thumb: #6b7791;
+  --ech-scrollbar-thumb-hover: #556177;
   --ech-glass: rgba(240, 243, 250, 0.85);
-  --ech-focus: rgba(0, 168, 198, 0.7);
-  --ech-spotlight-core: rgba(0, 168, 198, 0.07);
-  --ech-spotlight-mid: rgba(0, 168, 198, 0.04);
+  --ech-focus: rgba(0, 115, 138, 0.7);
+  --ech-spotlight-core: rgba(0, 115, 138, 0.07);
+  --ech-spotlight-mid: rgba(0, 115, 138, 0.04);
 }
 
 @keyframes fade-up {
@@ -194,6 +198,7 @@
   html {
     scroll-behavior: smooth;
     background-color: var(--ech-background);
+    scrollbar-color: var(--ech-scrollbar-thumb) var(--ech-scrollbar-track);
   }
 
   body {
@@ -222,23 +227,26 @@
     outline-offset: 3px;
   }
 
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
+  /* Legacy WebKit styling is ignored by engines that support scrollbar-color. */
+  @supports not (scrollbar-color: auto) {
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
 
-  ::-webkit-scrollbar-track {
-    background: var(--ech-scrollbar-track);
-  }
+    ::-webkit-scrollbar-track {
+      background: var(--ech-scrollbar-track);
+    }
 
-  ::-webkit-scrollbar-thumb {
-    border: 2px solid var(--ech-scrollbar-track);
-    border-radius: 9999px;
-    background: var(--ech-scrollbar-thumb);
-  }
+    ::-webkit-scrollbar-thumb {
+      border: 2px solid var(--ech-scrollbar-track);
+      border-radius: 9999px;
+      background: var(--ech-scrollbar-thumb);
+    }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--ech-scrollbar-thumb-hover);
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--ech-scrollbar-thumb-hover);
+    }
   }
 }
 
@@ -272,7 +280,14 @@
       transparent 75%
     );
     transition: opacity 500ms ease;
-    will-change: background;
+  }
+
+  /* Skip layout/paint work for long below-the-fold home sections. */
+  @supports (content-visibility: auto) {
+    .deferred-section {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 700px;
+    }
   }
 
   .glass-panel {
@@ -298,8 +313,8 @@
     text-wrap: balance;
   }
 
-  /* Scroll-triggered entrance used by tech and project cards. */
-  .reveal {
+  /* Static by default; JS opts into the entrance animation via `html.js`. */
+  html.js .reveal:not(.is-visible) {
     opacity: 0;
     transform: translateY(18px);
     transition:
@@ -309,7 +324,7 @@
     will-change: opacity, transform;
   }
 
-  .reveal.is-visible {
+  html.js .reveal.is-visible {
     opacity: 1;
     transform: none;
     will-change: auto;
@@ -334,12 +349,46 @@
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+  /* Keep final states while removing recurring or spatial motion. */
+  .animate-pulse-dot,
+  .animate-cursor,
+  .animate-float,
+  .animate-scan,
+  .animate-carousel-progress {
+    animation: none;
+  }
+
+  html.js .reveal:not(.is-visible) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .page-enter-active,
+  .page-leave-active,
+  .lightbox-enter-active,
+  .lightbox-leave-active,
+  .modal-enter-active,
+  .modal-leave-active,
+  .settings-enter-active,
+  .settings-leave-active,
+  .menu-enter-active,
+  .menu-leave-active,
+  .gallery-slide-enter-active,
+  .gallery-slide-leave-active,
+  .tech-move {
+    transition: none;
+  }
+
+  .page-enter-from,
+  .page-leave-to,
+  .lightbox-enter-from,
+  .lightbox-leave-to,
+  .modal-enter-from,
+  .modal-leave-to,
+  .settings-enter-from,
+  .settings-leave-to {
+    opacity: 1;
+    transform: none;
   }
 }

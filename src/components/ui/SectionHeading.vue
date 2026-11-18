@@ -20,7 +20,7 @@ withDefaults(
   <div :class="align === 'center' ? 'mx-auto text-center' : ''">
     <p
       v-if="code"
-      class="font-mono text-[10px] uppercase tracking-[0.24em] text-cyan-accent/75 sm:text-[11px]"
+      class="font-mono text-[10px] uppercase tracking-[0.24em] text-cyan-accent sm:text-[11px]"
     >
       {{ code }}
     </p>

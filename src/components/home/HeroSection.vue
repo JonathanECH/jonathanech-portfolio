@@ -24,7 +24,8 @@ const canvasRef = ref<HTMLCanvasElement | null>(null)
 
 const POINTER_RADIUS = 180
 const CONNECT_DISTANCE = 115
-const MAX_PARTICLES = 55
+const MAX_PARTICLES = 36
+const MOBILE_MAX_PARTICLES = 18
 
 let ctx: CanvasRenderingContext2D | null = null
 let particles: HeroParticle[] = []
@@ -41,6 +42,7 @@ let resizeObserver: ResizeObserver | null = null
 let visibilityObserver: IntersectionObserver | null = null
 let prefersReducedMotion = false
 let isVisible = true
+let allowGlow = false
 let particleRgb = '0, 229, 255'
 let particleGlow = '#00E5FF'
 
@@ -77,7 +79,10 @@ watch(
 )
 
 function createParticles(): void {
-  const count = Math.min(Math.floor((width * 500) / 12000), MAX_PARTICLES)
+  // Canvas shadowBlur is expensive on mobile GPUs, so keep the effect on larger screens.
+  allowGlow = width >= 640
+  const particleLimit = allowGlow ? MAX_PARTICLES : MOBILE_MAX_PARTICLES
+  const count = Math.min(Math.floor((width * 500) / 12000), particleLimit)
 
   particles = Array.from({ length: count }, () => {
     const baseRadius = Math.random() * 1.5 + 0.8
@@ -115,10 +120,17 @@ function drawParticle(particle: HeroParticle): void {
   ctx.beginPath()
   ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2)
   ctx.fillStyle = `rgba(${particleRgb}, ${particle.currentAlpha})`
-  ctx.shadowBlur = particle.radius > 2 ? 10 : 4
-  ctx.shadowColor = particleGlow
+
+  if (allowGlow) {
+    ctx.shadowBlur = particle.radius > 2 ? 10 : 4
+    ctx.shadowColor = particleGlow
+  }
+
   ctx.fill()
-  ctx.shadowBlur = 0
+
+  if (allowGlow) {
+    ctx.shadowBlur = 0
+  }
 }
 
 function updateParticle(particle: HeroParticle): void {
@@ -402,7 +414,7 @@ onBeforeUnmount(() => {
         <p
           class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-muted sm:text-[11px]"
         >
-          <MapPin :size="13" class="text-cyan-accent/80" aria-hidden="true" />
+          <MapPin :size="13" class="text-cyan-accent" aria-hidden="true" />
           {{ profile.location }}
         </p>
 
@@ -448,7 +460,7 @@ onBeforeUnmount(() => {
       <div class="mt-9 flex w-full flex-col items-stretch justify-center gap-3 sm:w-auto sm:flex-row">
         <a
           href="#proyectos"
-          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-black shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] transition-all duration-300 hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] active:scale-[0.98] sm:text-xs"
+          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-accent-contrast shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] transition-all duration-300 hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] active:scale-[0.98] sm:text-xs"
         >
           <Terminal :size="16" aria-hidden="true" />
           {{ t('hero.explore') }}
@@ -475,9 +487,9 @@ onBeforeUnmount(() => {
 
       <div class="mt-12 w-full max-w-2xl">
         <div
-          class="mb-3 flex items-center justify-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-muted/60 sm:text-[10px]"
+          class="mb-3 flex items-center justify-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-muted sm:text-[10px]"
         >
-          <Activity :size="12" class="text-cyan-accent/70" aria-hidden="true" />
+          <Activity :size="12" class="text-cyan-accent" aria-hidden="true" />
           {{ t('hero.metrics') }}
         </div>
 
@@ -489,7 +501,7 @@ onBeforeUnmount(() => {
             :key="stat.label"
             class="bg-background/85 px-5 py-4 text-center sm:text-left"
           >
-            <dt class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted/70 sm:text-[10px]">
+            <dt class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted sm:text-[10px]">
               {{ stat.label }}
             </dt>
             <dd class="mt-1 font-sans text-sm font-semibold text-foreground">{{ stat.value }}</dd>
@@ -499,7 +511,7 @@ onBeforeUnmount(() => {
 
       <a
         href="#stack"
-        class="mt-10 inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-muted/60 transition-colors duration-300 hover:text-cyan-accent sm:text-[10px]"
+        class="mt-10 inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-muted transition-colors duration-300 hover:text-cyan-accent sm:text-[10px]"
       >
         {{ t('hero.scroll') }}
         <ArrowRight :size="13" class="rotate-90" aria-hidden="true" />

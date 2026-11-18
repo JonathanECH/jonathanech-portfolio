@@ -10,7 +10,10 @@ const sectionCode = computed(() => t('about.code'))
 </script>
 
 <template>
-  <section id="sobre-mi" class="relative border-t border-border/60 py-20 sm:py-24 lg:py-28">
+  <section
+    id="sobre-mi"
+    class="deferred-section relative border-t border-border/60 py-20 sm:py-24 lg:py-28"
+  >
     <div class="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-12">
       <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <SectionHeading
@@ -37,13 +40,13 @@ const sectionCode = computed(() => t('about.code'))
                 <Terminal :size="12" class="shrink-0 text-cyan-accent" aria-hidden="true" />
                 <span class="truncate">{{ profile.philosophyPath }}</span>
               </div>
-              <span class="hidden shrink-0 font-mono text-[9px] uppercase tracking-[0.16em] text-muted/70 sm:block">
+              <span class="hidden shrink-0 font-mono text-[9px] uppercase tracking-[0.16em] text-muted sm:block">
                 UTF-8
               </span>
             </div>
 
             <div class="p-5 sm:p-7">
-              <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan-accent/80">
+              <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan-accent">
                 {{ t('about.bioLabel') }}
               </p>
 

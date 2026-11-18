@@ -59,7 +59,7 @@ onBeforeUnmount(() => {
     />
 
     <div class="flex items-start justify-between gap-3">
-      <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-accent/70">
+      <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-accent">
         {{ technology.label }}
       </span>
 
@@ -84,14 +84,14 @@ onBeforeUnmount(() => {
         <li
           v-for="specialty in technology.specialties"
           :key="specialty"
-          class="rounded border border-cyan-accent/15 bg-cyan-accent/5 px-1.5 py-0.5 font-mono text-[10px] leading-relaxed text-cyan-accent/80"
+          class="rounded border border-cyan-accent/15 bg-cyan-accent/5 px-1.5 py-0.5 font-mono text-[10px] leading-relaxed text-cyan-accent"
         >
           {{ specialty }}
         </li>
       </ul>
 
       <span
-        class="shrink-0 font-mono text-[10px] tabular-nums text-muted/40 transition-colors duration-300 group-hover:text-muted/70"
+        class="shrink-0 font-mono text-[10px] tabular-nums text-muted transition-colors duration-300 group-hover:text-muted"
         aria-hidden="true"
       >
         {{ paddedIndex }}

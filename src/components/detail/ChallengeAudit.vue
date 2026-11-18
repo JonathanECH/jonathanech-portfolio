@@ -20,7 +20,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
   >
     <div class="mb-8 flex items-center gap-3">
       <span
-        class="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan-accent/80 sm:text-[11px]"
+        class="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan-accent sm:text-[11px]"
       >
         {{ t('detail.challengeCode') }}
       </span>
@@ -109,7 +109,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
                 {{ t('detail.resolution') }}
               </p>
               <p
-                class="rounded bg-surface-card-hover/50 p-3 font-mono text-[11px] leading-relaxed text-foreground/60"
+                class="rounded bg-surface-card-hover/50 p-3 font-mono text-[11px] leading-relaxed text-muted"
               >
                 {{ project.audit.resolution }}
               </p>

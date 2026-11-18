@@ -40,7 +40,7 @@ function toggleTechGrid(): void {
 <template>
   <section
     id="stack"
-    class="relative w-full scroll-mt-20 overflow-hidden border-t border-border/60 bg-surface/30 py-20 lg:py-28"
+    class="deferred-section relative w-full scroll-mt-20 overflow-hidden border-t border-border/60 bg-surface/30 py-20 lg:py-28"
   >
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
       <div class="absolute inset-0 bg-grid-fine opacity-40" />
@@ -70,7 +70,7 @@ function toggleTechGrid(): void {
           class="inline-flex cursor-pointer items-center gap-2 rounded-lg border px-3.5 py-2 font-mono text-[10px] uppercase tracking-[0.14em] transition-all duration-200 sm:text-[11px]"
           :class="
             isActive(option.value)
-              ? 'border-cyan-accent bg-cyan-accent text-black shadow-[0_0_18px_rgba(var(--ech-accent-rgb),0.28)]'
+              ? 'border-cyan-accent bg-cyan-accent text-accent-contrast shadow-[0_0_18px_rgba(var(--ech-accent-rgb),0.28)]'
               : 'border-border bg-surface-card/60 text-muted hover:border-border-hover hover:text-foreground'
           "
           @click="setCategory(option.value)"
@@ -78,7 +78,7 @@ function toggleTechGrid(): void {
           {{ option.label }}
           <span
             class="text-[9px] tabular-nums sm:text-[10px]"
-            :class="isActive(option.value) ? 'text-black/60' : 'text-muted/60'"
+            :class="isActive(option.value) ? 'text-accent-contrast/70' : 'text-muted'"
           >
             {{ categoryCounts[option.value] }}
           </span>
@@ -130,7 +130,7 @@ function toggleTechGrid(): void {
       </div>
 
       <div
-        class="mt-6 flex flex-wrap items-center justify-between gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-muted/50 sm:text-[10px]"
+        class="mt-6 flex flex-wrap items-center justify-between gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-muted sm:text-[10px]"
       >
         <span>
           {{ t('tech.modulesLoaded', { count: filteredTechnologies.length.toString().padStart(2, '0') }) }}

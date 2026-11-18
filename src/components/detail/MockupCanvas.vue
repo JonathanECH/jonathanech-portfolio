@@ -210,8 +210,11 @@ const analyticsAxis = computed(() =>
       v-if="slide.image"
       :src="slide.image"
       :alt="slide.alt ?? slide.title"
+      width="1200"
+      height="750"
       class="h-full w-full object-cover"
       loading="lazy"
+      decoding="async"
     />
     <div
       v-else
@@ -401,7 +404,7 @@ const analyticsAxis = computed(() =>
                   >
                     {{ t('mockup.blockHash') }}
                   </p>
-                  <p class="mt-0.5 font-mono text-[5px] leading-tight text-foreground/60 sm:text-[7px]">
+                  <p class="mt-0.5 font-mono text-[5px] leading-tight text-muted sm:text-[7px]">
                     a3f9…e21c
                   </p>
                 </div>

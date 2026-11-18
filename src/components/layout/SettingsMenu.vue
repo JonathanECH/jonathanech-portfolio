@@ -73,11 +73,29 @@ function onDocumentKeydown(event: KeyboardEvent): void {
 }
 
 watch(open, async (isOpen) => {
+  const panel = panelRef.value
+
   if (isOpen) {
     await nextTick()
-    panelRef.value?.focus()
+    if (typeof panel?.showPopover === 'function' && !panel.matches(':popover-open')) {
+      panel.showPopover()
+    }
+    panel?.focus()
+    return
+  }
+
+  if (typeof panel?.hidePopover === 'function' && panel.matches(':popover-open')) {
+    panel.hidePopover()
   }
 })
+
+/** Keeps Vue state in sync with Popover light dismiss. */
+function handlePopoverToggle(event: Event): void {
+  if ((event as ToggleEvent).newState === 'closed' && open.value) {
+    open.value = false
+    triggerRef.value?.focus()
+  }
+}
 
 onMounted(() => {
   document.addEventListener('pointerdown', onDocumentPointerDown)
@@ -97,7 +115,6 @@ onUnmounted(() => {
       type="button"
       class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-border text-muted transition-colors hover:border-border-hover hover:text-cyan-accent"
       :class="open ? 'border-border-hover text-cyan-accent' : ''"
-      aria-haspopup="dialog"
       :aria-expanded="open"
       aria-controls="settings-panel"
       :aria-label="t('settings.ariaLabel')"
@@ -111,10 +128,11 @@ onUnmounted(() => {
         v-if="open"
         id="settings-panel"
         ref="panelRef"
-        role="dialog"
+        popover="auto"
         tabindex="-1"
         aria-labelledby="settings-panel-title"
-        class="absolute right-0 top-[calc(100%+0.6rem)] z-50 w-60 overflow-hidden rounded-xl border border-border bg-surface/95 shadow-[0_18px_50px_-12px_rgba(0,0,0,0.7)] backdrop-blur-xl focus:outline-none"
+        class="absolute bottom-auto left-auto right-0 top-[calc(100%+0.6rem)] z-50 m-0 w-60 overflow-hidden rounded-xl border border-border bg-surface/95 shadow-[0_18px_50px_-12px_rgba(0,0,0,0.7)] backdrop-blur-xl focus:outline-none"
+        @toggle="handlePopoverToggle"
       >
         <div class="border-b border-border/70 px-4 py-3">
           <p id="settings-panel-title" class="font-sans text-sm font-semibold text-foreground">{{ t('settings.title') }}</p>
@@ -126,7 +144,7 @@ onUnmounted(() => {
         <div class="p-2">
           <div role="group" :aria-label="t('settings.language')">
             <p
-              class="px-2 pb-1 pt-1 font-mono text-[9px] uppercase tracking-[0.18em] text-muted/80"
+              class="px-2 pb-1 pt-1 font-mono text-[9px] uppercase tracking-[0.18em] text-muted"
             >
               {{ t('settings.language') }}
             </p>
@@ -160,7 +178,7 @@ onUnmounted(() => {
 
           <div role="group" :aria-label="t('settings.theme')">
             <p
-              class="px-2 pb-1 pt-1 font-mono text-[9px] uppercase tracking-[0.18em] text-muted/80"
+              class="px-2 pb-1 pt-1 font-mono text-[9px] uppercase tracking-[0.18em] text-muted"
             >
               {{ t('settings.theme') }}
             </p>

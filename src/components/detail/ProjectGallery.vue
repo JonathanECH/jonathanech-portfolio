@@ -307,7 +307,7 @@ function announceCurrent(): void {
     <div class="border-t border-border bg-surface/60 px-4 py-3 sm:px-5 sm:py-4">
       <p class="sr-only" aria-live="polite" aria-atomic="true">{{ manualAnnouncement }}</p>
       <div>
-        <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-cyan-accent/80">
+        <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-cyan-accent">
           {{ activeSlide?.title ?? t('gallery.noCapture') }}
         </p>
         <p class="mt-1.5 max-w-3xl text-sm leading-relaxed text-muted">
@@ -319,7 +319,7 @@ function announceCurrent(): void {
         <span
           v-for="badge in activeSlide?.badges ?? []"
           :key="badge"
-          class="rounded-sm border border-cyan-accent/20 bg-cyan-accent/[0.06] px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-cyan-accent/90 sm:text-[10px]"
+          class="rounded-sm border border-cyan-accent/20 bg-cyan-accent/[0.06] px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-cyan-accent sm:text-[10px]"
         >
           {{ badge }}
         </span>

@@ -97,7 +97,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             <dt class="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
               {{ t('detail.problem') }}
             </dt>
-            <dd class="mt-2 text-sm leading-relaxed text-foreground/60 sm:text-[15px]">
+            <dd class="mt-2 text-sm leading-relaxed text-muted sm:text-[15px]">
               {{ project.problem }}
             </dd>
           </div>
@@ -111,7 +111,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
                 <li
                   v-for="tag in project.techTags"
                   :key="tag"
-                  class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-cyan-accent/90"
+                  class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-cyan-accent"
                 >
                   {{ tag }}
                 </li>
@@ -158,7 +158,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             :href="project.links.demo"
             target="_blank"
             rel="noopener noreferrer"
-            class="group inline-flex items-center gap-2 rounded bg-cyan-accent px-5 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-black transition-all duration-300 hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.35)]"
+            class="group inline-flex items-center gap-2 rounded bg-cyan-accent px-5 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-contrast transition-all duration-300 hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.35)]"
           >
             {{ t('detail.demo') }}
             <ArrowUpRight

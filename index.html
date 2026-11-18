@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#0B0E14" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -47,6 +48,9 @@
     <!-- Applies the stored theme/locale before first paint to avoid a flash. -->
     <script>
       ;(() => {
+        // Enables JS-only motion states before the stylesheet is parsed.
+        document.documentElement.classList.add('js')
+
         try {
           const raw = localStorage.getItem('ech:preferences')
           const parsed = raw ? JSON.parse(raw) : {}

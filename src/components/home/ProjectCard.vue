@@ -37,6 +37,8 @@ function openQuickView(): void {
           <img
             :src="previewSlide.image"
             :alt="previewSlide.alt ?? `${project.name}: ${previewSlide.title}`"
+            width="1200"
+            height="750"
             loading="lazy"
             decoding="async"
             class="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
@@ -176,7 +178,7 @@ function openQuickView(): void {
           <span class="text-[var(--accent)]">{{ project.titleHighlight }}</span>
         </h3>
 
-        <p class="mt-1 font-mono text-[10px] text-foreground/50 truncate">
+        <p class="mt-1 font-mono text-[10px] text-muted truncate">
           // {{ project.role }}
         </p>
 
@@ -184,7 +186,7 @@ function openQuickView(): void {
 
         <dl class="mt-4 space-y-3 border-t border-border/60 pt-4">
           <div>
-            <dt class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted/70">
+            <dt class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
               {{ t('projects.problemLabel') }}
             </dt>
             <dd class="mt-1 line-clamp-2 text-xs leading-relaxed text-muted">
@@ -193,14 +195,14 @@ function openQuickView(): void {
           </div>
 
           <div>
-            <dt class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted/70">
+            <dt class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
               {{ t('projects.solutionLabel') }}
             </dt>
             <dd class="mt-1.5 flex flex-wrap gap-1.5">
               <span
                 v-for="tag in project.techTags.slice(0, 4)"
                 :key="tag"
-                class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-cyan-accent/90"
+                class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-cyan-accent"
               >
                 {{ tag }}
               </span>
@@ -209,7 +211,7 @@ function openQuickView(): void {
 
           <div v-if="project.audit.metrics.length > 0">
             <dt
-              class="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-muted/70"
+              class="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-muted"
             >
               <ShieldCheck :size="11" class="text-cyan-accent" aria-hidden="true" />
               {{ t('projects.impactLabel') }}

@@ -1,66 +1,73 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ArrowRight, ExternalLink, X } from '@lucide/vue'
-import { useFocusTrap } from '@/composables/useFocusTrap'
-import { useScrollLock } from '@/composables/useScrollLock'
 import { useI18n } from '@/i18n'
 import { usePortfolioStore } from '@/stores/portfolio'
 
 const store = usePortfolioStore()
 const { t } = useI18n()
 
-const dialogRef = ref<HTMLElement | null>(null)
+const dialogRef = ref<HTMLDialogElement | null>(null)
 const open = computed(() => store.isQuickViewOpen)
 const project = computed(() => store.quickViewProject)
 
-const locked = ref(false)
 watch(
   open,
-  (isOpen) => {
-    if (isOpen) locked.value = true
+  async (isOpen) => {
+    if (!isOpen) {
+      return
+    }
+
+    await nextTick()
+    const dialog = dialogRef.value
+    if (dialog && !dialog.open) {
+      dialog.showModal()
+    }
   },
-  { immediate: true },
+  { immediate: true, flush: 'post' },
 )
 
-useScrollLock(locked)
-useFocusTrap(dialogRef, open)
-
-function handleAfterLeave(): void {
-  if (!open.value) locked.value = false
+function close(): void {
+  store.closeQuickView()
 }
 
-function onKeydown(event: KeyboardEvent): void {
-  if (event.key === 'Escape' && store.isQuickViewOpen) {
-    event.preventDefault()
-    store.closeQuickView()
+function handleCancel(event: Event): void {
+  // Let the leave transition finish before the native dialog closes.
+  event.preventDefault()
+  close()
+}
+
+function handleAfterLeave(): void {
+  const dialog = dialogRef.value
+  if (dialog?.open && !open.value) {
+    dialog.close()
   }
 }
 
-onMounted(() => document.addEventListener('keydown', onKeydown))
-onUnmounted(() => document.removeEventListener('keydown', onKeydown))
+function handleNativeClose(): void {
+  // Keeps state in sync if the browser closes the dialog by another path.
+  if (open.value) {
+    close()
+  }
+}
 </script>
 
 <template>
   <Teleport to="body">
-    <Transition name="modal" @after-leave="handleAfterLeave">
-      <div
-        v-if="open && project"
-        class="fixed inset-0 z-[100] overflow-y-auto bg-background/80 backdrop-blur-md"
-        @click.self="store.closeQuickView"
-      >
-        <div
-          class="flex min-h-full items-center justify-center p-4 sm:p-6"
-          @click.self="store.closeQuickView"
-        >
+    <dialog
+      ref="dialogRef"
+      class="quick-view-dialog"
+      aria-labelledby="quick-view-title"
+      aria-describedby="quick-view-summary"
+      @cancel="handleCancel"
+      @close="handleNativeClose"
+      @click.self="close"
+    >
+      <Transition name="modal" @after-leave="handleAfterLeave">
+        <div v-if="open && project" class="flex min-h-full items-center justify-center p-4 sm:p-6" @click.self="close">
           <div
-            ref="dialogRef"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="quick-view-title"
-            aria-describedby="quick-view-summary"
-            tabindex="-1"
-            class="modal-panel relative flex max-h-[calc(100dvh-2rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-surface-card shadow-[0_32px_80px_-32px_rgba(0,0,0,0.9)] sm:max-h-[calc(100dvh-3rem)]"
+            class="modal-panel relative flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card shadow-[0_32px_80px_-32px_rgba(0,0,0,0.9)] sm:max-w-2xl"
             :style="`--accent: ${project.accent}`"
           >
             <!-- Terminal-style title bar -->
@@ -75,9 +82,10 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
               </p>
               <button
                 type="button"
+                autofocus
                 class="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-transparent text-muted transition-colors hover:border-border hover:text-foreground"
                 :aria-label="t('projects.closeQuickView')"
-                @click="store.closeQuickView"
+                @click="close"
               >
                 <X :size="16" aria-hidden="true" />
               </button>
@@ -114,7 +122,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                 <span
                   v-for="tag in project.techTags"
                   :key="tag"
-                  class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-cyan-accent/90"
+                  class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-cyan-accent"
                 >
                   {{ tag }}
                 </span>
@@ -145,7 +153,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                     <p class="mt-1 font-mono text-base font-semibold text-[var(--accent)]">
                       {{ metric.value }}
                     </p>
-                    <p v-if="metric.detail" class="mt-0.5 font-mono text-[9px] text-foreground/50">
+                    <p v-if="metric.detail" class="mt-0.5 font-mono text-[9px] text-muted">
                       {{ metric.detail }}
                     </p>
                   </div>
@@ -160,7 +168,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                 <button
                   type="button"
                   class="inline-flex items-center justify-center rounded-lg border border-border px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-border-hover hover:text-foreground"
-                  @click="store.closeQuickView"
+                  @click="close"
                 >
                   {{ t('projects.close') }}
                 </button>
@@ -176,8 +184,8 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                 </a>
                 <RouterLink
                   :to="`/proyectos/${project.slug}`"
-                  class="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-4 py-2.5 font-sans text-xs font-semibold text-black transition-all duration-300 hover:shadow-[0_0_24px_rgba(var(--ech-accent-rgb),0.45)]"
-                  @click="store.closeQuickView"
+                  class="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-4 py-2.5 font-sans text-xs font-semibold text-accent-contrast transition-all duration-300 hover:shadow-[0_0_24px_rgba(var(--ech-accent-rgb),0.45)]"
+                  @click="close"
                 >
                   {{ t('projects.viewFull') }}
                   <ArrowRight :size="15" aria-hidden="true" />
@@ -186,31 +194,57 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
             </div>
           </div>
         </div>
-      </div>
-    </Transition>
+      </Transition>
+    </dialog>
   </Teleport>
 </template>
 
+<style>
+.quick-view-dialog {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+.quick-view-dialog::backdrop {
+  background: var(--ech-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+</style>
+
 <style scoped>
+.modal-panel {
+  max-height: calc(100vh - 2rem);
+  max-height: calc(100dvh - 2rem);
+}
+
+@media (min-width: 640px) {
+  .modal-panel {
+    max-height: calc(100vh - 3rem);
+    max-height: calc(100dvh - 3rem);
+  }
+}
+
 .modal-enter-active,
 .modal-leave-active {
-  transition: opacity 200ms ease;
+  transition:
+    opacity 200ms ease,
+    transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-enter-from,
 .modal-leave-to {
-  opacity: 0;
-}
-
-.modal-enter-active .modal-panel,
-.modal-leave-active .modal-panel {
-  transition:
-    transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 200ms ease;
-}
-
-.modal-enter-from .modal-panel,
-.modal-leave-to .modal-panel {
   opacity: 0;
   transform: translateY(16px) scale(0.985);
 }

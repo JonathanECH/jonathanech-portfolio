@@ -5,7 +5,6 @@ import { Download, Menu, X } from '@lucide/vue'
 import logoNavbar from '@/assets/logo-navbar.svg'
 import SettingsMenu from '@/components/layout/SettingsMenu.vue'
 import { useActiveSection } from '@/composables/useActiveSection'
-import { useScrollLock } from '@/composables/useScrollLock'
 import { useScrolled } from '@/composables/useScrolled'
 import { useI18n } from '@/i18n'
 
@@ -15,8 +14,6 @@ const { scrolled } = useScrolled()
 const { activeSection } = useActiveSection(['inicio', 'stack', 'proyectos', 'sobre-mi', 'contacto'])
 const mobileOpen = ref(false)
 const navbarRef = ref<HTMLElement | null>(null)
-
-useScrollLock(mobileOpen)
 
 const navLinks = computed(() => [
   { label: t('nav.home'), hash: '#inicio', section: 'inicio' },
@@ -133,7 +130,7 @@ onUnmounted(() => {
         <a
           href="/cv/jonathan-campos-cv.pdf"
           download
-          class="hidden items-center gap-1.5 rounded-lg bg-cyan-accent px-4 py-2 font-sans text-xs font-semibold text-black transition-all duration-300 hover:shadow-[0_0_15px_rgba(var(--ech-accent-rgb),0.4)] sm:flex"
+          class="hidden items-center gap-1.5 rounded-lg bg-cyan-accent px-4 py-2 font-sans text-xs font-semibold text-accent-contrast transition-all duration-300 hover:shadow-[0_0_15px_rgba(var(--ech-accent-rgb),0.4)] sm:flex"
         >
           <Download :size="14" aria-hidden="true" />
           {{ t('nav.downloadCv') }}
@@ -180,14 +177,14 @@ onUnmounted(() => {
             :aria-current="isActive(link.section) ? 'page' : undefined"
           >
             {{ link.label }}
-            <span class="font-mono text-[10px] text-muted/60">{{ link.hash }}</span>
+            <span class="font-mono text-[10px] text-muted">{{ link.hash }}</span>
           </RouterLink>
         </nav>
 
         <a
           href="/cv/jonathan-campos-cv.pdf"
           download
-          class="mt-4 flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-4 py-3 font-sans text-xs font-semibold text-black"
+          class="mt-4 flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-4 py-3 font-sans text-xs font-semibold text-accent-contrast"
         >
           <Download :size="15" aria-hidden="true" />
           {{ t('nav.downloadCv') }}
