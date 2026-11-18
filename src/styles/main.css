@@ -92,10 +92,10 @@
   --ech-surface-card-hover: #e8edf6;
   --ech-border: rgba(11, 14, 20, 0.1);
   --ech-border-hover: rgba(16, 154, 182, 0.45);
-  /* Vivid cyan in light mode; black keeps text on the accent at 6.3:1. */
+  /* Vivid cyan in light mode; white keeps the original CTA look. */
   --ech-accent: #109ab6;
   --ech-accent-rgb: 16, 154, 182;
-  --ech-accent-contrast: #000000;
+  --ech-accent-contrast: #ffffff;
   --ech-accent-glow: rgba(16, 154, 182, 0.15);
   --ech-muted: #5b6478;
   --ech-foreground: #1a1f2e;
