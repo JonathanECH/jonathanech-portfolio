@@ -154,8 +154,8 @@ export const enMessages = {
   'gallery.closeFull': 'Close enlarged capture',
   'gallery.zoomIn': 'Zoom in',
   'gallery.zoomOut': 'Zoom out',
-  'gallery.fullHint':
-    'Swipe to navigate · Pinch, double tap or Ctrl + scroll to zoom · Esc to close',
+  'gallery.fullHintTouch': 'Swipe to navigate · Pinch or double tap to zoom',
+  'gallery.fullHintPointer': 'Ctrl + scroll to zoom · Esc to close',
 
   'pager.aria': 'Project navigation',
   'pager.previous': 'PREVIOUS CASE',

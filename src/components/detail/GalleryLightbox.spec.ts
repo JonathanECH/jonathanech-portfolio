@@ -45,4 +45,12 @@ describe('gallery lightbox theme', () => {
   it('hides the caption footer while the image is zoomed', () => {
     expect(lightboxSource).toContain('v-show="!zoom.isZoomed.value"')
   })
+
+  it('shows touch and pointer hints only for their input device', () => {
+    expect(lightboxSource).toContain("t('gallery.fullHintTouch')")
+    expect(lightboxSource).toContain("t('gallery.fullHintPointer')")
+    expect(lightboxSource).not.toContain("t('gallery.fullHint')")
+    expect(lightboxSource).toContain('@media (pointer: coarse)')
+    expect(lightboxSource).toContain('@media (pointer: fine)')
+  })
 })
