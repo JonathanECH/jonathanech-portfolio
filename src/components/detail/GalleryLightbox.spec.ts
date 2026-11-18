@@ -41,4 +41,8 @@ describe('gallery lightbox theme', () => {
   it('wires ctrl + wheel zoom to the viewer', () => {
     expect(lightboxSource).toContain('@wheel="zoom.onWheel"')
   })
+
+  it('hides the caption footer while the image is zoomed', () => {
+    expect(lightboxSource).toContain('v-show="!zoom.isZoomed.value"')
+  })
 })
