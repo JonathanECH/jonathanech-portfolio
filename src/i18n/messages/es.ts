@@ -25,6 +25,8 @@ export const esMessages = {
   'settings.light': 'Claro',
 
   'footer.ariaSocial': 'Enlaces sociales',
+  'footer.copyright':
+    '© 2026 Jonathan Campos // Vue 3 • TypeScript • Tailwind CSS. Todos los derechos reservados.',
 
   'hero.available': 'Disponible para proyectos',
   'hero.intro':

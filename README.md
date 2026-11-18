@@ -279,8 +279,9 @@ pnpm preview
 ## Control de calidad y publicación
 
 - `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest y el build estático con `vite-ssg`.
-- Referencia de la release de **2026-11-18**: typecheck OK, **92/92 pruebas** y build de producción correcto (6 páginas prerenderizadas).
-- Antes de publicar se revisa `git status`, se confirma que `main` no tiene cambios locales pendientes y se hace push a `origin/main`, la rama desplegada en producción.
+- Release actual: **v1.0.0** (2026-11-18). Referencia verificada: typecheck OK, **94/94 pruebas** y build de producción correcto (6 páginas prerenderizadas).
+- Historial de cambios en [`CHANGELOG.md`](CHANGELOG.md); procedimientos de mantenimiento, tags, dependencias, monitoreo y rollback en [`docs/MAINTENANCE.md`](docs/MAINTENANCE.md).
+- Antes de publicar se revisa `git status`, se confirma que `main` no tiene cambios locales pendientes y se hace push a `origin/main` con `--follow-tags`; la rama está desplegada en producción.
 - El detalle de las mejoras, su trazabilidad y la validación previa al despliegue está en [`docs/AUDIT_AND_ROADMAP.md`](docs/AUDIT_AND_ROADMAP.md).
 
 ---

@@ -16,9 +16,7 @@ const footerLinks = computed(() =>
     <div
       class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-7 font-mono text-[11px] text-muted sm:px-6 md:flex-row lg:px-12"
     >
-      <p class="text-center md:text-left">
-        © 2026 Jonathan Campos // Vue 3 • TypeScript • Tailwind CSS.
-      </p>
+      <p class="text-center md:text-left">{{ t('footer.copyright') }}</p>
 
       <nav
         class="flex items-center gap-4 uppercase tracking-[0.16em]"
