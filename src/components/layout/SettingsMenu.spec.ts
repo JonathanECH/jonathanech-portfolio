@@ -31,8 +31,10 @@ describe('settings menu trigger', () => {
     expect(trigger).toContain('<Settings')
   })
 
-  it('syncs the popover through the DOM-aware helper', () => {
-    expect(settingsMenuSource).toContain("from '@/composables/usePopoverPanel'")
-    expect(settingsMenuSource).toContain('syncPopoverPanel(isOpen, panelRef, nextTick)')
+  it('positions the panel under the navbar button like before', () => {
+    expect(settingsMenuSource).not.toContain('popover=')
+    expect(settingsMenuSource).toContain('class="absolute right-0 top-[calc(100%+0.6rem)]')
+    expect(settingsMenuSource).toContain('await nextTick()')
+    expect(settingsMenuSource).toContain('panelRef.value?.focus()')
   })
 })
