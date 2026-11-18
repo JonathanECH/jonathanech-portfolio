@@ -17,6 +17,13 @@ describe('i18n dictionaries', () => {
     }
   })
 
+  it('localizes the footer copyright with all rights reserved', () => {
+    expect(esMessages['footer.copyright']).toContain('Todos los derechos reservados.')
+    expect(enMessages['footer.copyright']).toContain('All rights reserved.')
+    expect(esMessages['footer.copyright']).toContain('Jonathan Campos')
+    expect(enMessages['footer.copyright']).toContain('Jonathan Campos')
+  })
+
   it('separates touch and pointer gallery hints', () => {
     expect(esMessages['gallery.fullHintTouch']).toContain('Pellizca')
     expect(esMessages['gallery.fullHintTouch']).not.toContain('Ctrl')

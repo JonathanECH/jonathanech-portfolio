@@ -27,6 +27,8 @@ export const enMessages = {
   'settings.light': 'Light',
 
   'footer.ariaSocial': 'Social links',
+  'footer.copyright':
+    '© 2026 Jonathan Campos // Vue 3 • TypeScript • Tailwind CSS. All rights reserved.',
 
   'hero.available': 'Available for projects',
   'hero.intro':

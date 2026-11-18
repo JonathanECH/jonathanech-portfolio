@@ -6,7 +6,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 
 ## Estado General
 
-- **Rama activa:** `main` (release 2026-11-18)
+- **Rama activa:** `main` (release `v1.0.0`)
 - **Fecha de inicio:** 9 de noviembre de 2026
 - **Última actualización:** 18 de noviembre de 2026
 - **Objetivo:** Credibilidad en 30–60 segundos, enlaces funcionales, posicionamiento claro como Frontend Engineer para reclutadores internacionales y paridad completa ES/EN.
@@ -23,7 +23,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | **P0.4** | **Honestidad en Estados y Clientes** | **COMPLETADO** | **TilyShop Inventory** confirmado como proyecto real desplegado en producción (`EN PRODUCCIÓN` / `IN PRODUCTION`), respaldado por su whitepaper técnico de arquitectura offline-first. Los otros dos proyectos se presentan honestamente como casos de estudio (`CASO DE ESTUDIO`). |
 | **P0.5** | **Contextualización de Métricas** | **COMPLETADO** | Se actualizaron las notas de consistencia (`consistencyNote`) de los 3 proyectos, explicando que las métricas corresponden a benchmarks en entornos de prueba y sincronización offline documentada en el whitepaper técnico. |
 | **P0.6** | **Posicionamiento Profesional Claro** | **COMPLETADO** | Se unificó el rol a "Desarrollador Frontend / Frontend Engineer", se eliminó "ARQUITECTO DE SOFTWARE" del titular (cambiado a `['DESARROLLADOR WEB', 'FRONTEND ENGINEER']`) y se explicitó la zona horaria (`UTC-4 (Barquisimeto, Venezuela)`). En la release 2026-11-18 se eliminaron pasantías, disponibilidad inmediata y etiquetas Junior/Mid: el bio pasó a describir colaboración con equipos remotos e internacionales y entregas listas para producción. |
-| **P0.7** | **Actualización de Tests de Paridad** | **COMPLETADO** | Se sincronizaron `src/stores/portfolio.spec.ts` e `src/i18n/i18n.spec.ts`. La suite completa pasa al 100% (92/92 pruebas) junto a `vue-tsc` y `vite-ssg build`. |
+| **P0.7** | **Actualización de Tests de Paridad** | **COMPLETADO** | Se sincronizaron `src/stores/portfolio.spec.ts` e `src/i18n/i18n.spec.ts`. La suite completa pasa al 100% (94/94 pruebas) junto a `vue-tsc` y `vite-ssg build`. |
 
 ---
 
@@ -45,7 +45,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | :--- | :--- | :---: | :--- |
 | **P2.1** | **Enlaces a Repositorios Públicos Reales** | **COMPLETADO (PARCIAL)** | `clima-vue` integrado con repositorio público (`github.com/JonathanECH/clima-vue`) y demo en vivo (`clima-vue-vert.vercel.app`). El `CRM desde cero` queda pendiente para una próxima fase. |
 | **P2.2** | **CV en PDF Actualizado** | **CONSERVADO** | Se mantiene temporalmente el archivo actual `public/cv/jonathan-campos-cv.pdf` a petición del usuario. Se actualizará en una iteración posterior. |
-| **P2.3** | **Verificación Integral CI/Local** | **COMPLETADO** | Pipeline `pnpm verify` pasando al 100%: 0 errores de typecheck, 92/92 pruebas unitarias en Vitest y build de producción con prerenderizado (`vite-ssg`). |
+| **P2.3** | **Verificación Integral CI/Local** | **COMPLETADO** | Pipeline `pnpm verify` pasando al 100%: 0 errores de typecheck, 94/94 pruebas unitarias en Vitest y build de producción con prerenderizado (`vite-ssg`). |
 
 ---
 
@@ -64,14 +64,15 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | **P3.9** | **Pistas adaptadas al dispositivo** | **COMPLETADO** | `@media (pointer: coarse)` muestra "Pellizca o doble toque"; `@media (pointer: fine)` muestra "Ctrl + scroll · Esc". Claves ES/EN separadas y testadas. Commit `5a4b7aa`. |
 | **P3.10** | **Bio orientada a reclutadores** | **COMPLETADO** | Se eliminaron pasantías, Junior/Mid y "disponibilidad inmediata" de `portfolio.ts`, `portfolio.en.ts` y README; el bio ahora habla de equipos remotos/internacionales y entregas production-ready. Commit `ca9b246`. |
 | **P3.11** | **Documentación de release** | **COMPLETADO** | README y este documento actualizados con el estado de la release, la verificación y el procedimiento de publicación (commit `docs: document production release`). |
+| **P3.12** | **Release v1.0.0 y mantenimiento** | **COMPLETADO** | Bump a `1.0.0`, tag anotado `v1.0.0`, `CHANGELOG.md`, `docs/MAINTENANCE.md`, Dependabot semanal (npm + Actions), copyright localizado en el footer y limpieza de ramas integradas. |
 
 ---
 
-## Validación previa a producción (release 2026-11-18)
+## Validación previa a producción (release `v1.0.0` · 2026-11-18)
 
 Checklist ejecutado antes de publicar en `origin/main`:
 
-1. **Verificación integral:** `pnpm verify` → typecheck OK, **92/92** tests en 10 archivos y build `vite-ssg` correcto (6 páginas prerenderizadas).
+1. **Verificación integral:** `pnpm verify` → typecheck OK, **94/94** tests en 11 archivos y build `vite-ssg` correcto (6 páginas prerenderizadas).
 2. **Patrones web:** `modern-web-guidance legacy-scan . --json` → `totalFindings: 0` (52 reglas, 38 guías).
 3. **Salida compilada:** CSS con ambos temas y tokens `--ech-accent` / `--ech-razetti-accent`; JS con `onWheel` y las pistas táctil/puntero; HTML prerenderizado sin pasantías ni Junior.
 4. **Estado de Git:** `git status --short --branch` sin cambios pendientes antes del push; `origin/main` sin commits nuevos tras `git fetch origin main`.
