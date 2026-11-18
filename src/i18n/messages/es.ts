@@ -153,7 +153,7 @@ export const esMessages = {
   'gallery.zoomIn': 'Acercar imagen',
   'gallery.zoomOut': 'Alejar imagen',
   'gallery.fullHint':
-    'Desliza para navegar · Pellizca o haz doble toque para ampliar · Esc para cerrar',
+    'Desliza para navegar · Pellizca, doble toque o Ctrl + scroll para ampliar · Esc para cerrar',
 
   'pager.aria': 'Navegación entre proyectos',
   'pager.previous': 'CASO ANTERIOR',

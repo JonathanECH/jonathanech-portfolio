@@ -223,6 +223,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
           v-if="open && slide"
           class="flex h-screen h-dvh w-screen flex-col overflow-hidden bg-background/95 backdrop-blur-xl"
           @click.self="handleBackdropClick"
+          @wheel="zoom.onWheel"
         >
           <div class="lightbox-panel flex h-full min-h-0 w-full flex-col justify-between overflow-hidden focus:outline-none">
             <div class="flex shrink-0 items-center justify-between gap-3 border-b border-border bg-surface/80 px-4 py-3 sm:px-8 sm:py-4">

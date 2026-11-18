@@ -37,4 +37,8 @@ describe('gallery lightbox theme', () => {
     expect(lightboxSource).toContain('overscroll-behavior: contain')
     expect(lightboxSource).toMatch(/\.lightbox-dialog::backdrop\s*\{[\s\S]*?overflow: hidden/)
   })
+
+  it('wires ctrl + wheel zoom to the viewer', () => {
+    expect(lightboxSource).toContain('@wheel="zoom.onWheel"')
+  })
 })
