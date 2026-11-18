@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, toRef, watch } from 'vue'
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from '@lucide/vue'
+import { useScrollLock } from '@/composables/useScrollLock'
 import { useSwipeNavigation } from '@/composables/useSwipeNavigation'
 import { useZoom } from '@/composables/useZoom'
 import { useI18n } from '@/i18n'
@@ -21,6 +22,8 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
+
+useScrollLock(toRef(props, 'open'))
 
 const dialogRef = ref<HTMLDialogElement | null>(null)
 const stageRef = ref<HTMLElement | null>(null)
@@ -358,6 +361,8 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 }
 
 .lightbox-dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
   background: rgba(0, 0, 0, 0.85);
 }
 

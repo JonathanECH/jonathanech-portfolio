@@ -30,4 +30,11 @@ describe('gallery lightbox theme', () => {
   it('adapts the native backdrop to the active theme', () => {
     expect(lightboxSource).toContain(':root.light .lightbox-dialog::backdrop')
   })
+
+  it('locks the page scroll and contains backdrop scrolling', () => {
+    expect(lightboxSource).toContain("from '@/composables/useScrollLock'")
+    expect(lightboxSource).toContain('useScrollLock(toRef(props, \'open\'))')
+    expect(lightboxSource).toContain('overscroll-behavior: contain')
+    expect(lightboxSource).toMatch(/\.lightbox-dialog::backdrop\s*\{[\s\S]*?overflow: hidden/)
+  })
 })

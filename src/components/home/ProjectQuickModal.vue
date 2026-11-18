@@ -2,6 +2,7 @@
 import { computed, nextTick, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ArrowRight, ExternalLink, X } from '@lucide/vue'
+import { useScrollLock } from '@/composables/useScrollLock'
 import { useI18n } from '@/i18n'
 import { usePortfolioStore } from '@/stores/portfolio'
 
@@ -11,6 +12,8 @@ const { t } = useI18n()
 const dialogRef = ref<HTMLDialogElement | null>(null)
 const open = computed(() => store.isQuickViewOpen)
 const project = computed(() => store.quickViewProject)
+
+useScrollLock(open)
 
 watch(
   open,
@@ -217,6 +220,8 @@ function handleNativeClose(): void {
 }
 
 .quick-view-dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
   background: var(--ech-glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
