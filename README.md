@@ -26,6 +26,7 @@ Portafolio profesional de ingeniería frontend, generado estáticamente con **Vi
 - [Estructura del proyecto](#estructura-del-proyecto)
 - [Scripts y flujo de trabajo](#scripts-y-flujo-de-trabajo)
 - [Accesibilidad y rendimiento](#accesibilidad-y-rendimiento)
+- [Control de calidad y publicación](#control-de-calidad-y-publicación)
 - [Contacto](#contacto)
 
 ---
@@ -36,7 +37,7 @@ Jonathan Campos es un **Frontend Web Developer** especializado en **Vue 3, Tailw
 
 - **Rol:** Frontend Web Developer / Frontend Engineer.
 - **Especialidades:** Arquitectura de componentes en Vue 3, gestión de estado con Pinia, optimización de rendimiento en cliente, PWA offline-first, accesibilidad web y SEO técnico.
-- **Objetivo:** Pasantías corporativas y posiciones Junior / Mid, presenciales o remotas, con disponibilidad inmediata.
+- **Objetivo:** Colaborar con equipos de producto e ingeniería de todo el mundo, entregando interfaces frontend medibles, accesibles y listas para producción; abierto a procesos de selección y entrevistas técnicas.
 - **Idiomas:** Español (nativo) e inglés técnico/profesional.
 
 ---
@@ -118,13 +119,15 @@ Resultado: `/proyectos/<slug>` se publica como HTML estático (`<slug>.html`) y 
 ### 3. Sistema de doble tema con tokens CSS runtime
 
 - **Modo oscuro (*Obsidian Cyber*):** fondo `#0b0e14`, acento cian `#00e5ff`.
-- **Modo claro (*Soft Cyber*):** fondo `#edf0f8`, superficies `#f5f7fa`.
+- **Modo claro (*Soft Cyber*):** fondo `#edf0f8`, superficies `#f5f7fa`, acento `#109ab6` con texto de acento en blanco.
+- **Acento de caso (Clínica Razetti):** token `--ech-razetti-accent`, `#0f766e` en claro y `#5eead4` en oscuro, para mantener contraste suficiente en ambos temas.
 - **Anti-flash:** script síncrono en `index.html` que aplica `localStorage` y `prefers-color-scheme` antes del primer render.
 
 ### 4. Componentes accesibles sin dependencias UI externas
 
-- **SettingsMenu:** selector de idioma y tema con `aria-haspopup`, `aria-expanded`, cierre con `Escape` y retorno de foco.
-- **ProjectQuickModal:** trampa de foco (`useFocusTrap`) y bloqueo de scroll (`useScrollLock`).
+- **SettingsMenu:** selector de idioma y tema con `aria-haspopup`, `aria-expanded`, cierre con `Escape` y panel anclado bajo la navbar.
+- **ProjectQuickModal:** `<dialog>` nativo con `showModal()`, bloqueo de scroll (`useScrollLock`) y contención en `::backdrop`; sin trampa de foco manual.
+- **GalleryLightbox:** `<dialog>` nativo, zoom con pellizco/doble toque y `Ctrl + rueda` en desktop, paneo al ampliar, pista adaptada a `pointer: coarse` / `pointer: fine`, footer oculto durante el zoom y bloqueo de scroll.
 - **Hero Canvas:** partículas que respetan `prefers-reduced-motion: reduce`.
 
 ---
@@ -213,7 +216,7 @@ src/
 │   ├── home/           # Hero, stack, proyectos, modal y contacto
 │   ├── layout/         # AppNavbar, AppFooter y SettingsMenu accesible
 │   └── ui/             # SectionHeading, TechIcon y soporte visual
-├── composables/        # useSeo, usePreferences, usePortfolioData, useFocusTrap, useScrollLock
+├── composables/        # useSeo, usePreferences, usePortfolioData, useScrollLock, useZoom, useSwipeNavigation
 ├── data/               # portfolio.ts (ES) y portfolio.en.ts (EN)
 ├── i18n/               # Diccionarios de UI, función t() y resolución de idioma
 ├── router/             # Rutas exportadas, historial y scroll reactivo
@@ -270,6 +273,15 @@ pnpm preview
 - **Tipografías locales:** `@fontsource-variable` autoalojado, sin peticiones a CDNs externos y con menor CLS.
 - **Semántica HTML:** `header`, `main`, `section`, `article`, `nav`, `footer` y atributos ARIA en controles interactivos.
 - **Imágenes:** `loading="lazy"`, `decoding="async"` y textos alternativos descriptivos.
+
+---
+
+## Control de calidad y publicación
+
+- `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest y el build estático con `vite-ssg`.
+- Referencia de la release de **2026-11-18**: typecheck OK, **92/92 pruebas** y build de producción correcto (6 páginas prerenderizadas).
+- Antes de publicar se revisa `git status`, se confirma que `main` no tiene cambios locales pendientes y se hace push a `origin/main`, la rama desplegada en producción.
+- El detalle de las mejoras, su trazabilidad y la validación previa al despliegue está en [`docs/AUDIT_AND_ROADMAP.md`](docs/AUDIT_AND_ROADMAP.md).
 
 ---
 
