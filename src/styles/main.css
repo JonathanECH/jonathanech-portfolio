@@ -91,12 +91,12 @@
   --ech-surface-card: #f5f7fa;
   --ech-surface-card-hover: #e8edf6;
   --ech-border: rgba(11, 14, 20, 0.1);
-  --ech-border-hover: rgba(0, 115, 138, 0.45);
-  /* Darker cyan keeps small text above 4.5:1 on light surfaces. */
-  --ech-accent: #00738a;
-  --ech-accent-rgb: 0, 115, 138;
-  --ech-accent-contrast: #ffffff;
-  --ech-accent-glow: rgba(0, 115, 138, 0.15);
+  --ech-border-hover: rgba(16, 154, 182, 0.45);
+  /* Vivid cyan in light mode; black keeps text on the accent at 6.3:1. */
+  --ech-accent: #109ab6;
+  --ech-accent-rgb: 16, 154, 182;
+  --ech-accent-contrast: #000000;
+  --ech-accent-glow: rgba(16, 154, 182, 0.15);
   --ech-muted: #5b6478;
   --ech-foreground: #1a1f2e;
   --ech-foreground-soft: rgba(26, 31, 46, 0.82);
@@ -109,16 +109,16 @@
   --ech-grid-line: rgba(11, 14, 20, 0.05);
   --ech-grid-line-strong: rgba(0, 168, 198, 0.09);
   --ech-grid-blend: multiply;
-  --ech-particle-rgb: 0, 115, 138;
-  --ech-selection-bg: rgba(0, 115, 138, 0.22);
+  --ech-particle-rgb: 16, 154, 182;
+  --ech-selection-bg: rgba(16, 154, 182, 0.22);
   --ech-selection-color: #1a1f2e;
   --ech-scrollbar-track: #edf0f8;
   --ech-scrollbar-thumb: #6b7791;
   --ech-scrollbar-thumb-hover: #556177;
   --ech-glass: rgba(240, 243, 250, 0.85);
-  --ech-focus: rgba(0, 115, 138, 0.7);
-  --ech-spotlight-core: rgba(0, 115, 138, 0.07);
-  --ech-spotlight-mid: rgba(0, 115, 138, 0.04);
+  --ech-focus: rgba(16, 154, 182, 0.7);
+  --ech-spotlight-core: rgba(16, 154, 182, 0.07);
+  --ech-spotlight-mid: rgba(16, 154, 182, 0.04);
   /* Project accent: deep teal keeps small text above 4.5:1 on light surfaces. */
   --ech-razetti-accent: #0f766e;
 }
