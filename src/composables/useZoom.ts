@@ -18,6 +18,13 @@ export interface TouchEventLike {
 export type ZoomPointerEvent = ZoomPoint &
   Partial<Pick<PointerEvent, 'button' | 'pointerId' | 'pointerType'>>
 
+export interface ZoomWheelEvent extends ZoomPoint {
+  readonly ctrlKey: boolean
+  readonly deltaY: number
+  readonly deltaMode?: number
+  preventDefault(): void
+}
+
 export interface UseZoomOptions {
   /**
    * Smallest allowed scale. Defaults to 1 (the image's original size).
@@ -91,6 +98,9 @@ const DOUBLE_TAP_DISTANCE = 32
 const TAP_MOVE_TOLERANCE = 10
 const TAP_SUPPRESSION_AFTER_PINCH = 300
 const CLICK_SUPPRESSION_AFTER_GESTURE = 80
+const WHEEL_ZOOM_SENSITIVITY = 0.002
+const WHEEL_LINE_HEIGHT = 16
+const WHEEL_PAGE_HEIGHT = 800
 
 export function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max)
@@ -368,6 +378,29 @@ export function useZoom(options: UseZoomOptions = {}) {
     zoomTo(scale.value / zoomStep)
   }
 
+  /**
+   * Ctrl + wheel zooms around the pointer, matching the browser's own
+   * ctrl + wheel pinch gesture while suppressing the native page zoom.
+   */
+  function onWheel(event: ZoomWheelEvent): void {
+    if (!event.ctrlKey || event.deltaY === 0) return
+
+    event.preventDefault()
+
+    const deltaPixels =
+      event.deltaMode === 1
+        ? event.deltaY * WHEEL_LINE_HEIGHT
+        : event.deltaMode === 2
+          ? event.deltaY * (globalThis.window?.innerHeight ?? WHEEL_PAGE_HEIGHT)
+          : event.deltaY
+
+    zoomTo(scale.value * Math.exp(-deltaPixels * WHEEL_ZOOM_SENSITIVITY), {
+      clientX: event.clientX,
+      clientY: event.clientY,
+    })
+    markJustPanned()
+  }
+
   function toggleZoom(anchor?: ZoomPoint): void {
     if (isZoomed.value) {
       resetZoom()
@@ -608,6 +641,7 @@ export function useZoom(options: UseZoomOptions = {}) {
     transformStyle,
     zoomIn,
     zoomOut,
+    onWheel,
     resetZoom,
     toggleZoom,
     onPointerDown,

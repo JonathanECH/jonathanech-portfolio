@@ -7,6 +7,7 @@ import {
   useZoom,
   type TouchEventLike,
   type ZoomPointerEvent,
+  type ZoomWheelEvent,
 } from './useZoom'
 
 const STAGE_WIDTH = 1000
@@ -69,6 +70,21 @@ function touchEvent(
   points: Array<{ clientX: number; clientY: number }>,
 ): TouchEventLike {
   return { touches: points }
+}
+
+function wheelEvent(
+  deltaY: number,
+  init: Partial<ZoomWheelEvent> = {},
+): ZoomWheelEvent {
+  return {
+    ctrlKey: true,
+    deltaY,
+    deltaMode: 0,
+    clientX: 500,
+    clientY: 400,
+    preventDefault: () => {},
+    ...init,
+  }
 }
 
 function doubleTap(zoom: ReturnType<typeof useZoom>, x: number, y: number): void {
@@ -156,6 +172,42 @@ describe('useZoom', () => {
     zoom.zoomOut()
     expect(zoom.scale.value).toBeCloseTo(4 / 1.5)
     expect(zoom.canZoomOut.value).toBe(true)
+  })
+
+  it('zooms around the pointer with ctrl + wheel and suppresses native page zoom', () => {
+    const zoom = createZoom()
+    const preventDefault = vi.fn()
+
+    zoom.onWheel(wheelEvent(-100, { preventDefault }))
+
+    expect(preventDefault).toHaveBeenCalledOnce()
+    expect(zoom.scale.value).toBeCloseTo(Math.exp(0.2))
+    expect(zoom.isZoomed.value).toBe(true)
+    expect(zoom.translateX.value).toBe(0)
+    expect(zoom.translateY.value).toBe(0)
+
+    zoom.onWheel(wheelEvent(100, { preventDefault }))
+
+    expect(zoom.scale.value).toBeCloseTo(1)
+    expect(zoom.isZoomed.value).toBe(false)
+  })
+
+  it('leaves plain wheel and its default behavior untouched', () => {
+    const zoom = createZoom()
+    const preventDefault = vi.fn()
+
+    zoom.onWheel(wheelEvent(-100, { ctrlKey: false, preventDefault }))
+
+    expect(preventDefault).not.toHaveBeenCalled()
+    expect(zoom.scale.value).toBe(1)
+  })
+
+  it('normalizes line-based wheel deltas before zooming', () => {
+    const zoom = createZoom()
+
+    zoom.onWheel(wheelEvent(-3, { deltaMode: 1 }))
+
+    expect(zoom.scale.value).toBeCloseTo(Math.exp(48 * 0.002))
   })
 
   it('toggles between the original and the double-tap scale', () => {
