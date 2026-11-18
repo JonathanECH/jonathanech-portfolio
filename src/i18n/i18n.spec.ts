@@ -17,6 +17,18 @@ describe('i18n dictionaries', () => {
     }
   })
 
+  it('separates touch and pointer gallery hints', () => {
+    expect(esMessages['gallery.fullHintTouch']).toContain('Pellizca')
+    expect(esMessages['gallery.fullHintTouch']).not.toContain('Ctrl')
+    expect(esMessages['gallery.fullHintPointer']).toContain('Ctrl + scroll')
+    expect(esMessages['gallery.fullHintPointer']).toContain('Esc')
+
+    expect(enMessages['gallery.fullHintTouch']).toContain('Pinch')
+    expect(enMessages['gallery.fullHintTouch']).not.toContain('Ctrl')
+    expect(enMessages['gallery.fullHintPointer']).toContain('Ctrl + scroll')
+    expect(enMessages['gallery.fullHintPointer']).toContain('Esc')
+  })
+
   it('interpolates parameters and falls back to the key', () => {
     expect(translate(esMessages, 'projects.quickViewAria', { name: 'TilyShop' })).toBe(
       'Vista rápida: TilyShop',

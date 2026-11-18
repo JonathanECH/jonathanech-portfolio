@@ -336,7 +336,8 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                 <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted sm:text-xs">
                   <span aria-live="polite">{{ index + 1 }} / {{ total }}</span>
                   <span aria-hidden="true">//</span>
-                  <span>{{ t('gallery.fullHint') }}</span>
+                  <span class="gallery-hint-touch">{{ t('gallery.fullHintTouch') }}</span>
+                  <span class="gallery-hint-pointer">{{ t('gallery.fullHintPointer') }}</span>
                 </div>
               </div>
             </div>
@@ -397,5 +398,25 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 .lightbox-leave-to .lightbox-panel {
   opacity: 0;
   transform: scale(0.98);
+}
+
+.gallery-hint-pointer {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .gallery-hint-touch {
+    display: inline;
+  }
+}
+
+@media (pointer: fine) {
+  .gallery-hint-touch {
+    display: none;
+  }
+
+  .gallery-hint-pointer {
+    display: inline;
+  }
 }
 </style>
