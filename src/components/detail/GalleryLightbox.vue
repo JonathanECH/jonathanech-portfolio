@@ -325,7 +325,10 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
               </div>
             </div>
 
-            <div class="shrink-0 border-t border-border bg-surface/80 px-4 py-3 sm:px-8 sm:py-4">
+            <div
+              v-show="!zoom.isZoomed.value"
+              class="shrink-0 border-t border-border bg-surface/80 px-4 py-3 sm:px-8 sm:py-4"
+            >
               <div class="mx-auto flex max-w-3xl flex-col items-center gap-1.5 text-center selection:bg-cyan-accent/30 selection:text-foreground dark:selection:text-white">
                 <p class="font-sans text-xs leading-relaxed text-foreground sm:text-sm md:text-base">
                   {{ slide.caption }}
