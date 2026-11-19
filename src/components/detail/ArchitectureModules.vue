@@ -57,7 +57,7 @@ function formatCounter(index: number, total: number): string {
         class="group relative flex flex-col overflow-hidden rounded border border-border bg-surface-card/50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:bg-surface-card sm:p-6"
       >
         <span
-          class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-(--project-accent)/70 via-(--project-accent)/15 to-transparent"
+          class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-(--project-accent)/70 via-(--project-accent)/15 to-transparent"
           aria-hidden="true"
         />
 

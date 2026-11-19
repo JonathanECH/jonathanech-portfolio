@@ -131,7 +131,7 @@ const sectionCode = computed(() => t('about.code'))
                   aria-valuemax="100"
                 >
                   <div
-                    class="about-metric-fill h-full rounded-full bg-gradient-to-r from-cyan-accent/50 to-cyan-accent"
+                    class="about-metric-fill h-full rounded-full bg-linear-to-r from-cyan-accent/50 to-cyan-accent"
                     :style="{ width: `${metric.value}%` }"
                   />
                 </div>

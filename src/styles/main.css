@@ -273,7 +273,6 @@
       linear-gradient(to right, var(--ech-grid-line) 1px, transparent 1px),
       linear-gradient(to bottom, var(--ech-grid-line) 1px, transparent 1px);
     background-size: 22px 22px;
-    mix-blend-mode: var(--ech-grid-blend);
   }
 
   .hero-spotlight {
@@ -462,6 +461,33 @@
 
       .about-metric:nth-child(4) {
         --metric-entry: entry 28%;
+      }
+    }
+
+    @media (prefers-reduced-motion: no-preference) and (max-width: 767px) {
+      /* On mobile single-column viewports, tall cards (450-520px) would otherwise
+         take 70%+ of the screen height to reach entry 100%, feeling delayed or
+         stuck mid-fade when touch scrolling decelerates. Completing the entry
+         within the bottom portion of the viewport keeps 1:1 touch responsiveness. */
+      .reveal--stack {
+        animation-range: entry 0% entry 40%;
+      }
+
+      .reveal--project {
+        --reveal-y: 12px;
+        animation-range: entry 0% entry 35%;
+      }
+
+      .reveal--about {
+        animation-range: entry 0% entry 35%;
+      }
+
+      .reveal--contact {
+        animation-range: var(--contact-entry) entry 40%;
+      }
+
+      .about-metric-fill {
+        animation-range: var(--metric-entry) entry 55%;
       }
     }
 

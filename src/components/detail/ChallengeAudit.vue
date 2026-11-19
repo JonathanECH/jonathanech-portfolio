@@ -65,7 +65,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
           class="relative overflow-hidden rounded border border-border bg-surface-card/60 p-5 sm:p-6 lg:p-7"
         >
           <span
-            class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-(--project-accent)/70 via-(--project-accent)/15 to-transparent"
+            class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-(--project-accent)/70 via-(--project-accent)/15 to-transparent"
             aria-hidden="true"
           />
 

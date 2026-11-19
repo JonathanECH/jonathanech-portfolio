@@ -44,8 +44,10 @@ let rafId: number | null = null
 let resizeObserver: ResizeObserver | null = null
 let visibilityObserver: IntersectionObserver | null = null
 let prefersReducedMotion = false
+let hasFinePointer = false
 let isVisible = true
 let allowGlow = false
+let spotlightDirty = true
 let particleRgb = '0, 229, 255'
 let particleGlow = '#00E5FF'
 
@@ -249,7 +251,14 @@ function tick(): void {
   pointerX += (targetX - pointerX) * 0.085
   pointerY += (targetY - pointerY) * 0.085
 
-  updateSpotlight()
+  if (spotlightDirty) {
+    updateSpotlight()
+
+    if (!isHovered && Math.hypot(targetX - pointerX, targetY - pointerY) < 1) {
+      spotlightDirty = false
+    }
+  }
+
   drawFrame(true)
 
   rafId = window.requestAnimationFrame(tick)
@@ -270,7 +279,7 @@ function stopAnimation(): void {
   }
 }
 
-function resizeCanvas(): void {
+function resizeCanvas(force = false): void {
   const section = sectionRef.value
   const canvas = canvasRef.value
 
@@ -284,12 +293,26 @@ function resizeCanvas(): void {
     return
   }
 
+  sectionDocLeft = rect.left + window.scrollX
+  sectionDocTop = rect.top + window.scrollY
+
+  // Ignore small vertical resizes caused by the mobile browser address bar
+  // retracting or expanding during scroll so we do not reallocate the GPU
+  // canvas buffer or reset particle positions mid-scroll.
+  if (
+    !force &&
+    width > 0 &&
+    height > 0 &&
+    Math.abs(rect.width - width) < 1 &&
+    Math.abs(rect.height - height) < 160
+  ) {
+    return
+  }
+
   const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
   width = rect.width
   height = rect.height
-  sectionDocLeft = rect.left + window.scrollX
-  sectionDocTop = rect.top + window.scrollY
   canvas.width = Math.floor(width * dpr)
   canvas.height = Math.floor(height * dpr)
   canvas.style.width = `${width}px`
@@ -310,6 +333,7 @@ function resizeCanvas(): void {
   pointerY = height * 0.45
   targetX = pointerX
   targetY = pointerY
+  spotlightDirty = false
 
   createParticles()
   updateSpotlight()
@@ -322,27 +346,41 @@ function resizeCanvas(): void {
 // Use cached document-relative section offsets instead of calling
 // `getBoundingClientRect()` on every pointermove event to avoid layout thrashing.
 function handlePointerMove(event: PointerEvent): void {
-  if (width === 0 || height === 0) {
+  if (event.pointerType === 'touch' || width === 0 || height === 0) {
     return
   }
 
   targetX = event.pageX - sectionDocLeft
   targetY = event.pageY - sectionDocTop
   isHovered = true
+  spotlightDirty = true
 }
 
-function handlePointerEnter(): void {
+function handlePointerEnter(event: PointerEvent): void {
+  if (event.pointerType === 'touch') {
+    return
+  }
+
   isHovered = true
+  spotlightDirty = true
 }
 
-function handlePointerLeave(): void {
+function handlePointerLeave(event: PointerEvent): void {
+  if (event.pointerType === 'touch') {
+    return
+  }
+
   isHovered = false
+  targetX = width * 0.5
+  targetY = height * 0.45
+  spotlightDirty = true
 }
 
 onMounted(() => {
   prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches
 
-  resizeCanvas()
+  resizeCanvas(true)
 
   const section = sectionRef.value
 
@@ -351,9 +389,11 @@ onMounted(() => {
   }
 
   if (!prefersReducedMotion) {
-    section.addEventListener('pointerenter', handlePointerEnter, { passive: true })
-    section.addEventListener('pointermove', handlePointerMove, { passive: true })
-    section.addEventListener('pointerleave', handlePointerLeave, { passive: true })
+    if (hasFinePointer) {
+      section.addEventListener('pointerenter', handlePointerEnter, { passive: true })
+      section.addEventListener('pointermove', handlePointerMove, { passive: true })
+      section.addEventListener('pointerleave', handlePointerLeave, { passive: true })
+    }
 
     visibilityObserver = new IntersectionObserver(([entry]) => {
       isVisible = entry.isIntersecting
@@ -403,9 +443,9 @@ onBeforeUnmount(() => {
   >
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
       <canvas ref="canvasRef" class="absolute inset-0 block h-full w-full" />
-      <div class="absolute inset-0 bg-grid opacity-[0.14] mix-blend-screen" />
+      <div class="absolute inset-0 bg-grid opacity-[0.14]" />
       <div ref="spotlightRef" class="hero-spotlight absolute inset-0" />
-      <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+      <div class="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-background to-transparent" />
     </div>
 
     <div

@@ -27,7 +27,7 @@ function openQuickView(): void {
 <template>
   <li class="reveal reveal--project">
     <article
-      class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card/60 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:shadow-[0_18px_40px_-24px_rgba(var(--ech-accent-rgb),0.45)]"
+      class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card/60 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-border-hover hover:shadow-[0_18px_40px_-24px_rgba(var(--ech-accent-rgb),0.45)]"
       :style="`--accent: ${project.accent}`"
     >
       <!-- Real screenshot preview, with the CSS/SVG mockup as fallback -->
@@ -43,13 +43,13 @@ function openQuickView(): void {
             class="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
           />
           <div
-            class="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/30"
+            class="absolute inset-0 bg-linear-to-b from-black/35 via-transparent to-black/30"
           />
 
           <div class="relative flex h-full flex-col justify-between p-3">
             <div class="flex items-center gap-1.5">
               <span
-                class="flex min-w-0 items-center gap-1.5 rounded-full border border-border/70 bg-background/80 px-2.5 py-1 backdrop-blur-sm"
+                class="flex min-w-0 items-center gap-1.5 rounded-full border border-border/70 bg-background/90 px-2.5 py-1 sm:bg-background/80 sm:backdrop-blur-sm"
               >
                 <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/25" />
                 <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/25" />
@@ -66,12 +66,12 @@ function openQuickView(): void {
 
             <div class="flex items-end justify-between gap-2">
               <span
-                class="min-w-0 truncate rounded border border-border/60 bg-background/80 px-2 py-1 font-mono text-[8px] uppercase tracking-widest text-foreground backdrop-blur-sm"
+                class="min-w-0 truncate rounded border border-border/60 bg-background/90 px-2 py-1 font-mono text-[8px] uppercase tracking-widest text-foreground sm:bg-background/80 sm:backdrop-blur-sm"
               >
                 {{ previewSlide.title }}
               </span>
               <span
-                class="shrink-0 rounded border border-border/60 bg-background/80 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.14em] text-(--accent) backdrop-blur-sm"
+                class="shrink-0 rounded border border-border/60 bg-background/90 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.14em] text-(--accent) sm:bg-background/80 sm:backdrop-blur-sm"
               >
                 {{ project.gallery.indexOf(previewSlide) + 1 }} / {{ project.gallery.length }}
               </span>
@@ -80,7 +80,7 @@ function openQuickView(): void {
 
           <span
             aria-hidden="true"
-            class="pointer-events-none absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/25 bg-black/45 text-white shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:bg-black/65 sm:opacity-85"
+            class="pointer-events-none absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/25 bg-black/65 text-white shadow-lg transition-colors duration-300 group-hover:bg-black/75 sm:bg-black/45 sm:opacity-85 sm:backdrop-blur-sm"
           >
             <ArrowUpRight :size="14" />
           </span>

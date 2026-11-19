@@ -50,7 +50,7 @@ const quickRoutes: readonly QuickRoute[] = [
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
       <div class="absolute inset-0 bg-grid-fine opacity-50" />
       <div
-        class="absolute left-1/2 top-1/2 h-120 w-120 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-cyan-accent/10 via-cyan-accent/5 to-transparent blur-3xl md:h-176 md:w-176"
+        class="absolute left-1/2 top-1/2 h-120 w-120 -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-tr from-cyan-accent/10 via-cyan-accent/5 to-transparent blur-3xl md:h-176 md:w-176"
       />
       <div
         class="absolute -top-32 right-1/4 h-80 w-80 rounded-full bg-cyan-accent/5 blur-[120px]"
@@ -111,7 +111,7 @@ const quickRoutes: readonly QuickRoute[] = [
 
         <!-- Primary Glyph Display -->
         <span
-          class="relative bg-gradient-to-b from-foreground via-foreground/85 to-muted/40 bg-clip-text font-sans text-[116px] font-black leading-none tracking-[-0.06em] text-transparent drop-shadow-[0_10px_35px_rgba(var(--ech-accent-rgb),0.25)] sm:text-[160px] md:text-[210px]"
+          class="relative bg-linear-to-b from-foreground via-foreground/85 to-muted/40 bg-clip-text font-sans text-[116px] font-black leading-none tracking-[-0.06em] text-transparent drop-shadow-[0_10px_35px_rgba(var(--ech-accent-rgb),0.25)] sm:text-[160px] md:text-[210px]"
         >
           404
         </span>
@@ -169,7 +169,7 @@ const quickRoutes: readonly QuickRoute[] = [
         <!-- Top Edge Highlight -->
         <span
           aria-hidden="true"
-          class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-accent/60 to-transparent"
+          class="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-cyan-accent/60 to-transparent"
         />
 
         <!-- Terminal Top Bar -->
