@@ -286,6 +286,12 @@
     transition: opacity 500ms ease;
   }
 
+  /* Isolate layout and style recalculations per section while keeping real
+     geometry available for view(block) scroll-driven reveal ranges. */
+  .deferred-section {
+    contain: layout style;
+  }
+
   /* Skip layout/paint work for long below-the-fold home sections. Sections with
      view-driven reveals keep their subtree laid out so the animation ranges are
      computed from real geometry. */

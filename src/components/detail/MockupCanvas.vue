@@ -4,11 +4,17 @@ import { CircleCheck } from '@lucide/vue'
 import { useI18n } from '@/i18n'
 import type { GallerySlide, MockupVariant } from '@/types/portfolio'
 
-const props = defineProps<{
-  slide: GallerySlide
-  accent: string
-  projectSlug: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    slide: GallerySlide
+    accent: string
+    projectSlug: string
+    priority?: boolean
+  }>(),
+  {
+    priority: false,
+  },
+)
 
 const { t } = useI18n()
 
@@ -213,7 +219,8 @@ const analyticsAxis = computed(() =>
       width="1200"
       height="750"
       class="h-full w-full object-cover"
-      loading="lazy"
+      :loading="priority ? 'eager' : 'lazy'"
+      :fetchpriority="priority ? 'high' : undefined"
       decoding="async"
     />
     <div

@@ -1,15 +1,19 @@
 import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, type Plugin } from 'vite'
+import { defineConfig, type HtmlTagDescriptor, type Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 import { projects } from './src/data/portfolio.ts'
 import { buildSitemap } from './src/seo/sitemap.ts'
 
+const CRITICAL_FONT_PATTERNS = [
+  /^assets\/plus-jakarta-sans-latin-wght-normal-.*\.woff2$/,
+  /^assets\/jetbrains-mono-latin-wght-normal-.*\.woff2$/,
+] as const
+
 /**
- * Emits `sitemap.xml` on build and serves it in dev.
- *
- * URLs come from the same `projects` collection that renders the portfolio, so
- * adding a case study updates the sitemap automatically.
+ * Emits `sitemap.xml` on build, serves it in dev, and injects `<link rel="preload">`
+ * hints for the two primary Latin variable WOFF2 fonts so the browser fetches them
+ * in parallel with the stylesheet.
  */
 function sitemapPlugin(): Plugin {
   let isSsrBuild = false
@@ -31,6 +35,33 @@ function sitemapPlugin(): Plugin {
         response.setHeader('Content-Type', 'application/xml; charset=utf-8')
         response.end(sitemap)
       })
+    },
+    transformIndexHtml: {
+      order: 'post',
+      handler(_html, ctx) {
+        if (!ctx.bundle) {
+          return []
+        }
+
+        const tags: HtmlTagDescriptor[] = []
+        for (const fileName of Object.keys(ctx.bundle)) {
+          if (CRITICAL_FONT_PATTERNS.some((pattern) => pattern.test(fileName))) {
+            tags.push({
+              tag: 'link',
+              attrs: {
+                rel: 'preload',
+                href: `/${fileName}`,
+                as: 'font',
+                type: 'font/woff2',
+                crossorigin: '',
+              },
+              injectTo: 'head',
+            })
+          }
+        }
+
+        return tags
+      },
     },
     generateBundle() {
       if (isSsrBuild) {
@@ -66,7 +97,9 @@ const config = {
     beastiesOptions: false,
     includedRoutes(paths: string[]): string[] {
       const staticPaths = paths.filter((path) => !path.includes(':') && !path.includes('*'))
-      return [...staticPaths, '/404', ...projects.map((project) => `/proyectos/${project.slug}`)]
+      return Array.from(
+        new Set([...staticPaths, '/404', ...projects.map((project) => `/proyectos/${project.slug}`)]),
+      )
     },
   },
 }

@@ -247,7 +247,12 @@ function announceCurrent(): void {
           :key="`${project.slug}-${activeSlide.id}-${activeIndex}`"
           class="absolute inset-0"
         >
-          <MockupCanvas :slide="activeSlide" :accent="project.accent" :project-slug="project.slug" />
+          <MockupCanvas
+            :slide="activeSlide"
+            :accent="project.accent"
+            :project-slug="project.slug"
+            :priority="activeIndex === 0"
+          />
         </div>
       </Transition>
 

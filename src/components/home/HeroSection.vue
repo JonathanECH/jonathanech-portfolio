@@ -21,6 +21,7 @@ interface HeroParticle {
 
 const sectionRef = ref<HTMLElement | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+const spotlightRef = ref<HTMLElement | null>(null)
 
 const POINTER_RADIUS = 180
 const CONNECT_DISTANCE = 115
@@ -31,6 +32,8 @@ let ctx: CanvasRenderingContext2D | null = null
 let particles: HeroParticle[] = []
 let width = 0
 let height = 0
+let sectionDocLeft = 0
+let sectionDocTop = 0
 let pointerX = 0
 let pointerY = 0
 let targetX = 0
@@ -101,15 +104,17 @@ function createParticles(): void {
   })
 }
 
+// Write spotlight coordinates to the leaf overlay element rather than the root
+// <section> to keep style invalidation off the rest of the Hero DOM subtree.
 function updateSpotlight(): void {
-  const section = sectionRef.value
+  const target = spotlightRef.value ?? sectionRef.value
 
-  if (!section || width === 0 || height === 0) {
+  if (!target || width === 0 || height === 0) {
     return
   }
 
-  section.style.setProperty('--mouse-x', `${((pointerX / width) * 100).toFixed(2)}%`)
-  section.style.setProperty('--mouse-y', `${((pointerY / height) * 100).toFixed(2)}%`)
+  target.style.setProperty('--mouse-x', `${((pointerX / width) * 100).toFixed(2)}%`)
+  target.style.setProperty('--mouse-y', `${((pointerY / height) * 100).toFixed(2)}%`)
 }
 
 function drawParticle(particle: HeroParticle): void {
@@ -283,6 +288,8 @@ function resizeCanvas(): void {
 
   width = rect.width
   height = rect.height
+  sectionDocLeft = rect.left + window.scrollX
+  sectionDocTop = rect.top + window.scrollY
   canvas.width = Math.floor(width * dpr)
   canvas.height = Math.floor(height * dpr)
   canvas.style.width = `${width}px`
@@ -312,21 +319,15 @@ function resizeCanvas(): void {
   }
 }
 
+// Use cached document-relative section offsets instead of calling
+// `getBoundingClientRect()` on every pointermove event to avoid layout thrashing.
 function handlePointerMove(event: PointerEvent): void {
-  const section = sectionRef.value
-
-  if (!section) {
+  if (width === 0 || height === 0) {
     return
   }
 
-  const rect = section.getBoundingClientRect()
-
-  if (rect.width === 0 || rect.height === 0) {
-    return
-  }
-
-  targetX = event.clientX - rect.left
-  targetY = event.clientY - rect.top
+  targetX = event.pageX - sectionDocLeft
+  targetY = event.pageY - sectionDocTop
   isHovered = true
 }
 
@@ -403,7 +404,7 @@ onBeforeUnmount(() => {
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
       <canvas ref="canvasRef" class="absolute inset-0 block h-full w-full" />
       <div class="absolute inset-0 bg-grid opacity-[0.14] mix-blend-screen" />
-      <div class="hero-spotlight absolute inset-0" />
+      <div ref="spotlightRef" class="hero-spotlight absolute inset-0" />
       <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </div>
 
