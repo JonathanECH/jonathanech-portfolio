@@ -84,6 +84,18 @@ Checklist ejecutado e integrado en `main` (PR `#13`):
 
 ---
 
+## Cambios pendientes de integración (post `v1.1.0`)
+
+Trabajo listo en la rama `feat/project-reveal-70` (commit `5bb208a`), aún no fusionado en `main`:
+
+1. **Alcance:** ajuste de rangos en `src/styles/main.css` y su contrato en `src/styles/reveal.spec.ts`. No hay cambios en componentes, composables ni dependencias.
+2. **Proyectos:** `animation-range` termina en `entry 70%` tanto en la regla base como en móvil (`max-width: 767px`, antes `entry 35%`); el escalonado de tablet (`entry 6% / 12%`) también cierra en `entry 70%`.
+3. **Sobre Mí:** las cuatro barras de métricas usan `cover` en vez de `entry`: inicios `cover 10% / 14% / 18% / 22%` y fin `cover 50%` en escritorio y `cover 45%` en móvil, manteniendo visible la cuarta barra (SEO) y sin animar `width`.
+4. **Verificación ejecutada en ese HEAD:** `pnpm verify` → typecheck OK, **110/110** tests en 12 archivos y build `vite-ssg` correcto (6 páginas prerenderizadas).
+5. **Entrega a producción:** abrir PR a `main`, fusionarla y publicar el tag que corresponda (`v1.1.1` o el siguiente según SemVer) con `git push --follow-tags`. No se ha hecho push, merge ni tag desde esta sesión.
+
+---
+
 ## Validación previa a producción (release `v1.0.1` · 2026-11-19)
 
 Checklist ejecutado antes de publicar en `origin/main`:
