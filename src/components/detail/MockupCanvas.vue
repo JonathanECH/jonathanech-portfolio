@@ -4,11 +4,17 @@ import { CircleCheck } from '@lucide/vue'
 import { useI18n } from '@/i18n'
 import type { GallerySlide, MockupVariant } from '@/types/portfolio'
 
-const props = defineProps<{
-  slide: GallerySlide
-  accent: string
-  projectSlug: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    slide: GallerySlide
+    accent: string
+    projectSlug: string
+    priority?: boolean
+  }>(),
+  {
+    priority: false,
+  },
+)
 
 const { t } = useI18n()
 
@@ -213,7 +219,8 @@ const analyticsAxis = computed(() =>
       width="1200"
       height="750"
       class="h-full w-full object-cover"
-      loading="lazy"
+      :loading="priority ? 'eager' : 'lazy'"
+      :fetchpriority="priority ? 'high' : undefined"
       decoding="async"
     />
     <div
@@ -309,7 +316,7 @@ const analyticsAxis = computed(() =>
                 <div
                   v-for="row in inventoryRows"
                   :key="row.sku"
-                  class="grid grid-cols-[1.4fr_0.5fr_0.5fr_0.9fr] items-center gap-1.5 border-b border-border/40 px-2 py-[5px] font-mono text-[6px] last:border-0 sm:text-[8px]"
+                  class="grid grid-cols-[1.4fr_0.5fr_0.5fr_0.9fr] items-center gap-1.5 border-b border-border/40 px-2 py-1.25 font-mono text-[6px] last:border-0 sm:text-[8px]"
                 >
                   <span class="truncate text-foreground/80">{{ row.sku }}</span>
                   <span class="text-muted">{{ row.size }}</span>
@@ -379,7 +386,7 @@ const analyticsAxis = computed(() =>
                 <div
                   v-for="(entry, index) in ledgerEntries"
                   :key="entry.id"
-                  class="grid grid-cols-[0.4fr_1.5fr_0.8fr_0.8fr] items-center gap-1 border-b border-border/40 px-2 py-[5px] font-mono text-[6px] last:border-0 sm:text-[8px]"
+                  class="grid grid-cols-[0.4fr_1.5fr_0.8fr_0.8fr] items-center gap-1 border-b border-border/40 px-2 py-1.25 font-mono text-[6px] last:border-0 sm:text-[8px]"
                 >
                   <span class="text-muted">{{ pad(index + 1) }}</span>
                   <span class="truncate text-foreground/80">{{ entry.account }}</span>
@@ -562,7 +569,7 @@ const analyticsAxis = computed(() =>
                 <div
                   v-for="slot in column.slots"
                   :key="slot.time"
-                  class="rounded-[2px] border px-1 py-0.5"
+                  class="rounded-xs border px-1 py-0.5"
                   :style="{
                     borderColor: slot.active
                       ? `color-mix(in srgb, ${accent} 40%, transparent)`

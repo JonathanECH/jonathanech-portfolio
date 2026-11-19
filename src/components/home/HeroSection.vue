@@ -21,6 +21,7 @@ interface HeroParticle {
 
 const sectionRef = ref<HTMLElement | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+const spotlightRef = ref<HTMLElement | null>(null)
 
 const POINTER_RADIUS = 180
 const CONNECT_DISTANCE = 115
@@ -31,6 +32,8 @@ let ctx: CanvasRenderingContext2D | null = null
 let particles: HeroParticle[] = []
 let width = 0
 let height = 0
+let sectionDocLeft = 0
+let sectionDocTop = 0
 let pointerX = 0
 let pointerY = 0
 let targetX = 0
@@ -41,8 +44,10 @@ let rafId: number | null = null
 let resizeObserver: ResizeObserver | null = null
 let visibilityObserver: IntersectionObserver | null = null
 let prefersReducedMotion = false
+let hasFinePointer = false
 let isVisible = true
 let allowGlow = false
+let spotlightDirty = true
 let particleRgb = '0, 229, 255'
 let particleGlow = '#00E5FF'
 
@@ -101,15 +106,17 @@ function createParticles(): void {
   })
 }
 
+// Write spotlight coordinates to the leaf overlay element rather than the root
+// <section> to keep style invalidation off the rest of the Hero DOM subtree.
 function updateSpotlight(): void {
-  const section = sectionRef.value
+  const target = spotlightRef.value ?? sectionRef.value
 
-  if (!section || width === 0 || height === 0) {
+  if (!target || width === 0 || height === 0) {
     return
   }
 
-  section.style.setProperty('--mouse-x', `${((pointerX / width) * 100).toFixed(2)}%`)
-  section.style.setProperty('--mouse-y', `${((pointerY / height) * 100).toFixed(2)}%`)
+  target.style.setProperty('--mouse-x', `${((pointerX / width) * 100).toFixed(2)}%`)
+  target.style.setProperty('--mouse-y', `${((pointerY / height) * 100).toFixed(2)}%`)
 }
 
 function drawParticle(particle: HeroParticle): void {
@@ -244,7 +251,14 @@ function tick(): void {
   pointerX += (targetX - pointerX) * 0.085
   pointerY += (targetY - pointerY) * 0.085
 
-  updateSpotlight()
+  if (spotlightDirty) {
+    updateSpotlight()
+
+    if (!isHovered && Math.hypot(targetX - pointerX, targetY - pointerY) < 1) {
+      spotlightDirty = false
+    }
+  }
+
   drawFrame(true)
 
   rafId = window.requestAnimationFrame(tick)
@@ -265,7 +279,7 @@ function stopAnimation(): void {
   }
 }
 
-function resizeCanvas(): void {
+function resizeCanvas(force = false): void {
   const section = sectionRef.value
   const canvas = canvasRef.value
 
@@ -276,6 +290,22 @@ function resizeCanvas(): void {
   const rect = section.getBoundingClientRect()
 
   if (rect.width === 0 || rect.height === 0) {
+    return
+  }
+
+  sectionDocLeft = rect.left + window.scrollX
+  sectionDocTop = rect.top + window.scrollY
+
+  // Ignore small vertical resizes caused by the mobile browser address bar
+  // retracting or expanding during scroll so we do not reallocate the GPU
+  // canvas buffer or reset particle positions mid-scroll.
+  if (
+    !force &&
+    width > 0 &&
+    height > 0 &&
+    Math.abs(rect.width - width) < 1 &&
+    Math.abs(rect.height - height) < 160
+  ) {
     return
   }
 
@@ -303,6 +333,7 @@ function resizeCanvas(): void {
   pointerY = height * 0.45
   targetX = pointerX
   targetY = pointerY
+  spotlightDirty = false
 
   createParticles()
   updateSpotlight()
@@ -312,36 +343,44 @@ function resizeCanvas(): void {
   }
 }
 
+// Use cached document-relative section offsets instead of calling
+// `getBoundingClientRect()` on every pointermove event to avoid layout thrashing.
 function handlePointerMove(event: PointerEvent): void {
-  const section = sectionRef.value
-
-  if (!section) {
+  if (event.pointerType === 'touch' || width === 0 || height === 0) {
     return
   }
 
-  const rect = section.getBoundingClientRect()
+  targetX = event.pageX - sectionDocLeft
+  targetY = event.pageY - sectionDocTop
+  isHovered = true
+  spotlightDirty = true
+}
 
-  if (rect.width === 0 || rect.height === 0) {
+function handlePointerEnter(event: PointerEvent): void {
+  if (event.pointerType === 'touch') {
     return
   }
 
-  targetX = event.clientX - rect.left
-  targetY = event.clientY - rect.top
   isHovered = true
+  spotlightDirty = true
 }
 
-function handlePointerEnter(): void {
-  isHovered = true
-}
+function handlePointerLeave(event: PointerEvent): void {
+  if (event.pointerType === 'touch') {
+    return
+  }
 
-function handlePointerLeave(): void {
   isHovered = false
+  targetX = width * 0.5
+  targetY = height * 0.45
+  spotlightDirty = true
 }
 
 onMounted(() => {
   prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches
 
-  resizeCanvas()
+  resizeCanvas(true)
 
   const section = sectionRef.value
 
@@ -350,9 +389,11 @@ onMounted(() => {
   }
 
   if (!prefersReducedMotion) {
-    section.addEventListener('pointerenter', handlePointerEnter, { passive: true })
-    section.addEventListener('pointermove', handlePointerMove, { passive: true })
-    section.addEventListener('pointerleave', handlePointerLeave, { passive: true })
+    if (hasFinePointer) {
+      section.addEventListener('pointerenter', handlePointerEnter, { passive: true })
+      section.addEventListener('pointermove', handlePointerMove, { passive: true })
+      section.addEventListener('pointerleave', handlePointerLeave, { passive: true })
+    }
 
     visibilityObserver = new IntersectionObserver(([entry]) => {
       isVisible = entry.isIntersecting
@@ -402,9 +443,9 @@ onBeforeUnmount(() => {
   >
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
       <canvas ref="canvasRef" class="absolute inset-0 block h-full w-full" />
-      <div class="absolute inset-0 bg-grid opacity-[0.14] mix-blend-screen" />
-      <div class="hero-spotlight absolute inset-0" />
-      <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+      <div class="absolute inset-0 bg-grid opacity-[0.14]" />
+      <div ref="spotlightRef" class="hero-spotlight absolute inset-0" />
+      <div class="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-background to-transparent" />
     </div>
 
     <div
@@ -433,7 +474,7 @@ onBeforeUnmount(() => {
 
       <p class="mt-7 font-mono text-xs tracking-[0.08em] text-foreground/65 sm:text-sm">
         {{ profile.name }}<span
-          class="ml-0.5 inline-block h-3.5 w-[2px] translate-y-0.5 animate-cursor bg-cyan-accent align-middle"
+          class="ml-0.5 inline-block h-3.5 w-0.5 translate-y-0.5 animate-cursor bg-cyan-accent align-middle"
           aria-hidden="true"
         />
       </p>

@@ -22,7 +22,7 @@ function copyEmail(value: string): void {
     class="deferred-section relative border-t border-border/60 py-20 sm:py-24 lg:py-28"
   >
     <div class="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-12">
-      <div class="relative overflow-hidden rounded-2xl border border-border bg-surface/40 p-6 sm:p-10 lg:p-14">
+      <div class="relative overflow-clip rounded-2xl border border-border bg-surface/40 p-6 sm:p-10 lg:p-14">
         <div
           class="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-cyan-accent/10 blur-3xl"
           aria-hidden="true"
@@ -42,19 +42,22 @@ function copyEmail(value: string): void {
           </div>
 
           <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <article
+            <div
               v-for="channel in contactChannels"
               :key="channel.id"
-              class="group relative flex flex-col rounded-xl border border-border bg-surface-card/70 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:shadow-[0_16px_32px_-24px_rgba(var(--ech-accent-rgb),0.5)]"
+              class="reveal reveal--contact h-full"
             >
+              <article
+                class="contact-card group relative flex h-full flex-col rounded-xl border border-border bg-surface-card/70 p-5 transition-all duration-300 hover:border-border-hover hover:shadow-[0_16px_32px_-24px_rgba(var(--ech-accent-rgb),0.5)] group-focus-within:border-border-hover group-focus-within:shadow-[0_16px_32px_-24px_rgba(var(--ech-accent-rgb),0.5)] motion-safe:hover:-translate-y-1 motion-safe:group-focus-within:-translate-y-1"
+              >
               <div class="flex items-start justify-between gap-3">
                 <span
-                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background/60 text-cyan-accent transition-colors group-hover:border-border-hover"
+                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background/60 text-cyan-accent transition-colors group-hover:border-border-hover group-focus-within:border-border-hover"
                 >
                   <SocialIcon :name="channel.icon" :size="18" />
                 </span>
                 <span
-                  class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-border text-muted transition-colors group-hover:border-border-hover group-hover:text-cyan-accent"
+                  class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-border text-muted transition-colors group-hover:border-border-hover group-hover:text-cyan-accent group-focus-within:border-border-hover group-focus-within:text-cyan-accent"
                   aria-hidden="true"
                 >
                   <ArrowUpRight v-if="channel.external" :size="14" />
@@ -78,7 +81,8 @@ function copyEmail(value: string): void {
                 <button
                   v-if="channel.copyValue"
                   type="button"
-                  class="relative z-10 mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-md border border-border bg-background/60 px-2.5 py-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-border-hover hover:text-cyan-accent active:border-cyan-accent active:text-cyan-accent"
+                  class="contact-copy-button relative z-10 mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-md border border-border bg-background/60 px-2.5 py-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-border-hover hover:text-cyan-accent active:border-cyan-accent active:text-cyan-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-safe:active:scale-[0.98]"
+                  :class="isCopied('email') ? 'border-cyan-accent/60 bg-cyan-accent/10 text-cyan-accent' : ''"
                   :aria-label="`${t('contact.copyEmail')}: ${channel.value}`"
                   @click.stop="copyEmail(channel.copyValue ?? channel.value)"
                 >
@@ -101,7 +105,7 @@ function copyEmail(value: string): void {
                       : 'noopener noreferrer'
                     : undefined
                 "
-                class="absolute inset-0 z-0 rounded-xl focus-visible:bg-cyan-accent/5 focus-visible:outline-offset-[-2px]"
+                class="absolute inset-0 z-0 rounded-xl focus-visible:bg-cyan-accent/5 focus-visible:-outline-offset-2"
                 :aria-label="
                   channel.external
                     ? t('contact.externalAria', {
@@ -111,7 +115,8 @@ function copyEmail(value: string): void {
                     : `${channel.actionLabel}: ${channel.value}`
                 "
               />
-            </article>
+              </article>
+            </div>
           </div>
 
           <div

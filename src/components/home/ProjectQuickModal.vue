@@ -96,7 +96,7 @@ function handleNativeClose(): void {
 
             <div class="min-h-0 flex-1 overflow-y-auto p-5 sm:p-7">
               <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 font-mono text-[9px] uppercase tracking-[0.18em]">
-                <span class="inline-flex items-center gap-1.5 text-[var(--accent)]">
+                <span class="inline-flex items-center gap-1.5 text-(--accent)">
                   <span class="h-1.5 w-1.5 rounded-full" :style="{ backgroundColor: project.accent }" />
                   {{ project.sector }}
                 </span>
@@ -114,7 +114,7 @@ function handleNativeClose(): void {
                 class="mt-3 font-sans text-2xl font-bold tracking-tight text-foreground sm:text-3xl"
               >
                 {{ project.title }}
-                <span class="text-[var(--accent)]">{{ project.titleHighlight }}</span>
+                <span class="text-(--accent)">{{ project.titleHighlight }}</span>
               </h2>
 
               <p id="quick-view-summary" class="mt-3 text-sm leading-relaxed text-muted">
@@ -125,7 +125,7 @@ function handleNativeClose(): void {
                 <span
                   v-for="tag in project.techTags"
                   :key="tag"
-                  class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-cyan-accent"
+                  class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-cyan-accent"
                 >
                   {{ tag }}
                 </span>
@@ -153,7 +153,7 @@ function handleNativeClose(): void {
                     <p class="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">
                       {{ metric.label }}
                     </p>
-                    <p class="mt-1 font-mono text-base font-semibold text-[var(--accent)]">
+                    <p class="mt-1 font-mono text-base font-semibold text-(--accent)">
                       {{ metric.value }}
                     </p>
                     <p v-if="metric.detail" class="mt-0.5 font-mono text-[9px] text-muted">

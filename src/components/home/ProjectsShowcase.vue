@@ -1,12 +1,22 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, defineAsyncComponent, ref } from 'vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 import { useI18n } from '@/i18n'
+import { useRevealTransition } from '@/composables/useRevealTransition'
 import { usePortfolioStore } from '@/stores/portfolio'
 import ProjectCard from './ProjectCard.vue'
-import ProjectQuickModal from './ProjectQuickModal.vue'
+
+// Defer loading and mounting the quick-view modal chunk until a visitor opens it.
+const ProjectQuickModal = defineAsyncComponent(() => import('./ProjectQuickModal.vue'))
 
 const store = usePortfolioStore()
+const shouldMountQuickModal = ref(false)
+
+function handleOpenQuickView(slug: string): void {
+  shouldMountQuickModal.value = true
+  store.openQuickView(slug)
+}
+const { onBeforeEnter, onBeforeLeave } = useRevealTransition()
 const { content, t } = useI18n()
 const projects = computed(() => content.value.projects)
 const sectionCode = computed(() => t('projects.code'))
@@ -72,15 +82,22 @@ const filteredProjects = computed(() => {
         </button>
       </div>
 
-      <ul class="mt-8 grid list-none grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <TransitionGroup
+        id="projects-grid"
+        tag="ul"
+        name="project"
+        role="list"
+        class="mt-8 grid list-none grid-cols-1 gap-6 overflow-x-clip md:grid-cols-2 lg:grid-cols-3"
+        @before-enter="onBeforeEnter"
+        @before-leave="onBeforeLeave"
+      >
         <ProjectCard
-          v-for="(project, index) in filteredProjects"
+          v-for="project in filteredProjects"
           :key="project.slug"
           :project="project"
-          :index="index"
-          @open-quick-view="store.openQuickView"
+          @open-quick-view="handleOpenQuickView"
         />
-      </ul>
+      </TransitionGroup>
 
       <div
         v-if="filteredProjects.length === 0"
@@ -90,6 +107,6 @@ const filteredProjects = computed(() => {
       </div>
     </div>
 
-    <ProjectQuickModal />
+    <ProjectQuickModal v-if="shouldMountQuickModal || store.isQuickViewOpen" />
   </section>
 </template>

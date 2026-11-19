@@ -4,10 +4,12 @@ import { ChevronDown } from '@lucide/vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 import TechCard from '@/components/home/TechCard.vue'
 import { useI18n } from '@/i18n'
+import { useRevealTransition } from '@/composables/useRevealTransition'
 import { usePortfolioStore } from '@/stores/portfolio'
 import type { TechFilter } from '@/types/portfolio'
 
 const store = usePortfolioStore()
+const { onBeforeEnter, onBeforeLeave } = useRevealTransition()
 const { content, t } = useI18n()
 const techFilterOptions = computed(() => content.value.techFilterOptions)
 
@@ -40,7 +42,7 @@ function toggleTechGrid(): void {
 <template>
   <section
     id="stack"
-    class="deferred-section relative w-full scroll-mt-20 overflow-hidden border-t border-border/60 bg-surface/30 py-20 lg:py-28"
+    class="deferred-section relative w-full scroll-mt-20 overflow-clip border-t border-border/60 bg-surface/30 py-20 lg:py-28"
   >
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
       <div class="absolute inset-0 bg-grid-fine opacity-40" />
@@ -101,10 +103,12 @@ function toggleTechGrid(): void {
         role="list"
         :aria-label="t('tech.gridAria')"
         class="mt-8 grid grid-cols-2 gap-3.5 lg:grid-cols-3 xl:grid-cols-4"
+        @before-enter="onBeforeEnter"
+        @before-leave="onBeforeLeave"
       >
         <TechCard
           v-for="(technology, index) in visibleTechnologies"
-          :key="`${activeCategory}-${technology.id}`"
+          :key="technology.id"
           :technology="technology"
           :index="index"
         />
@@ -141,6 +145,19 @@ function toggleTechGrid(): void {
 </template>
 
 <style scoped>
+.tech-enter-active {
+  transition:
+    opacity 220ms ease,
+    translate 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    scale 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tech-enter-from {
+  opacity: 0;
+  translate: 0 14px;
+  scale: 0.985;
+}
+
 .tech-move {
   transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
 }
