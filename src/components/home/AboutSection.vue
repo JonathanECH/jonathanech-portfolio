@@ -28,7 +28,7 @@ const sectionCode = computed(() => t('about.code'))
 
       <div class="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-12">
         <!-- Editor window -->
-        <div class="lg:col-span-7">
+        <div class="reveal reveal--about h-full lg:col-span-7">
           <div class="h-full overflow-hidden rounded-2xl border border-border bg-surface-card/60">
             <div class="flex items-center gap-3 border-b border-border bg-background/60 px-4 py-3">
               <div class="flex items-center gap-1.5" aria-hidden="true">
@@ -95,7 +95,7 @@ const sectionCode = computed(() => t('about.code'))
 
         <!-- Performance + environment panels -->
         <div class="flex flex-col gap-6 lg:col-span-5">
-          <div class="rounded-2xl border border-border bg-surface-card/60 p-5 transition-colors duration-300 hover:border-border-hover sm:p-6">
+          <div class="reveal reveal--about rounded-2xl border border-border bg-surface-card/60 p-5 transition-colors duration-300 hover:border-border-hover sm:p-6">
             <div class="flex items-center gap-2.5">
               <span
                 class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border bg-background/60 text-cyan-accent"
@@ -113,7 +113,7 @@ const sectionCode = computed(() => t('about.code'))
             </div>
 
             <ul class="mt-5 space-y-3.5">
-              <li v-for="metric in profile.performance" :key="metric.label">
+              <li v-for="metric in profile.performance" :key="metric.label" class="about-metric">
                 <div
                   class="flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.14em]"
                 >
@@ -123,7 +123,7 @@ const sectionCode = computed(() => t('about.code'))
                   </span>
                 </div>
                 <div
-                  class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-foreground/10"
+                  class="mt-1.5 h-1.5 overflow-clip rounded-full bg-foreground/10"
                   role="progressbar"
                   :aria-label="metric.label"
                   :aria-valuenow="metric.value"
@@ -131,7 +131,7 @@ const sectionCode = computed(() => t('about.code'))
                   aria-valuemax="100"
                 >
                   <div
-                    class="h-full rounded-full bg-gradient-to-r from-cyan-accent/50 to-cyan-accent"
+                    class="about-metric-fill h-full rounded-full bg-gradient-to-r from-cyan-accent/50 to-cyan-accent"
                     :style="{ width: `${metric.value}%` }"
                   />
                 </div>
@@ -140,7 +140,7 @@ const sectionCode = computed(() => t('about.code'))
           </div>
 
           <div
-            class="flex flex-1 flex-col rounded-2xl border border-border bg-surface-card/60 p-5 transition-colors duration-300 hover:border-border-hover sm:p-6"
+            class="reveal reveal--about flex flex-1 flex-col rounded-2xl border border-border bg-surface-card/60 p-5 transition-colors duration-300 hover:border-border-hover sm:p-6"
           >
             <div class="flex items-center justify-between gap-3">
               <div class="flex items-center gap-2.5">

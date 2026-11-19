@@ -360,6 +360,37 @@
       }
     }
 
+    @keyframes reveal-about {
+      from {
+        opacity: 0;
+        translate: 0 18px;
+      }
+      to {
+        opacity: 1;
+        translate: 0 0;
+      }
+    }
+
+    @keyframes reveal-contact {
+      from {
+        opacity: 0;
+        translate: 0 16px;
+      }
+      to {
+        opacity: 1;
+        translate: 0 0;
+      }
+    }
+
+    @keyframes about-metric-fill {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
+
     @media (prefers-reduced-motion: no-preference) {
       .reveal--stack {
         /* `animation` resets the timeline, so both timeline properties are
@@ -377,6 +408,54 @@
         animation: reveal-project 1ms linear both;
         animation-timeline: view(block);
         animation-range: entry 0% entry 100%;
+      }
+
+      .reveal--about {
+        animation: reveal-about 1ms linear both;
+        animation-timeline: view(block);
+        animation-range: entry 0% entry 90%;
+      }
+
+      .reveal--contact {
+        --contact-entry: entry 0%;
+        animation: reveal-contact 1ms linear both;
+        animation-timeline: view(block);
+        animation-range: var(--contact-entry) entry 100%;
+      }
+
+      .reveal--contact:nth-child(2) {
+        --contact-entry: entry 4%;
+      }
+
+      .reveal--contact:nth-child(3) {
+        --contact-entry: entry 8%;
+      }
+
+      .reveal--contact:nth-child(4) {
+        --contact-entry: entry 12%;
+      }
+
+      .about-metric {
+        --metric-entry: entry 10%;
+      }
+
+      .about-metric-fill {
+        transform-origin: left;
+        animation: about-metric-fill 1ms linear both;
+        animation-timeline: view(block);
+        animation-range: var(--metric-entry) entry 90%;
+      }
+
+      .about-metric:nth-child(2) {
+        --metric-entry: entry 16%;
+      }
+
+      .about-metric:nth-child(3) {
+        --metric-entry: entry 22%;
+      }
+
+      .about-metric:nth-child(4) {
+        --metric-entry: entry 28%;
       }
     }
 
@@ -485,6 +564,11 @@
     transform: none;
     translate: none;
     scale: none;
+  }
+
+  .about-metric-fill {
+    animation: none;
+    transform: none;
   }
 
   .page-enter-active,

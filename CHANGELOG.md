@@ -29,6 +29,17 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
   timeline al entrar/salir para que ninguna tarjeta quede oculta o congelada.
 - Stack ajustado a `animation-range: entry 0% entry 85%`; el bloque de
   `prefers-reduced-motion` también cubre las transiciones de grupo.
+- Revelado sobrio en “Sobre Mí”: los bloques de biografía y paneles laterales
+  entran con `translate: 0 18px` + `opacity`, y las cuatro barras de métricas
+  llenan con `transform: scaleX()` desde `transform-origin: left` (rangos
+  escalonados 10/16/22/28%), sin animar `width` ni provocar layout shifts.
+- Entrada escalonada de los canales de contacto (`translate: 0 16px` + `opacity`,
+  rangos 0/4/8/12%) y refuerzo de hover/focus en tarjetas y del botón de copiar
+  correo, con movimiento limitado a `motion-safe:` y datos de contacto siempre
+  legibles y seleccionables.
+- Contenedor de Contacto y pista de métricas cambiados de `overflow-hidden` a
+  `overflow-clip` para que `view()` se mida contra el viewport y no contra un
+  scrollport anidado.
 
 ### Removed
 

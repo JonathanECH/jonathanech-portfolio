@@ -38,10 +38,15 @@ describe('scroll-driven reveal contract', () => {
     const supports = block(css, supportsToken)
     const stack = block(supports, '@keyframes reveal-stack')
     const project = block(supports, '@keyframes reveal-project')
+    const about = block(supports, '@keyframes reveal-about')
+    const contact = block(supports, '@keyframes reveal-contact')
+    const metric = block(supports, '@keyframes about-metric-fill')
 
     for (const [name, keyframes] of [
       ['reveal-stack', stack],
       ['reveal-project', project],
+      ['reveal-about', about],
+      ['reveal-contact', contact],
     ] as const) {
       expect(keyframes, name).toContain('opacity: 0')
       expect(keyframes, name).toContain('opacity: 1')
@@ -55,6 +60,14 @@ describe('scroll-driven reveal contract', () => {
     expect(stack).toContain('scale: 0.97')
     expect(project).toContain('translate: var(--reveal-x) var(--reveal-y)')
     expect(project).toContain('scale: var(--reveal-scale)')
+    expect(about).toContain('translate: 0 18px')
+    expect(contact).toContain('translate: 0 16px')
+
+    expect(metric).toContain('transform: scaleX(0)')
+    expect(metric).toContain('transform: scaleX(1)')
+    expect(metric).not.toMatch(
+      /\b(?:top|right|bottom|left|width|height|margin|padding|filter)\s*:/,
+    )
   })
 
   it('activates the animation only with support and no reduced-motion preference', () => {
@@ -67,6 +80,19 @@ describe('scroll-driven reveal contract', () => {
     const cases = [
       ['stack', block(supports, '.reveal--stack {'), 'reveal-stack', 'entry 0% entry 85%'],
       ['project', block(supports, '.reveal--project {'), 'reveal-project', 'entry 0% entry 100%'],
+      ['about', block(supports, '.reveal--about {'), 'reveal-about', 'entry 0% entry 90%'],
+      [
+        'contact',
+        block(supports, '.reveal--contact {'),
+        'reveal-contact',
+        'var(--contact-entry) entry 100%',
+      ],
+      [
+        'metric fill',
+        block(supports, '.about-metric-fill {'),
+        'about-metric-fill',
+        'var(--metric-entry) entry 90%',
+      ],
     ] as const
 
     for (const [name, rule, animationName, range] of cases) {
@@ -74,6 +100,48 @@ describe('scroll-driven reveal contract', () => {
       expect(animation, name).toBeGreaterThanOrEqual(0)
       expect(rule.indexOf('animation-timeline: view(block);'), name).toBeGreaterThan(animation)
       expect(rule.indexOf(`animation-range: ${range};`), name).toBeGreaterThan(animation)
+    }
+  })
+
+  it('staggers contact cards and all four metric bars without orphan timeline rules', () => {
+    const supports = block(css, supportsToken)
+
+    const contactRanges = [
+      'entry 0%',
+      'entry 4%',
+      'entry 8%',
+      'entry 12%',
+    ] as const
+    for (const [index, value] of contactRanges.entries()) {
+      const selector = index === 0 ? '.reveal--contact {' : `.reveal--contact:nth-child(${index + 1}) {`
+      expect(block(supports, selector), selector).toContain(`--contact-entry: ${value};`)
+    }
+
+    const metricRanges = [
+      'entry 10%',
+      'entry 16%',
+      'entry 22%',
+      'entry 28%',
+    ] as const
+    for (const [index, value] of metricRanges.entries()) {
+      const selector = index === 0 ? '.about-metric {' : `.about-metric:nth-child(${index + 1}) {`
+      expect(block(supports, selector), selector).toContain(`--metric-entry: ${value};`)
+    }
+
+    expect(block(supports, '.about-metric-fill {')).toContain('transform-origin: left;')
+
+    for (const selector of [
+      '.reveal--contact:nth-child(2) {',
+      '.reveal--contact:nth-child(3) {',
+      '.reveal--contact:nth-child(4) {',
+      '.about-metric:nth-child(2) {',
+      '.about-metric:nth-child(3) {',
+      '.about-metric:nth-child(4) {',
+    ]) {
+      const rule = block(supports, selector)
+      expect(rule, selector).not.toContain('animation:')
+      expect(rule, selector).not.toContain('animation-timeline:')
+      expect(rule, selector).not.toContain('animation-range:')
     }
   })
 
@@ -108,6 +176,10 @@ describe('scroll-driven reveal contract', () => {
     expect(reveal).toContain('transform: none;')
     expect(reveal).toContain('translate: none;')
     expect(reveal).toContain('scale: none;')
+
+    const metricFill = block(reduced, '.about-metric-fill {')
+    expect(metricFill).toContain('animation: none;')
+    expect(metricFill).toContain('transform: none;')
 
     expect(reduced).toContain('.project-enter-active')
     expect(reduced).toContain('.project-leave-active')
@@ -234,5 +306,41 @@ describe('scroll-driven reveal contract', () => {
     expect(settled).toContain('opacity: 1;')
     expect(settled).toContain('translate: none;')
     expect(settled).toContain('scale: none;')
+  })
+
+  it('reveals the about blocks and fills metrics without layout animation', () => {
+    const about = readFileSync(new URL('../components/home/AboutSection.vue', import.meta.url), 'utf8')
+
+    expect(about).toContain('class="reveal reveal--about h-full lg:col-span-7"')
+    expect(about).toContain('class="reveal reveal--about rounded-2xl')
+    expect(about).toContain('class="reveal reveal--about flex flex-1 flex-col')
+    expect(about).toContain('class="about-metric"')
+    expect(about).toContain('class="mt-1.5 h-1.5 overflow-clip rounded-full bg-foreground/10"')
+    expect(about).toContain('class="about-metric-fill h-full rounded-full')
+    expect(about).toContain(':style="{ width: `${metric.value}%` }"')
+    expect(about).toContain('role="progressbar"')
+    expect(about).toContain(':aria-valuenow="metric.value"')
+  })
+
+  it('reveals contact channels and keeps copy feedback accessible', () => {
+    const contact = readFileSync(
+      new URL('../components/home/ContactSection.vue', import.meta.url),
+      'utf8',
+    )
+
+    expect(contact).toContain('class="relative overflow-clip rounded-2xl')
+    expect(contact).toContain('class="reveal reveal--contact h-full"')
+    expect(contact).toContain('class="contact-card group relative flex h-full flex-col')
+    expect(contact).toContain('motion-safe:hover:-translate-y-1')
+    expect(contact).toContain('motion-safe:group-focus-within:-translate-y-1')
+    expect(contact).toContain('group-focus-within:border-border-hover')
+    expect(contact).toContain('class="contact-copy-button relative z-10')
+    expect(contact).toContain('@click.stop="copyEmail(channel.copyValue ?? channel.value)"')
+    expect(contact).toContain('aria-live="polite"')
+    expect(contact).toContain(
+      "isCopied('email') ? 'border-cyan-accent/60 bg-cyan-accent/10 text-cyan-accent' : ''",
+    )
+    expect(contact).toContain('motion-safe:active:scale-[0.98]')
+    expect(contact).toContain(':key="channel.id"')
   })
 })
