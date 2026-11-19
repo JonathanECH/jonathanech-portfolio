@@ -270,10 +270,17 @@ pnpm preview
 - **Navegación por teclado:** enlace de salto al contenido, foco visible (`:focus-visible`) y cierre con `Escape` en modales.
 - **Movimiento reducido:** respeto íntegro de `prefers-reduced-motion`.
 - **Animaciones de scroll:** revelado nativo con `animation-timeline: view()`,
-  contenido visible por defecto si el navegador no las soporta y sin polyfill.
-- **Tipografías locales:** `@fontsource-variable` autoalojado, sin peticiones a CDNs externos y con menor CLS.
+  rangos adaptados por breakpoint (entrada corta en móvil para mantener respuesta
+  táctil 1:1), contenido visible por defecto si el navegador no las soporta y sin
+  polyfill.
+- **Tipografías locales:** `@fontsource-variable` autoalojado con `preload` automático
+  de los subsets WOFF2 latinos críticos en el HTML prerenderizado, sin peticiones
+  a CDNs externos y con menor CLS.
 - **Semántica HTML:** `header`, `main`, `section`, `article`, `nav`, `footer` y atributos ARIA en controles interactivos.
-- **Imágenes:** `loading="lazy"`, `decoding="async"` y textos alternativos descriptivos.
+- **Imágenes y carga diferida:** primera captura de galería con `loading="eager"` y
+  `fetchpriority="high"` (LCP), resto de imágenes con `loading="lazy"` y
+  `decoding="async"`, y carga bajo demanda (`defineAsyncComponent`) para
+  `ProjectQuickModal` y `NotFoundView`.
 
 ---
 

@@ -6,7 +6,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 
 ## Estado General
 
-- **Rama activa:** `feat/css-scroll-reveal` (release `v1.1.0` preparada)
+- **Rama activa:** `main` (release `v1.1.0` publicada)
 - **Fecha de inicio:** 9 de noviembre de 2026
 - **Última actualización:** 19 de noviembre de 2026
 - **Objetivo:** Credibilidad en 30–60 segundos, enlaces funcionales, posicionamiento claro como Frontend Engineer para reclutadores internacionales y paridad completa ES/EN.
@@ -67,17 +67,20 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | **P3.12** | **Release v1.0.0 y mantenimiento** | **COMPLETADO** | Bump a `1.0.0`, tag anotado `v1.0.0`, `CHANGELOG.md`, `docs/MAINTENANCE.md`, Dependabot semanal (npm + Actions), copyright localizado en el footer y limpieza de ramas integradas. |
 | **P3.13** | **Fix de animaciones de entrada** | **COMPLETADO** | La transición se movió a la regla base `html.js .reveal` (antes solo estaba en `:not(.is-visible)`, así que no se animaba). `v-reveal` pasó al raíz de `ProjectCard`/`TechCard`, se excluyó `content-visibility` en secciones con reveals y se añadieron 8 tests. Commit `fix: restore scroll reveal animation`. |
 | **P3.14** | **Revelado nativo por scroll** | **COMPLETADO** | Las cards usan `@keyframes` con `translate`/`opacity`, `animation-timeline: view(block)` y `animation-range: entry 0% entry 100%` dentro de `@supports`; contenido visible por defecto y `prefers-reduced-motion` con estado final. Se eliminaron `v-reveal`, `html.js` y el prop `index` de `ProjectCard`; `useActiveSection` y `useScrolled` quedaron intactos. `src/styles/reveal.spec.ts` valida el contrato CSS. El Stack cambió `overflow-hidden` por `overflow-clip`: `hidden` creaba un scrollport anidado y `view()` media la entrada dentro de la sección en lugar del viewport. El animador vive en wrappers separados (`reveal--stack`, `reveal--project`) para no competir con el `pressed`/`hover` de las cards; las proyectos distinguen móvil de tablet/desktop y la grilla usa `overflow-x-clip`. Filtros y "Ver más" usan `TransitionGroup` con keys estables y `reveal-settled` para cancelar `view()` al entrar/salir, evitando tarjetas ocultas o congeladas. "Sobre Mí" añade `reveal--about` en sus tres bloques y barras de métricas que llenan con `scaleX` escalonado (10/16/22/28%, incluida la cuarta barra SEO); "Contacto" añade `reveal--contact` con escalonado 0/4/8/12% y microinteracciones `motion-safe:`. Ambos usan `overflow-clip` en contenedores/pistas para preservar la geometría de `view()`. |
+| **P3.15** | **Optimización Core Web Vitals y fluidez táctil en móvil** | **COMPLETADO** | Priorización LCP (`loading="eager"` + `fetchpriority="high"`) en primera slide de `ProjectGallery`/`MockupCanvas`; `preload` automático de los 2 WOFF2 variables latinos en `vite.config.ts`; lazy-load con `defineAsyncComponent` de `ProjectQuickModal` y `NotFoundView`; caché en `vercel.json` para `/projects/(.*)` y `/og-image.jpg`; rangos `animation-range` cortos en móvil (`max-width: 767px`, `entry 0% entry 35%/40%`); `HeroSection` sin layout thrashing, sin repintado de gradiente a 60fps en reposo y sin reinicio de `<canvas>` por la barra de direcciones móvil; `TechCard` cancela feedback táctil durante scroll; `ProjectCard` reserva `backdrop-blur-sm` a `sm:`. Commits `6e317b3` y `16c06a1`. |
+| **P3.16** | **Higiene DX: Vue Router 5, TypeScript 7 y Tailwind v4** | **COMPLETADO** | Guard de `vite-ssg` adaptado en `src/main.ts` a firma de 2 argumentos basada en `return` (elimina `[VUE_ROUTER_R0025]`); eliminado `"baseUrl": "."` deprecado en `tsconfig.json` y `tsconfig.node.json`; migradas 58 clases a sintaxis canónica de Tailwind CSS v4 (`0` warnings restantes). Commit `8206837`. |
 
 ---
 
 ## Validación previa a producción (release `v1.1.0` · 2026-11-19)
 
-Checklist ejecutado en la rama `feat/css-scroll-reveal`:
+Checklist ejecutado e integrado en `main` (PR `#13`):
 
 1. **Verificación integral:** `pnpm verify` → typecheck OK, **110/110** tests en 12 archivos y build `vite-ssg` correcto (6 páginas prerenderizadas).
-2. **Contrato CSS:** `src/styles/reveal.spec.ts` comprueba el `@supports`, el rango acotado, el orden de `animation-timeline` respecto al shorthand y el estado final con `prefers-reduced-motion`.
+2. **Contrato CSS y fluidez móvil:** `src/styles/reveal.spec.ts` comprueba el `@supports`, el rango acotado, el orden de `animation-timeline` respecto al shorthand y el estado final con `prefers-reduced-motion`, con rangos de entrada acortados en móvil (`max-width: 767px`).
 3. **Fallback visible:** `.reveal` mantiene `opacity: 1` y `transform: none` por defecto; no quedan `html.js`, `.is-visible` ni `--reveal-delay`.
-4. **Pendiente:** merge a `main` y tag `v1.1.0` tras la verificación en la rama.
+4. **Diagnósticos limpios:** `0` errores de TypeScript (`baseUrl` eliminado), `0` advertencias de clases canónicas de Tailwind CSS v4 y `0` warnings `[VUE_ROUTER_R0025]` en consola.
+5. **Publicación:** PR `#13` fusionado en `main` y tag anotado `v1.1.0` publicado en `origin`.
 
 ---
 

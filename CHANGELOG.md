@@ -7,6 +7,19 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
 ## [1.1.0] - 2026-11-19
 
+### Added
+
+- Preload automático en `vite.config.ts` (`<link rel="preload" as="font" type="font/woff2" crossorigin>`)
+  para los dos subsets variables críticos (`Plus Jakarta Sans` y `JetBrains Mono`,
+  `latin-wght-normal`) en el HTML prerenderizado.
+- Priorización LCP (`:priority="activeIndex === 0"`, `loading="eager"` y
+  `fetchpriority="high"`) para la primera diapositiva de `ProjectGallery` y
+  `MockupCanvas`, manteniendo `loading="lazy"` en el resto de slides.
+- Cabeceras `Cache-Control` en `vercel.json` para imágenes de casos de estudio
+  (`/projects/(.*)`) y tarjeta Open Graph global (`/og-image.jpg`).
+- `src/composables/useRevealTransition.ts` y `src/styles/reveal.spec.ts` (16
+  pruebas de contrato CSS y transiciones de grupo).
+
 ### Changed
 
 - Animación de revelado por scroll de las cards migrada de `IntersectionObserver`
@@ -40,6 +53,40 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 - Contenedor de Contacto y pista de métricas cambiados de `overflow-hidden` a
   `overflow-clip` para que `view()` se mida contra el viewport y no contra un
   scrollport anidado.
+- Carga diferida (`defineAsyncComponent`) de `ProjectQuickModal` en
+  `ProjectsShowcase` (montado bajo demanda al abrir la vista rápida) y de
+  `NotFoundView` en `ProjectDetailView`.
+- Contención de layout y estilo (`contain: layout style`) en `.deferred-section`.
+- Clases utilitarias normalizadas a la sintaxis canónica nativa de Tailwind CSS v4
+  en 14 componentes (`text-(--accent)`, `border-(--project-accent)`,
+  `bg-linear-to-*`, `aspect-4/3`, `sm:aspect-video`, `h-18`, `z-100`, etc.).
+
+### Fixed
+
+- Fluidez del desplazamiento táctil en móvil:
+  - Rangos `animation-range` acortados en `@media (max-width: 767px)` (`entry 0% entry 35%`
+    / `40%` y `--reveal-y: 12px`) para que las tarjetas altas de una sola columna
+    completen su entrada en el tercio inferior del viewport sin quedar a medio
+    aparecer cuando desacelera el scroll inercial.
+  - `HeroSection` ignora variaciones menores de altura (`< 160px`) causadas por la
+    barra de direcciones del navegador móvil al hacer scroll (evitando reasignar el
+    buffer de `<canvas>` y reiniciar las partículas en pleno desplazamiento),
+    cachea los offsets del contenedor para no ejecutar `getBoundingClientRect()` en
+    cada `pointermove`, escribe `--mouse-x`/`--mouse-y` en el elemento hoja
+    `spotlightRef` únicamente cuando el puntero cambia (`spotlightDirty`), limita
+    los listeners de hover a dispositivos `(hover: hover) and (pointer: fine)` y
+    elimina `mix-blend-screen` / `mix-blend-mode` de las rejillas de fondo.
+  - `TechCard` cancela el feedback táctil si el gesto se convierte en scroll
+    (`pointermove > 6px` o `pointercancel`) y acota `transition-all` a
+    `transition-[transform,border-color,background-color]`.
+  - `ProjectCard` sustituye los 4 `backdrop-blur-sm` por tarjeta en móvil (`< 640px`)
+    por fondos semitransparentes directos (`sm:backdrop-blur-sm` en pantallas
+    mayores) y acota `transition-all` a `transition-[transform,border-color,box-shadow]`.
+- Adaptado `router.beforeEach` en `src/main.ts` para convertir el guard interno de
+  3 argumentos `(to, from, next)` de `vite-ssg` en un guard moderno de 2 argumentos
+  basado en `return`, eliminando la advertencia `[VUE_ROUTER_R0025]` de Vue Router 5.
+- Eliminada la opción deprecada `"baseUrl": "."` en `tsconfig.json` y
+  `tsconfig.node.json` para compatibilidad con TypeScript 7.
 
 ### Removed
 
