@@ -13,7 +13,27 @@ import { routes, scrollBehavior } from './router'
 export const createApp = ViteSSG(
   App,
   { routes, scrollBehavior },
-  ({ app }) => {
+  ({ app, router }) => {
+    // `vite-ssg` registers an internal `(to, from, next) => next()` guard right
+    // after this callback, which triggers `[VUE_ROUTER_R0025]` in Vue Router 5.
+    // Adapting 3-arg guards to a 2-arg return-based guard preserves `vite-ssg`
+    // initial-state hydration without invoking Vue Router's deprecated `next()`.
+    const rawBeforeEach = router.beforeEach.bind(router)
+    router.beforeEach = (guard) => {
+      if (guard.length < 3) {
+        return rawBeforeEach(guard)
+      }
+
+      return rawBeforeEach((to, from) => {
+        let forwarded: unknown
+        const outcome = guard.call(undefined, to, from, ((arg?: unknown) => {
+          forwarded = arg
+        }) as Parameters<typeof guard>[2])
+
+        return (outcome !== undefined ? outcome : forwarded) as ReturnType<typeof guard>
+      })
+    }
+
     app.use(createPinia())
 
     if (!import.meta.env.SSR) {

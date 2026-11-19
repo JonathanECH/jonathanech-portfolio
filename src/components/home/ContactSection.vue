@@ -105,7 +105,7 @@ function copyEmail(value: string): void {
                       : 'noopener noreferrer'
                     : undefined
                 "
-                class="absolute inset-0 z-0 rounded-xl focus-visible:bg-cyan-accent/5 focus-visible:outline-offset-[-2px]"
+                class="absolute inset-0 z-0 rounded-xl focus-visible:bg-cyan-accent/5 focus-visible:-outline-offset-2"
                 :aria-label="
                   channel.external
                     ? t('contact.externalAria', {

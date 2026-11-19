@@ -48,7 +48,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
             class="flex gap-4 border-t border-border pt-4"
           >
             <span
-              class="mt-0.5 font-mono text-[11px] font-semibold text-[color:var(--project-accent)]"
+              class="mt-0.5 font-mono text-[11px] font-semibold text-(--project-accent)"
               aria-hidden="true"
             >
               0{{ index + 1 }}
@@ -65,7 +65,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
           class="relative overflow-hidden rounded border border-border bg-surface-card/60 p-5 sm:p-6 lg:p-7"
         >
           <span
-            class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[color:var(--project-accent)]/70 via-[color:var(--project-accent)]/15 to-transparent"
+            class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-(--project-accent)/70 via-(--project-accent)/15 to-transparent"
             aria-hidden="true"
           />
 
@@ -73,7 +73,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
             class="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4"
           >
             <h3
-              class="inline-flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--project-accent)] sm:text-[11px]"
+              class="inline-flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-(--project-accent) sm:text-[11px]"
             >
               <ShieldCheck :size="15" aria-hidden="true" />
               {{ t('detail.auditReport') }}
@@ -100,10 +100,10 @@ const accentStyle = computed<Record<string, string>>(() => ({
 
             <div>
               <p
-                class="mb-1.5 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-[color:var(--project-accent)]"
+                class="mb-1.5 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-(--project-accent)"
               >
                 <span
-                  class="h-1.5 w-1.5 rounded-full bg-[color:var(--project-accent)]"
+                  class="h-1.5 w-1.5 rounded-full bg-(--project-accent)"
                   aria-hidden="true"
                 />
                 {{ t('detail.resolution') }}
@@ -124,7 +124,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
                 <p class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
                   {{ metric.label }}
                 </p>
-                <p class="mt-1.5 font-mono text-sm font-semibold text-[color:var(--project-accent)]">
+                <p class="mt-1.5 font-mono text-sm font-semibold text-(--project-accent)">
                   {{ metric.value }}
                 </p>
                 <p v-if="metric.detail" class="mt-0.5 font-mono text-[9px] text-foreground/45">
@@ -137,7 +137,7 @@ const accentStyle = computed<Record<string, string>>(() => ({
               <CircleCheck
                 :size="13"
                 aria-hidden="true"
-                class="mt-0.5 shrink-0 text-[color:var(--project-accent)]/80"
+                class="mt-0.5 shrink-0 text-(--project-accent)/80"
               />
               <span>{{ project.audit.consistencyNote }}</span>
             </p>

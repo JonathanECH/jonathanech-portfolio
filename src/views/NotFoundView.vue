@@ -50,7 +50,7 @@ const quickRoutes: readonly QuickRoute[] = [
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
       <div class="absolute inset-0 bg-grid-fine opacity-50" />
       <div
-        class="absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-cyan-accent/10 via-cyan-accent/5 to-transparent blur-3xl md:h-[44rem] md:w-[44rem]"
+        class="absolute left-1/2 top-1/2 h-120 w-120 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-cyan-accent/10 via-cyan-accent/5 to-transparent blur-3xl md:h-176 md:w-176"
       />
       <div
         class="absolute -top-32 right-1/4 h-80 w-80 rounded-full bg-cyan-accent/5 blur-[120px]"
@@ -58,7 +58,7 @@ const quickRoutes: readonly QuickRoute[] = [
 
       <!-- Decorative CAD Technical Mesh -->
       <svg
-        class="absolute inset-0 h-full w-full stroke-foreground/[0.04] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)]"
+        class="absolute inset-0 h-full w-full stroke-foreground/4 mask-[radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)]"
         width="100%"
         height="100%"
       >
@@ -233,7 +233,7 @@ const quickRoutes: readonly QuickRoute[] = [
             <span class="font-semibold text-cyan-accent">&gt; ACTION:</span>
             <span class="text-cyan-accent">{{ t('notFound.logAction') }}</span>
             <span
-              class="ml-0.5 inline-block h-3.5 w-[2px] translate-y-0.5 animate-cursor bg-cyan-accent align-middle"
+              class="ml-0.5 inline-block h-3.5 w-0.5 translate-y-0.5 animate-cursor bg-cyan-accent align-middle"
               aria-hidden="true"
             />
           </div>

@@ -66,12 +66,12 @@ function openQuickView(): void {
 
             <div class="flex items-end justify-between gap-2">
               <span
-                class="min-w-0 truncate rounded border border-border/60 bg-background/80 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.1em] text-foreground backdrop-blur-sm"
+                class="min-w-0 truncate rounded border border-border/60 bg-background/80 px-2 py-1 font-mono text-[8px] uppercase tracking-widest text-foreground backdrop-blur-sm"
               >
                 {{ previewSlide.title }}
               </span>
               <span
-                class="shrink-0 rounded border border-border/60 bg-background/80 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.14em] text-[var(--accent)] backdrop-blur-sm"
+                class="shrink-0 rounded border border-border/60 bg-background/80 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.14em] text-(--accent) backdrop-blur-sm"
               >
                 {{ project.gallery.indexOf(previewSlide) + 1 }} / {{ project.gallery.length }}
               </span>
@@ -164,7 +164,7 @@ function openQuickView(): void {
       <div class="flex flex-1 flex-col p-5 sm:p-6">
         <div class="flex items-center justify-between gap-3">
           <span
-            class="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-[var(--accent)]"
+            class="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-(--accent)"
           >
             <span class="h-1.5 w-1.5 rounded-full" :style="{ backgroundColor: project.accent }" />
             {{ project.sector }}
@@ -174,7 +174,7 @@ function openQuickView(): void {
 
         <h3 class="mt-4 font-sans text-lg font-bold tracking-tight text-foreground sm:text-xl">
           {{ project.title }}
-          <span class="text-[var(--accent)]">{{ project.titleHighlight }}</span>
+          <span class="text-(--accent)">{{ project.titleHighlight }}</span>
         </h3>
 
         <p class="mt-1 font-mono text-[10px] text-muted truncate">
@@ -201,7 +201,7 @@ function openQuickView(): void {
               <span
                 v-for="tag in project.techTags.slice(0, 4)"
                 :key="tag"
-                class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-cyan-accent"
+                class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-cyan-accent"
               >
                 {{ tag }}
               </span>
@@ -251,7 +251,7 @@ function openQuickView(): void {
       <!-- Stretched link: the whole card navigates to the case study -->
       <RouterLink
         :to="`/proyectos/${project.slug}`"
-        class="absolute inset-0 z-0 rounded-2xl focus-visible:bg-cyan-accent/5 focus-visible:outline-offset-[-2px]"
+        class="absolute inset-0 z-0 rounded-2xl focus-visible:bg-cyan-accent/5 focus-visible:-outline-offset-2"
         :aria-label="t('projects.viewFullAria', { name: project.name })"
       />
     </article>

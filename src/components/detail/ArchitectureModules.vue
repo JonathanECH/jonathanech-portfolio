@@ -57,13 +57,13 @@ function formatCounter(index: number, total: number): string {
         class="group relative flex flex-col overflow-hidden rounded border border-border bg-surface-card/50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:bg-surface-card sm:p-6"
       >
         <span
-          class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[color:var(--project-accent)]/70 via-[color:var(--project-accent)]/15 to-transparent"
+          class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-(--project-accent)/70 via-(--project-accent)/15 to-transparent"
           aria-hidden="true"
         />
 
         <div class="flex items-start justify-between gap-3">
           <span
-            class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded border border-[color:var(--project-accent)]/25 bg-[color:var(--project-accent)]/10 text-[color:var(--project-accent)] transition-colors duration-300 group-hover:border-[color:var(--project-accent)]/50"
+            class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded border border-(--project-accent)/25 bg-(--project-accent)/10 text-(--project-accent) transition-colors duration-300 group-hover:border-(--project-accent)/50"
           >
             <component :is="moduleIcon(module.icon)" :size="18" aria-hidden="true" />
           </span>
@@ -73,7 +73,7 @@ function formatCounter(index: number, total: number): string {
         </div>
 
         <p
-          class="mt-5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[color:var(--project-accent)]"
+          class="mt-5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-(--project-accent)"
         >
           {{ module.code }} // {{ module.title }}
         </p>
@@ -95,7 +95,7 @@ function formatCounter(index: number, total: number): string {
             <Check
               :size="12"
               aria-hidden="true"
-              class="mt-0.5 shrink-0 text-[color:var(--project-accent)]/80"
+              class="mt-0.5 shrink-0 text-(--project-accent)/80"
             />
             <span>{{ point }}</span>
           </li>

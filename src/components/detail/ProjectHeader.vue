@@ -29,7 +29,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
       aria-hidden="true"
     />
     <div
-      class="pointer-events-none absolute -top-48 left-1/2 -z-10 h-[26rem] w-[52rem] max-w-full -translate-x-1/2 rounded-full bg-[color:var(--project-accent)]/10 blur-3xl"
+      class="pointer-events-none absolute -top-48 left-1/2 -z-10 h-104 w-208 max-w-full -translate-x-1/2 rounded-full bg-(--project-accent)/10 blur-3xl"
       aria-hidden="true"
     />
 
@@ -61,10 +61,10 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             {{ t('detail.year', { year: project.year }) }}
           </span>
           <span
-            class="inline-flex items-center gap-1.5 rounded border border-[color:var(--project-accent)]/30 bg-[color:var(--project-accent)]/10 px-2.5 py-1 text-[color:var(--project-accent)]"
+            class="inline-flex items-center gap-1.5 rounded border border-(--project-accent)/30 bg-(--project-accent)/10 px-2.5 py-1 text-(--project-accent)"
           >
             <span
-              class="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-[color:var(--project-accent)]"
+              class="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-(--project-accent)"
               aria-hidden="true"
             />
             {{ project.status }}
@@ -74,7 +74,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
 
       <div class="max-w-5xl">
         <p
-          class="mt-9 font-mono text-[10px] uppercase tracking-[0.24em] text-[color:var(--project-accent)] sm:mt-10 sm:text-[11px]"
+          class="mt-9 font-mono text-[10px] uppercase tracking-[0.24em] text-(--project-accent) sm:mt-10 sm:text-[11px]"
         >
           // {{ project.sector }} // {{ project.year }}
         </p>
@@ -92,7 +92,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
 
         <dl class="mt-8 grid max-w-4xl grid-cols-1 gap-5 sm:grid-cols-2">
           <div
-            class="border-l-2 border-[color:var(--project-accent)]/60 bg-surface-card/40 px-4 py-3 sm:col-span-2 sm:px-5"
+            class="border-l-2 border-(--project-accent)/60 bg-surface-card/40 px-4 py-3 sm:col-span-2 sm:px-5"
           >
             <dt class="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
               {{ t('detail.problem') }}
@@ -111,7 +111,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
                 <li
                   v-for="tag in project.techTags"
                   :key="tag"
-                  class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-cyan-accent"
+                  class="rounded border border-border/70 bg-background/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-cyan-accent"
                 >
                   {{ tag }}
                 </li>

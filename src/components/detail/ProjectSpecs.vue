@@ -57,12 +57,12 @@ const specs = computed<readonly SpecItem[]>(() => [
         class="group relative flex flex-col justify-between gap-4 bg-surface p-5 transition-colors duration-300 hover:bg-surface-card sm:p-6"
       >
         <span
-          class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--project-accent)]/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-(--project-accent)/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
           aria-hidden="true"
         />
 
         <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-          <span class="text-[color:var(--project-accent)]/80">
+          <span class="text-(--project-accent)/80">
             0{{ index + 1 }} //
           </span>
           {{ spec.label }}

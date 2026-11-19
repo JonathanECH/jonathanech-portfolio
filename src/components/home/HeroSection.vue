@@ -434,7 +434,7 @@ onBeforeUnmount(() => {
 
       <p class="mt-7 font-mono text-xs tracking-[0.08em] text-foreground/65 sm:text-sm">
         {{ profile.name }}<span
-          class="ml-0.5 inline-block h-3.5 w-[2px] translate-y-0.5 animate-cursor bg-cyan-accent align-middle"
+          class="ml-0.5 inline-block h-3.5 w-0.5 translate-y-0.5 animate-cursor bg-cyan-accent align-middle"
           aria-hidden="true"
         />
       </p>

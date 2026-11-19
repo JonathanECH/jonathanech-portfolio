@@ -84,7 +84,7 @@ onUnmounted(() => {
             : 'border-transparent bg-transparent')
     "
   >
-    <div class="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-12">
+    <div class="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-12">
       <RouterLink
         to="/"
         class="group relative flex items-center justify-center rounded-lg"

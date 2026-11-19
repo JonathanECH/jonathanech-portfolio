@@ -209,7 +209,7 @@ function announceCurrent(): void {
         </span>
       </div>
 
-      <div class="absolute inset-x-0 bottom-0 h-[2px] overflow-hidden bg-foreground/10">
+      <div class="absolute inset-x-0 bottom-0 h-0.5 overflow-hidden bg-foreground/10">
         <div
           :key="progressKey"
           class="h-full w-full origin-left animate-carousel-progress"
@@ -224,7 +224,7 @@ function announceCurrent(): void {
     <!-- Stage -->
     <div
       ref="stageRef"
-      class="group relative aspect-[4/3] w-full overflow-hidden bg-background sm:aspect-[16/9]"
+      class="group relative aspect-4/3 w-full overflow-hidden bg-background sm:aspect-video"
       tabindex="0"
       role="group"
       :aria-label="
@@ -324,7 +324,7 @@ function announceCurrent(): void {
         <span
           v-for="badge in activeSlide?.badges ?? []"
           :key="badge"
-          class="rounded-sm border border-cyan-accent/20 bg-cyan-accent/[0.06] px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-cyan-accent sm:text-[10px]"
+          class="rounded-sm border border-cyan-accent/20 bg-cyan-accent/6 px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-cyan-accent sm:text-[10px]"
         >
           {{ badge }}
         </span>
