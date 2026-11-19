@@ -79,7 +79,7 @@ describe('scroll-driven reveal contract', () => {
     const supports = block(css, supportsToken)
     const cases = [
       ['stack', block(supports, '.reveal--stack {'), 'reveal-stack', 'entry 0% entry 85%'],
-      ['project', block(supports, '.reveal--project {'), 'reveal-project', 'entry 0% entry 100%'],
+      ['project', block(supports, '.reveal--project {'), 'reveal-project', 'entry 0% entry 70%'],
       ['about', block(supports, '.reveal--about {'), 'reveal-about', 'entry 0% entry 90%'],
       [
         'contact',
@@ -91,7 +91,7 @@ describe('scroll-driven reveal contract', () => {
         'metric fill',
         block(supports, '.about-metric-fill {'),
         'about-metric-fill',
-        'var(--metric-entry) entry 90%',
+        'var(--metric-entry) cover 50%',
       ],
     ] as const
 
@@ -118,10 +118,10 @@ describe('scroll-driven reveal contract', () => {
     }
 
     const metricRanges = [
-      'entry 10%',
-      'entry 16%',
-      'entry 22%',
-      'entry 28%',
+      'cover 10%',
+      'cover 14%',
+      'cover 18%',
+      'cover 22%',
     ] as const
     for (const [index, value] of metricRanges.entries()) {
       const selector = index === 0 ? '.about-metric {' : `.about-metric:nth-child(${index + 1}) {`
@@ -159,8 +159,8 @@ describe('scroll-driven reveal contract', () => {
     expect(tablet).toContain('--reveal-scale: 0.985')
     expect(tablet).toContain('.reveal--project:nth-child(even)')
     expect(tablet).toContain('--reveal-x: -18px')
-    expect(tablet).toContain('animation-range: entry 6% entry 100%')
-    expect(tablet).toContain('animation-range: entry 12% entry 100%')
+    expect(tablet).toContain('animation-range: entry 6% entry 70%')
+    expect(tablet).toContain('animation-range: entry 12% entry 70%')
 
     const desktop = block(supports, desktopToken)
     expect(desktop).toContain('--reveal-x: 24px')

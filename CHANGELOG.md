@@ -5,6 +5,28 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
+## [1.1.1] - 2026-11-19
+
+### Changed
+
+- Ajuste final de los rangos de revelado por scroll en `src/styles/main.css`:
+  las cards de proyectos completan la entrada en `entry 70%` (antes `entry 100%`
+  en escritorio y `entry 35%` en móvil), y el escalonado de tablet
+  (`entry 6%/12%`) también termina en `entry 70%`, para que la animación se
+  perciba completa sin quedarse a media transición al desplazarse con inercia.
+- Las cuatro barras de métricas de “Sobre Mí” pasan a un rango `cover`:
+  inicios escalonados `cover 10% / 14% / 18% / 22%` y fin `cover 50%` en
+  escritorio y `cover 45%` en móvil (antes `entry 10/16/22/28%` → `entry 90%/55%`),
+  de modo que el llenado se reparte a lo largo del paso de la barra por el viewport.
+- `src/styles/reveal.spec.ts` actualiza el contrato de rangos para reflejar
+  estos valores (`entry 70%`, `cover 10/14/18/22%` y `cover 50%`).
+
+### Verificación
+
+- Integrado desde `feat/project-reveal-70` (commit `5bb208a`). `pnpm verify`:
+  typecheck OK, **110/110** pruebas y build `vite-ssg` correcto (6 páginas
+  prerenderizadas).
+
 ## [1.1.0] - 2026-11-19
 
 ### Added
