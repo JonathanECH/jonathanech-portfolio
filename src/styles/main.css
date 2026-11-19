@@ -286,9 +286,11 @@
     transition: opacity 500ms ease;
   }
 
-  /* Skip layout/paint work for long below-the-fold home sections. */
+  /* Skip layout/paint work for long below-the-fold home sections. Sections with
+     reveal animations keep their subtree laid out so IntersectionObserver can
+     reliably detect the cards as they enter the viewport. */
   @supports (content-visibility: auto) {
-    .deferred-section {
+    .deferred-section:not(:has(.reveal)) {
       content-visibility: auto;
       contain-intrinsic-size: auto 700px;
     }
@@ -317,21 +319,25 @@
     text-wrap: balance;
   }
 
-  /* Static by default; JS opts into the entrance animation via `html.js`. */
-  html.js .reveal:not(.is-visible) {
-    opacity: 0;
-    transform: translateY(18px);
+  /* Static by default; JS opts into the entrance animation via `html.js`.
+     The transition belongs on the base rule: it must exist in the after-change
+     style when `.is-visible` is added, otherwise the element snaps instead of
+     animating. Opacity and transform stay on the compositor without will-change. */
+  html.js .reveal {
     transition:
       opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
       transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
     transition-delay: var(--reveal-delay, 0ms);
-    will-change: opacity, transform;
+  }
+
+  html.js .reveal:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(18px);
   }
 
   html.js .reveal.is-visible {
     opacity: 1;
     transform: none;
-    will-change: auto;
   }
 
   .page-enter-active,
