@@ -2,11 +2,13 @@
 import { computed, ref } from 'vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 import { useI18n } from '@/i18n'
+import { useRevealTransition } from '@/composables/useRevealTransition'
 import { usePortfolioStore } from '@/stores/portfolio'
 import ProjectCard from './ProjectCard.vue'
 import ProjectQuickModal from './ProjectQuickModal.vue'
 
 const store = usePortfolioStore()
+const { onBeforeEnter, onBeforeLeave } = useRevealTransition()
 const { content, t } = useI18n()
 const projects = computed(() => content.value.projects)
 const sectionCode = computed(() => t('projects.code'))
@@ -72,14 +74,22 @@ const filteredProjects = computed(() => {
         </button>
       </div>
 
-      <ul class="mt-8 grid list-none grid-cols-1 gap-6 overflow-x-clip md:grid-cols-2 lg:grid-cols-3">
+      <TransitionGroup
+        id="projects-grid"
+        tag="ul"
+        name="project"
+        role="list"
+        class="mt-8 grid list-none grid-cols-1 gap-6 overflow-x-clip md:grid-cols-2 lg:grid-cols-3"
+        @before-enter="onBeforeEnter"
+        @before-leave="onBeforeLeave"
+      >
         <ProjectCard
           v-for="project in filteredProjects"
           :key="project.slug"
           :project="project"
           @open-quick-view="store.openQuickView"
         />
-      </ul>
+      </TransitionGroup>
 
       <div
         v-if="filteredProjects.length === 0"

@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
+import { useRevealTransition } from '@/composables/useRevealTransition'
 
 const css = readFileSync(new URL('./main.css', import.meta.url), 'utf8')
 const supportsToken = '@supports ((animation-timeline: view()) and (animation-range: entry))'
@@ -64,15 +65,15 @@ describe('scroll-driven reveal contract', () => {
   it('uses a bounded view timeline declared after the animation shorthand', () => {
     const supports = block(css, supportsToken)
     const cases = [
-      ['stack', block(supports, '.reveal--stack {'), 'reveal-stack'],
-      ['project', block(supports, '.reveal--project {'), 'reveal-project'],
+      ['stack', block(supports, '.reveal--stack {'), 'reveal-stack', 'entry 0% entry 85%'],
+      ['project', block(supports, '.reveal--project {'), 'reveal-project', 'entry 0% entry 100%'],
     ] as const
 
-    for (const [name, rule, animationName] of cases) {
+    for (const [name, rule, animationName, range] of cases) {
       const animation = rule.indexOf(`animation: ${animationName} 1ms linear both;`)
       expect(animation, name).toBeGreaterThanOrEqual(0)
       expect(rule.indexOf('animation-timeline: view(block);'), name).toBeGreaterThan(animation)
-      expect(rule.indexOf('animation-range: entry 0% entry 100%;'), name).toBeGreaterThan(animation)
+      expect(rule.indexOf(`animation-range: ${range};`), name).toBeGreaterThan(animation)
     }
   })
 
@@ -107,6 +108,14 @@ describe('scroll-driven reveal contract', () => {
     expect(reveal).toContain('transform: none;')
     expect(reveal).toContain('translate: none;')
     expect(reveal).toContain('scale: none;')
+
+    expect(reduced).toContain('.project-enter-active')
+    expect(reduced).toContain('.project-leave-active')
+    expect(reduced).toContain('.project-move')
+    expect(reduced).toContain('.tech-enter-active')
+    expect(reduced).toContain('.tech-leave-active')
+    expect(reduced).toContain('.tech-enter-from')
+    expect(reduced).toContain('.project-enter-from')
   })
 
   it('removes the JavaScript-only reveal hooks', () => {
@@ -155,10 +164,9 @@ describe('scroll-driven reveal contract', () => {
     }
 
     const showcase = readFileSync(new URL('../components/home/ProjectsShowcase.vue', import.meta.url), 'utf8')
-    const gridStart = showcase.indexOf('<ul class="mt-8 grid')
-    expect(gridStart).toBeGreaterThanOrEqual(0)
-    const gridTag = showcase.slice(gridStart, showcase.indexOf('>', gridStart))
-    expect(gridTag).toContain('overflow-x-clip')
+    expect(showcase).toContain(
+      'class="mt-8 grid list-none grid-cols-1 gap-6 overflow-x-clip md:grid-cols-2 lg:grid-cols-3"',
+    )
   })
 
   it('keeps animated wrappers separate from the interactive cards', () => {
@@ -171,5 +179,60 @@ describe('scroll-driven reveal contract', () => {
     const project = readFileSync(new URL('../components/home/ProjectCard.vue', import.meta.url), 'utf8')
     expect(project).toContain('<li class="reveal reveal--project">')
     expect(project).toContain('hover:-translate-y-1')
+  })
+
+  it('settles TransitionGroup cards so view() cannot hide them', () => {
+    const { onBeforeEnter, onBeforeLeave } = useRevealTransition()
+    const classes = new Set<string>()
+    const el = { classList: { add: (name: string) => classes.add(name) } } as unknown as Element
+
+    onBeforeEnter(el)
+    expect(classes.has('reveal-settled')).toBe(true)
+
+    classes.clear()
+    onBeforeLeave(el)
+    expect(classes.has('reveal-settled')).toBe(true)
+  })
+
+  it('uses stable keys and settle hooks in both filtered grids', () => {
+    const stack = readFileSync(new URL('../components/home/TechEcosystem.vue', import.meta.url), 'utf8')
+    expect(stack).toContain('<TransitionGroup')
+    expect(stack).toContain('@before-enter="onBeforeEnter"')
+    expect(stack).toContain('@before-leave="onBeforeLeave"')
+    expect(stack).toContain(':key="technology.id"')
+    expect(stack).not.toContain('activeCategory}-${technology.id')
+
+    const projects = readFileSync(
+      new URL('../components/home/ProjectsShowcase.vue', import.meta.url),
+      'utf8',
+    )
+    expect(projects).toContain('<TransitionGroup')
+    expect(projects).toContain('tag="ul"')
+    expect(projects).toContain('name="project"')
+    expect(projects).toContain(':key="project.slug"')
+    expect(projects).toContain('@before-enter="onBeforeEnter"')
+    expect(projects).toContain('@before-leave="onBeforeLeave"')
+    expect(projects).toContain('overflow-x-clip')
+  })
+
+  it('defines clean enter, leave and move transitions for both grids', () => {
+    const stack = readFileSync(new URL('../components/home/TechEcosystem.vue', import.meta.url), 'utf8')
+    expect(stack).toContain('.tech-enter-active')
+    expect(stack).toContain('.tech-enter-from')
+    expect(stack).toContain('.tech-move')
+    expect(stack).toContain('transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1)')
+
+    expect(css).toContain('.reveal.reveal-settled')
+    expect(css).toContain('.project-enter-active')
+    expect(css).toContain('.project-enter-from')
+    expect(css).toContain('.project-leave-active')
+    expect(css).toContain('.project-leave-to')
+    expect(css).toContain('.project-move')
+
+    const settled = block(css, '.reveal.reveal-settled')
+    expect(settled).toContain('animation: none;')
+    expect(settled).toContain('opacity: 1;')
+    expect(settled).toContain('translate: none;')
+    expect(settled).toContain('scale: none;')
   })
 })

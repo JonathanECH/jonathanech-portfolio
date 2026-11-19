@@ -23,6 +23,12 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 - Cards de proyectos con entrada vertical en móvil y entrada lateral con leve
   asentamiento y escalonado por posición en tablet/desktop, con
   `overflow-x-clip` en la grilla para evitar scroll horizontal.
+- Transiciones unificadas al filtrar o expandir Stack y Proyectos mediante
+  `<TransitionGroup>`, claves estables por `technology.id` / `project.slug` y
+  `*-move` sobre `transform`. El hook `reveal-settled` cancela el `view()`
+  timeline al entrar/salir para que ninguna tarjeta quede oculta o congelada.
+- Stack ajustado a `animation-range: entry 0% entry 85%`; el bloque de
+  `prefers-reduced-motion` también cubre las transiciones de grupo.
 
 ### Removed
 
