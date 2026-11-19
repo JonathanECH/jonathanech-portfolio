@@ -5,6 +5,24 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
+## [1.0.1] - 2026-11-19
+
+### Fixed
+
+- La animación de entrada por scroll de las cards de proyectos y tecnologías: la
+  transición estaba declarada solo en el estado oculto, así que al añadir
+  `.is-visible` el estado final no tenía `transition` y las cards aparecían de golpe.
+  Ahora la transición vive en la regla base `html.js .reveal`.
+- `v-reveal` se aplica directamente en el elemento raíz de `ProjectCard` y
+  `TechCard`, sin depender del *attribute fallthrough* desde el componente padre.
+- Las secciones con animaciones `reveal` ya no usan `content-visibility: auto`,
+  para que `IntersectionObserver` detecte las cards de forma fiable.
+
+### Added
+
+- `src/directives/reveal.spec.ts`: 8 pruebas para la directiva (delay, reduced
+  motion, sin `IntersectionObserver`, intersección, limpieza) y para la regla CSS.
+
 ## [1.0.0] - 2026-11-18
 
 Primera release estable desplegada en `https://jonathanech.dev`. El portafolio pasa

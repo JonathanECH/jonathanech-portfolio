@@ -26,7 +26,7 @@ function openQuickView(): void {
 </script>
 
 <template>
-  <li class="reveal">
+  <li v-reveal="index * 80" class="reveal">
     <article
       class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card/60 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:shadow-[0_18px_40px_-24px_rgba(var(--ech-accent-rgb),0.45)]"
       :style="`--accent: ${project.accent}`"

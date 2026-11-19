@@ -105,7 +105,6 @@ function toggleTechGrid(): void {
         <TechCard
           v-for="(technology, index) in visibleTechnologies"
           :key="`${activeCategory}-${technology.id}`"
-          v-reveal="Math.min(index, 6) * 45"
           :technology="technology"
           :index="index"
         />
