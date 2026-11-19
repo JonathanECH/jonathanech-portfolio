@@ -72,7 +72,7 @@ const filteredProjects = computed(() => {
         </button>
       </div>
 
-      <ul class="mt-8 grid list-none grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <ul class="mt-8 grid list-none grid-cols-1 gap-6 overflow-x-clip md:grid-cols-2 lg:grid-cols-3">
         <ProjectCard
           v-for="project in filteredProjects"
           :key="project.slug"

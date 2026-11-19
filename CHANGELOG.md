@@ -17,6 +17,12 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 - Eliminada la directiva `v-reveal` (`src/directives/reveal.ts`), la clase
   auxiliar `html.js` en `index.html` y el prop `index` en `ProjectCard`,
   manteniendo intactos `useActiveSection` y `useScrolled`.
+- Revelado del Stack con mayor presencia (`translate: 0 28px` y `scale: 0.97`)
+  en un wrapper dedicado que preserva el feedback táctil del `<article>`
+  (`pressed`, `pointerdown` y `transform` inline).
+- Cards de proyectos con entrada vertical en móvil y entrada lateral con leve
+  asentamiento y escalonado por posición en tablet/desktop, con
+  `overflow-x-clip` en la grilla para evitar scroll horizontal.
 
 ### Removed
 

@@ -321,35 +321,93 @@
 
   /* Content is fully visible by default. The hidden keyframe state only exists
      inside the scroll-driven-animation support query, so unsupported browsers
-     never hide a card. `translate` and `opacity` stay on the compositor.
-     view() uses the nearest scrollport: reveal sections must use `overflow:
-     clip`, not `hidden`, so cards are measured against the viewport. */
+     never hide a card. The animated wrapper owns `translate`/`scale`; the card
+     inside keeps `hover:-translate-y-1` and the inline `transform` used by the
+     Stack tap feedback. view() uses the nearest scrollport, so reveal sections
+     must use `overflow: clip`, not `hidden`, to be measured against the
+     viewport. */
   .reveal {
     opacity: 1;
     transform: none;
     translate: none;
+    scale: none;
   }
 
   @supports ((animation-timeline: view()) and (animation-range: entry)) {
-    @keyframes reveal-on-scroll {
+    @keyframes reveal-stack {
       from {
         opacity: 0;
-        translate: 0 18px;
+        translate: 0 28px;
+        scale: 0.97;
       }
       to {
         opacity: 1;
         translate: 0 0;
+        scale: 1;
+      }
+    }
+
+    @keyframes reveal-project {
+      from {
+        opacity: 0;
+        translate: var(--reveal-x) var(--reveal-y);
+        scale: var(--reveal-scale);
+      }
+      to {
+        opacity: 1;
+        translate: 0 0;
+        scale: 1;
       }
     }
 
     @media (prefers-reduced-motion: no-preference) {
-      .reveal {
+      .reveal--stack {
         /* `animation` resets the timeline, so both timeline properties are
            declared afterwards. The duration is non-zero but progress comes
            entirely from the bounded view() range. */
-        animation: reveal-on-scroll 1ms linear both;
+        animation: reveal-stack 1ms linear both;
         animation-timeline: view(block);
         animation-range: entry 0% entry 100%;
+      }
+
+      .reveal--project {
+        --reveal-x: 0px;
+        --reveal-y: 24px;
+        --reveal-scale: 1;
+        animation: reveal-project 1ms linear both;
+        animation-timeline: view(block);
+        animation-range: entry 0% entry 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+      .reveal--project {
+        --reveal-x: 18px;
+        --reveal-y: 14px;
+        --reveal-scale: 0.985;
+      }
+
+      .reveal--project:nth-child(even) {
+        --reveal-x: -18px;
+      }
+
+      .reveal--project:nth-child(3n + 2) {
+        animation-range: entry 6% entry 100%;
+      }
+
+      .reveal--project:nth-child(3n + 3) {
+        animation-range: entry 12% entry 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+      .reveal--project {
+        --reveal-x: 24px;
+        --reveal-scale: 0.98;
+      }
+
+      .reveal--project:nth-child(even) {
+        --reveal-x: -24px;
       }
     }
   }
@@ -387,6 +445,7 @@
     opacity: 1;
     transform: none;
     translate: none;
+    scale: none;
   }
 
   .page-enter-active,
