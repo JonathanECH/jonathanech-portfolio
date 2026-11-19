@@ -48,9 +48,6 @@
     <!-- Applies the stored theme/locale before first paint to avoid a flash. -->
     <script>
       ;(() => {
-        // Enables JS-only motion states before the stylesheet is parsed.
-        document.documentElement.classList.add('js')
-
         try {
           const raw = localStorage.getItem('ech:preferences')
           const parsed = raw ? JSON.parse(raw) : {}

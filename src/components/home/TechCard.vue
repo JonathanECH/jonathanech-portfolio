@@ -39,7 +39,6 @@ onBeforeUnmount(() => {
 
 <template>
   <article
-    v-reveal="Math.min(index, 6) * 45"
     role="listitem"
     class="reveal group relative flex h-full touch-manipulation select-none flex-col overflow-hidden rounded-xl border border-border bg-surface-card/60 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-border-hover hover:bg-surface-card-hover hover:shadow-[0_0_30px_-8px_rgba(var(--ech-accent-rgb),0.35)] active:border-cyan-accent active:bg-cyan-accent/10"
     :style="

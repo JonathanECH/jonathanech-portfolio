@@ -83,7 +83,6 @@ export const createApp = ViteSSG(
   App,
   { routes, scrollBehavior },
   ({ app }) => {
-    app.directive('reveal', reveal)
     app.use(createPinia())
 
     if (!import.meta.env.SSR) {
@@ -270,6 +269,8 @@ pnpm preview
 
 - **Navegación por teclado:** enlace de salto al contenido, foco visible (`:focus-visible`) y cierre con `Escape` en modales.
 - **Movimiento reducido:** respeto íntegro de `prefers-reduced-motion`.
+- **Animaciones de scroll:** revelado nativo con `animation-timeline: view()`,
+  contenido visible por defecto si el navegador no las soporta y sin polyfill.
 - **Tipografías locales:** `@fontsource-variable` autoalojado, sin peticiones a CDNs externos y con menor CLS.
 - **Semántica HTML:** `header`, `main`, `section`, `article`, `nav`, `footer` y atributos ARIA en controles interactivos.
 - **Imágenes:** `loading="lazy"`, `decoding="async"` y textos alternativos descriptivos.
@@ -279,7 +280,7 @@ pnpm preview
 ## Control de calidad y publicación
 
 - `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest y el build estático con `vite-ssg`.
-- Release actual: **v1.0.1** (2026-11-19). Referencia verificada: typecheck OK, **102/102 pruebas** y build de producción correcto (6 páginas prerenderizadas).
+- Release actual: **v1.1.0** (2026-11-19). Referencia verificada: typecheck OK, **102/102 pruebas** y build de producción correcto (6 páginas prerenderizadas).
 - Historial de cambios en [`CHANGELOG.md`](CHANGELOG.md); procedimientos de mantenimiento, tags, dependencias, monitoreo y rollback en [`docs/MAINTENANCE.md`](docs/MAINTENANCE.md).
 - Antes de publicar se revisa `git status`, se confirma que `main` no tiene cambios locales pendientes y se hace push a `origin/main` con `--follow-tags`; la rama está desplegada en producción.
 - El detalle de las mejoras, su trazabilidad y la validación previa al despliegue está en [`docs/AUDIT_AND_ROADMAP.md`](docs/AUDIT_AND_ROADMAP.md).

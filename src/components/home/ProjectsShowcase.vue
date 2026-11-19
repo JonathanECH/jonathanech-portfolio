@@ -74,10 +74,9 @@ const filteredProjects = computed(() => {
 
       <ul class="mt-8 grid list-none grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <ProjectCard
-          v-for="(project, index) in filteredProjects"
+          v-for="project in filteredProjects"
           :key="project.slug"
           :project="project"
-          :index="index"
           @open-quick-view="store.openQuickView"
         />
       </ul>

@@ -5,6 +5,24 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
+## [1.1.0] - 2026-11-19
+
+### Changed
+
+- Animación de revelado por scroll de las cards migrada de `IntersectionObserver`
+  en JavaScript a *CSS Scroll-Driven Animations* (`animation-timeline: view()`
+  y `animation-range: entry 0% entry 100%`) animando la propiedad `translate`
+  dentro de `@supports ((animation-timeline: view()) and (animation-range: entry))`
+  con respaldo visible por defecto y respeto a `prefers-reduced-motion`.
+- Eliminada la directiva `v-reveal` (`src/directives/reveal.ts`), la clase
+  auxiliar `html.js` en `index.html` y el prop `index` en `ProjectCard`,
+  manteniendo intactos `useActiveSection` y `useScrolled`.
+
+### Removed
+
+- `src/directives/reveal.ts` y `src/directives/reveal.spec.ts`, reemplazados por
+  `src/styles/reveal.spec.ts` para validar el contrato CSS.
+
 ## [1.0.1] - 2026-11-19
 
 ### Fixed
