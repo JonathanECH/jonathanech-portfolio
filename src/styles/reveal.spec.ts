@@ -56,12 +56,13 @@ describe('scroll-driven reveal contract', () => {
       expect(keyframes, name).not.toContain('transform:')
     }
 
-    expect(stack).toContain('translate: 0 28px')
-    expect(stack).toContain('scale: 0.97')
+    expect(stack).toContain('translate: 0 60px')
+    expect(stack).toContain('scale: 0.86')
     expect(project).toContain('translate: var(--reveal-x) var(--reveal-y)')
     expect(project).toContain('scale: var(--reveal-scale)')
     expect(about).toContain('translate: 0 18px')
-    expect(contact).toContain('translate: 0 16px')
+    expect(contact).toContain('translate: var(--contact-x) var(--contact-y)')
+    expect(contact).toContain('scale: var(--contact-scale)')
 
     expect(metric).toContain('transform: scaleX(0)')
     expect(metric).toContain('transform: scaleX(1)')
@@ -171,6 +172,11 @@ describe('scroll-driven reveal contract', () => {
     const desktop = block(supports, desktopToken)
     expect(desktop).toContain('--reveal-x: 24px')
     expect(desktop).toContain('--reveal-scale: 0.98')
+    expect(desktop).toContain('--contact-x: -44px')
+    expect(desktop).toContain('--contact-x: -18px')
+    expect(desktop).toContain('--contact-x: 18px')
+    expect(desktop).toContain('--contact-x: 44px')
+    expect(desktop).toContain('animation-range: var(--contact-entry) entry 85%')
   })
 
   it('restores the final visible state under reduced motion', () => {
@@ -259,15 +265,28 @@ describe('scroll-driven reveal contract', () => {
     expect(project).toContain('hover:-translate-y-1')
   })
 
-  it('settles TransitionGroup cards so view() cannot hide them', () => {
-    const { onBeforeEnter, onBeforeLeave } = useRevealTransition()
+  it('settles TransitionGroup cards only during enter/leave and always restores view() reveal afterwards', () => {
+    const { onBeforeEnter, onAfterEnter, onEnterCancelled, onBeforeLeave } = useRevealTransition()
     const classes = new Set<string>()
-    const el = { classList: { add: (name: string) => classes.add(name) } } as unknown as Element
+    const el = {
+      classList: {
+        add: (name: string) => classes.add(name),
+        remove: (name: string) => classes.delete(name),
+      },
+    } as unknown as Element
 
     onBeforeEnter(el)
     expect(classes.has('reveal-settled')).toBe(true)
 
-    classes.clear()
+    onAfterEnter(el)
+    expect(classes.has('reveal-settled')).toBe(false)
+
+    onBeforeEnter(el)
+    expect(classes.has('reveal-settled')).toBe(true)
+
+    onEnterCancelled(el)
+    expect(classes.has('reveal-settled')).toBe(false)
+
     onBeforeLeave(el)
     expect(classes.has('reveal-settled')).toBe(true)
   })
@@ -276,6 +295,8 @@ describe('scroll-driven reveal contract', () => {
     const stack = readFileSync(new URL('../components/home/TechEcosystem.vue', import.meta.url), 'utf8')
     expect(stack).toContain('<TransitionGroup')
     expect(stack).toContain('@before-enter="onBeforeEnter"')
+    expect(stack).toContain('@after-enter="onAfterEnter"')
+    expect(stack).toContain('@enter-cancelled="onEnterCancelled"')
     expect(stack).toContain('@before-leave="onBeforeLeave"')
     expect(stack).toContain(':key="technology.id"')
     expect(stack).not.toContain('activeCategory}-${technology.id')
@@ -289,6 +310,8 @@ describe('scroll-driven reveal contract', () => {
     expect(projects).toContain('name="project"')
     expect(projects).toContain(':key="project.slug"')
     expect(projects).toContain('@before-enter="onBeforeEnter"')
+    expect(projects).toContain('@after-enter="onAfterEnter"')
+    expect(projects).toContain('@enter-cancelled="onEnterCancelled"')
     expect(projects).toContain('@before-leave="onBeforeLeave"')
     expect(projects).toContain('overflow-x-clip')
   })

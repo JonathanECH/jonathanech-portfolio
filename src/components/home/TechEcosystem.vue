@@ -9,7 +9,7 @@ import { usePortfolioStore } from '@/stores/portfolio'
 import type { TechFilter } from '@/types/portfolio'
 
 const store = usePortfolioStore()
-const { onBeforeEnter, onBeforeLeave } = useRevealTransition()
+const { onBeforeEnter, onAfterEnter, onEnterCancelled, onBeforeLeave } = useRevealTransition()
 const { content, t } = useI18n()
 const techFilterOptions = computed(() => content.value.techFilterOptions)
 
@@ -104,6 +104,8 @@ function toggleTechGrid(): void {
         :aria-label="t('tech.gridAria')"
         class="mt-8 grid grid-cols-2 gap-3.5 lg:grid-cols-3 xl:grid-cols-4"
         @before-enter="onBeforeEnter"
+        @after-enter="onAfterEnter"
+        @enter-cancelled="onEnterCancelled"
         @before-leave="onBeforeLeave"
       >
         <TechCard
@@ -146,6 +148,7 @@ function toggleTechGrid(): void {
 
 <style scoped>
 .tech-enter-active {
+  animation: none;
   transition:
     opacity 220ms ease,
     translate 220ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -163,6 +166,7 @@ function toggleTechGrid(): void {
 }
 
 .tech-leave-active {
+  animation: none;
   transition:
     opacity 180ms ease,
     transform 180ms ease;

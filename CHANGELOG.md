@@ -5,7 +5,7 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
-## [Unreleased]
+## [1.2.0] - 2026-11-20
 
 ### Added
 
@@ -42,9 +42,24 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
   redundante `animation-range: entry 0% entry 70%` que repetía el rango base y se
   documenta únicamente `--reveal-y: 12px`, manteniendo intacto el comportamiento
   y `@media (prefers-reduced-motion: reduce)`.
+- Animación de revelado por scroll en Desktop (`min-width: 1024px`) para la
+  sección de **Contacto** (`@keyframes reveal-contact` y `.reveal--contact` en
+  `src/styles/main.css`): convergencia simétrica al eje central (*Console Docking*),
+  donde el par interior (`GitHub` y `LinkedIn`) inicia en `entry 0%` con
+  `--contact-x: ±18px` y `--contact-scale: 0.88`, y el par exterior (`Email` y
+  `WhatsApp`) converge desde `--contact-x: ±44px` y `--contact-scale: 0.86` en
+  `entry 6%` hasta `entry 85%`.
 
 ### Fixed
 
+- Preservación permanente de la animación de scroll (`animation-timeline: view(block)`)
+  en todas las cards del **Stack** y **Proyectos** (`src/composables/useRevealTransition.ts`,
+  `src/components/home/TechEcosystem.vue`, `src/components/home/ProjectsShowcase.vue`
+  y `src/styles/main.css`): `reveal-settled` ahora se elimina de forma incondicional
+  en `@after-enter` y `@enter-cancelled` (además de pausar `animation: none` en
+  `.tech-enter-active` / `.project-enter-active`), evitando que las cards pierdan
+  su animación de scroll al filtrar categorías, expandir con "Ver más" o volver
+  al filtro por defecto (`TODAS // ALL`).
 - Hidratación SSG sin desajustes de idioma: `initPreferences()` se traslada de
   `src/main.ts` al hook `onMounted` de `src/App.vue`, garantizando que el primer
   render de hidratación coincida con el HTML prerenderizado en español antes de
@@ -81,7 +96,7 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
 ### Verificación
 
-- `pnpm verify`: typecheck OK, **123/123** pruebas en **13** archivos de test y
+- `pnpm verify`: typecheck OK, **124/124** pruebas en **13** archivos de test y
   build `vite-ssg` correcto (6 páginas prerenderizadas).
 
 ## [1.1.1] - 2026-11-19

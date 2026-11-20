@@ -6,7 +6,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 
 ## Estado General
 
-- **Rama activa:** `fix/ssg-locale-lightbox-gallery` (sobre `main` en release `v1.1.1`)
+- **Rama activa:** `main` (release `v1.2.0`)
 - **Fecha de inicio:** 9 de noviembre de 2026
 - **Última actualización:** 20 de noviembre de 2026
 - **Objetivo:** Credibilidad en 30–60 segundos, enlaces funcionales, posicionamiento claro como Frontend Engineer para reclutadores internacionales y paridad completa ES/EN.
@@ -71,6 +71,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | **P3.16** | **Higiene DX: Vue Router 5, TypeScript 7 y Tailwind v4** | **COMPLETADO** | Guard de `vite-ssg` adaptado en `src/main.ts` a firma de 2 argumentos basada en `return` (elimina `[VUE_ROUTER_R0025]`); eliminado `"baseUrl": "."` deprecado en `tsconfig.json` y `tsconfig.node.json`; migradas 58 clases a sintaxis canónica de Tailwind CSS v4 (`0` warnings restantes). Commit `8206837`. |
 | **P3.17** | **Hidratación SSG, higiene de gestos, accesibilidad y limpieza de código** | **COMPLETADO** | `initPreferences()` movido a `onMounted` en `App.vue` (sin mismatch SSG); `GalleryLightbox` respeta `swipe.justSwiped` al hacer clic en backdrop/escenario; `ProjectGallery` se remonta al cambiar `locale`; limpieza de timers de 80 ms en `useZoom` y `useSwipeNavigation` (`reset`, `onPointerDown`, `onScopeDispose`); preservación aditiva de `padding-right` con `calc(...)` en `useScrollLock`; restauración de foco a `menuButtonRef` al cerrar menú móvil en `AppNavbar`; diagnóstico en inglés de Clínica Razetti alineado con revocación JWT en tiempo real; eliminado renderizador CSS muerto de mockups, `MockupVariant`/`variant` y 51 claves `mockup.*` huérfanas; limpiada declaración redundante `animation-range` en regla móvil de `.reveal--project`; `rel` centralizado en `ContactChannel` (`portfolio.ts` / `portfolio.en.ts`) para `AppFooter` y `ContactSection`. Suite ampliada a **120/120** pruebas en 13 archivos. |
 | **P3.18** | **Skeleton de carga en el visor de galería** | **COMPLETADO** | `GalleryLightbox` muestra un placeholder accesible mientras carga la imagen activa: se activa al abrir o cambiar de diapositiva/fuente, respeta imágenes en caché (`complete` + `naturalWidth > 0` tras `nextTick()`) y se oculta en `load`/`error`. Es decorativo (`aria-hidden`, `pointer-events-none`), usa `motion-safe:animate-pulse` y no bloquea backdrop, zoom, swipe ni teclado. Cubierto en `GalleryLightbox.spec.ts` (commit `9bb3f82`). Suite en **123/123** pruebas en 13 archivos. |
+| **P3.19** | **Persistencia de scroll-reveal en filtros de Stack y convergencia simétrica en Contacto Desktop** | **COMPLETADO** | `useRevealTransition` limpia `reveal-settled` de forma incondicional en `onAfterEnter` y `onEnterCancelled` (y `.tech-enter-active` / `.project-enter-active` declaran `animation: none` durante la transición de 220 ms), garantizando que ninguna card del Stack o Proyectos pierda su `animation-timeline: view(block)` al filtrar, expandir o volver a `TODAS // ALL`. Añadida coreografía de convergencia simétrica al centro (*Console Docking*) en Desktop (`min-width: 1024px`) para `.reveal--contact` (`--contact-x: ±44px / ±18px`, `--contact-scale: 0.86 / 0.88`). Suite en **124/124** pruebas en 13 archivos. |
 
 ---
 
@@ -95,6 +96,18 @@ Checklist de la rama `feat/project-reveal-70` (commits `5bb208a` y `f593ee7`):
 3. **Sobre Mí:** las cuatro barras de métricas usan `cover` en vez de `entry`: inicios `cover 10% / 14% / 18% / 22%` y fin `cover 50%` en escritorio y `cover 45%` en móvil, manteniendo visible la cuarta barra (SEO) y sin animar `width`.
 4. **Verificación integral:** `pnpm verify` → typecheck OK, **110/110** tests en 12 archivos y build `vite-ssg` correcto (6 páginas prerenderizadas).
 5. **Publicación:** merge de la rama en `main` y tag anotado `v1.1.1` enviado con `git push --follow-tags`; `main` es la rama desplegada en producción.
+
+---
+
+## Validación previa a producción (release `v1.2.0` · 2026-11-20)
+
+Checklist de los PR `#14`, `#15` y `#16`:
+
+1. **Alcance:** skeleton accesible en `GalleryLightbox`, correcciones de SSG/gestos/accesibilidad, tokens de easing y transiciones explícitas, y preservación del reveal nativo por scroll al filtrar o expandir el Stack y los Proyectos; bump a `1.2.0` en `package.json`.
+2. **Movimiento:** `reveal-settled` se libera en `@after-enter` y `@enter-cancelled`, con keys estables y wrappers de animación separados de las cards interactivas; Contacto añade convergencia escalonada en desktop sin animar propiedades de layout.
+3. **Accesibilidad:** `motion-safe:` en hover/press, dot decorativo con `aria-hidden`, foco restaurado al cerrar el menú móvil y `rel` centralizado en los canales de contacto.
+4. **Verificación integral:** `pnpm verify` → typecheck OK, **124/124** tests en 13 archivos y build `vite-ssg` correcto (6 páginas prerenderizadas).
+5. **Publicación:** PR `#16` fusionado en `main` y tag anotado `v1.2.0` enviado con `git push --follow-tags`; `main` es la rama desplegada en producción.
 
 ---
 
