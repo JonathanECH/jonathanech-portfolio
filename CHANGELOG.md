@@ -5,6 +5,67 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
+## [Unreleased]
+
+### Changed
+
+- Centralización del atributo `rel` en los canales de contacto: `ContactChannel`
+  incorpora `rel?: string` en `src/types/portfolio.ts`, definido en la fuente de
+  datos (`src/data/portfolio.ts` y `src/data/portfolio.en.ts`: `'me noopener noreferrer'`
+  en GitHub y LinkedIn, `'noopener noreferrer'` en WhatsApp) y enlazado
+  directamente con `:rel="link.rel"` / `:rel="channel.rel"` en `AppFooter.vue` y
+  `ContactSection.vue`.
+- Coherencia bilingüe en el diagnóstico de auditoría del caso **Clínica Razetti**
+  (`src/data/portfolio.en.ts`): la cláusula final ahora refleja la ausencia de
+  revocación de tokens JWT en tiempo real al desactivar usuarios, en paridad con
+  la versión en español y con la resolución técnica del caso.
+- Limpieza de la regla móvil `@media (prefers-reduced-motion: no-preference) and (max-width: 767px)`
+  para `.reveal--project` en `src/styles/main.css`: se elimina la declaración
+  redundante `animation-range: entry 0% entry 70%` que repetía el rango base y se
+  documenta únicamente `--reveal-y: 12px`, manteniendo intacto el comportamiento
+  y `@media (prefers-reduced-motion: reduce)`.
+
+### Fixed
+
+- Hidratación SSG sin desajustes de idioma: `initPreferences()` se traslada de
+  `src/main.ts` al hook `onMounted` de `src/App.vue`, garantizando que el primer
+  render de hidratación coincida con el HTML prerenderizado en español antes de
+  aplicar la preferencia del navegador o de `localStorage`.
+- `GalleryLightbox` respeta la ventana de supresión de clic sintético tras un
+  gesto horizontal (`swipe.justSwiped`) además de `zoom.justPanned`, evitando que
+  el diálogo se cierre por accidente al soltar un swipe sobre el escenario o el
+  backdrop.
+- `ProjectGallery` se remonta al cambiar de idioma (`:key="`${project.slug}-${locale}`"`
+  en `ProjectDetailView.vue`), sincronizando de inmediato los slides activos del
+  carrusel y del lightbox con el contenido localizado.
+- Limpieza determinista de temporizadores de supresión de clic (80 ms) en gestos:
+  `useZoom.ts` limpia `clickSuppressionTimer` y restablece `justPanned = false`
+  en `resetZoom()` y al disponer el scope (`onScopeDispose`); `useSwipeNavigation.ts`
+  almacena el ID del temporizador y lo limpia en `reset()`, al iniciar un nuevo
+  `onPointerDown` y en `onScopeDispose`.
+- Restauración del foco de teclado al cerrar el menú móvil en `AppNavbar.vue`:
+  el botón hamburguesa expone `ref="menuButtonRef"` y recupera el foco
+  (`menuButtonRef.value?.focus()`) cuando el menú se cierra con `Escape`, clic en
+  el backdrop o clic fuera de la barra.
+- `useScrollLock.ts` preserva cualquier `padding-right` inline previo en
+  `document.body` usando `calc(${previousPaddingRight || '0px'} + ${scrollbarWidth}px)`
+  al compensar el scrollbar y restaura el valor original exacto al desbloquear.
+
+### Removed
+
+- Código muerto del renderizador de mockups CSS en `src/components/detail/MockupCanvas.vue`,
+  props `:accent` y `:project-slug` en `ProjectGallery.vue`, el tipo `MockupVariant`
+  y los campos `variant` en `src/types/portfolio.ts`, `src/data/portfolio.ts` y
+  `src/data/portfolio.en.ts`, así como las 51 claves huérfanas `mockup.*` en
+  `src/i18n/messages/es.ts` y `src/i18n/messages/en.ts`. `MockupCanvas.vue`
+  conserva la renderización de imagen (`<img>`) y su respaldo accesible ante
+  errores de carga (`@error`).
+
+### Verificación
+
+- `pnpm verify`: typecheck OK, **120/120** pruebas en **13** archivos de test y
+  build `vite-ssg` correcto (6 páginas prerenderizadas).
+
 ## [1.1.1] - 2026-11-19
 
 ### Changed

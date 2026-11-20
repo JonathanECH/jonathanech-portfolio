@@ -76,7 +76,7 @@ Jonathan Campos es un **Frontend Web Developer** especializado en **Vue 3, Tailw
 
 ### 1. Generación estática con `vite-ssg`
 
-`src/main.ts` exporta `createApp` mediante `ViteSSG`, que crea la aplicación con historial en memoria durante el prerenderizado e historial web en el navegador.
+`src/main.ts` exporta `createApp` mediante `ViteSSG`, que crea la aplicación con historial en memoria durante el prerenderizado e historial web en el navegador. La hidratación de preferencias de idioma del cliente (`initPreferences()`) se ejecuta dentro de `onMounted` en `src/App.vue` para evitar discrepancias de hidratación con el HTML prerenderizado:
 
 ```ts
 export const createApp = ViteSSG(
@@ -84,10 +84,6 @@ export const createApp = ViteSSG(
   { routes, scrollBehavior },
   ({ app }) => {
     app.use(createPinia())
-
-    if (!import.meta.env.SSR) {
-      initPreferences()
-    }
   },
 )
 ```
@@ -267,12 +263,9 @@ pnpm preview
 
 ## Accesibilidad y rendimiento
 
-- **Navegación por teclado:** enlace de salto al contenido, foco visible (`:focus-visible`) y cierre con `Escape` en modales.
-- **Movimiento reducido:** respeto íntegro de `prefers-reduced-motion`.
-- **Animaciones de scroll:** revelado nativo con `animation-timeline: view()`,
-  rangos adaptados por breakpoint (entrada corta en móvil para mantener respuesta
-  táctil 1:1), contenido visible por defecto si el navegador no las soporta y sin
-  polyfill.
+- **Navegación por teclado:** enlace de salto al contenido, foco visible (`:focus-visible`), restauración del foco al botón de menú móvil al cerrar con `Escape` o backdrop, y cierre con `Escape` en modales.
+- **Movimiento reducido:** respeto íntegro de `prefers-reduced-motion` y utilidades `motion-safe:` en microinteracciones.
+- **Animaciones de scroll y transiciones de grupo:** revelado nativo con `animation-timeline: view()` y `animation-range` adaptados por sección y breakpoint (proyectos al `entry 70%`, métricas de "Sobre Mí" en rango `cover`, entrada escalonada en "Contacto" y contenedores con `overflow-clip` para no crear scrollports anidados), coordinado con `<TransitionGroup>` mediante `useRevealTransition` (`reveal-settled`) al filtrar o expandir tarjetas, con contenido visible por defecto si el navegador no las soporta y sin polyfill.
 - **Tipografías locales:** `@fontsource-variable` autoalojado con `preload` automático
   de los subsets WOFF2 latinos críticos en el HTML prerenderizado, sin peticiones
   a CDNs externos y con menor CLS.
@@ -286,8 +279,8 @@ pnpm preview
 
 ## Control de calidad y publicación
 
-- `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest y el build estático con `vite-ssg`.
-- Release actual: **v1.1.1** (2026-11-19). Referencia verificada: typecheck OK, **110/110 pruebas** y build de producción correcto (6 páginas prerenderizadas).
+- `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**120/120 pruebas** en **13 archivos**) y el build estático con `vite-ssg`.
+- Release actual: **v1.1.1** (2026-11-19), con correcciones posteriores de hidratación SSG, gestos de galería, accesibilidad y limpieza documentadas en `[Unreleased]` dentro de [`CHANGELOG.md`](CHANGELOG.md).
 - Release anterior: **v1.1.0**. El detalle de los ajustes de rangos de esta versión está en [`CHANGELOG.md`](CHANGELOG.md).
 - Historial de cambios en [`CHANGELOG.md`](CHANGELOG.md); procedimientos de mantenimiento, tags, dependencias, monitoreo y rollback en [`docs/MAINTENANCE.md`](docs/MAINTENANCE.md).
 - Antes de publicar se revisa `git status`, se confirma que `main` no tiene cambios locales pendientes y se hace push a `origin/main` con `--follow-tags`; la rama está desplegada en producción.
