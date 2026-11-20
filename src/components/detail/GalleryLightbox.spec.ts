@@ -53,4 +53,14 @@ describe('gallery lightbox theme', () => {
     expect(lightboxSource).toContain('@media (pointer: coarse)')
     expect(lightboxSource).toContain('@media (pointer: fine)')
   })
+
+  it('keeps swipe suppression when the slide changes', () => {
+    const slideWatcher = lightboxSource.match(
+      /watch\(\s*\(\) => props\.slide\?\.id,\s*\(\) => \{[\s\S]*?\},\s*\)/,
+    )?.[0]
+
+    expect(slideWatcher).toBeDefined()
+    expect(slideWatcher).toContain('zoom.resetZoom(true)')
+    expect(slideWatcher).not.toContain('swipe.reset()')
+  })
 })

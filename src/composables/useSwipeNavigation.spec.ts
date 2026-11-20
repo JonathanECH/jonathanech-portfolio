@@ -14,6 +14,24 @@ function createPointerEvent(init: Partial<SwipePointerEvent> = {}): SwipePointer
 }
 
 describe('useSwipeNavigation', () => {
+  it('keeps justSwiped during the synthetic click window', () => {
+    vi.useFakeTimers()
+    try {
+      const swipe = useSwipeNavigation({ threshold: 40 })
+
+      swipe.onPointerDown(createPointerEvent({ clientX: 200, clientY: 100 }))
+      swipe.onPointerMove(createPointerEvent({ clientX: 140, clientY: 100 }))
+      swipe.onPointerUp(createPointerEvent({ clientX: 140, clientY: 100 }))
+
+      expect(swipe.justSwiped.value).toBe(true)
+
+      vi.advanceTimersByTime(80)
+      expect(swipe.justSwiped.value).toBe(false)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
   it('triggers onNext when swiping left past threshold', () => {
     const onNext = vi.fn()
     const onPrevious = vi.fn()

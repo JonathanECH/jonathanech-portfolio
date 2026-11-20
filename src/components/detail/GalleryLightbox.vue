@@ -108,7 +108,6 @@ watch(
 watch(
   () => props.slide?.id,
   () => {
-    swipe.reset()
     zoom.resetZoom(true)
   },
 )

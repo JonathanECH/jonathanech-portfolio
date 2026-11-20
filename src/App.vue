@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import AppNavbar from '@/components/layout/AppNavbar.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
+import { initPreferences } from '@/composables/usePreferences'
 import { useSeo } from '@/composables/useSeo'
 import { useI18n } from '@/i18n'
 
@@ -9,6 +11,10 @@ const route = useRoute()
 const { t } = useI18n()
 
 useSeo()
+
+onMounted(() => {
+  initPreferences()
+})
 </script>
 
 <template>

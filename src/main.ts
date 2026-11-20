@@ -5,7 +5,6 @@ import '@fontsource-variable/plus-jakarta-sans'
 import '@fontsource-variable/jetbrains-mono'
 import './styles/main.css'
 import App from './App.vue'
-import { initPreferences } from './composables/usePreferences'
 import { routes, scrollBehavior } from './router'
 
 // `ViteSSG` creates the app, installs the router (memory history while
@@ -37,7 +36,6 @@ export const createApp = ViteSSG(
     app.use(createPinia())
 
     if (!import.meta.env.SSR) {
-      initPreferences()
       inject({ mode: import.meta.env.PROD ? 'production' : 'development' })
     }
   },
