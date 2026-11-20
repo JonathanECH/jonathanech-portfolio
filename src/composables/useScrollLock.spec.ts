@@ -24,7 +24,7 @@ describe('page scroll lock', () => {
     lockPageScroll()
 
     expect(bodyStyle.overflow).toBe('hidden')
-    expect(bodyStyle.paddingRight).toBe('20px')
+    expect(bodyStyle.paddingRight).toBe('calc(0px + 20px)')
   })
 
   it('keeps the page locked until the last overlay unlocks', () => {
@@ -39,11 +39,13 @@ describe('page scroll lock', () => {
     expect(bodyStyle.paddingRight).toBe('')
   })
 
-  it('restores pre-existing inline styles', () => {
+  it('preserves and restores pre-existing inline styles', () => {
     bodyStyle.overflow = 'auto'
     bodyStyle.paddingRight = '8px'
 
     lockPageScroll()
+    expect(bodyStyle.paddingRight).toBe('calc(8px + 20px)')
+
     unlockPageScroll()
 
     expect(bodyStyle.overflow).toBe('auto')

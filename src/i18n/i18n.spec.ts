@@ -76,5 +76,14 @@ describe('localized content', () => {
     expect(enContent.contactChannels[0]?.description).not.toBe(
       esContent.contactChannels[0]?.description,
     )
+    expect(enContent.projects[0]?.gallery[0]?.title).not.toBe(
+      esContent.projects[0]?.gallery[0]?.title,
+    )
+    expect(enContent.projects[0]?.gallery[0]?.caption).not.toBe(
+      esContent.projects[0]?.gallery[0]?.caption,
+    )
+    expect(enContent.projects[0]?.gallery[0]?.alt).not.toBe(
+      esContent.projects[0]?.gallery[0]?.alt,
+    )
   })
 })

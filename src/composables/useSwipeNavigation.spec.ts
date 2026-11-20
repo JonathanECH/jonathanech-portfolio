@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { ref } from 'vue'
+import { effectScope, ref } from 'vue'
 import { useSwipeNavigation, type SwipePointerEvent } from './useSwipeNavigation'
 
 function createPointerEvent(init: Partial<SwipePointerEvent> = {}): SwipePointerEvent {
@@ -14,6 +14,64 @@ function createPointerEvent(init: Partial<SwipePointerEvent> = {}): SwipePointer
 }
 
 describe('useSwipeNavigation', () => {
+  it('keeps justSwiped during the synthetic click window', () => {
+    vi.useFakeTimers()
+    try {
+      const swipe = useSwipeNavigation({ threshold: 40 })
+
+      swipe.onPointerDown(createPointerEvent({ clientX: 200, clientY: 100 }))
+      swipe.onPointerMove(createPointerEvent({ clientX: 140, clientY: 100 }))
+      swipe.onPointerUp(createPointerEvent({ clientX: 140, clientY: 100 }))
+
+      expect(swipe.justSwiped.value).toBe(true)
+
+      vi.advanceTimersByTime(80)
+      expect(swipe.justSwiped.value).toBe(false)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('clears the click suppression timer on reset, onPointerDown and scope dispose', () => {
+    vi.useFakeTimers()
+    try {
+      const swipe = useSwipeNavigation({ threshold: 40 })
+
+      swipe.onPointerDown(createPointerEvent({ clientX: 200, clientY: 100 }))
+      swipe.onPointerMove(createPointerEvent({ clientX: 140, clientY: 100 }))
+      swipe.onPointerUp(createPointerEvent({ clientX: 140, clientY: 100 }))
+
+      expect(swipe.justSwiped.value).toBe(true)
+      expect(vi.getTimerCount()).toBe(1)
+
+      swipe.reset()
+      expect(swipe.justSwiped.value).toBe(false)
+      expect(vi.getTimerCount()).toBe(0)
+
+      swipe.onPointerDown(createPointerEvent({ clientX: 200, clientY: 100 }))
+      swipe.onPointerMove(createPointerEvent({ clientX: 140, clientY: 100 }))
+      swipe.onPointerUp(createPointerEvent({ clientX: 140, clientY: 100 }))
+      expect(vi.getTimerCount()).toBe(1)
+
+      swipe.onPointerDown(createPointerEvent({ clientX: 200, clientY: 100 }))
+      expect(swipe.justSwiped.value).toBe(false)
+      expect(vi.getTimerCount()).toBe(0)
+
+      const scope = effectScope()
+      const scopedSwipe = scope.run(() => useSwipeNavigation({ threshold: 40 }))!
+
+      scopedSwipe.onPointerDown(createPointerEvent({ clientX: 200, clientY: 100 }))
+      scopedSwipe.onPointerMove(createPointerEvent({ clientX: 140, clientY: 100 }))
+      scopedSwipe.onPointerUp(createPointerEvent({ clientX: 140, clientY: 100 }))
+      expect(vi.getTimerCount()).toBe(1)
+
+      scope.stop()
+      expect(vi.getTimerCount()).toBe(0)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
   it('triggers onNext when swiping left past threshold', () => {
     const onNext = vi.fn()
     const onPrevious = vi.fn()

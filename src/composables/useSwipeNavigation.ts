@@ -1,5 +1,7 @@
-import { computed, ref, toValue } from 'vue'
+import { computed, getCurrentScope, onScopeDispose, ref, toValue } from 'vue'
 import type { MaybeRefOrGetter } from 'vue'
+
+const CLICK_SUPPRESSION_AFTER_SWIPE = 80
 
 export type SwipePointerEvent = Pick<PointerEvent, 'clientX' | 'clientY'> &
   Partial<Pick<PointerEvent, 'button' | 'pointerId' | 'pointerType'>>
@@ -40,14 +42,23 @@ export function useSwipeNavigation(options: UseSwipeNavigationOptions = {}) {
   let startY = 0
   let isPointerDown = false
   let activePointerId: number | null = null
+  let clickSuppressionTimer: ReturnType<typeof setTimeout> | null = null
 
   const isEnabled = computed(() => toValue(options.enabled) ?? true)
+
+  function clearClickSuppressionTimer(): void {
+    if (clickSuppressionTimer !== null) {
+      clearTimeout(clickSuppressionTimer)
+      clickSuppressionTimer = null
+    }
+  }
 
   function onPointerDown(event: SwipePointerEvent): void {
     if (!isEnabled.value) return
     // Only respond to primary click / touch
     if (event.button !== undefined && event.button !== 0 && event.pointerType === 'mouse') return
 
+    clearClickSuppressionTimer()
     isPointerDown = true
     activePointerId = event.pointerId ?? 1
     startX = event.clientX
@@ -104,9 +115,11 @@ export function useSwipeNavigation(options: UseSwipeNavigationOptions = {}) {
       isSwiping.value = false
 
       // Prevent accidental click events right after a swipe gesture
-      setTimeout(() => {
+      clearClickSuppressionTimer()
+      clickSuppressionTimer = setTimeout(() => {
         justSwiped.value = false
-      }, 80)
+        clickSuppressionTimer = null
+      }, CLICK_SUPPRESSION_AFTER_SWIPE)
     }
   }
 
@@ -120,12 +133,17 @@ export function useSwipeNavigation(options: UseSwipeNavigationOptions = {}) {
   }
 
   function reset(): void {
+    clearClickSuppressionTimer()
     isPointerDown = false
     activePointerId = null
     isDragging.value = false
     isSwiping.value = false
     justSwiped.value = false
     offsetX.value = 0
+  }
+
+  if (getCurrentScope()) {
+    onScopeDispose(clearClickSuppressionTimer)
   }
 
   return {

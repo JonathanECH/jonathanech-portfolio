@@ -473,9 +473,9 @@
         animation-range: entry 0% entry 40%;
       }
 
+      /* Halve the initial vertical offset on small screens while keeping the base entry range. */
       .reveal--project {
         --reveal-y: 12px;
-        animation-range: entry 0% entry 70%;
       }
 
       .reveal--about {

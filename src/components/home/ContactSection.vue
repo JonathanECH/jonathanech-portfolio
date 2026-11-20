@@ -98,13 +98,7 @@ function copyEmail(value: string): void {
               <a
                 :href="channel.href"
                 :target="channel.external ? '_blank' : undefined"
-                :rel="
-                  channel.external
-                    ? channel.id === 'github' || channel.id === 'linkedin'
-                      ? 'me noopener noreferrer'
-                      : 'noopener noreferrer'
-                    : undefined
-                "
+                :rel="channel.rel"
                 class="absolute inset-0 z-0 rounded-xl focus-visible:bg-cyan-accent/5 focus-visible:-outline-offset-2"
                 :aria-label="
                   channel.external

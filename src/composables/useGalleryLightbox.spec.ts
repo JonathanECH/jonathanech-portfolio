@@ -39,7 +39,6 @@ describe('useGalleryLightbox', () => {
       title: 'Mock Slide Without Image',
       caption: 'Mock caption',
       path: 'mock/path',
-      variant: 'medical',
       badges: ['Mock'],
     }
     const lightbox = useGalleryLightbox([slideWithoutImage])

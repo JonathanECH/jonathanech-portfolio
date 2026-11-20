@@ -1,4 +1,4 @@
-import { computed, nextTick, ref, toValue } from 'vue'
+import { computed, getCurrentScope, nextTick, onScopeDispose, ref, toValue } from 'vue'
 import type { MaybeRefOrGetter } from 'vue'
 
 export interface ZoomPoint {
@@ -284,12 +284,16 @@ export function useZoom(options: UseZoomOptions = {}) {
     translateY.value = clamp(nextTranslateY, boundsY.min, boundsY.max)
   }
 
-  function markJustPanned(): void {
-    justPanned.value = true
-
+  function clearClickSuppressionTimer(): void {
     if (clickSuppressionTimer !== null) {
       clearTimeout(clickSuppressionTimer)
+      clickSuppressionTimer = null
     }
+  }
+
+  function markJustPanned(): void {
+    justPanned.value = true
+    clearClickSuppressionTimer()
 
     clickSuppressionTimer = setTimeout(() => {
       justPanned.value = false
@@ -302,6 +306,8 @@ export function useZoom(options: UseZoomOptions = {}) {
       isTransitionSuppressed.value = true
     }
 
+    clearClickSuppressionTimer()
+    justPanned.value = false
     scale.value = minScale
     translateX.value = 0
     translateY.value = 0
@@ -608,6 +614,7 @@ export function useZoom(options: UseZoomOptions = {}) {
 
     if (scale.value <= minScale + PINCH_RESET_THRESHOLD) {
       resetZoom()
+      markJustPanned()
       return
     }
 
@@ -622,6 +629,10 @@ export function useZoom(options: UseZoomOptions = {}) {
   function onTouchCancel(): void {
     if (!isPinching.value) return
     finishPinch()
+  }
+
+  if (getCurrentScope()) {
+    onScopeDispose(clearClickSuppressionTimer)
   }
 
   return {

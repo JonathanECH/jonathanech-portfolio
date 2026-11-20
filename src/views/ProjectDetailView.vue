@@ -15,7 +15,7 @@ const NotFoundView = defineAsyncComponent(() => import('@/views/NotFoundView.vue
 const props = defineProps<{ slug: string }>()
 
 const { getProjectBySlug, getProjectNeighbors } = usePortfolioData()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const project = computed(() => getProjectBySlug(props.slug))
 const neighbors = computed(() => getProjectNeighbors(props.slug))
@@ -39,7 +39,10 @@ const galleryCode = computed(() => t('detail.galleryCode'))
         :description="project.galleryDescription"
       />
       <div class="mt-8">
-        <ProjectGallery :project="project" />
+        <ProjectGallery
+          :key="`${project.slug}-${locale}`"
+          :project="project"
+        />
       </div>
     </section>
 

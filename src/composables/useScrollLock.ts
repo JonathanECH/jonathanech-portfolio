@@ -20,7 +20,7 @@ export function lockPageScroll(): void {
 
     // Reserve the scrollbar width so hiding it does not shift the layout.
     if (scrollbarWidth > 0) {
-      document.body.style.paddingRight = `${scrollbarWidth}px`
+      document.body.style.paddingRight = `calc(${previousPaddingRight || '0px'} + ${scrollbarWidth}px)`
     }
   }
 

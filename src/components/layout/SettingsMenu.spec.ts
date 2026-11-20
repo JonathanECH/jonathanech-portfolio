@@ -37,4 +37,9 @@ describe('settings menu trigger', () => {
     expect(settingsMenuSource).toContain('await nextTick()')
     expect(settingsMenuSource).toContain('panelRef.value?.focus()')
   })
+
+  it('restores focus to the mobile menu button when the mobile menu is dismissed', () => {
+    expect(navbarSource).toContain('ref="menuButtonRef"')
+    expect(navbarSource).toContain('menuButtonRef.value?.focus()')
+  })
 })

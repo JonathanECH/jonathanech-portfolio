@@ -14,6 +14,7 @@ const { scrolled } = useScrolled()
 const { activeSection } = useActiveSection(['inicio', 'stack', 'proyectos', 'sobre-mi', 'contacto'])
 const mobileOpen = ref(false)
 const navbarRef = ref<HTMLElement | null>(null)
+const menuButtonRef = ref<HTMLButtonElement | null>(null)
 
 const navLinks = computed(() => [
   { label: t('nav.home'), hash: '#inicio', section: 'inicio' },
@@ -44,9 +45,21 @@ function isActive(section: string): boolean {
   return activeLink.value === section
 }
 
+function closeMobileMenu(returnFocus = false): void {
+  if (!mobileOpen.value) {
+    return
+  }
+
+  mobileOpen.value = false
+
+  if (returnFocus) {
+    menuButtonRef.value?.focus()
+  }
+}
+
 function handleKeydown(event: KeyboardEvent): void {
   if (event.key === 'Escape' && mobileOpen.value) {
-    mobileOpen.value = false
+    closeMobileMenu(true)
   }
 }
 
@@ -57,7 +70,7 @@ function onDocumentPointerDown(event: PointerEvent): void {
 
   const target = event.target
   if (target instanceof Node && !navbarRef.value.contains(target)) {
-    mobileOpen.value = false
+    closeMobileMenu(true)
   }
 }
 
@@ -137,6 +150,7 @@ onUnmounted(() => {
         </a>
 
         <button
+          ref="menuButtonRef"
           type="button"
           class="relative flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground transition-colors hover:border-border-hover hover:text-cyan-accent lg:hidden"
           :aria-expanded="mobileOpen"
@@ -206,7 +220,7 @@ onUnmounted(() => {
           v-if="mobileOpen"
           class="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs lg:hidden"
           aria-hidden="true"
-          @click="mobileOpen = false"
+          @click="closeMobileMenu(true)"
         />
       </Transition>
     </Teleport>

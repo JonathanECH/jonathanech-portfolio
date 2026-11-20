@@ -27,7 +27,8 @@ useScrollLock(toRef(props, 'open'))
 
 const dialogRef = ref<HTMLDialogElement | null>(null)
 const stageRef = ref<HTMLElement | null>(null)
-const imageRef = ref<HTMLElement | null>(null)
+const imageRef = ref<HTMLImageElement | null>(null)
+const isImageLoading = ref(false)
 
 const zoom = useZoom({
   stage: stageRef,
@@ -86,6 +87,39 @@ const imageStyle = computed(() => ({
     : 'none',
 }))
 
+const imageSourceKey = computed(() =>
+  props.open && props.slide ? `${props.slide.id}:${props.slide.image}` : '',
+)
+
+function startImageLoading(): void {
+  isImageLoading.value = true
+}
+
+function finishImageLoading(): void {
+  isImageLoading.value = false
+}
+
+function syncImageLoading(): void {
+  const image = imageRef.value
+  if (image?.complete && image.naturalWidth > 0) {
+    finishImageLoading()
+  }
+}
+
+watch(
+  imageSourceKey,
+  async (source) => {
+    if (!source) {
+      return
+    }
+
+    startImageLoading()
+    await nextTick()
+    syncImageLoading()
+  },
+  { immediate: true, flush: 'post' },
+)
+
 watch(
   () => props.open,
   async (isOpen) => {
@@ -108,7 +142,6 @@ watch(
 watch(
   () => props.slide?.id,
   () => {
-    swipe.reset()
     zoom.resetZoom(true)
   },
 )
@@ -308,9 +341,19 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                 @click="handleStageClick"
               >
                 <div
-                  class="flex h-full w-full items-center justify-center will-change-transform"
+                  class="relative flex h-full w-full items-center justify-center will-change-transform"
                   :style="swipeTrackStyle"
                 >
+                  <div
+                    v-if="isImageLoading"
+                    aria-hidden="true"
+                    class="pointer-events-none absolute left-1/2 top-1/2 flex aspect-4/3 w-[92vw] max-w-4xl -translate-x-1/2 -translate-y-1/2 flex-col justify-end gap-3 overflow-hidden rounded-xl border border-border bg-linear-to-br from-surface-card/80 via-surface/70 to-surface-card/80 p-4 shadow-[0_24px_70px_-20px_rgba(0,0,0,0.9)] backdrop-blur-sm sm:aspect-video sm:w-[85vw]"
+                  >
+                    <span class="h-2.5 w-1/3 rounded-full bg-foreground/10 motion-safe:animate-pulse" />
+                    <span class="h-2 w-2/3 rounded-full bg-foreground/10 motion-safe:animate-pulse" />
+                    <span class="h-2 w-1/2 rounded-full bg-foreground/10 motion-safe:animate-pulse" />
+                  </div>
+
                   <img
                     ref="imageRef"
                     :key="slide.id"
@@ -318,6 +361,8 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
                     :alt="slide.alt ?? slide.title"
                     draggable="false"
                     decoding="async"
+                    @load="finishImageLoading"
+                    @error="finishImageLoading"
                     class="block h-auto w-auto max-h-[50vh] max-w-[92vw] select-none rounded-xl border border-border object-contain shadow-[0_24px_70px_-20px_rgba(0,0,0,0.9)] will-change-transform sm:max-h-[56vh] sm:max-w-[85vw] lg:max-h-[60vh] lg:max-w-4xl xl:max-h-[64vh] xl:max-w-5xl"
                     :style="imageStyle"
                   />

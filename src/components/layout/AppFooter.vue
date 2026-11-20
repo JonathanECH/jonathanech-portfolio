@@ -27,13 +27,7 @@ const footerLinks = computed(() =>
           <a
             :href="link.href"
             :target="link.external ? '_blank' : undefined"
-            :rel="
-              link.external
-                ? link.id === 'github' || link.id === 'linkedin'
-                  ? 'me noopener noreferrer'
-                  : 'noopener noreferrer'
-                : undefined
-            "
+            :rel="link.rel"
             class="transition-colors hover:text-cyan-accent"
             :aria-label="
               link.external

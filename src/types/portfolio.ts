@@ -40,14 +40,6 @@ export type TechIconKey =
   | 'vercel'
   | 'netlify'
 
-export type MockupVariant =
-  | 'inventory'
-  | 'ledger'
-  | 'batches'
-  | 'medical'
-  | 'erp'
-  | 'analytics'
-
 export type ModuleIcon = 'reactivity' | 'state' | 'database'
 
 export interface Technology {
@@ -65,7 +57,6 @@ export interface GallerySlide {
   readonly title: string
   readonly caption: string
   readonly path: string
-  readonly variant: MockupVariant
   readonly badges: readonly string[]
   readonly image?: string
   readonly alt?: string
@@ -176,6 +167,7 @@ export interface ContactChannel {
   readonly actionLabel: string
   readonly copyValue?: string
   readonly external?: boolean
+  readonly rel?: string
 }
 
 export interface PortfolioContent {
