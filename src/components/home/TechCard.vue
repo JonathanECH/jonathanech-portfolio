@@ -98,7 +98,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="reveal reveal--stack h-full" role="listitem">
     <article
-      class="group relative flex h-full touch-manipulation select-none flex-col overflow-hidden rounded-xl border border-border bg-surface-card/60 p-4 transition-[transform,border-color,background-color] duration-200 hover:-translate-y-1 hover:border-border-hover hover:bg-surface-card-hover hover:shadow-[0_0_30px_-8px_rgba(var(--ech-accent-rgb),0.35)] active:border-cyan-accent active:bg-cyan-accent/10"
+      class="group relative flex h-full touch-manipulation select-none flex-col overflow-hidden rounded-xl border border-border bg-surface-card/60 p-4 transition-[transform,border-color,background-color] duration-200 motion-safe:hover:-translate-y-1 hover:border-border-hover hover:bg-surface-card-hover hover:shadow-[0_0_30px_-8px_rgba(var(--ech-accent-rgb),0.35)] active:border-cyan-accent active:bg-cyan-accent/10"
       :style="
         pressed
           ? {
@@ -124,7 +124,7 @@ onBeforeUnmount(() => {
           {{ technology.label }}
         </span>
 
-        <span class="transition-transform duration-300 group-hover:scale-110">
+        <span class="transition-transform duration-300 motion-safe:group-hover:scale-110">
           <TechIcon
             :icon="technology.iconKey"
             :color="technology.brandColor"

@@ -48,7 +48,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             <ArrowLeft
               :size="12"
               aria-hidden="true"
-              class="transition-transform duration-200 group-hover:-translate-x-1"
+              class="transition-transform duration-200 motion-safe:group-hover:-translate-x-1"
             />
             <span>{{ t('detail.projects') }}</span>
           </RouterLink>
@@ -158,13 +158,13 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             :href="project.links.demo"
             target="_blank"
             rel="noopener noreferrer"
-            class="group inline-flex items-center gap-2 rounded bg-cyan-accent px-5 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-contrast transition-all duration-300 hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.35)]"
+            class="group inline-flex items-center gap-2 rounded bg-cyan-accent px-5 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-contrast interactive-transition hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.35)]"
           >
             {{ t('detail.demo') }}
             <ArrowUpRight
               :size="15"
               aria-hidden="true"
-              class="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              class="transition-transform duration-200 motion-safe:group-motion-safe:hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5"
             />
             <span class="sr-only">{{ t('detail.opensNewTab') }}</span>
           </a>
@@ -174,7 +174,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             :href="project.links.repo"
             target="_blank"
             rel="noopener noreferrer"
-            class="group inline-flex items-center gap-2 rounded border border-border bg-surface-card/60 px-5 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/85 transition-all duration-300 hover:border-border-hover hover:text-cyan-accent"
+            class="group inline-flex items-center gap-2 rounded border border-border bg-surface-card/60 px-5 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/85 interactive-transition hover:border-border-hover hover:text-cyan-accent"
           >
             {{ t('detail.viewCode') }}
             <ExternalLink :size="14" aria-hidden="true" />
@@ -185,7 +185,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             v-if="project.links.whitepaper"
             :href="project.links.whitepaper"
             download
-            class="group inline-flex items-center gap-2 rounded border border-border bg-surface-card/60 px-5 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/70 transition-all duration-300 hover:border-border-hover hover:text-foreground"
+            class="group inline-flex items-center gap-2 rounded border border-border bg-surface-card/60 px-5 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/70 interactive-transition hover:border-border-hover hover:text-foreground"
           >
             {{ t('detail.whitepaper') }}
             <FileText :size="14" aria-hidden="true" />

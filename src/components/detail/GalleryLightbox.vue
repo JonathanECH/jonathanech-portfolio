@@ -275,7 +275,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
               <div class="flex shrink-0 items-center gap-2">
                 <button
                   type="button"
-                  class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground shadow-lg transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-border disabled:hover:bg-surface/80 disabled:hover:text-foreground disabled:active:scale-100 sm:h-11 sm:w-11"
+                  class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground shadow-lg interactive-transition hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast motion-safe:active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-border disabled:hover:bg-surface/80 disabled:hover:text-foreground disabled:active:scale-100 sm:h-11 sm:w-11"
                   :aria-label="t('gallery.zoomOut')"
                   :disabled="!zoom.canZoomOut.value"
                   autofocus
@@ -286,7 +286,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 
                 <button
                   type="button"
-                  class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground shadow-lg transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-border disabled:hover:bg-surface/80 disabled:hover:text-foreground disabled:active:scale-100 sm:h-11 sm:w-11"
+                  class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground shadow-lg interactive-transition hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast motion-safe:active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-border disabled:hover:bg-surface/80 disabled:hover:text-foreground disabled:active:scale-100 sm:h-11 sm:w-11"
                   :aria-label="t('gallery.zoomIn')"
                   :disabled="!zoom.canZoomIn.value"
                   @click="zoom.zoomIn"
@@ -296,7 +296,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 
                 <button
                   type="button"
-                  class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground shadow-lg transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast active:scale-95 sm:h-11 sm:w-11"
+                  class="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground shadow-lg interactive-transition hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast motion-safe:active:scale-95 sm:h-11 sm:w-11"
                   :aria-label="t('gallery.closeFull')"
                   @click="emit('close')"
                 >
@@ -309,7 +309,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
               <button
                 v-if="total > 1 && !zoom.isZoomed.value"
                 type="button"
-                class="absolute left-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground backdrop-blur-sm transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast active:scale-95 sm:left-5 sm:h-12 sm:w-12"
+                class="absolute left-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground backdrop-blur-sm interactive-transition hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast motion-safe:active:scale-95 sm:left-5 sm:h-12 sm:w-12"
                 :aria-label="t('gallery.previous')"
                 @click.stop="goPrevious"
               >
@@ -319,7 +319,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
               <button
                 v-if="total > 1 && !zoom.isZoomed.value"
                 type="button"
-                class="absolute right-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground backdrop-blur-sm transition-all duration-200 hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast active:scale-95 sm:right-5 sm:h-12 sm:w-12"
+                class="absolute right-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/80 text-foreground backdrop-blur-sm interactive-transition hover:border-cyan-accent hover:bg-cyan-accent hover:text-accent-contrast motion-safe:active:scale-95 sm:right-5 sm:h-12 sm:w-12"
                 :aria-label="t('gallery.next')"
                 @click.stop="goNext"
               >
@@ -424,7 +424,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 <style scoped>
 .lightbox-enter-active,
 .lightbox-leave-active {
-  transition: opacity 220ms ease;
+  transition: opacity 220ms var(--ease-out);
 }
 
 .lightbox-enter-from,
@@ -435,8 +435,8 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
 .lightbox-enter-active .lightbox-panel,
 .lightbox-leave-active .lightbox-panel {
   transition:
-    transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 220ms ease;
+    transform 240ms var(--ease-out),
+    opacity 220ms var(--ease-out);
 }
 
 .lightbox-enter-from .lightbox-panel,

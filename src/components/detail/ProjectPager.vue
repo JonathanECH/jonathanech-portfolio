@@ -22,7 +22,7 @@ const { t } = useI18n()
           class="group flex items-center gap-4 bg-background p-5 transition-colors duration-300 hover:bg-surface-card sm:p-6"
         >
           <span
-            class="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-border text-muted transition-all duration-300 group-hover:-translate-x-1 group-hover:border-border-hover group-hover:text-cyan-accent"
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-border text-muted interactive-transition motion-safe:group-hover:-translate-x-1 group-hover:border-border-hover group-hover:text-cyan-accent"
             aria-hidden="true"
           >
             <ArrowLeft :size="17" />
@@ -85,7 +85,7 @@ const { t } = useI18n()
             </span>
           </span>
           <span
-            class="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-border text-muted transition-all duration-300 group-hover:translate-x-1 group-hover:border-border-hover group-hover:text-cyan-accent"
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-border text-muted interactive-transition motion-safe:group-hover:translate-x-1 group-hover:border-border-hover group-hover:text-cyan-accent"
             aria-hidden="true"
           >
             <ArrowRight :size="17" />

@@ -88,7 +88,7 @@ onUnmounted(() => {
 <template>
   <header
     ref="navbarRef"
-    class="fixed inset-x-0 top-0 z-50 border-b transition-all duration-300"
+    class="fixed inset-x-0 top-0 z-50 border-b interactive-transition"
     :class="
       mobileOpen
         ? 'border-border bg-background'
@@ -110,7 +110,7 @@ onUnmounted(() => {
         <img
           :src="logoNavbar"
           alt=""
-          class="relative h-10 w-10 transition-transform duration-300 group-hover:scale-105"
+          class="relative h-10 w-10 transition-transform duration-300 motion-safe:group-hover:scale-105"
           width="40"
           height="40"
         />
@@ -126,12 +126,12 @@ onUnmounted(() => {
           :aria-current="isActive(link.section) ? 'page' : undefined"
         >
           <span
-            class="h-1 w-1 rounded-full bg-cyan-accent transition-all duration-300"
+            class="h-1 w-1 rounded-full bg-cyan-accent interactive-transition"
             :class="isActive(link.section) ? 'opacity-100 shadow-[0_0_8px_var(--ech-accent)]' : 'opacity-0'"
           />
           {{ link.label }}
           <span
-            class="absolute -bottom-0.5 left-0 h-px bg-cyan-accent/60 transition-all duration-300"
+            class="absolute -bottom-0.5 left-0 h-px bg-cyan-accent/60 interactive-transition"
             :class="isActive(link.section) ? 'w-full opacity-100' : 'w-0 opacity-0'"
           />
         </RouterLink>
@@ -143,7 +143,7 @@ onUnmounted(() => {
         <a
           href="/cv/jonathan-campos-cv.pdf"
           download
-          class="hidden items-center gap-1.5 rounded-lg bg-cyan-accent px-4 py-2 font-sans text-xs font-semibold text-accent-contrast transition-all duration-300 hover:shadow-[0_0_15px_rgba(var(--ech-accent-rgb),0.4)] sm:flex"
+          class="hidden items-center gap-1.5 rounded-lg bg-cyan-accent px-4 py-2 font-sans text-xs font-semibold text-accent-contrast interactive-transition hover:shadow-[0_0_15px_rgba(var(--ech-accent-rgb),0.4)] sm:flex"
         >
           <Download :size="14" aria-hidden="true" />
           {{ t('nav.downloadCv') }}
@@ -152,7 +152,7 @@ onUnmounted(() => {
         <button
           ref="menuButtonRef"
           type="button"
-          class="relative flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground transition-colors hover:border-border-hover hover:text-cyan-accent lg:hidden"
+          class="relative flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground interactive-transition hover:border-border-hover hover:text-cyan-accent motion-safe:active:scale-[0.97] lg:hidden"
           :aria-expanded="mobileOpen"
           aria-controls="mobile-navigation"
           :aria-label="mobileOpen ? t('nav.closeMenu') : t('nav.openMenu')"
@@ -163,7 +163,7 @@ onUnmounted(() => {
             enter-active-class="transition duration-200 ease-out"
             enter-from-class="transform scale-90 opacity-0"
             enter-to-class="transform scale-100 opacity-100"
-            leave-active-class="transition duration-150 ease-in"
+            leave-active-class="transition duration-150 ease-out"
             leave-from-class="transform scale-100 opacity-100"
             leave-to-class="transform scale-90 opacity-0"
           >
@@ -212,7 +212,7 @@ onUnmounted(() => {
         enter-active-class="transition-opacity duration-200 ease-out"
         enter-from-class="opacity-0"
         enter-to-class="opacity-100"
-        leave-active-class="transition-opacity duration-150 ease-in"
+        leave-active-class="transition-opacity duration-150 ease-out"
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
       >
@@ -231,8 +231,8 @@ onUnmounted(() => {
 .menu-enter-active,
 .menu-leave-active {
   transition:
-    opacity 180ms ease,
-    transform 180ms ease;
+    opacity 180ms var(--ease-out),
+    transform 180ms var(--ease-out);
 }
 
 .menu-enter-from,

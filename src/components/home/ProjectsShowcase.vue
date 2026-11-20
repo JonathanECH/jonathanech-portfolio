@@ -70,7 +70,7 @@ const filteredProjects = computed(() => {
           :key="opt.id"
           type="button"
           :aria-pressed="activeFilter === opt.id"
-          class="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] transition-all duration-200"
+          class="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] interactive-transition"
           :class="
             activeFilter === opt.id
               ? 'border-cyan-accent bg-cyan-accent/10 text-cyan-accent shadow-[0_0_15px_rgba(var(--ech-accent-rgb),0.15)]'

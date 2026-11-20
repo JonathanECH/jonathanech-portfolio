@@ -349,4 +349,14 @@ describe('scroll-driven reveal contract', () => {
     expect(contact).toContain('motion-safe:active:scale-[0.98]')
     expect(contact).toContain(':key="channel.id"')
   })
+
+  it('uses shared motion tokens and explicit interactive transition properties', () => {
+    expect(css).toContain('--ease-out: cubic-bezier(0.23, 1, 0.32, 1);')
+    expect(css).toContain('--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);')
+
+    const interactive = block(css, '.interactive-transition')
+    expect(interactive).toContain('border-color 160ms var(--ease-out)')
+    expect(interactive).toContain('transform 160ms var(--ease-out)')
+    expect(interactive).not.toContain('all')
+  })
 })
