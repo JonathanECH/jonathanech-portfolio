@@ -64,3 +64,29 @@ describe('gallery lightbox theme', () => {
     expect(slideWatcher).not.toContain('swipe.reset()')
   })
 })
+
+describe('gallery lightbox image loading', () => {
+  it('starts loading when the open state or active source changes', () => {
+    expect(lightboxSource).toContain('const isImageLoading = ref(false)')
+    expect(lightboxSource).toContain('ref<HTMLImageElement | null>(null)')
+    expect(lightboxSource).toContain('const imageSourceKey = computed(')
+    expect(lightboxSource).toContain('props.slide.id}:${props.slide.image}')
+    expect(lightboxSource).toMatch(/watch\(\s*imageSourceKey,/)
+    expect(lightboxSource).toContain('startImageLoading()')
+    expect(lightboxSource).toContain('await nextTick()')
+    expect(lightboxSource).toContain('syncImageLoading()')
+  })
+
+  it('hides the skeleton on load, error and cached images', () => {
+    expect(lightboxSource).toContain('@load="finishImageLoading"')
+    expect(lightboxSource).toContain('@error="finishImageLoading"')
+    expect(lightboxSource).toContain('image?.complete && image.naturalWidth > 0')
+  })
+
+  it('renders a decorative skeleton without blocking pointer input', () => {
+    expect(lightboxSource).toContain('v-if="isImageLoading"')
+    expect(lightboxSource).toContain('aria-hidden="true"')
+    expect(lightboxSource).toContain('pointer-events-none')
+    expect(lightboxSource).toContain('motion-safe:animate-pulse')
+  })
+})
