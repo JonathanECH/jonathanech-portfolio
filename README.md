@@ -273,13 +273,14 @@ pnpm preview
 - **Imágenes y carga diferida:** primera captura de galería con `loading="eager"` y
   `fetchpriority="high"` (LCP), resto de imágenes con `loading="lazy"` y
   `decoding="async"`, y carga bajo demanda (`defineAsyncComponent`) para
-  `ProjectQuickModal` y `NotFoundView`.
+  `ProjectQuickModal` y `NotFoundView`. `GalleryLightbox` muestra un skeleton
+  decorativo y accesible mientras carga la imagen activa.
 
 ---
 
 ## Control de calidad y publicación
 
-- `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**120/120 pruebas** en **13 archivos**) y el build estático con `vite-ssg`.
+- `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**123/123 pruebas** en **13 archivos**) y el build estático con `vite-ssg`.
 - Release actual: **v1.1.1** (2026-11-19), con correcciones posteriores de hidratación SSG, gestos de galería, accesibilidad y limpieza documentadas en `[Unreleased]` dentro de [`CHANGELOG.md`](CHANGELOG.md).
 - Release anterior: **v1.1.0**. El detalle de los ajustes de rangos de esta versión está en [`CHANGELOG.md`](CHANGELOG.md).
 - Historial de cambios en [`CHANGELOG.md`](CHANGELOG.md); procedimientos de mantenimiento, tags, dependencias, monitoreo y rollback en [`docs/MAINTENANCE.md`](docs/MAINTENANCE.md).

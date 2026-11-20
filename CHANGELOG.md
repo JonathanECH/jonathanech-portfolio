@@ -7,6 +7,18 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+### Added
+
+- Loading skeleton en `GalleryLightbox` (`src/components/detail/GalleryLightbox.vue`):
+  se activa al abrir el visor o al cambiar la fuente/diapositiva activa (`id`/`src`),
+  con sincronización de caché tras `nextTick()` (`complete` y `naturalWidth > 0`)
+  para no dejarlo colgado, y se oculta en `@load` y en `@error`. El placeholder es
+  decorativo (`aria-hidden="true"` y `pointer-events-none`) y usa
+  `motion-safe:animate-pulse`, sin movimiento bajo
+  `prefers-reduced-motion: reduce`; no bloquea el cierre por backdrop, el zoom,
+  el swipe ni la navegación por teclado. Cubierto por
+  `src/components/detail/GalleryLightbox.spec.ts`.
+
 ### Changed
 
 - Centralización del atributo `rel` en los canales de contacto: `ContactChannel`
@@ -63,7 +75,7 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
 ### Verificación
 
-- `pnpm verify`: typecheck OK, **120/120** pruebas en **13** archivos de test y
+- `pnpm verify`: typecheck OK, **123/123** pruebas en **13** archivos de test y
   build `vite-ssg` correcto (6 páginas prerenderizadas).
 
 ## [1.1.1] - 2026-11-19
