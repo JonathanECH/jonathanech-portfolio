@@ -281,8 +281,8 @@ pnpm preview
 ## Control de calidad y publicación
 
 - `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**124/124 pruebas** en **13 archivos**) y el build estático con `vite-ssg`.
-- Release actual: **v1.1.1** (2026-11-19), con correcciones posteriores de hidratación SSG, gestos de galería, accesibilidad y limpieza documentadas en `[Unreleased]` dentro de [`CHANGELOG.md`](CHANGELOG.md).
-- Release anterior: **v1.1.0**. El detalle de los ajustes de rangos de esta versión está en [`CHANGELOG.md`](CHANGELOG.md).
+- Release actual: **v1.2.0** (2026-11-20), con skeleton del lightbox, quick wins de movimiento, preservación del reveal por scroll al filtrar y anclaje de contacto en escritorio.
+- Release anterior: **v1.1.1**. El detalle de los cambios de esta versión está en [`CHANGELOG.md`](CHANGELOG.md).
 - Historial de cambios en [`CHANGELOG.md`](CHANGELOG.md); procedimientos de mantenimiento, tags, dependencias, monitoreo y rollback en [`docs/MAINTENANCE.md`](docs/MAINTENANCE.md).
 - Antes de publicar se revisa `git status`, se confirma que `main` no tiene cambios locales pendientes y se hace push a `origin/main` con `--follow-tags`; la rama está desplegada en producción.
 - El detalle de las mejoras, su trazabilidad y la validación previa al despliegue está en [`docs/AUDIT_AND_ROADMAP.md`](docs/AUDIT_AND_ROADMAP.md).
