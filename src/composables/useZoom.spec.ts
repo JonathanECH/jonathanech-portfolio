@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
+import { effectScope } from 'vue'
 import {
   clamp,
   computeAxisBounds,
@@ -340,6 +341,36 @@ describe('useZoom', () => {
       vi.advanceTimersByTime(100)
 
       expect(zoom.justPanned.value).toBe(false)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('clears the click suppression timer and resets justPanned on resetZoom and scope dispose', () => {
+    vi.useFakeTimers()
+
+    try {
+      const zoom = createZoom()
+
+      doubleTap(zoom, 500, 400)
+      zoom.onPointerDown(pointerEvent(500, 400))
+      zoom.onPointerMove(pointerEvent(560, 400))
+      zoom.onPointerUp(pointerEvent(560, 400))
+
+      expect(zoom.justPanned.value).toBe(true)
+
+      zoom.resetZoom()
+      expect(zoom.justPanned.value).toBe(false)
+
+      const scope = effectScope()
+      const scopedZoom = scope.run(() => createZoom())!
+
+      scopedZoom.onWheel(wheelEvent(-100))
+      expect(scopedZoom.justPanned.value).toBe(true)
+      expect(vi.getTimerCount()).toBe(1)
+
+      scope.stop()
+      expect(vi.getTimerCount()).toBe(0)
     } finally {
       vi.useRealTimers()
     }

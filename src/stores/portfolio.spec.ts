@@ -68,6 +68,27 @@ describe('portfolio data integrity', () => {
     expect(contactChannels.find((channel) => channel.id === 'whatsapp')?.href).toBe(
       'https://wa.me/584121966931',
     )
+    expect(contactChannels.find((channel) => channel.id === 'email')?.rel).toBeUndefined()
+    expect(contactChannels.find((channel) => channel.id === 'github')?.rel).toBe(
+      'me noopener noreferrer',
+    )
+    expect(contactChannels.find((channel) => channel.id === 'linkedin')?.rel).toBe(
+      'me noopener noreferrer',
+    )
+    expect(contactChannels.find((channel) => channel.id === 'whatsapp')?.rel).toBe(
+      'noopener noreferrer',
+    )
+  })
+
+  it('keeps the Clínica Razetti audit diagnosis aligned across Spanish and English', () => {
+    const esRazetti = projects.find((project) => project.slug === 'gestion-medica')
+    const enRazetti = enContent.projects.find((project) => project.slug === 'gestion-medica')
+
+    expect(esRazetti?.audit.diagnosis).toContain('revocación de tokens JWT en tiempo real')
+    expect(enRazetti?.audit.diagnosis).toContain(
+      'real-time JWT token revocation when deactivating users',
+    )
+    expect(enRazetti?.audit.diagnosis).not.toContain('unindexed tables')
   })
 
   it('keeps the bio recruiter-focused without internship or junior-seeking language', () => {

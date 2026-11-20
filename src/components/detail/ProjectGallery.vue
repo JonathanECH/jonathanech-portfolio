@@ -249,8 +249,6 @@ function announceCurrent(): void {
         >
           <MockupCanvas
             :slide="activeSlide"
-            :accent="project.accent"
-            :project-slug="project.slug"
             :priority="activeIndex === 0"
           />
         </div>

@@ -47,7 +47,6 @@ const projects: readonly Project[] = [
         caption:
           'Unit summary, pending orders and quick sale registration from a single view.',
         path: 'dashboard',
-        variant: 'inventory',
         badges: ['Operations Summary', 'Sale Entry', 'Stock'],
         image: '/projects/tilyshop-inventory/dashboard-tilyshop-inventory.webp',
         alt: 'TilyShop overview panel with unit metrics, pending orders and sale registration',
@@ -58,7 +57,6 @@ const projects: readonly Project[] = [
         caption:
           'Catalogue with filters by institution, name, color and size; per-product editing and deletion.',
         path: 'admin/inventory',
-        variant: 'inventory',
         badges: ['Catalogue', 'Filters', 'Sizes'],
         image: '/projects/tilyshop-inventory/admin-tilyshop-inventory.webp',
         alt: 'Inventory administration table with filters by institution, color and size',
@@ -69,7 +67,6 @@ const projects: readonly Project[] = [
         caption:
           'Filters by date range, garment and seller, with unit and revenue totals.',
         path: 'sales',
-        variant: 'analytics',
         badges: ['Sales', 'Filters', 'Totals'],
         image: '/projects/tilyshop-inventory/ventas-tilyshop-inventory.webp',
         alt: 'Sales history with filters by date, garment and seller',
@@ -79,7 +76,6 @@ const projects: readonly Project[] = [
         title: 'Profile & Security',
         caption: 'Credential management and password change with client-side validation.',
         path: 'profile',
-        variant: 'inventory',
         badges: ['Profile', 'Security', 'Credentials'],
         image: '/projects/tilyshop-inventory/perfil-tilyshop-inventory.webp',
         alt: 'Profile screen with a password change form',
@@ -194,7 +190,6 @@ const projects: readonly Project[] = [
         caption:
           'Temperature, description, humidity, feels-like, min/max and wind in a single view.',
         path: 'home',
-        variant: 'analytics',
         badges: ['Current Weather', 'OpenWeatherMap', 'Glassmorphism'],
         image: '/projects/clima-vue/home-clima-vue.webp',
         alt: 'Clima Vue main view with current temperature and weather metrics',
@@ -205,7 +200,6 @@ const projects: readonly Project[] = [
         caption:
           'Real-time suggestions by city, region and country with a 350 ms debounce.',
         path: 'search',
-        variant: 'analytics',
         badges: ['Geocoding', '350 ms Debounce', 'History'],
         image: '/projects/clima-vue/search-clima-vue.webp',
         alt: 'City autocomplete with suggestions by region and country',
@@ -216,7 +210,6 @@ const projects: readonly Project[] = [
         caption:
           'Adaptive layout with form, weather cards and error states on small screens.',
         path: 'mobile',
-        variant: 'analytics',
         badges: ['Responsive', 'Mobile First', 'Error States'],
         image: '/projects/clima-vue/mobile-clima-vue.webp',
         alt: 'Clima Vue mobile view with form and weather cards',
@@ -330,7 +323,6 @@ const projects: readonly Project[] = [
         caption:
           'Central dashboard with hospital metrics, modular navigation and clinical activity monitoring.',
         path: 'dashboard',
-        variant: 'medical',
         badges: ['Overview', 'Metrics', 'Hospital'],
         image: '/projects/clinica-razetti/dashboard-clinica-razetti.webp',
         alt: 'Clínica Razetti admin dashboard with hospital metrics and direct navigation',
@@ -341,7 +333,6 @@ const projects: readonly Project[] = [
         caption:
           'Dynamic dual-mode form (create/edit), real-time reactive validation and input sanitization.',
         path: 'pacientes/registro',
-        variant: 'medical',
         badges: ['Patients', 'Reactive Forms', 'Dual Mode'],
         image: '/projects/clinica-razetti/registro-paciente-clinica-razetti.webp',
         alt: 'Patient registration and edit form with reactive validations',
@@ -352,7 +343,6 @@ const projects: readonly Project[] = [
         caption:
           'Directory of clinical specialists, shift assignment, appointment quotas and availability control.',
         path: 'medicos',
-        variant: 'medical',
         badges: ['Specialists', 'Schedules', 'Availability'],
         image: '/projects/clinica-razetti/medicos-clinica-razetti.webp',
         alt: 'Specialists directory and consultation schedule management',
@@ -363,7 +353,6 @@ const projects: readonly Project[] = [
         caption:
           'Department-segmented tabs, instant filtering with Signals and medical record export to PDF.',
         path: 'reportes',
-        variant: 'analytics',
         badges: ['PDF Reports', 'Signals', 'Analytics'],
         image: '/projects/clinica-razetti/reportes-clinica-razetti.webp',
         alt: 'Clinical reports hub with department tabs and PDF medical record export',
@@ -374,7 +363,6 @@ const projects: readonly Project[] = [
         caption:
           'Strict RBAC access control, privilege escalation protection and logical deletion for record integrity.',
         path: 'usuarios',
-        variant: 'medical',
         badges: ['RBAC', 'RoleGuard', 'Audit'],
         image: '/projects/clinica-razetti/usuarios-clinica-razetti.webp',
         alt: 'User and role administration module with security policies',
@@ -385,7 +373,6 @@ const projects: readonly Project[] = [
         caption:
           'Secure login with JWT Bearer tokens, 401/403 interception, rate limiting and real-time session revocation.',
         path: 'login',
-        variant: 'medical',
         badges: ['JWT Bearer', 'Rate Limiting', 'Security'],
         image: '/projects/clinica-razetti/login-clinica-razetti.webp',
         alt: 'Authentication and secure login screen for hospital system',
@@ -402,7 +389,7 @@ const projects: readonly Project[] = [
     },
     audit: {
       diagnosis:
-        'Previous clinic workflows lacked strict token-level role controls, allowed hard deletes without audit trails and suffered high query latency across unindexed tables.',
+        'Previous clinic workflows lacked strict token-level role controls, allowed hard deletes without audit trails and had no real-time JWT token revocation when deactivating users.',
       resolution:
         'Engineered a reactive Angular 19 SPA with Signals and functional RoleGuards, backed by a Node.js/PostgreSQL API with Zod, real-time active user JWT checks and mandatory soft deletes for legal compliance.',
       badge: 'VERIFIED QA & SECURITY',
@@ -499,7 +486,6 @@ const projects: readonly Project[] = [
         caption:
           'Revenue, expenses, profitability and main accounts for the fiscal year in real time.',
         path: 'dashboard',
-        variant: 'erp',
         badges: ['Revenue', 'Expenses', 'Profitability'],
         image: '/projects/erp-lubriken/dashboard-ERP-lubriken.webp',
         alt: 'Financial dashboard with revenue, expenses and main accounts',
@@ -510,7 +496,6 @@ const projects: readonly Project[] = [
         caption:
           'Chart of accounts, double-entry journal entries and fiscal periods in a single console.',
         path: 'accounting',
-        variant: 'ledger',
         badges: ['Double Entry', 'General Ledger', 'Periods'],
         image: '/projects/erp-lubriken/contabilidad-ERP-lubriken.webp',
         alt: 'Accounting module with general ledger and double-entry entries',
@@ -521,7 +506,6 @@ const projects: readonly Project[] = [
         caption:
           'Catalogue, stock and Kardex movements with low-stock alerts and adjustments.',
         path: 'inventory',
-        variant: 'inventory',
         badges: ['Kardex', 'Low Stock', 'Catalogue'],
         image: '/projects/erp-lubriken/inventrario-ERP-lubriken.webp',
         alt: 'Products and inventory module with stock and Kardex movements',
@@ -531,7 +515,6 @@ const projects: readonly Project[] = [
         title: 'Supplier Management',
         caption: 'Supplier directory with tax ID, contacts, purchases and account status.',
         path: 'suppliers',
-        variant: 'analytics',
         badges: ['Suppliers', 'Purchases', 'Tax ID'],
         image: '/projects/erp-lubriken/proveedores-ERP-lubriken.webp',
         alt: 'Supplier management with tax ID, contacts and account status',
@@ -541,7 +524,6 @@ const projects: readonly Project[] = [
         title: 'System Audit',
         caption: 'Access and action log per user, with IP, result and timestamp.',
         path: 'audit',
-        variant: 'analytics',
         badges: ['Audit', 'Access', 'Traceability'],
         image: '/projects/erp-lubriken/auditoria-ERP-lubriken.webp',
         alt: 'System audit log with access and actions per user',
@@ -551,7 +533,6 @@ const projects: readonly Project[] = [
         title: 'System Login',
         caption: 'Accounting panel authentication with a secure session and access control.',
         path: 'login',
-        variant: 'inventory',
         badges: ['Authentication', 'Session', 'Security'],
         image: '/projects/erp-lubriken/login-ERP-lubriken.webp',
         alt: 'Lubriken C.A. sign-in screen',
@@ -686,6 +667,7 @@ const contactChannels: readonly ContactChannel[] = [
     icon: 'github',
     actionLabel: 'GitHub Profile',
     external: true,
+    rel: 'me noopener noreferrer',
   },
   {
     id: 'linkedin',
@@ -696,6 +678,7 @@ const contactChannels: readonly ContactChannel[] = [
     icon: 'linkedin',
     actionLabel: 'LinkedIn Sync',
     external: true,
+    rel: 'me noopener noreferrer',
   },
   {
     id: 'whatsapp',
@@ -706,6 +689,7 @@ const contactChannels: readonly ContactChannel[] = [
     icon: 'whatsapp',
     actionLabel: 'WhatsApp Direct Pulse',
     external: true,
+    rel: 'noopener noreferrer',
   },
 ]
 

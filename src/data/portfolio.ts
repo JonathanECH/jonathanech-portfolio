@@ -256,7 +256,6 @@ export const projects: readonly Project[] = [
         caption:
           'Resumen de unidades, pendientes por surtir y registro rápido de ventas desde una sola vista.',
         path: 'dashboard',
-        variant: 'inventory',
         badges: ['Resumen Operativo', 'Registro de Ventas', 'Stock'],
         image: '/projects/tilyshop-inventory/dashboard-tilyshop-inventory.webp',
         alt: 'Panel general de TilyShop con métricas de unidades, pendientes y registro de venta',
@@ -267,7 +266,6 @@ export const projects: readonly Project[] = [
         caption:
           'Catálogo con filtros por institución, nombre, color y talla; edición y borrado por producto.',
         path: 'admin/inventario',
-        variant: 'inventory',
         badges: ['Catálogo', 'Filtros', 'Tallas'],
         image: '/projects/tilyshop-inventory/admin-tilyshop-inventory.webp',
         alt: 'Tabla de administración de inventario con filtros por institución, color y talla',
@@ -278,7 +276,6 @@ export const projects: readonly Project[] = [
         caption:
           'Filtros por rango de fechas, prenda y vendedor, con totales de unidades e ingresos.',
         path: 'ventas',
-        variant: 'analytics',
         badges: ['Ventas', 'Filtros', 'Totales'],
         image: '/projects/tilyshop-inventory/ventas-tilyshop-inventory.webp',
         alt: 'Historial de ventas con filtros por fecha, prenda y vendedor',
@@ -288,7 +285,6 @@ export const projects: readonly Project[] = [
         title: 'Perfil & Seguridad',
         caption: 'Gestión de credenciales y cambio de contraseña con validación en el cliente.',
         path: 'perfil',
-        variant: 'inventory',
         badges: ['Perfil', 'Seguridad', 'Credenciales'],
         image: '/projects/tilyshop-inventory/perfil-tilyshop-inventory.webp',
         alt: 'Pantalla de perfil con formulario de cambio de contraseña',
@@ -403,7 +399,6 @@ export const projects: readonly Project[] = [
         caption:
           'Temperatura, descripción, humedad, sensación térmica, mínima/máxima y viento en una sola vista.',
         path: 'home',
-        variant: 'analytics',
         badges: ['Clima Actual', 'OpenWeatherMap', 'Glassmorphism'],
         image: '/projects/clima-vue/home-clima-vue.webp',
         alt: 'Vista principal de Clima Vue con temperatura actual y métricas meteorológicas',
@@ -414,7 +409,6 @@ export const projects: readonly Project[] = [
         caption:
           'Sugerencias en tiempo real por ciudad, región y país con debounce de 350 ms.',
         path: 'search',
-        variant: 'analytics',
         badges: ['Geocoding', 'Debounce 350 ms', 'Historial'],
         image: '/projects/clima-vue/search-clima-vue.webp',
         alt: 'Autocompletado de ciudades con sugerencias por región y país',
@@ -425,7 +419,6 @@ export const projects: readonly Project[] = [
         caption:
           'Layout adaptativo con formulario, tarjetas de clima y estados de error en pantalla pequeña.',
         path: 'mobile',
-        variant: 'analytics',
         badges: ['Responsive', 'Mobile First', 'Estados de Error'],
         image: '/projects/clima-vue/mobile-clima-vue.webp',
         alt: 'Vista móvil de Clima Vue con formulario y tarjetas de clima',
@@ -539,7 +532,6 @@ export const projects: readonly Project[] = [
         caption:
           'Vista central con métricas hospitalarias, navegación modular y monitoreo de actividad clínica.',
         path: 'dashboard',
-        variant: 'medical',
         badges: ['Panel Central', 'Métricas', 'Gestión'],
         image: '/projects/clinica-razetti/dashboard-clinica-razetti.webp',
         alt: 'Panel de administración de Clínica Razetti con estadísticas y módulos hospitalarios',
@@ -550,7 +542,6 @@ export const projects: readonly Project[] = [
         caption:
           'Formulario dinámico con soporte dual (crear/editar), validación reactiva en tiempo real y sanitización de datos.',
         path: 'pacientes/registro',
-        variant: 'medical',
         badges: ['Pacientes', 'Reactive Forms', 'Modo Dual'],
         image: '/projects/clinica-razetti/registro-paciente-clinica-razetti.webp',
         alt: 'Formulario de registro y edición de pacientes en Clínica Razetti',
@@ -561,7 +552,6 @@ export const projects: readonly Project[] = [
         caption:
           'Directorio de especialistas clínicos, asignación de turnos, cupos por consulta y control de disponibilidad.',
         path: 'medicos',
-        variant: 'medical',
         badges: ['Especialistas', 'Horarios', 'Consultas'],
         image: '/projects/clinica-razetti/medicos-clinica-razetti.webp',
         alt: 'Directorio y gestión de médicos especialistas y horarios de consulta',
@@ -572,7 +562,6 @@ export const projects: readonly Project[] = [
         caption:
           'Segmented tabs por departamento, filtros instantáneos con Signals y descarga de expedientes médicos en PDF.',
         path: 'reportes',
-        variant: 'analytics',
         badges: ['Reportes PDF', 'Signals', 'Analíticas'],
         image: '/projects/clinica-razetti/reportes-clinica-razetti.webp',
         alt: 'Hub de reportes clínicos con pestañas de departamento y descarga de expedientes en PDF',
@@ -583,7 +572,6 @@ export const projects: readonly Project[] = [
         caption:
           'Administración de acceso basada en roles (RBAC), control estricto de privilegios y borrado lógico para auditoría.',
         path: 'usuarios',
-        variant: 'medical',
         badges: ['RBAC', 'RoleGuard', 'Auditoría'],
         image: '/projects/clinica-razetti/usuarios-clinica-razetti.webp',
         alt: 'Módulo de administración de usuarios y roles con políticas de seguridad',
@@ -594,7 +582,6 @@ export const projects: readonly Project[] = [
         caption:
           'Inicio de sesión con JWT Bearer, intercepción 401/403, rate limiting y revocación de sesión en tiempo real.',
         path: 'login',
-        variant: 'medical',
         badges: ['JWT Bearer', 'Rate Limiting', 'Seguridad'],
         image: '/projects/clinica-razetti/login-clinica-razetti.webp',
         alt: 'Pantalla de autenticación y acceso seguro al sistema hospitalario',
@@ -708,7 +695,6 @@ export const projects: readonly Project[] = [
         caption:
           'Ingresos, gastos, rentabilidad y cuentas principales del ejercicio fiscal en tiempo real.',
         path: 'dashboard',
-        variant: 'erp',
         badges: ['Ingresos', 'Gastos', 'Rentabilidad'],
         image: '/projects/erp-lubriken/dashboard-ERP-lubriken.webp',
         alt: 'Dashboard financiero con ingresos, gastos y cuentas principales',
@@ -719,7 +705,6 @@ export const projects: readonly Project[] = [
         caption:
           'Plan de cuentas, asientos de partida doble y periodos fiscales en una sola consola.',
         path: 'contabilidad',
-        variant: 'ledger',
         badges: ['Doble Partida', 'Libro Diario', 'Periodos'],
         image: '/projects/erp-lubriken/contabilidad-ERP-lubriken.webp',
         alt: 'Módulo de contabilidad con libro diario y asientos de partida doble',
@@ -730,7 +715,6 @@ export const projects: readonly Project[] = [
         caption:
           'Catálogo, existencias y movimientos Kardex con alertas de stock bajo y ajustes.',
         path: 'inventario',
-        variant: 'inventory',
         badges: ['Kardex', 'Stock Bajo', 'Catálogo'],
         image: '/projects/erp-lubriken/inventrario-ERP-lubriken.webp',
         alt: 'Módulo de productos e inventario con existencias y movimientos Kardex',
@@ -740,7 +724,6 @@ export const projects: readonly Project[] = [
         title: 'Gestión de Proveedores',
         caption: 'Directorio de proveedores con RUC, contactos, compras y estado de cuenta.',
         path: 'proveedores',
-        variant: 'analytics',
         badges: ['Proveedores', 'Compras', 'RUC'],
         image: '/projects/erp-lubriken/proveedores-ERP-lubriken.webp',
         alt: 'Gestión de proveedores con RUC, contactos y estado de cuenta',
@@ -751,7 +734,6 @@ export const projects: readonly Project[] = [
         caption:
           'Registro de accesos y acciones por usuario, con IP, resultado y marca temporal.',
         path: 'auditoria',
-        variant: 'analytics',
         badges: ['Auditoría', 'Accesos', 'Trazabilidad'],
         image: '/projects/erp-lubriken/auditoria-ERP-lubriken.webp',
         alt: 'Auditoría del sistema con registro de accesos y acciones por usuario',
@@ -762,7 +744,6 @@ export const projects: readonly Project[] = [
         caption:
           'Autenticación del panel contable con sesión segura y control de acceso.',
         path: 'login',
-        variant: 'inventory',
         badges: ['Autenticación', 'Sesión', 'Seguridad'],
         image: '/projects/erp-lubriken/login-ERP-lubriken.webp',
         alt: 'Pantalla de inicio de sesión de Lubriken C.A.',
@@ -897,6 +878,7 @@ export const contactChannels: readonly ContactChannel[] = [
     icon: 'github',
     actionLabel: 'GitHub Profile',
     external: true,
+    rel: 'me noopener noreferrer',
   },
   {
     id: 'linkedin',
@@ -907,6 +889,7 @@ export const contactChannels: readonly ContactChannel[] = [
     icon: 'linkedin',
     actionLabel: 'LinkedIn Sync',
     external: true,
+    rel: 'me noopener noreferrer',
   },
   {
     id: 'whatsapp',
@@ -917,5 +900,6 @@ export const contactChannels: readonly ContactChannel[] = [
     icon: 'whatsapp',
     actionLabel: 'WhatsApp Pulse Directo',
     external: true,
+    rel: 'noopener noreferrer',
   },
 ]

@@ -147,11 +147,17 @@ describe('scroll-driven reveal contract', () => {
 
   it('differentiates project reveals by breakpoint and grid position', () => {
     const supports = block(css, supportsToken)
+    const mobileToken = '@media (prefers-reduced-motion: no-preference) and (max-width: 767px)'
     const tabletToken = '@media (prefers-reduced-motion: no-preference) and (min-width: 768px)'
     const desktopToken = '@media (prefers-reduced-motion: no-preference) and (min-width: 1024px)'
 
+    expect(supports).toContain(mobileToken)
     expect(supports).toContain(tabletToken)
     expect(supports).toContain(desktopToken)
+
+    const mobileProject = block(block(supports, mobileToken), '.reveal--project {')
+    expect(mobileProject).toContain('--reveal-y: 12px;')
+    expect(mobileProject).not.toContain('animation-range:')
 
     const tablet = block(supports, tabletToken)
     expect(tablet).toContain('--reveal-x: 18px')
