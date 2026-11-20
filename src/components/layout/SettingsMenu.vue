@@ -95,7 +95,7 @@ onUnmounted(() => {
     <button
       ref="triggerRef"
       type="button"
-      class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-border text-muted transition-colors hover:border-border-hover hover:text-cyan-accent"
+      class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-border text-muted interactive-transition hover:border-border-hover hover:text-cyan-accent motion-safe:active:scale-[0.97]"
       :class="open ? 'border-border-hover text-cyan-accent' : ''"
       :aria-expanded="open"
       aria-controls="settings-panel"
@@ -132,7 +132,7 @@ onUnmounted(() => {
               v-for="option in localeOptions"
               :key="option.value"
               type="button"
-              class="flex w-full cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left font-sans text-xs transition-colors"
+              class="flex w-full cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left font-sans text-xs interactive-transition motion-safe:active:scale-[0.98]"
               :class="
                 localeMode === option.value
                   ? 'bg-cyan-accent/10 text-cyan-accent'
@@ -166,7 +166,7 @@ onUnmounted(() => {
               v-for="option in themeOptions"
               :key="option.value"
               type="button"
-              class="flex w-full cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left font-sans text-xs transition-colors"
+              class="flex w-full cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left font-sans text-xs interactive-transition motion-safe:active:scale-[0.98]"
               :class="
                 themeMode === option.value
                   ? 'bg-cyan-accent/10 text-cyan-accent'
@@ -197,8 +197,8 @@ onUnmounted(() => {
 .settings-enter-active,
 .settings-leave-active {
   transition:
-    opacity 150ms ease,
-    transform 150ms ease;
+    opacity 150ms var(--ease-out),
+    transform 150ms var(--ease-out);
 }
 
 .settings-enter-from,

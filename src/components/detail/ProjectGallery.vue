@@ -273,7 +273,7 @@ function announceCurrent(): void {
 
       <button
         type="button"
-        class="absolute left-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-foreground/80 backdrop-blur-md transition-all hover:border-cyan-accent/70 hover:text-cyan-accent active:scale-95 sm:left-4 sm:h-10 sm:w-10"
+        class="absolute left-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-foreground/80 backdrop-blur-md interactive-transition hover:border-cyan-accent/70 hover:text-cyan-accent motion-safe:active:scale-95 sm:left-4 sm:h-10 sm:w-10"
         :aria-label="t('gallery.previous')"
         @click="handlePrev"
       >
@@ -282,7 +282,7 @@ function announceCurrent(): void {
 
       <button
         type="button"
-        class="absolute right-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-foreground/80 backdrop-blur-md transition-all hover:border-cyan-accent/70 hover:text-cyan-accent active:scale-95 sm:right-4 sm:h-10 sm:w-10"
+        class="absolute right-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-foreground/80 backdrop-blur-md interactive-transition hover:border-cyan-accent/70 hover:text-cyan-accent motion-safe:active:scale-95 sm:right-4 sm:h-10 sm:w-10"
         :aria-label="t('gallery.next')"
         @click="handleNext"
       >
@@ -296,7 +296,7 @@ function announceCurrent(): void {
           v-for="(slide, index) in gallerySlides"
           :key="slide.id"
           type="button"
-          class="h-1.5 rounded-full transition-all duration-300"
+          class="h-1.5 rounded-full interactive-transition"
           :class="index === activeIndex ? 'w-6' : 'w-2 bg-foreground/25 hover:bg-foreground/50'"
           :style="index === activeIndex ? { backgroundColor: project.accent } : undefined"
           :aria-label="t('gallery.goTo', { index: index + 1, title: slide.title })"

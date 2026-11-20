@@ -187,7 +187,7 @@ function handleNativeClose(): void {
                 </a>
                 <RouterLink
                   :to="`/proyectos/${project.slug}`"
-                  class="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-4 py-2.5 font-sans text-xs font-semibold text-accent-contrast transition-all duration-300 hover:shadow-[0_0_24px_rgba(var(--ech-accent-rgb),0.45)]"
+                  class="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-4 py-2.5 font-sans text-xs font-semibold text-accent-contrast interactive-transition hover:shadow-[0_0_24px_rgba(var(--ech-accent-rgb),0.45)]"
                   @click="close"
                 >
                   {{ t('projects.viewFull') }}

@@ -48,7 +48,7 @@ function copyEmail(value: string): void {
               class="reveal reveal--contact h-full"
             >
               <article
-                class="contact-card group relative flex h-full flex-col rounded-xl border border-border bg-surface-card/70 p-5 transition-all duration-300 hover:border-border-hover hover:shadow-[0_16px_32px_-24px_rgba(var(--ech-accent-rgb),0.5)] group-focus-within:border-border-hover group-focus-within:shadow-[0_16px_32px_-24px_rgba(var(--ech-accent-rgb),0.5)] motion-safe:hover:-translate-y-1 motion-safe:group-focus-within:-translate-y-1"
+                class="contact-card group relative flex h-full flex-col rounded-xl border border-border bg-surface-card/70 p-5 interactive-transition hover:border-border-hover hover:shadow-[0_16px_32px_-24px_rgba(var(--ech-accent-rgb),0.5)] group-focus-within:border-border-hover group-focus-within:shadow-[0_16px_32px_-24px_rgba(var(--ech-accent-rgb),0.5)] motion-safe:hover:-translate-y-1 motion-safe:group-focus-within:-translate-y-1"
               >
               <div class="flex items-start justify-between gap-3">
                 <span

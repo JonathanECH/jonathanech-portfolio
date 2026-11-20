@@ -21,6 +21,12 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
 ### Changed
 
+- Movimiento de la interfaz unificado: `src/styles/main.css` define los tokens
+  `--ease-out` y `--ease-in-out` y la utilidad `.interactive-transition`, que
+  sustituye a `transition-all` en componentes interactivos con transiciones
+  explícitas de 160 ms. Las salidas del menú y del backdrop usan `ease-out`
+  en lugar de `ease-in`, y las transformaciones de hover/press están protegidas
+  por `motion-safe:`. Cubierto por `src/styles/reveal.spec.ts`.
 - Centralización del atributo `rel` en los canales de contacto: `ContactChannel`
   incorpora `rel?: string` en `src/types/portfolio.ts`, definido en la fuente de
   datos (`src/data/portfolio.ts` y `src/data/portfolio.en.ts`: `'me noopener noreferrer'`

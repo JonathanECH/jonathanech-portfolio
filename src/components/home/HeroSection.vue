@@ -501,13 +501,13 @@ onBeforeUnmount(() => {
       <div class="mt-9 flex w-full flex-col items-stretch justify-center gap-3 sm:w-auto sm:flex-row">
         <a
           href="#proyectos"
-          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-accent-contrast shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] transition-all duration-300 hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] active:scale-[0.98] sm:text-xs"
+          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-accent-contrast shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] interactive-transition hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] motion-safe:active:scale-[0.97] sm:text-xs"
         >
           <Terminal :size="16" aria-hidden="true" />
           {{ t('hero.explore') }}
           <ArrowRight
             :size="15"
-            class="transition-transform duration-300 group-hover:translate-x-0.5"
+            class="transition-transform duration-300 motion-safe:group-hover:translate-x-0.5"
             aria-hidden="true"
           />
         </a>
@@ -515,11 +515,11 @@ onBeforeUnmount(() => {
         <a
           href="/cv/jonathan-campos-cv.pdf"
           download
-          class="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/60 px-6 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground transition-all duration-300 hover:border-border-hover hover:bg-surface-card hover:text-cyan-accent active:scale-[0.98] sm:text-xs"
+          class="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/60 px-6 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground interactive-transition hover:border-border-hover hover:bg-surface-card hover:text-cyan-accent motion-safe:active:scale-[0.97] sm:text-xs"
         >
           <Download
             :size="16"
-            class="transition-transform duration-300 group-hover:translate-y-0.5"
+            class="transition-transform duration-300 motion-safe:group-hover:translate-y-0.5"
             aria-hidden="true"
           />
           {{ t('nav.downloadCv') }}

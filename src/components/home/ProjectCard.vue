@@ -27,7 +27,7 @@ function openQuickView(): void {
 <template>
   <li class="reveal reveal--project">
     <article
-      class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card/60 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-border-hover hover:shadow-[0_18px_40px_-24px_rgba(var(--ech-accent-rgb),0.45)]"
+      class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-card/60 transition-[transform,border-color,box-shadow] duration-300 motion-safe:hover:-translate-y-1 hover:border-border-hover hover:shadow-[0_18px_40px_-24px_rgba(var(--ech-accent-rgb),0.45)]"
       :style="`--accent: ${project.accent}`"
     >
       <!-- Real screenshot preview, with the CSS/SVG mockup as fallback -->
@@ -40,7 +40,7 @@ function openQuickView(): void {
             height="750"
             loading="lazy"
             decoding="async"
-            class="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+            class="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.04]"
           />
           <div
             class="absolute inset-0 bg-linear-to-b from-black/35 via-transparent to-black/30"
@@ -233,7 +233,7 @@ function openQuickView(): void {
             <ArrowRight
               :size="12"
               aria-hidden="true"
-              class="transition-transform duration-300 group-hover:translate-x-1"
+              class="transition-transform duration-300 motion-safe:group-hover:translate-x-1"
             />
           </span>
 
