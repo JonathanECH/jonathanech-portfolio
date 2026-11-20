@@ -98,7 +98,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="reveal reveal--stack h-full" role="listitem">
     <article
-      class="group relative flex h-full touch-manipulation select-none flex-col overflow-hidden rounded-xl border border-border bg-surface-card/60 p-4 transition-[transform,border-color,background-color] duration-200 motion-safe:hover:-translate-y-1 hover:border-border-hover hover:bg-surface-card-hover hover:shadow-[0_0_30px_-8px_rgba(var(--ech-accent-rgb),0.35)] active:border-cyan-accent active:bg-cyan-accent/10"
+      class="group relative flex h-full touch-manipulation select-none flex-col overflow-hidden rounded-xl border border-border bg-surface-card/60 p-4 transition-[transform,border-color,background-color] duration-300 motion-safe:hover:-translate-y-1 hover:border-border-hover hover:bg-surface-card-hover hover:shadow-[0_0_30px_-8px_rgba(var(--ech-accent-rgb),0.35)] active:border-cyan-accent active:bg-cyan-accent/10"
       :style="
         pressed
           ? {
@@ -116,7 +116,7 @@ onBeforeUnmount(() => {
     >
       <div
         aria-hidden="true"
-        class="pointer-events-none absolute inset-x-4 top-0 h-px bg-linear-to-r from-transparent via-cyan-accent/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        class="pointer-events-none absolute inset-x-4 top-0 h-px bg-linear-to-r from-transparent via-cyan-accent/60 to-transparent opacity-0 transition-opacity duration-400 group-hover:opacity-100"
       />
 
       <div class="flex items-start justify-between gap-3">
@@ -124,18 +124,18 @@ onBeforeUnmount(() => {
           {{ technology.label }}
         </span>
 
-        <span class="transition-transform duration-300 motion-safe:group-hover:scale-110">
+        <span class="transition-transform duration-400 motion-safe:group-hover:scale-110">
           <TechIcon
             :icon="technology.iconKey"
             :color="technology.brandColor"
             :size="24"
-            class="text-muted transition-colors duration-300 [@media(hover:hover)]:group-hover:text-(--brand) group-active:text-(--brand)"
+            class="text-muted transition-colors duration-400 [@media(hover:hover)]:group-hover:text-(--brand) group-active:text-(--brand)"
           />
         </span>
       </div>
 
       <h3
-        class="mt-4 font-mono text-base font-bold tracking-wide text-foreground transition-colors duration-300 group-hover:text-cyan-accent"
+        class="mt-4 font-mono text-base font-bold tracking-wide text-foreground transition-colors duration-400 group-hover:text-cyan-accent"
       >
         {{ technology.name }}
       </h3>
@@ -152,7 +152,7 @@ onBeforeUnmount(() => {
         </ul>
 
         <span
-          class="shrink-0 font-mono text-[10px] tabular-nums text-muted transition-colors duration-300 group-hover:text-muted"
+          class="shrink-0 font-mono text-[10px] tabular-nums text-muted transition-colors duration-400 group-hover:text-muted"
           aria-hidden="true"
         >
           {{ paddedIndex }}

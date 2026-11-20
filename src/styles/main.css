@@ -355,8 +355,8 @@
     @keyframes reveal-stack {
       from {
         opacity: 0;
-        translate: 0 28px;
-        scale: 0.97;
+        translate: 0 60px;
+        scale: 0.86;
       }
       to {
         opacity: 1;
@@ -392,11 +392,13 @@
     @keyframes reveal-contact {
       from {
         opacity: 0;
-        translate: 0 16px;
+        translate: var(--contact-x) var(--contact-y);
+        scale: var(--contact-scale);
       }
       to {
         opacity: 1;
         translate: 0 0;
+        scale: 1;
       }
     }
 
@@ -435,6 +437,9 @@
       }
 
       .reveal--contact {
+        --contact-x: 0px;
+        --contact-y: 16px;
+        --contact-scale: 1;
         --contact-entry: entry 0%;
         animation: reveal-contact 1ms linear both;
         animation-timeline: view(block);
@@ -533,13 +538,47 @@
       .reveal--project:nth-child(even) {
         --reveal-x: -24px;
       }
+
+      /* Symmetric console docking on 4-column desktop: outer channels converge
+         inward from the edges while the inner pair locks into the center axis. */
+      .reveal--contact {
+        --contact-x: -44px;
+        --contact-y: 22px;
+        --contact-scale: 0.86;
+        --contact-entry: entry 6%;
+        animation-range: var(--contact-entry) entry 85%;
+      }
+
+      .reveal--contact:nth-child(2) {
+        --contact-x: -18px;
+        --contact-y: 16px;
+        --contact-scale: 0.88;
+        --contact-entry: entry 0%;
+      }
+
+      .reveal--contact:nth-child(3) {
+        --contact-x: 18px;
+        --contact-y: 16px;
+        --contact-scale: 0.88;
+        --contact-entry: entry 0%;
+      }
+
+      .reveal--contact:nth-child(4) {
+        --contact-x: 44px;
+        --contact-y: 22px;
+        --contact-scale: 0.86;
+        --contact-entry: entry 6%;
+      }
     }
   }
 
-  /* TransitionGroup takes over cards that are filtered, expanded or removed.
-     `reveal-settled` cancels the view() animation so it cannot hide or freeze
-     a card while Vue transitions it, and keeps it visible afterwards. */
-  .reveal.reveal-settled {
+  /* TransitionGroup takes over cards while they are entering or leaving.
+     `reveal-settled` cancels the view() animation during the 180-240ms Vue
+     transition, and `onAfterEnter` / `onEnterCancelled` remove it right after
+     so the card always resumes its scroll-driven reveal timeline. */
+  .reveal.reveal-settled,
+  .reveal.project-enter-active,
+  .reveal.project-leave-active {
     animation: none;
     opacity: 1;
     transform: none;

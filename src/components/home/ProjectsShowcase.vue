@@ -16,7 +16,7 @@ function handleOpenQuickView(slug: string): void {
   shouldMountQuickModal.value = true
   store.openQuickView(slug)
 }
-const { onBeforeEnter, onBeforeLeave } = useRevealTransition()
+const { onBeforeEnter, onAfterEnter, onEnterCancelled, onBeforeLeave } = useRevealTransition()
 const { content, t } = useI18n()
 const projects = computed(() => content.value.projects)
 const sectionCode = computed(() => t('projects.code'))
@@ -89,6 +89,8 @@ const filteredProjects = computed(() => {
         role="list"
         class="mt-8 grid list-none grid-cols-1 gap-6 overflow-x-clip md:grid-cols-2 lg:grid-cols-3"
         @before-enter="onBeforeEnter"
+        @after-enter="onAfterEnter"
+        @enter-cancelled="onEnterCancelled"
         @before-leave="onBeforeLeave"
       >
         <ProjectCard

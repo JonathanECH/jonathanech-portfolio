@@ -265,7 +265,7 @@ pnpm preview
 
 - **Navegación por teclado:** enlace de salto al contenido, foco visible (`:focus-visible`), restauración del foco al botón de menú móvil al cerrar con `Escape` o backdrop, y cierre con `Escape` en modales.
 - **Movimiento reducido:** respeto íntegro de `prefers-reduced-motion` y utilidades `motion-safe:` en microinteracciones.
-- **Animaciones de scroll y transiciones de grupo:** revelado nativo con `animation-timeline: view()` y `animation-range` adaptados por sección y breakpoint (proyectos al `entry 70%`, métricas de "Sobre Mí" en rango `cover`, entrada escalonada en "Contacto" y contenedores con `overflow-clip` para no crear scrollports anidados), coordinado con `<TransitionGroup>` mediante `useRevealTransition` (`reveal-settled`) al filtrar o expandir tarjetas, con contenido visible por defecto si el navegador no las soporta y sin polyfill.
+- **Animaciones de scroll y transiciones de grupo:** revelado nativo con `animation-timeline: view()` y `animation-range` adaptados por sección y breakpoint (proyectos al `entry 70%`, métricas de "Sobre Mí" en rango `cover`, convergencia simétrica al centro en "Contacto" desktop y contenedores con `overflow-clip` para no crear scrollports anidados), coordinado con `<TransitionGroup>` mediante `useRevealTransition` (`reveal-settled` liberado en `@after-enter` / `@enter-cancelled`) para que las tarjetas conserven siempre su animación de scroll tras filtrar o expandir, con contenido visible por defecto si el navegador no las soporta y sin polyfill.
 - **Tipografías locales:** `@fontsource-variable` autoalojado con `preload` automático
   de los subsets WOFF2 latinos críticos en el HTML prerenderizado, sin peticiones
   a CDNs externos y con menor CLS.
@@ -280,7 +280,7 @@ pnpm preview
 
 ## Control de calidad y publicación
 
-- `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**123/123 pruebas** en **13 archivos**) y el build estático con `vite-ssg`.
+- `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**124/124 pruebas** en **13 archivos**) y el build estático con `vite-ssg`.
 - Release actual: **v1.1.1** (2026-11-19), con correcciones posteriores de hidratación SSG, gestos de galería, accesibilidad y limpieza documentadas en `[Unreleased]` dentro de [`CHANGELOG.md`](CHANGELOG.md).
 - Release anterior: **v1.1.0**. El detalle de los ajustes de rangos de esta versión está en [`CHANGELOG.md`](CHANGELOG.md).
 - Historial de cambios en [`CHANGELOG.md`](CHANGELOG.md); procedimientos de mantenimiento, tags, dependencias, monitoreo y rollback en [`docs/MAINTENANCE.md`](docs/MAINTENANCE.md).
