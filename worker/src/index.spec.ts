@@ -30,7 +30,10 @@ function createEnv(storedTheme: string | null = null, token: string = ADMIN_TOKE
 function htmlResponse(): Response {
   return new Response('<!doctype html><html><body>origin html</body></html>', {
     status: 200,
-    headers: { 'content-type': 'text/html; charset=utf-8' },
+    headers: {
+      'content-type': 'text/html; charset=utf-8',
+      'cache-control': 'public, max-age=604800, stale-while-revalidate=86400',
+    },
   })
 }
 
@@ -101,6 +104,36 @@ describe('theme worker', () => {
     const response = await worker.fetch(new Request('https://worker.test/'), env, CONTEXT)
 
     expect(response.headers.get('set-cookie')).toBe('ech_theme=default; Path=/; SameSite=Lax')
+  })
+
+  it('does not let a shared cache freeze the theme cookie', async () => {
+    const { env } = createEnv('christmas')
+
+    const response = await worker.fetch(
+      new Request('https://worker.test/proyectos/clima-vue'),
+      env,
+      CONTEXT,
+    )
+
+    expect(response.headers.get('set-cookie')).toBe('ech_theme=christmas; Path=/; SameSite=Lax')
+    expect(response.headers.get('cache-control')).toBe('private, no-cache')
+  })
+
+  it('rejects admin API requests other than POST without proxying them', async () => {
+    const { env, put } = createEnv('default')
+
+    for (const method of ['GET', 'HEAD']) {
+      const response = await worker.fetch(
+        new Request('https://worker.test/api/admin/theme', { method }),
+        env,
+        CONTEXT,
+      )
+
+      expect(response.status, method).toBe(401)
+      expect(response.headers.get('cache-control')).toBe('no-store')
+      expect(put).not.toHaveBeenCalled()
+      expect(originFetch).not.toHaveBeenCalled()
+    }
   })
 
   it('rejects a missing token without writing to KV', async () => {

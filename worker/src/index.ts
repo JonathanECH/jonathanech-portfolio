@@ -12,6 +12,8 @@ const THEME_KEY = 'theme'
 const THEME_COOKIE = 'ech_theme'
 const THEMES: readonly Theme[] = ['default', 'christmas']
 const NO_STORE = 'no-store'
+// The cookie is per-visitor state: HTML that carries it must never be shared-cached.
+const HTML_CACHE_CONTROL = 'private, no-cache'
 
 function isTheme(value: unknown): value is Theme {
   return typeof value === 'string' && (THEMES as readonly string[]).includes(value)
@@ -41,9 +43,14 @@ async function readTheme(env: Env): Promise<Theme> {
   return isTheme(stored) ? stored : 'default'
 }
 
-function withThemeCookie(response: Response, theme: Theme): Response {
+function withThemeCookie(
+  response: Response,
+  theme: Theme,
+  cacheControl = HTML_CACHE_CONTROL,
+): Response {
   const headers = new Headers(response.headers)
   headers.set('Set-Cookie', `${THEME_COOKIE}=${theme}; Path=/; SameSite=Lax`)
+  headers.set('Cache-Control', cacheControl)
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
@@ -91,18 +98,22 @@ function invalidThemeResponse(status: number, message: string): Response {
   )
 }
 
+function unauthorizedResponse(): Response {
+  return withNoStore(
+    new Response('Unauthorized', {
+      status: 401,
+      headers: { 'WWW-Authenticate': 'Bearer' },
+    }),
+  )
+}
+
 async function handleThemeUpdate(request: Request, env: Env): Promise<Response> {
   const authorization = request.headers.get('authorization') ?? ''
   const bearer = /^Bearer (.+)$/.exec(authorization)?.[1] ?? ''
   const expected = env.THEME_ADMIN_TOKEN
 
   if (!expected || !(await themeTokenMatches(bearer, expected))) {
-    return withNoStore(
-      new Response('Unauthorized', {
-        status: 401,
-        headers: { 'WWW-Authenticate': 'Bearer' },
-      }),
-    )
+    return unauthorizedResponse()
   }
 
   let payload: unknown
@@ -202,13 +213,13 @@ const worker = {
   async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
     const path = new URL(request.url).pathname
 
-    if (path === '/api/admin/theme' && request.method === 'POST') {
-      return handleThemeUpdate(request, env)
+    if (path === '/api/admin/theme') {
+      return request.method === 'POST' ? handleThemeUpdate(request, env) : unauthorizedResponse()
     }
 
     if (path === '/admin/theme' && (request.method === 'GET' || request.method === 'HEAD')) {
       const theme = await readTheme(env)
-      return withThemeCookie(adminForm(theme), theme)
+      return withThemeCookie(adminForm(theme), theme, NO_STORE)
     }
 
     const theme = await readTheme(env)
