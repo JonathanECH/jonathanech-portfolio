@@ -8,8 +8,21 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 
 - **Rama activa:** `main` (release `v1.2.0`)
 - **Fecha de inicio:** 9 de noviembre de 2026
-- **Última actualización:** 20 de noviembre de 2026
+- **Última actualización:** 24 de noviembre de 2026
 - **Objetivo:** Credibilidad en 30–60 segundos, enlaces funcionales, posicionamiento claro como Frontend Engineer para reclutadores internacionales y paridad completa ES/EN.
+
+---
+
+## Fase 0 del CMS — 2026-11-24 (pendiente de integrar en `main`)
+
+| Ítem | Descripción | Estado | Detalle técnico |
+| :--- | :--- | :---: | :--- |
+| **0B** | Retirada de métricas de auditoría del sitio | **COMPLETADO** | `AuditMetric`, `audit.metrics` y `audit.consistencyNote` desaparecen de tipos, datos ES/EN y los cuatro componentes que las mostraban (`ProjectCard`, `ProjectQuickModal`, `ChallengeAudit`, `ProjectHeader`). Se conservan `diagnosis`, `resolution`, `badge`, `ZoomMetrics`, `profile.stats`, `profile.performance`, los alt texts, el whitepaper y esta documentación. La altura de las tarjetas se reserva con `min-h-*` para no introducir CLS. |
+| **0A** | Tema navideño global controlado solo por el admin | **COMPLETADO** | Worker de Cloudflare delante de Vercel: KV `THEME_STATE` con clave `theme` y enum `default` \| `christmas`, secreto `THEME_ADMIN_TOKEN`, cookie `ech_theme` en cada respuesta HTML y `Cache-Control: private, no-cache`. `GET /admin/theme` sirve un formulario temporal `noindex`/`no-store`; `POST /api/admin/theme` valida el token en tiempo constante (`401` sin escribir KV, `422` fuera del enum, `204` + `no-store`). Sin opción navideña en `SettingsMenu` ni claves nuevas en `src/i18n/messages/`. |
+| **0A** | Anti-flash y accesibilidad | **COMPLETADO** | `index.html` prioriza la cookie sobre `ech:preferences`, aplica `data-theme` y `theme-color` antes del primer paint, ignora valores inválidos y restaura la preferencia guardada cuando la cookie vuelve a `default`. `usePreferences.ts` no sobrescribe `christmas` al cambiar claro/oscuro. Tokens semánticos con contraste AA en texto, superficies y CTA; movimiento solo bajo `prefers-reduced-motion: no-preference`, sin transiciones en carga. |
+| **V** | Verificación | **COMPLETADO** | `cd worker && pnpm test` → 11/11 y `pnpm typecheck` limpio; `pnpm verify` → 135/135 tests, typecheck y 6 páginas SSG; `grep` de `christmas` en `SettingsMenu.vue` y `src/i18n/messages/` sin coincidencias; smoke con `wrangler dev`: `GET /api/admin/theme` → 401, `POST` sin token → 401, `POST` con token → 204, HTML con `ech_theme=christmas` y `private, no-cache`. |
+
+**Operación:** crear el namespace KV, pegar su id en `worker/wrangler.toml`, ejecutar `wrangler secret put THEME_ADMIN_TOKEN`, desplegar con `wrangler deploy` y usar `/admin/theme`. La vuelta a **Predeterminado** restaura las preferencias ES/EN y claro/oscuro de cada visitante sin redeploy. **Fase 1** migrará el estado a `site_settings.active_theme` y retirará el formulario, el endpoint y el secreto temporales.
 
 ---
 
