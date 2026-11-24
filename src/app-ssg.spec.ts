@@ -27,6 +27,8 @@ const projectSources = {
     'utf8',
   ),
 }
+const themeScript =
+  indexSource.match(/<script>\s*([\s\S]*?)<\/script>/)?.[1] ?? ''
 
 describe('SSG locale hydration', () => {
   it('starts preferences after the first render', () => {
@@ -63,5 +65,23 @@ describe('prerendered project surfaces', () => {
       )
       expect(messages, locale).toContain("'hero.metrics'")
     }
+  })
+})
+
+describe('pre-paint global theme', () => {
+  it('reads the worker cookie and applies christmas before the first paint', () => {
+    expect(indexSource.indexOf('<script>')).toBeLessThan(indexSource.indexOf('</head>'))
+    expect(themeScript).toContain('document.cookie')
+    expect(themeScript).toContain("startsWith('ech_theme=')")
+    expect(themeScript).toContain("['default', 'christmas'].includes")
+    expect(themeScript).toContain("root.dataset.theme = 'christmas'")
+    expect(themeScript).toContain("themeColor.setAttribute('content', '#0B1F1A')")
+  })
+
+  it('ignores unknown cookie values and restores the stored preference for default', () => {
+    expect(themeScript).toContain("forcedTheme !== 'christmas'")
+    expect(themeScript).toContain("localStorage.getItem('ech:preferences')")
+    expect(themeScript).toContain('root.dataset.theme = theme')
+    expect(themeScript).not.toContain('localStorage.setItem')
   })
 })

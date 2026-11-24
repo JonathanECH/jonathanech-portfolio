@@ -126,6 +126,59 @@
   --ech-razetti-accent: #0f766e;
 }
 
+/*
+ * Global seasonal layer set by the Worker cookie. It replaces both light and
+ * dark palettes instead of decorating them, so hierarchy stays unchanged:
+ * the CTA keeps the functional mint, while gold/red live in borders and glows.
+ */
+[data-theme='christmas'] {
+  color-scheme: dark;
+
+  --ech-background: #0b1f1a;
+  --ech-surface: #102a22;
+  --ech-surface-card: #15342a;
+  --ech-surface-card-hover: #1b4033;
+  --ech-border: rgba(255, 255, 255, 0.12);
+  --ech-border-hover: rgba(251, 191, 36, 0.55);
+  --ech-accent: #5eead4;
+  --ech-accent-rgb: 94, 234, 212;
+  --ech-accent-contrast: #05201a;
+  --ech-accent-glow: rgba(94, 234, 212, 0.18);
+  --ech-muted: #b7c9be;
+  --ech-foreground: #f3faf6;
+  --ech-foreground-soft: rgba(243, 250, 246, 0.88);
+  --ech-ink-rgb: 243, 250, 246;
+  --ech-danger: #fca5a5;
+  --ech-danger-soft: #fecaca;
+  --ech-warning: #fbbf24;
+  --ech-warning-soft: #fde68a;
+  --ech-success: #34d399;
+  --ech-grid-line: rgba(255, 255, 255, 0.03);
+  --ech-grid-line-strong: rgba(94, 234, 212, 0.07);
+  --ech-grid-blend: normal;
+  --ech-particle-rgb: 94, 234, 212;
+  --ech-selection-bg: rgba(94, 234, 212, 0.26);
+  --ech-selection-color: #f3faf6;
+  --ech-scrollbar-track: #0b1f1a;
+  --ech-scrollbar-thumb: #315445;
+  --ech-scrollbar-thumb-hover: #4a7562;
+  --ech-glass: rgba(16, 42, 34, 0.78);
+  --ech-focus: rgba(94, 234, 212, 0.75);
+  --ech-spotlight-core: rgba(94, 234, 212, 0.12);
+  --ech-spotlight-mid: rgba(251, 191, 36, 0.04);
+  /* Project accent: pale mint keeps small text above 4.5:1 on christmas cards. */
+  --ech-razetti-accent: #a7f3d0;
+}
+
+/* The cookie is applied before first paint, so this never animates page load. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-theme='christmas'] body {
+    transition:
+      background-color 200ms ease,
+      color 200ms ease;
+  }
+}
+
 @keyframes fade-up {
   from {
     opacity: 0;
