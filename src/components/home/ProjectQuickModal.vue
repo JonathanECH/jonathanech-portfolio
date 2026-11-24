@@ -144,26 +144,10 @@ function handleNativeClose(): void {
                   </span>
                 </div>
 
-                <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  <div
-                    v-for="metric in project.audit.metrics"
-                    :key="metric.label"
-                    class="rounded-lg border border-border/70 bg-surface/60 p-3"
-                  >
-                    <p class="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">
-                      {{ metric.label }}
-                    </p>
-                    <p class="mt-1 font-mono text-base font-semibold text-(--accent)">
-                      {{ metric.value }}
-                    </p>
-                    <p v-if="metric.detail" class="mt-0.5 font-mono text-[9px] text-muted">
-                      {{ metric.detail }}
-                    </p>
-                  </div>
-                </div>
-
-                <p class="mt-4 border-t border-border/60 pt-3 font-mono text-[10px] leading-relaxed text-muted">
-                  {{ project.audit.consistencyNote }}
+                <p
+                  class="mt-4 line-clamp-2 border-t border-border/60 pt-3 font-mono text-[10px] leading-relaxed text-muted"
+                >
+                  {{ project.audit.diagnosis }}
                 </p>
               </div>
 

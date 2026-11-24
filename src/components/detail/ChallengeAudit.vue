@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { CircleCheck, ShieldCheck } from '@lucide/vue'
+import { ShieldCheck } from '@lucide/vue'
 import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
@@ -115,32 +115,6 @@ const accentStyle = computed<Record<string, string>>(() => ({
               </p>
             </div>
 
-            <div class="grid grid-cols-1 gap-2 border-t border-border pt-5 sm:grid-cols-3">
-              <div
-                v-for="metric in project.audit.metrics"
-                :key="metric.label"
-                class="rounded border border-border bg-surface/70 px-3 py-3"
-              >
-                <p class="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
-                  {{ metric.label }}
-                </p>
-                <p class="mt-1.5 font-mono text-sm font-semibold text-(--project-accent)">
-                  {{ metric.value }}
-                </p>
-                <p v-if="metric.detail" class="mt-0.5 font-mono text-[9px] text-foreground/45">
-                  {{ metric.detail }}
-                </p>
-              </div>
-            </div>
-
-            <p class="flex items-start gap-2 font-mono text-[10px] leading-relaxed text-foreground/45">
-              <CircleCheck
-                :size="13"
-                aria-hidden="true"
-                class="mt-0.5 shrink-0 text-(--project-accent)/80"
-              />
-              <span>{{ project.audit.consistencyNote }}</span>
-            </p>
           </div>
         </div>
       </div>
