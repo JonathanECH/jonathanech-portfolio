@@ -62,18 +62,10 @@ export interface GallerySlide {
   readonly alt?: string
 }
 
-export interface AuditMetric {
-  readonly label: string
-  readonly value: string
-  readonly detail?: string
-}
-
 export interface AuditReport {
   readonly diagnosis: string
   readonly resolution: string
   readonly badge: string
-  readonly metrics: readonly AuditMetric[]
-  readonly consistencyNote: string
 }
 
 export interface ProjectChallenge {

@@ -45,10 +45,20 @@
 
     <title>Jonathan Campos — Desarrollador Web Frontend (Vue 3)</title>
 
-    <!-- Applies the stored theme/locale before first paint to avoid a flash. -->
+    <!--
+      Applies the worker-managed theme and stored locale before first paint.
+      The cookie always wins: the visitor's light/dark choice is preserved in
+      localStorage and is restored as soon as the cookie is back to `default`.
+    -->
     <script>
       ;(() => {
         try {
+          const cookieEntry = document.cookie
+            .split('; ')
+            .find((entry) => entry.startsWith('ech_theme='))
+          const cookieValue = cookieEntry?.slice('ech_theme='.length) ?? ''
+          const forcedTheme = ['default', 'christmas'].includes(cookieValue) ? cookieValue : null
+
           const raw = localStorage.getItem('ech:preferences')
           const parsed = raw ? JSON.parse(raw) : {}
           const themeMode = ['system', 'dark', 'light'].includes(parsed.theme)
@@ -67,14 +77,23 @@
               : localeMode
 
           const root = document.documentElement
-          root.classList.toggle('dark', theme === 'dark')
-          root.classList.toggle('light', theme === 'light')
-          root.dataset.theme = theme
-          root.lang = locale
-
           const themeColor = document.querySelector('meta[name="theme-color"]')
-          if (themeColor) {
-            themeColor.setAttribute('content', theme === 'dark' ? '#0B0E14' : '#EDF0F8')
+
+          if (forcedTheme === 'christmas') {
+            root.classList.remove('dark', 'light')
+            root.dataset.theme = 'christmas'
+            root.lang = locale
+            if (themeColor) {
+              themeColor.setAttribute('content', '#0B1F1A')
+            }
+          } else if (forcedTheme !== 'christmas') {
+            root.classList.toggle('dark', theme === 'dark')
+            root.classList.toggle('light', theme === 'light')
+            root.dataset.theme = theme
+            root.lang = locale
+            if (themeColor) {
+              themeColor.setAttribute('content', theme === 'dark' ? '#0B0E14' : '#EDF0F8')
+            }
           }
         } catch {
           // Preferences are optional; keep the static dark defaults.

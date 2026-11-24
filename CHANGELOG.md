@@ -5,6 +5,53 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
+## [Unreleased]
+
+### Added
+
+- Worker mínimo de Cloudflare (`worker/src/index.ts`, `worker/wrangler.toml`) que
+  deja pasar el HTML prerenderizado de Vercel y fija en cada respuesta HTML la
+  cookie `ech_theme` leída de la KV `THEME_STATE` (clave `theme`, valores
+  `default` | `christmas`). La respuesta HTML del Worker usa
+  `Cache-Control: private, no-cache` para que un caché compartido no congele
+  la cookie de un estado anterior.
+- Panel de administración temporal `GET /admin/theme` (`noindex`, `no-store`):
+  formulario con token, botón deshabilitado mientras envía y feedback en un
+  contenedor con `aria-live="polite"` y altura reservada, sin CLS. El secreto
+  `THEME_ADMIN_TOKEN` se configura con `wrangler secret put` y nunca se
+  renderiza ni se versiona.
+- Endpoint `POST /api/admin/theme`: exige `Authorization: Bearer <token>` con
+  comparación en tiempo constante (SHA-256 + XOR), responde `401` sin escribir
+  en KV si falta o es inválido — también para métodos distintos de `POST` —,
+  `422` si el valor está fuera del enum y `204` con `no-store` al actualizar.
+- Capa de tema navideño en `src/styles/main.css` bajo
+  `[data-theme='christmas']`: tokens semánticos con contraste AA, acentos vivos
+  limitados a bordes y detalles, y transiciones de `background-color`/`color`
+  únicamente bajo `prefers-reduced-motion: no-preference`.
+- Tests del Worker (`worker/src/index.spec.ts`), de preferencias con cookie
+  (`src/composables/usePreferences.spec.ts`) y de tokens/UI pública
+  (`src/styles/theme.spec.ts`).
+
+### Changed
+
+- El script síncrono de `index.html` prioriza la cookie `ech_theme` sobre
+  `ech:preferences`, aplica `data-theme` y `theme-color` antes del primer paint
+  e ignora valores desconocidos. `default` restaura la preferencia guardada.
+- `usePreferences.ts` no sobrescribe `christmas` cuando la cookie está activa,
+  incluso si el visitante cambia entre claro y oscuro.
+- Documentación operativa ampliada en `README.md` y
+  `docs/AUDIT_AND_ROADMAP.md` con despliegue, uso del interruptor y vuelta a
+  `default`.
+
+### Removed
+
+- Métricas de auditoría del sitio: `AuditMetric`, `audit.metrics` y
+  `audit.consistencyNote` en tipos, datos y los cuatro componentes que las
+  mostraban. Se conservan `diagnosis`, `resolution`, `badge`, `ZoomMetrics`,
+  `profile.stats`, `profile.performance`, los alt texts con "metrics", el
+  whitepaper y la documentación de auditoría. Las alturas de las tarjetas se
+  reservan con `min-h-*` para evitar CLS.
+
 ## [1.2.0] - 2026-11-20
 
 ### Added

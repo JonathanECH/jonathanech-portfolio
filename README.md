@@ -21,6 +21,7 @@ Portafolio profesional de ingeniería frontend, generado estáticamente con **Vi
 - [Perfil y objetivos](#perfil-y-objetivos)
 - [Stack tecnológico](#stack-tecnológico)
 - [Arquitectura](#arquitectura)
+- [Worker de tema global (Fase 0)](#worker-de-tema-global-fase-0)
 - [SEO técnico y GEO](#seo-técnico-y-geo)
 - [Casos de estudio](#casos-de-estudio)
 - [Estructura del proyecto](#estructura-del-proyecto)
@@ -116,7 +117,7 @@ Resultado: `/proyectos/<slug>` se publica como HTML estático (`<slug>.html`) y 
 - **Modo oscuro (*Obsidian Cyber*):** fondo `#0b0e14`, acento cian `#00e5ff`.
 - **Modo claro (*Soft Cyber*):** fondo `#edf0f8`, superficies `#f5f7fa`, acento `#109ab6` con texto de acento en blanco.
 - **Acento de caso (Clínica Razetti):** token `--ech-razetti-accent`, `#0f766e` en claro y `#5eead4` en oscuro, para mantener contraste suficiente en ambos temas.
-- **Anti-flash:** script síncrono en `index.html` que aplica `localStorage` y `prefers-color-scheme` antes del primer render.
+- **Anti-flash:** script síncrono en `index.html` que aplica la cookie `ech_theme` del Worker antes que `localStorage` / `prefers-color-scheme`, y actualiza `theme-color` antes del primer render.
 
 ### 4. Componentes accesibles sin dependencias UI externas
 
@@ -124,6 +125,28 @@ Resultado: `/proyectos/<slug>` se publica como HTML estático (`<slug>.html`) y 
 - **ProjectQuickModal:** `<dialog>` nativo con `showModal()`, bloqueo de scroll (`useScrollLock`) y contención en `::backdrop`; sin trampa de foco manual.
 - **GalleryLightbox:** `<dialog>` nativo, zoom con pellizco/doble toque y `Ctrl + rueda` en desktop, paneo al ampliar, pista adaptada a `pointer: coarse` / `pointer: fine`, footer oculto durante el zoom y bloqueo de scroll.
 - **Hero Canvas:** partículas que respetan `prefers-reduced-motion: reduce`.
+
+### 5. Worker de tema global (Fase 0 del CMS)
+
+Un Worker de Cloudflare se sitúa delante del HTML prerenderizado de Vercel. No hay base de datos ni backend: el estado global vive en la KV `THEME_STATE` (clave `theme`, valores estrictos `default` | `christmas`) y el secreto `THEME_ADMIN_TOKEN` se guarda fuera del repositorio.
+
+| Ruta | Comportamiento |
+| :--- | :--- |
+| `GET /*` | Pasa el HTML de Vercel y fija `Set-Cookie: ech_theme=<valor>; Path=/; SameSite=Lax`. El HTML con cookie lleva `Cache-Control: private, no-cache`. |
+| `GET /admin/theme` | Formulario temporal (`noindex`, `no-store`) para introducir el token y elegir tema; nunca renderiza el secreto. |
+| `POST /api/admin/theme` | `{ "theme": "default" \| "christmas" }` con `Authorization: Bearer <token>` → `204`; `401` sin escribir en KV si falta o es inválido; `422` fuera del enum. |
+
+Despliegue y operación:
+
+```bash
+cd worker
+pnpm install
+# Crear el namespace KV en Cloudflare y pegar su id en wrangler.toml
+wrangler secret put THEME_ADMIN_TOKEN   # nunca se commitea
+wrangler deploy
+```
+
+Tras el despliegue, abre `https://<dominio-del-worker>/admin/theme`, introduce el token y pulsa **Navideño** o **Predeterminado**. El Interruptor afecta a todas las visitantes sin rebuild; **Predeterminado** restaura `ech:preferences` de cada visitante en la siguiente respuesta HTML. Fase 1 migrará este valor a `site_settings.active_theme`, retirará el formulario temporal y el endpoint de administración.
 
 ---
 
@@ -255,9 +278,12 @@ pnpm verify
 
 # Servir el build de producción localmente
 pnpm preview
+
+# Worker de tema: tests, typecheck y servidor local (dependencias propias)
+cd worker && pnpm install && pnpm test && pnpm typecheck && pnpm dev
 ```
 
-`pnpm build` genera `dist/index.html`, `dist/404.html`, `dist/proyectos/<slug>.html`, `dist/sitemap.xml` y los assets con hash.
+`pnpm build` genera `dist/index.html`, `dist/404.html`, `dist/proyectos/<slug>.html`, `dist/sitemap.xml` y los assets con hash. El Worker tiene su propio `pnpm-lock.yaml`: `pnpm verify` no cubre sus tests, así que ambos comandos son obligatorios antes de integrar.
 
 ---
 
@@ -280,7 +306,8 @@ pnpm preview
 
 ## Control de calidad y publicación
 
-- `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**124/124 pruebas** en **13 archivos**) y el build estático con `vite-ssg`.
+- `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**135/135 pruebas** en **15 archivos**) y el build estático con `vite-ssg` (6 páginas). `cd worker && pnpm test` añade **11 pruebas** del tema global y `pnpm typecheck` verifica el Worker.
+- Sin integrar en `main`: **Fase 0 del CMS** en `feat/portfolio-cms` — métricas de auditoría retiradas del sitio y tema navideño controlado solo por el admin mediante Worker + KV, sin opción pública en `SettingsMenu` ni claves nuevas en i18n.
 - Release actual: **v1.2.0** (2026-11-20), con skeleton del lightbox, quick wins de movimiento, preservación del reveal por scroll al filtrar y anclaje de contacto en escritorio.
 - Release anterior: **v1.1.1**. El detalle de los cambios de esta versión está en [`CHANGELOG.md`](CHANGELOG.md).
 - Historial de cambios en [`CHANGELOG.md`](CHANGELOG.md); procedimientos de mantenimiento, tags, dependencias, monitoreo y rollback en [`docs/MAINTENANCE.md`](docs/MAINTENANCE.md).

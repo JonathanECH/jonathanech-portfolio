@@ -1,0 +1,16 @@
+name = "jonathanech-theme-worker"
+main = "src/index.ts"
+compatibility_date = "2026-11-24"
+
+# KV guarda una única clave `theme` con valores estrictos: `default` | `christmas`.
+[[kv_namespaces]]
+binding = "THEME_STATE"
+id = "REEMPLAZAR_CON_EL_ID_DEL_NAMESPACE"
+
+# Origen del HTML prerenderizado; se puede sobrescribir por entorno.
+[vars]
+PUBLIC_SITE_ORIGIN = "https://jonathanech.dev"
+
+# THEME_ADMIN_TOKEN es un secreto y NUNCA se guarda aquí:
+#   wrangler secret put THEME_ADMIN_TOKEN
+# El worker responde 401 si la variable no existe.

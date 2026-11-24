@@ -96,25 +96,6 @@ const projects: readonly Project[] = [
       resolution:
         'The data model was redesigned with atomic batches per SKU and size, an immutable transactional ledger and an offline-first reactive layer with optimistic locks. Critical queries were indexed and N+1 reads were eliminated.',
       badge: 'VERIFIED ARCHITECTURE',
-      metrics: [
-        {
-          label: 'STOCK INTEGRITY',
-          value: '0.00% Discrepancy',
-          detail: 'Immutable transactional ledger',
-        },
-        {
-          label: 'POS CONCURRENCY',
-          value: 'Optimistic Locks',
-          detail: 'Idempotency via client_txn_id',
-        },
-        {
-          label: 'PERSISTENCE',
-          value: 'PostgreSQL ACID',
-          detail: 'Indexed queries without N+1',
-        },
-      ],
-      consistencyNote:
-        'Idempotent synchronization with client_txn_id and atomic transactions validated locally and documented in the repository technical whitepaper.',
     },
     modules: [
       {
@@ -230,25 +211,6 @@ const projects: readonly Project[] = [
       resolution:
         'The flow was centralized in the useClima composable: a 350 ms debounce for autocomplete, OpenWeatherMap Geocoding and current weather via Axios, reverse geocoding to validate GPS, localStorage history (max 5) and explicit messages for every error scenario.',
       badge: 'VERIFIED API & UX',
-      metrics: [
-        {
-          label: 'AUTOCOMPLETE',
-          value: '350 ms Debounce',
-          detail: 'Real-time Geocoding API',
-        },
-        {
-          label: 'LOCAL HISTORY',
-          value: '5 Searches',
-          detail: 'localStorage, no backend',
-        },
-        {
-          label: 'TESTING',
-          value: 'Vitest',
-          detail: 'useClima composable',
-        },
-      ],
-      consistencyNote:
-        'OpenWeatherMap flow, location validation and local persistence implemented client-side; the useClima composable is covered by Vitest tests.',
     },
     modules: [
       {
@@ -393,25 +355,6 @@ const projects: readonly Project[] = [
       resolution:
         'Engineered a reactive Angular 19 SPA with Signals and functional RoleGuards, backed by a Node.js/PostgreSQL API with Zod, real-time active user JWT checks and mandatory soft deletes for legal compliance.',
       badge: 'VERIFIED QA & SECURITY',
-      metrics: [
-        {
-          label: 'UNIT TESTING',
-          value: 'Vitest Passing',
-          detail: 'Components, guards and services',
-        },
-        {
-          label: 'ACCESS CONTROL',
-          value: '0 IDOR Breaches',
-          detail: 'RoleGuard + strict JWT scoping',
-        },
-        {
-          label: 'LEGAL AUDITING',
-          value: '100% Soft Deletes',
-          detail: 'Zero physical DELETEs in DB',
-        },
-      ],
-      consistencyNote:
-        'Reactive clinical workflows, Zod validation and RBAC control verified with Vitest test suites and integration tests executed in a local test environment.',
     },
     modules: [
       {
@@ -553,25 +496,6 @@ const projects: readonly Project[] = [
       resolution:
         'A double-entry ledger with hash-based idempotency, assisted reconciliation and reports generated from the same transactional source was implemented. Docker guarantees parity between close and production environments.',
       badge: 'VERIFIED ACCOUNTING INTEGRITY',
-      metrics: [
-        {
-          label: 'LEDGER BALANCE',
-          value: 'Double-Entry',
-          detail: 'Debits = Credits constraint',
-        },
-        {
-          label: 'IDEMPOTENCY',
-          value: '0 Duplicates',
-          detail: 'Unique transaction hash',
-        },
-        {
-          label: 'DEVOPS PARITY',
-          value: 'Docker Parity',
-          detail: 'Reproducible financial close',
-        },
-      ],
-      consistencyNote:
-        'General ledger integrity guaranteed via foreign keys, PostgreSQL ACID transactions and accounting rules validated in a local Docker environment.',
     },
     modules: [
       {

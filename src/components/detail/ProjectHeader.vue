@@ -119,21 +119,12 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             </dd>
           </div>
 
-          <div class="rounded border border-border bg-surface-card/40 px-4 py-3">
+          <div class="flex min-h-19 items-center justify-between gap-3 rounded border border-border bg-surface-card/40 px-4 py-3">
             <dt class="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
-              {{ t('detail.impact') }}
+              {{ t('detail.auditReport') }}
             </dt>
-            <dd class="mt-2">
-              <ul class="space-y-1.5">
-                <li
-                  v-for="metric in project.audit.metrics"
-                  :key="metric.label"
-                  class="font-mono text-[10px] leading-relaxed"
-                >
-                  <span class="text-foreground">{{ metric.value }}</span>
-                  <span class="text-muted"> — {{ metric.label }}</span>
-                </li>
-              </ul>
+            <dd class="min-w-0 truncate font-mono text-[10px] text-foreground/80">
+              {{ project.audit.badge }}
             </dd>
           </div>
         </dl>

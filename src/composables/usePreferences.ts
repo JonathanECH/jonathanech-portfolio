@@ -14,6 +14,9 @@ import type {
 } from '@/types/portfolio'
 
 export const PREFERENCES_STORAGE_KEY = 'ech:preferences'
+export const CHRISTMAS_THEME_COLOR = '#0B1F1A'
+
+type ForcedTheme = 'default' | 'christmas' | null
 
 const themeMode = ref<ThemeMode>('system')
 const localeMode = ref<LocaleMode>('system')
@@ -46,19 +49,38 @@ function readStoredPreferences(): Preferences {
   }
 }
 
+function readForcedTheme(): ForcedTheme {
+  if (typeof document === 'undefined') {
+    return null
+  }
+
+  const entry = document.cookie.split('; ').find((part) => part.startsWith('ech_theme='))
+  const value = entry?.slice('ech_theme='.length) ?? ''
+  return value === 'default' || value === 'christmas' ? value : null
+}
+
 function applyToDocument(): void {
   if (typeof document === 'undefined') {
     return
   }
 
   const root = document.documentElement
+  const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
+
+  root.lang = resolvedLocale.value
+
+  if (readForcedTheme() === 'christmas') {
+    root.classList.remove('dark', 'light')
+    root.dataset.theme = 'christmas'
+    if (themeColor) {
+      themeColor.content = CHRISTMAS_THEME_COLOR
+    }
+    return
+  }
 
   root.classList.toggle('dark', resolvedTheme.value === 'dark')
   root.classList.toggle('light', resolvedTheme.value === 'light')
   root.dataset.theme = resolvedTheme.value
-  root.lang = resolvedLocale.value
-
-  const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
 
   if (themeColor) {
     themeColor.content = resolvedTheme.value === 'dark' ? '#0B0E14' : '#EDF0F8'

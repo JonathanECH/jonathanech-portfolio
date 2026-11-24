@@ -7,6 +7,14 @@ import { enContent } from '@/data/portfolio.en'
 import { usePortfolioStore } from '@/stores/portfolio'
 import { usePortfolioData } from '@/composables/usePortfolioData'
 
+const LEGACY_AUDIT_KEYS = ['metrics', 'consistency' + 'Note'] as const
+
+function expectNoLegacyAuditFields(audit: object): void {
+  for (const key of LEGACY_AUDIT_KEYS) {
+    expect(key in audit, key).toBe(false)
+  }
+}
+
 describe('portfolio data integrity', () => {
   it('exposes the twenty-three technologies across the four ecosystem categories', () => {
     expect(technologies).toHaveLength(23)
@@ -26,22 +34,31 @@ describe('portfolio data integrity', () => {
       expect(project.gallery.length).toBeGreaterThanOrEqual(3)
       expect(project.modules).toHaveLength(3)
       expect(project.challenge.findings.length).toBeGreaterThan(0)
-      expect(project.audit.metrics).toHaveLength(3)
+      expectNoLegacyAuditFields(project.audit)
+      expect(project.audit.diagnosis.trim().length).toBeGreaterThan(0)
+      expect(project.audit.resolution.trim().length).toBeGreaterThan(0)
       expect(project.audit.badge.trim().length).toBeGreaterThan(0)
       expect(project.techTags.length).toBeGreaterThan(0)
     }
+
+    for (const project of enContent.projects) {
+      expectNoLegacyAuditFields(project.audit)
+      expect(project.audit.diagnosis.trim().length).toBeGreaterThan(0)
+      expect(project.audit.resolution.trim().length).toBeGreaterThan(0)
+    }
   })
 
-  it('keeps the TilyShop audit metrics aligned with the verifiable architecture brief', () => {
+  it('keeps the TilyShop audit diagnosis aligned with the architecture brief', () => {
     const tilyshop = projects.find((project) => project.slug === 'tilyshop-inventory')
 
     expect(tilyshop?.name).toBe('TilyShop Inventory')
     expect(tilyshop?.audit.badge).toBe('ARQUITECTURA VERIFICADA')
-    expect(tilyshop?.audit.metrics[0].value).toBe('0.00% Descuadre')
-    expect(tilyshop?.audit.consistencyNote).toContain('whitepaper')
+    expect(tilyshop?.audit.diagnosis).toContain('escrituras no atómicas')
+    expect(tilyshop?.audit.resolution).toContain('locks optimistas')
+    expectNoLegacyAuditFields(tilyshop?.audit ?? {})
   })
 
-  it('exposes Clima Vue as a deployed project with real links and verifiable metrics', () => {
+  it('exposes Clima Vue as a deployed project with real links', () => {
     const clima = projects.find((project) => project.slug === 'clima-vue')
 
     expect(clima?.name).toBe('Clima Vue')
@@ -51,8 +68,7 @@ describe('portfolio data integrity', () => {
     expect(clima?.gallery).toHaveLength(3)
     expect(clima?.gallery.every((slide) => Boolean(slide.image))).toBe(true)
     expect(clima?.techTags).toContain('OpenWeatherMap')
-    expect(clima?.audit.metrics[0].value).toBe('350 ms Debounce')
-    expect(clima?.audit.metrics[1].value).toBe('5 Búsquedas')
+    expectNoLegacyAuditFields(clima?.audit ?? {})
   })
 
   it('exposes a complete profile and four direct contact channels', () => {

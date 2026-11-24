@@ -305,25 +305,6 @@ export const projects: readonly Project[] = [
       resolution:
         'Se rediseñó el modelo de datos con lotes atómicos por SKU y talla, se introdujo un ledger transaccional inmutable y una capa reactiva offline-first con locks optimistas. Las consultas críticas se indexaron y se eliminaron las lecturas N+1.',
       badge: 'ARQUITECTURA VERIFICADA',
-      metrics: [
-        {
-          label: 'INTEGRIDAD DE STOCK',
-          value: '0.00% Descuadre',
-          detail: 'Ledger transaccional inmutable',
-        },
-        {
-          label: 'CONCURRENCIA POS',
-          value: 'Locks Optimistas',
-          detail: 'Idempotencia por client_txn_id',
-        },
-        {
-          label: 'PERSISTENCIA',
-          value: 'PostgreSQL ACID',
-          detail: 'Consultas indexadas sin N+1',
-        },
-      ],
-      consistencyNote:
-        'Sincronización idempotente con client_txn_id y transacciones atómicas validadas localmente y documentadas en el whitepaper técnico del repositorio.',
     },
     modules: [
       {
@@ -439,25 +420,6 @@ export const projects: readonly Project[] = [
       resolution:
         'Se centralizó el flujo en el composable useClima: debounce de 350 ms para el autocompletado, Geocoding y current weather de OpenWeatherMap vía Axios, reverse geocoding para validar el GPS, historial en localStorage (máximo 5) y mensajes explícitos para cada escenario de error.',
       badge: 'API & UX VALIDADAS',
-      metrics: [
-        {
-          label: 'AUTOCOMPLETADO',
-          value: '350 ms Debounce',
-          detail: 'Geocoding API en tiempo real',
-        },
-        {
-          label: 'HISTORIAL LOCAL',
-          value: '5 Búsquedas',
-          detail: 'localStorage, sin backend',
-        },
-        {
-          label: 'PRUEBAS',
-          value: 'Vitest',
-          detail: 'Composable useClima',
-        },
-      ],
-      consistencyNote:
-        'Flujo de OpenWeatherMap, validación de ubicación y persistencia local implementados en el cliente; el composable useClima está cubierto por pruebas con Vitest.',
     },
     modules: [
       {
@@ -602,25 +564,6 @@ export const projects: readonly Project[] = [
       resolution:
         'Se implementó una SPA reactiva en Angular 19 con Signals y RoleGuards, conectada a una API en Node.js/PostgreSQL con Zod, JWT con validación de estado activo en tiempo real y borrados lógicos para integridad legal.',
       badge: 'QA & SEGURIDAD VERIFICADA',
-      metrics: [
-        {
-          label: 'PRUEBAS UNITARIAS',
-          value: 'Vitest Passing',
-          detail: 'Componentes, guards y servicios',
-        },
-        {
-          label: 'CONTROL DE ACCESO',
-          value: '0 Brechas IDOR',
-          detail: 'RoleGuard + filtro JWT estricto',
-        },
-        {
-          label: 'HISTORIAL LEGAL',
-          value: '100% Borrado Lógico',
-          detail: 'Cero DELETEs físicos en BD',
-        },
-      ],
-      consistencyNote:
-        'Flujos clínicos reactivos, validación Zod y control RBAC validados mediante suites de Vitest y pruebas de integración ejecutadas de manera local.',
     },
     modules: [
       {
@@ -764,25 +707,6 @@ export const projects: readonly Project[] = [
       resolution:
         'Se implementó un ledger de doble partida con idempotencia por hash, conciliación asistida y reportes generados desde la misma fuente transaccional. Docker garantiza paridad entre entornos de cierre y producción.',
       badge: 'INTEGRIDAD CONTABLE VERIFICADA',
-      metrics: [
-        {
-          label: 'BALANCE CONTABLE',
-          value: 'Doble Partida',
-          detail: 'Debe = Haber por constraint',
-        },
-        {
-          label: 'IDEMPOTENCIA',
-          value: '0 Duplicados',
-          detail: 'Hash de transacción único',
-        },
-        {
-          label: 'ENTORNO & DEVOPS',
-          value: 'Docker Parity',
-          detail: 'Cierres contables reproducibles',
-        },
-      ],
-      consistencyNote:
-        'Integridad del libro diario garantizada mediante llaves foráneas, transacciones ACID en PostgreSQL y reglas contables validadas en entorno local con Docker.',
     },
     modules: [
       {
