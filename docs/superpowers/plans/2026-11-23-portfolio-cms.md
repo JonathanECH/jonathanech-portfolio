@@ -635,3 +635,34 @@ git add apps/ pnpm-workspace.yaml README.md docs/MAINTENANCE.md && git commit -m
 - `pnpm verify && pnpm test -- src/composables/useCmsData.spec.ts` → hidratación síncrona, testimonios en home/detalle sin CLS, typecheck, tests y build SSG.
 - `pnpm --filter admin test && pnpm --filter client test` → panel, subida en dos pasos, precarga del borrador y paridad ES/EN sin traducir el contenido del testimonio.
 - Smoke final: aprobar un testimonio y crear un proyecto en el panel, recargar `jonathanech.dev` sin deploy, comprobar que ambos aparecen en `__ECH_CMS_DATA__`, en `sitemap.xml` y en el JSON-LD, que `/proyectos/<slug-nuevo>` devuelve 200, que no hay filas huérfanas en `project_images` tras una firma sin confirmar y que con `active_theme='christmas'` el tema festivo gana sobre la preferencia local.
+
+## Estado de implementación — Fase 0 (2026-11-24)
+
+Ejecutada en orden **0B → 0A** por petición explícita, sobre la rama
+`feat/portfolio-cms` (commits `5f1b197` → `21a23a4`), sin tocar `main`.
+La spec de diseño sigue siendo la autoridad; esta sección solo registra el
+resultado, no cambia el contrato.
+
+| Tarea | Resultado | Evidencia |
+| :--- | :--- | :--- |
+| **0B** | Completada | `AuditMetric`, `audit.metrics` y `audit.consistencyNote` ausentes de `src/`; `diagnosis`, `resolution`, `badge`, `ZoomMetrics`, `profile.stats`, `profile.performance`, alt texts, README, `docs/AUDIT_AND_ROADMAP.md` y whitepaper conservados. Alturas de tarjetas reservadas con `min-h-*`. |
+| **0A** | Completada | Worker con KV `THEME_STATE` (clave `theme`, enum `default` \| `christmas`), secreto `THEME_ADMIN_TOKEN`, cookie `ech_theme` en toda respuesta HTML, `GET /admin/theme`, `POST /api/admin/theme` (401/422/204), tokens CSS de contraste AA y anti-flash con cookie > `ech:preferences`. Sin opción navideña en `SettingsMenu` ni claves i18n nuevas. |
+| **Revisión final** | Completada | Revisor independiente: dos hallazgos Important corregidos con tests RED→GREEN en `c7576f8` — la cookie no puede ser congelada por un caché compartido (`Cache-Control: private, no-cache` en HTML) y `GET /api/admin/theme` devuelve 401 sin llegar al proxy. |
+| **Documentación** | Completada | `CHANGELOG.md`, `README.md` y `docs/AUDIT_AND_ROADMAP.md` describen el alcance, el despliegue del Worker y la vuelta a `default` (commit `21a23a4`). |
+
+Verificación final ejecutada sobre el árbol integrado:
+`cd worker && pnpm test` → 11/11; `cd worker && pnpm typecheck` → limpio;
+`pnpm verify` → 135/135 tests, 15 archivos, typecheck y 6 páginas SSG;
+ambos `grep` de métricas y de UI/i18n navideña sin coincidencias; smoke con
+`wrangler dev` → `GET /api/admin/theme` 401, `POST` sin token 401, `POST` con
+token 204, HTML con `ech_theme=christmas` y `private, no-cache`.
+
+Decisiones registradas durante la ejecución: el orden 0B→0A; sincronización de
+plan/spec aprobados desde esta misma rama; configuración adicional del Worker
+(`tsconfig.json`, `packageManager`, `allowBuilds`, ignores de `.wrangler` y
+`.dev.vars`); formulario de admin servido por el Worker; y las decisiones
+finales de la revisión (endpoint temporal sin rate limiting, cookie sin
+`HttpOnly`/`Secure`/`Max-Age`, CI sin tests del Worker y AA verificado en tokens
+semánticos, no en opacidades preexistentes).
+
+Fase 1 permanece intacta y no se inicia antes de enero de 2027.
