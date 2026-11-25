@@ -7,13 +7,14 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 ## Estado General
 
 - **Rama activa:** `main` (release `v1.2.0`)
+- **Fase 0 del CMS:** integrada en `main` el 24 de noviembre de 2026 (PR #19).
 - **Fecha de inicio:** 9 de noviembre de 2026
 - **Última actualización:** 24 de noviembre de 2026
 - **Objetivo:** Credibilidad en 30–60 segundos, enlaces funcionales, posicionamiento claro como Frontend Engineer para reclutadores internacionales y paridad completa ES/EN.
 
 ---
 
-## Fase 0 del CMS — 2026-11-24 (pendiente de integrar en `main`)
+## Fase 0 del CMS — 2026-11-24 (integrada en `main` vía PR #19)
 
 | Ítem | Descripción | Estado | Detalle técnico |
 | :--- | :--- | :---: | :--- |

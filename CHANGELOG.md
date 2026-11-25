@@ -7,6 +7,8 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+> Fase 0 del CMS integrada en `main` el 24 de noviembre de 2026 (PR #19).
+
 ### Added
 
 - Worker mínimo de Cloudflare (`worker/src/index.ts`, `worker/wrangler.toml`) que

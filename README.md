@@ -307,7 +307,7 @@ cd worker && pnpm install && pnpm test && pnpm typecheck && pnpm dev
 ## Control de calidad y publicación
 
 - `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**135/135 pruebas** en **15 archivos**) y el build estático con `vite-ssg` (6 páginas). `cd worker && pnpm test` añade **11 pruebas** del tema global y `pnpm typecheck` verifica el Worker.
-- Sin integrar en `main`: **Fase 0 del CMS** en `feat/portfolio-cms` — métricas de auditoría retiradas del sitio y tema navideño controlado solo por el admin mediante Worker + KV, sin opción pública en `SettingsMenu` ni claves nuevas en i18n.
+- **Fase 0 del CMS integrada en `main`** (PR #19, 2026-11-24): métricas de auditoría retiradas del sitio y tema navideño controlado solo por el admin mediante Worker + KV, sin opción pública en `SettingsMenu` ni claves nuevas en i18n.
 - Release actual: **v1.2.0** (2026-11-20), con skeleton del lightbox, quick wins de movimiento, preservación del reveal por scroll al filtrar y anclaje de contacto en escritorio.
 - Release anterior: **v1.1.1**. El detalle de los cambios de esta versión está en [`CHANGELOG.md`](CHANGELOG.md).
 - Historial de cambios en [`CHANGELOG.md`](CHANGELOG.md); procedimientos de mantenimiento, tags, dependencias, monitoreo y rollback en [`docs/MAINTENANCE.md`](docs/MAINTENANCE.md).
