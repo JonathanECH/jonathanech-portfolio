@@ -5,7 +5,7 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
-## [Unreleased]
+## [1.3.0] - 2026-11-26
 
 > Fase 0 del CMS integrada en `main` el 24 de noviembre de 2026 (PR #19).
 
@@ -44,6 +44,18 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 - Documentación operativa ampliada en `README.md` y
   `docs/AUDIT_AND_ROADMAP.md` con despliegue, uso del interruptor y vuelta a
   `default`.
+- Dependencias actualizadas (PR `#17`): `@lucide/vue` 1.77.0, `@unhead/vue`
+  2.1.18, `vue` 3.5.46 y `vitest` 5.1.1. El proyecto raíz pasa a pnpm 12.23.0
+  y `.github/workflows/verify.yml` usa la misma versión para que
+  `pnpm install --frozen-lockfile` no diverga del lockfile.
+
+### Fixed
+
+- Rutas del CV unificadas: el PDF pasa de `public/cv/jonathan-campos-cv.pdf` a
+  `public/cv/CV_JonathanCampos.pdf` y se actualizan los enlaces de descarga en
+  `src/components/home/HeroSection.vue` y
+  `src/components/layout/AppNavbar.vue`, junto con el estado P2.2 de
+  `docs/AUDIT_AND_ROADMAP.md`. No quedan referencias al nombre anterior.
 
 ### Removed
 
@@ -53,6 +65,12 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
   `profile.stats`, `profile.performance`, los alt texts con "metrics", el
   whitepaper y la documentación de auditoría. Las alturas de las tarjetas se
   reservan con `min-h-*` para evitar CLS.
+
+### Verificación
+
+- `pnpm verify`: typecheck OK, **135/135** pruebas en **15** archivos y build
+  `vite-ssg` correcto (6 páginas prerenderizadas).
+- Worker de tema: `pnpm test` → **11/11** pruebas y `pnpm typecheck` OK.
 
 ## [1.2.0] - 2026-11-20
 

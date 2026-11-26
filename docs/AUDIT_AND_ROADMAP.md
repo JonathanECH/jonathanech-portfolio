@@ -6,10 +6,10 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 
 ## Estado General
 
-- **Rama activa:** `main` (release `v1.2.0`)
+- **Rama activa:** `main` (release `v1.3.0`)
 - **Fase 0 del CMS:** integrada en `main` el 24 de noviembre de 2026 (PR #19).
 - **Fecha de inicio:** 9 de noviembre de 2026
-- **Última actualización:** 24 de noviembre de 2026
+- **Última actualización:** 26 de noviembre de 2026
 - **Objetivo:** Credibilidad en 30–60 segundos, enlaces funcionales, posicionamiento claro como Frontend Engineer para reclutadores internacionales y paridad completa ES/EN.
 
 ---
@@ -37,7 +37,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | **P0.4** | **Honestidad en Estados y Clientes** | **COMPLETADO** | **TilyShop Inventory** confirmado como proyecto real desplegado en producción (`EN PRODUCCIÓN` / `IN PRODUCTION`), respaldado por su whitepaper técnico de arquitectura offline-first. Los otros dos proyectos se presentan honestamente como casos de estudio (`CASO DE ESTUDIO`). |
 | **P0.5** | **Contextualización de Métricas** | **COMPLETADO** | Se actualizaron las notas de consistencia (`consistencyNote`) de los 3 proyectos, explicando que las métricas corresponden a benchmarks en entornos de prueba y sincronización offline documentada en el whitepaper técnico. |
 | **P0.6** | **Posicionamiento Profesional Claro** | **COMPLETADO** | Se unificó el rol a "Desarrollador Frontend / Frontend Engineer", se eliminó "ARQUITECTO DE SOFTWARE" del titular (cambiado a `['DESARROLLADOR WEB', 'FRONTEND ENGINEER']`) y se explicitó la zona horaria (`UTC-4 (Barquisimeto, Venezuela)`). En la release 2026-11-18 se eliminaron pasantías, disponibilidad inmediata y etiquetas Junior/Mid: el bio pasó a describir colaboración con equipos remotos e internacionales y entregas listas para producción. |
-| **P0.7** | **Actualización de Tests de Paridad** | **COMPLETADO** | Se sincronizaron `src/stores/portfolio.spec.ts` e `src/i18n/i18n.spec.ts`. La suite completa pasa al 100% (102/102 pruebas) junto a `vue-tsc` y `vite-ssg build`. |
+| **P0.7** | **Actualización de Tests de Paridad** | **COMPLETADO** | Se sincronizaron `src/stores/portfolio.spec.ts` e `src/i18n/i18n.spec.ts`. La suite completa pasa al 100% (135/135 pruebas en 15 archivos) junto a `vue-tsc` y `vite-ssg build`; el Worker añade 11 pruebas propias. |
 
 ---
 
@@ -58,8 +58,8 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | Ítem | Descripción | Estado | Detalle técnico |
 | :--- | :--- | :---: | :--- |
 | **P2.1** | **Enlaces a Repositorios Públicos Reales** | **COMPLETADO (PARCIAL)** | `clima-vue` integrado con repositorio público (`github.com/JonathanECH/clima-vue`) y demo en vivo (`clima-vue-vert.vercel.app`). El `CRM desde cero` queda pendiente para una próxima fase. |
-| **P2.2** | **CV en PDF Actualizado** | **CONSERVADO** | Se mantiene temporalmente el archivo actual `public/cv/jonathan-campos-cv.pdf` a petición del usuario. Se actualizará en una iteración posterior. |
-| **P2.3** | **Verificación Integral CI/Local** | **COMPLETADO** | Pipeline `pnpm verify` pasando al 100%: 0 errores de typecheck, 102/102 pruebas unitarias en Vitest y build de producción con prerenderizado (`vite-ssg`). |
+| **P2.2** | **CV en PDF Actualizado** | **ACTUALIZADO** | `public/cv/CV_JonathanCampos.pdf` sustituye al antiguo `jonathan-campos-cv.pdf` (PDF 1.4, 408 KB). Los enlaces de descarga en `HeroSection.vue` y `AppNavbar.vue` apuntan al nuevo nombre y no quedan referencias al anterior. |
+| **P2.3** | **Verificación Integral CI/Local** | **COMPLETADO** | Pipeline `pnpm verify` pasando al 100%: 0 errores de typecheck, 135/135 pruebas unitarias en 15 archivos, 11 pruebas del Worker y build de producción con prerenderizado (`vite-ssg`). El CI usa pnpm 12.23.0, igual que `package.json` y el lockfile raíz. |
 
 ---
 
@@ -110,6 +110,18 @@ Checklist de la rama `feat/project-reveal-70` (commits `5bb208a` y `f593ee7`):
 3. **Sobre Mí:** las cuatro barras de métricas usan `cover` en vez de `entry`: inicios `cover 10% / 14% / 18% / 22%` y fin `cover 50%` en escritorio y `cover 45%` en móvil, manteniendo visible la cuarta barra (SEO) y sin animar `width`.
 4. **Verificación integral:** `pnpm verify` → typecheck OK, **110/110** tests en 12 archivos y build `vite-ssg` correcto (6 páginas prerenderizadas).
 5. **Publicación:** merge de la rama en `main` y tag anotado `v1.1.1` enviado con `git push --follow-tags`; `main` es la rama desplegada en producción.
+
+---
+
+## Validación previa a producción (release `v1.3.0` · 2026-11-26)
+
+Checklist de los PR `#17`, `#18`, `#19` y de la auditoría local posterior:
+
+1. **Alcance:** Fase 0 del CMS (Worker + KV, panel `/admin/theme` y cookie `ech_theme`), retirada de métricas de auditoría, plan/especificación del CMS, bump de dependencias y de pnpm 12.23.0 con CI alineado, y renombrado del CV.
+2. **Movimiento y accesibilidad:** el tema navideño solo altera tokens semánticos, sin exponer interruptor público; las transiciones de color quedan limitadas a `prefers-reduced-motion: no-preference` y las tarjetas reservan altura con `min-h-*` para evitar CLS.
+3. **Auditoría de enlaces:** no quedan referencias a `jonathan-campos-cv.pdf`; `HeroSection.vue` y `AppNavbar.vue` descargan `CV_JonathanCampos.pdf` (PDF 1.4, 408 KB, cabecera `%PDF` verificada).
+4. **Verificación integral:** `pnpm verify` → typecheck OK, **135/135** tests en 15 archivos y build `vite-ssg` correcto (6 páginas prerenderizadas); `cd worker && pnpm test` → **11/11** y `pnpm typecheck` OK.
+5. **Publicación:** fusión del PR de auditoría en `main` y tag anotado `v1.3.0` enviado con `git push --follow-tags`; `main` es la rama desplegada en producción.
 
 ---
 

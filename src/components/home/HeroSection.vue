@@ -513,7 +513,7 @@ onBeforeUnmount(() => {
         </a>
 
         <a
-          href="/cv/jonathan-campos-cv.pdf"
+          href="/cv/CV_JonathanCampos.pdf"
           download
           class="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/60 px-6 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground interactive-transition hover:border-border-hover hover:bg-surface-card hover:text-cyan-accent motion-safe:active:scale-[0.97] sm:text-xs"
         >
