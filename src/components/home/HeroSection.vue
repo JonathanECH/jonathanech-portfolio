@@ -439,7 +439,7 @@ onBeforeUnmount(() => {
   <section
     id="inicio"
     ref="sectionRef"
-    class="relative flex min-h-screen w-full scroll-mt-20 items-center overflow-hidden border-b border-border/60 bg-background"
+    class="relative flex min-h-screen w-full scroll-mt-20 items-center overflow-hidden border-b border-border/60 bg-background lg:min-h-svh"
   >
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
       <canvas ref="canvasRef" class="absolute inset-0 block h-full w-full" />
@@ -449,7 +449,7 @@ onBeforeUnmount(() => {
     </div>
 
     <div
-      class="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-5 pb-16 pt-28 text-center sm:px-6 sm:pt-32 lg:px-12 lg:pb-24 lg:pt-36"
+      class="hero-content relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-5 pb-16 pt-28 text-center sm:px-6 sm:pt-32 lg:px-12 lg:pb-[clamp(2rem,4vh,3.5rem)] lg:pt-[clamp(5rem,9vh,7.5rem)]"
     >
       <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
         <p
@@ -472,33 +472,33 @@ onBeforeUnmount(() => {
         </span>
       </div>
 
-      <p class="mt-7 font-mono text-xs tracking-[0.08em] text-foreground/65 sm:text-sm">
+      <p class="mt-7 font-mono text-xs tracking-[0.08em] text-foreground/65 sm:text-sm lg:mt-[clamp(0.75rem,1.6vh,1.25rem)]">
         {{ profile.name }}<span
           class="ml-0.5 inline-block h-3.5 w-0.5 translate-y-0.5 animate-cursor bg-cyan-accent align-middle"
           aria-hidden="true"
         />
       </p>
 
-      <h1 class="mt-3 flex flex-col items-center gap-2">
+      <h1 class="mt-3 flex flex-col items-center gap-2 lg:mt-[clamp(0.5rem,1vh,0.875rem)]">
         <span
-          class="block font-sans text-2xl font-bold uppercase leading-tight tracking-[-0.02em] text-foreground sm:text-3xl lg:text-4xl"
+          class="block font-sans text-2xl font-bold uppercase leading-tight tracking-[-0.02em] text-foreground sm:text-3xl lg:text-[clamp(1.5rem,3vh,2.25rem)]"
         >
           {{ profile.headline[0] }}
         </span>
         <span
-          class="block font-sans text-[2.4rem] font-black uppercase leading-[0.95] tracking-[-0.04em] text-cyan-accent text-glow min-[380px]:text-5xl sm:text-6xl lg:text-8xl"
+          class="block font-sans text-[2.4rem] font-black uppercase leading-[0.95] tracking-[-0.04em] text-cyan-accent text-glow min-[380px]:text-5xl sm:text-6xl lg:text-[clamp(3rem,8vh,6rem)]"
         >
           {{ profile.headline[1] }}
         </span>
       </h1>
 
       <p
-        class="mt-7 max-w-2xl text-balance text-sm leading-relaxed text-muted sm:text-base lg:text-[17px]"
+        class="mt-7 max-w-2xl text-balance text-sm leading-relaxed text-muted sm:text-base lg:mt-[clamp(0.875rem,2vh,1.5rem)] lg:text-[17px]"
       >
         {{ t('hero.intro') }}
       </p>
 
-      <div class="mt-9 flex w-full flex-col items-stretch justify-center gap-3 sm:w-auto sm:flex-row">
+      <div class="mt-9 flex w-full flex-col items-stretch justify-center gap-3 sm:w-auto sm:flex-row lg:mt-[clamp(1.25rem,2.6vh,2rem)]">
         <a
           href="#proyectos"
           class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-accent-contrast shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] interactive-transition hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] motion-safe:active:scale-[0.97] sm:text-xs"
@@ -526,9 +526,9 @@ onBeforeUnmount(() => {
         </a>
       </div>
 
-      <div class="mt-12 w-full max-w-2xl">
+      <div class="mt-12 w-full max-w-2xl lg:mt-[clamp(1.5rem,3.2vh,2.5rem)]">
         <div
-          class="mb-3 flex items-center justify-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-muted sm:text-[10px]"
+          class="mb-3 flex items-center justify-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-muted sm:text-[10px] lg:mb-[clamp(0.5rem,1vh,0.75rem)]"
         >
           <Activity :size="12" class="text-cyan-accent" aria-hidden="true" />
           {{ t('hero.metrics') }}
@@ -540,7 +540,7 @@ onBeforeUnmount(() => {
           <div
             v-for="stat in profile.stats"
             :key="stat.label"
-            class="bg-background/85 px-5 py-4 text-center sm:text-left"
+            class="bg-background/85 px-5 py-4 text-center sm:text-left lg:py-[clamp(0.5rem,1.4vh,1rem)]"
           >
             <dt class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted sm:text-[10px]">
               {{ stat.label }}
@@ -552,7 +552,7 @@ onBeforeUnmount(() => {
 
       <a
         href="#stack"
-        class="mt-10 inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-muted transition-colors duration-300 hover:text-cyan-accent sm:text-[10px]"
+        class="mt-10 inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-muted transition-colors duration-300 hover:text-cyan-accent sm:text-[10px] lg:mt-[clamp(1.25rem,2.6vh,2rem)]"
       >
         {{ t('hero.scroll') }}
         <ArrowRight :size="13" class="rotate-90" aria-hidden="true" />

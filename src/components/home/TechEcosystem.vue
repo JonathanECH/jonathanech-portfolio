@@ -42,7 +42,7 @@ function toggleTechGrid(): void {
 <template>
   <section
     id="stack"
-    class="deferred-section relative w-full scroll-mt-20 overflow-clip border-t border-border/60 bg-surface/30 py-20 lg:py-28"
+    class="deferred-section relative flex w-full scroll-mt-20 flex-col justify-center overflow-clip border-t border-border/60 bg-surface/30 py-20 lg:min-h-svh lg:py-28"
   >
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
       <div class="absolute inset-0 bg-grid-fine opacity-40" />
