@@ -1,6 +1,6 @@
 {
   "name": "jonathanech-portfolio",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@12.23.0",

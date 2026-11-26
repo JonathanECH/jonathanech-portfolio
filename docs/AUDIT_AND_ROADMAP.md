@@ -6,8 +6,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 
 ## Estado General
 
-- **Rama activa:** `main` (release `v1.3.2`)
-- **Rama de trabajo:** `fix/mobile-nav-menu` (release `v1.3.3` pendiente)
+- **Rama activa:** `main` (release `v1.3.3`)
 - **Fase 0 del CMS:** integrada en `main` el 24 de noviembre de 2026 (PR #19).
 - **Fecha de inicio:** 9 de noviembre de 2026
 - **Última actualización:** 26 de noviembre de 2026
@@ -114,7 +113,7 @@ Checklist de la rama `feat/project-reveal-70` (commits `5bb208a` y `f593ee7`):
 
 ---
 
-## Validación previa a producción (release `v1.3.3` pendiente · 2026-11-26)
+## Validación previa a producción (release `v1.3.3` · 2026-11-26)
 
 Checklist del menú móvil y del resaltado de sección:
 
@@ -139,9 +138,9 @@ Checklist del menú móvil y del resaltado de sección:
 5. **Verificación:** `pnpm verify` → typecheck OK, **143/143** pruebas en 17
    archivos y build `vite-ssg` correcto (6 páginas). Nuevos contratos en
    `AppNavbar.spec.ts` y `useActiveSection.spec.ts`.
-6. **Publicación:** PR abierto contra `main`; no se crea el tag `v1.3.3` ni se
-   mueve `package.json` hasta publicar la release. Los tags `v1.3.0`, `v1.3.1`
-   y `v1.3.2` permanecen intactos.
+6. **Publicación:** fusión del PR #23 en `main` y tag anotado `v1.3.3` enviado
+   con `git push --follow-tags`; los tags `v1.3.0`, `v1.3.1` y `v1.3.2` no se
+   mueven.
 
 ---
 

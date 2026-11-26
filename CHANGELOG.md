@@ -5,9 +5,7 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
-## [Unreleased]
-
-> Pendiente de publicar como `v1.3.3` tras la fusión del PR y el tag anotado.
+## [1.3.3] - 2026-11-26
 
 ### Fixed
 
@@ -33,6 +31,8 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
   viewport, la página detrás no scrollea, Ajustes no se solapa, Escape y el
   backdrop devuelven el foco, y al reabrir el menú Proyectos y Stack aparecen
   resaltados. El zoom con pellizco sigue disponible.
+- Tras la fusión del PR se publica el tag anotado `v1.3.3` con `git push --follow-tags`;
+  los tags `v1.3.0`, `v1.3.1` y `v1.3.2` no se mueven.
 
 ## [1.3.2] - 2026-11-26
 
