@@ -277,6 +277,16 @@
     min-height: 100vh;
   }
 
+  button,
+  a {
+    touch-action: manipulation;
+  }
+
+  button {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
   ::selection {
     background: var(--ech-selection-bg);
     color: var(--ech-selection-color);

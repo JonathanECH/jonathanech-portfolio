@@ -6,7 +6,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 
 ## Estado General
 
-- **Rama activa:** `main` (release `v1.3.2`)
+- **Rama activa:** `main` (release `v1.3.3`)
 - **Fase 0 del CMS:** integrada en `main` el 24 de noviembre de 2026 (PR #19).
 - **Fecha de inicio:** 9 de noviembre de 2026
 - **Última actualización:** 26 de noviembre de 2026
@@ -21,7 +21,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | **0B** | Retirada de métricas de auditoría del sitio | **COMPLETADO** | `AuditMetric`, `audit.metrics` y `audit.consistencyNote` desaparecen de tipos, datos ES/EN y los cuatro componentes que las mostraban (`ProjectCard`, `ProjectQuickModal`, `ChallengeAudit`, `ProjectHeader`). Se conservan `diagnosis`, `resolution`, `badge`, `ZoomMetrics`, `profile.stats`, `profile.performance`, los alt texts, el whitepaper y esta documentación. La altura de las tarjetas se reserva con `min-h-*` para no introducir CLS. |
 | **0A** | Tema navideño global controlado solo por el admin | **COMPLETADO** | Worker de Cloudflare delante de Vercel: KV `THEME_STATE` con clave `theme` y enum `default` \| `christmas`, secreto `THEME_ADMIN_TOKEN`, cookie `ech_theme` en cada respuesta HTML y `Cache-Control: private, no-cache`. `GET /admin/theme` sirve un formulario temporal `noindex`/`no-store`; `POST /api/admin/theme` valida el token en tiempo constante (`401` sin escribir KV, `422` fuera del enum, `204` + `no-store`). Sin opción navideña en `SettingsMenu` ni claves nuevas en `src/i18n/messages/`. |
 | **0A** | Anti-flash y accesibilidad | **COMPLETADO** | `index.html` prioriza la cookie sobre `ech:preferences`, aplica `data-theme` y `theme-color` antes del primer paint, ignora valores inválidos y restaura la preferencia guardada cuando la cookie vuelve a `default`. `usePreferences.ts` no sobrescribe `christmas` al cambiar claro/oscuro. Tokens semánticos con contraste AA en texto, superficies y CTA; movimiento solo bajo `prefers-reduced-motion: no-preference`, sin transiciones en carga. |
-| **V** | Verificación | **COMPLETADO** | `cd worker && pnpm test` → 11/11 y `pnpm typecheck` limpio; `pnpm verify` → 138/138 tests, typecheck y 6 páginas SSG; `grep` de `christmas` en `SettingsMenu.vue` y `src/i18n/messages/` sin coincidencias; smoke con `wrangler dev`: `GET /api/admin/theme` → 401, `POST` sin token → 401, `POST` con token → 204, HTML con `ech_theme=christmas` y `private, no-cache`. |
+| **V** | Verificación | **COMPLETADO** | `cd worker && pnpm test` → 11/11 y `pnpm typecheck` limpio; `pnpm verify` → 143/143 tests, typecheck y 6 páginas SSG; `grep` de `christmas` en `SettingsMenu.vue` y `src/i18n/messages/` sin coincidencias; smoke con `wrangler dev`: `GET /api/admin/theme` → 401, `POST` sin token → 401, `POST` con token → 204, HTML con `ech_theme=christmas` y `private, no-cache`. |
 
 **Operación:** crear el namespace KV, pegar su id en `worker/wrangler.toml`, ejecutar `wrangler secret put THEME_ADMIN_TOKEN`, desplegar con `wrangler deploy` y usar `/admin/theme`. La vuelta a **Predeterminado** restaura las preferencias ES/EN y claro/oscuro de cada visitante sin redeploy. **Fase 1** migrará el estado a `site_settings.active_theme` y retirará el formulario, el endpoint y el secreto temporales.
 
@@ -37,7 +37,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | **P0.4** | **Honestidad en Estados y Clientes** | **COMPLETADO** | **TilyShop Inventory** confirmado como proyecto real desplegado en producción (`EN PRODUCCIÓN` / `IN PRODUCTION`), respaldado por su whitepaper técnico de arquitectura offline-first. Los otros dos proyectos se presentan honestamente como casos de estudio (`CASO DE ESTUDIO`). |
 | **P0.5** | **Contextualización de Métricas** | **COMPLETADO** | Se actualizaron las notas de consistencia (`consistencyNote`) de los 3 proyectos, explicando que las métricas corresponden a benchmarks en entornos de prueba y sincronización offline documentada en el whitepaper técnico. |
 | **P0.6** | **Posicionamiento Profesional Claro** | **COMPLETADO** | Se unificó el rol a "Desarrollador Frontend / Frontend Engineer", se eliminó "ARQUITECTO DE SOFTWARE" del titular (cambiado a `['DESARROLLADOR WEB', 'FRONTEND ENGINEER']`) y se explicitó la zona horaria (`UTC-4 (Barquisimeto, Venezuela)`). En la release 2026-11-18 se eliminaron pasantías, disponibilidad inmediata y etiquetas Junior/Mid: el bio pasó a describir colaboración con equipos remotos e internacionales y entregas listas para producción. |
-| **P0.7** | **Actualización de Tests de Paridad** | **COMPLETADO** | Se sincronizaron `src/stores/portfolio.spec.ts` e `src/i18n/i18n.spec.ts`. La suite completa pasa al 100% (138/138 pruebas en 15 archivos) junto a `vue-tsc` y `vite-ssg build`; el Worker añade 11 pruebas propias. |
+| **P0.7** | **Actualización de Tests de Paridad** | **COMPLETADO** | Se sincronizaron `src/stores/portfolio.spec.ts` e `src/i18n/i18n.spec.ts`. La suite completa pasa al 100% (143/143 pruebas en 17 archivos) junto a `vue-tsc` y `vite-ssg build`; el Worker añade 11 pruebas propias. |
 
 ---
 
@@ -59,7 +59,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | :--- | :--- | :---: | :--- |
 | **P2.1** | **Enlaces a Repositorios Públicos Reales** | **COMPLETADO (PARCIAL)** | `clima-vue` integrado con repositorio público (`github.com/JonathanECH/clima-vue`) y demo en vivo (`clima-vue-vert.vercel.app`). El `CRM desde cero` queda pendiente para una próxima fase. |
 | **P2.2** | **CV en PDF Actualizado** | **ACTUALIZADO** | `public/cv/CV_JonathanCampos.pdf` sustituye al antiguo `jonathan-campos-cv.pdf` (PDF 1.4, 408 KB). Los enlaces de descarga en `HeroSection.vue` y `AppNavbar.vue` apuntan al nuevo nombre y no quedan referencias al anterior. |
-| **P2.3** | **Verificación Integral CI/Local** | **COMPLETADO** | Pipeline `pnpm verify` pasando al 100%: 0 errores de typecheck, 138/138 pruebas unitarias en 15 archivos, 11 pruebas del Worker y build de producción con prerenderizado (`vite-ssg`). El CI usa pnpm 12.23.0, igual que `package.json` y el lockfile raíz. |
+| **P2.3** | **Verificación Integral CI/Local** | **COMPLETADO** | Pipeline `pnpm verify` pasando al 100%: 0 errores de typecheck, 143/143 pruebas unitarias en 17 archivos, 11 pruebas del Worker y build de producción con prerenderizado (`vite-ssg`). El CI usa pnpm 12.23.0, igual que `package.json` y el lockfile raíz. |
 
 ---
 
@@ -110,6 +110,37 @@ Checklist de la rama `feat/project-reveal-70` (commits `5bb208a` y `f593ee7`):
 3. **Sobre Mí:** las cuatro barras de métricas usan `cover` en vez de `entry`: inicios `cover 10% / 14% / 18% / 22%` y fin `cover 50%` en escritorio y `cover 45%` en móvil, manteniendo visible la cuarta barra (SEO) y sin animar `width`.
 4. **Verificación integral:** `pnpm verify` → typecheck OK, **110/110** tests en 12 archivos y build `vite-ssg` correcto (6 páginas prerenderizadas).
 5. **Publicación:** merge de la rama en `main` y tag anotado `v1.1.1` enviado con `git push --follow-tags`; `main` es la rama desplegada en producción.
+
+---
+
+## Validación previa a producción (release `v1.3.3` · 2026-11-26)
+
+Checklist del menú móvil y del resaltado de sección:
+
+1. **Causa raíz:** `useActiveSection` ordenaba las entradas del
+   `IntersectionObserver` por `intersectionRatio`. En el salto suave a
+   `#proyectos`, la entrada de `#stack` podía conservar mayor ratio y el navbar
+   seguía marcando **Inicio** o **Stack**. Ahora se calcula la geometría real de
+   cada sección y gana la más reciente dentro de la banda
+   `topOffset` → `45%` del viewport.
+2. **Menú táctil:** el panel usa `max-h-[calc(100dvh-5.5rem)]`, scroll propio y
+   `overscroll-contain`; el backdrop cierra en `pointerdown.prevent` para evitar
+   scroll chaining. `touch-action: manipulation` y `user-select: none` eliminan
+   el retardo de doble tap y la selección accidental, sin quitar el zoom con
+   pellizco.
+3. **Coexistencia y foco:** abrir Ajustes cierra el menú; elegir un enlace,
+   pulsar Escape o tocar el backdrop devuelve el foco a
+   `menuButtonRef`. `aria-current="page"` y el acento cian se comprueban al
+   reabrir el menú.
+4. **Navegadores:** Brave real con eventos táctiles a 390×844 y 320×568: menú
+   dentro del viewport, página detrás sin scroll, Proyectos y Stack resaltados
+   correctamente.
+5. **Verificación:** `pnpm verify` → typecheck OK, **143/143** pruebas en 17
+   archivos y build `vite-ssg` correcto (6 páginas). Nuevos contratos en
+   `AppNavbar.spec.ts` y `useActiveSection.spec.ts`.
+6. **Publicación:** fusión del PR #23 en `main` y tag anotado `v1.3.3` enviado
+   con `git push --follow-tags`; los tags `v1.3.0`, `v1.3.1` y `v1.3.2` no se
+   mueven.
 
 ---
 

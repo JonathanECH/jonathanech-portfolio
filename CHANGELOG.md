@@ -5,6 +5,35 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
+## [1.3.3] - 2026-11-26
+
+### Fixed
+
+- Menú móvil: `AppNavbar.vue` limita el panel a `100dvh` con scroll propio y
+  `overscroll-contain`, deja el backdrop con `pointerdown.prevent` para que la
+  página detrás no se desplace, cierra el menú al abrir Ajustes y devuelve el foco
+  al botón del menú al elegir un enlace, pulsar Escape o tocar fuera.
+- Resaltado de la navegación: `useActiveSection` ya no elige la sección por
+  `intersectionRatio`. Calcula la geometría real dentro de la banda comprendida
+  entre el offset del navbar y el 45% del viewport, de modo que **Proyectos**
+  queda marcado con `aria-current="page"` tras el salto al ancla en móvil. El
+  mismo arreglo aplica al resaltado de escritorio.
+- Entrada táctil: `main.css` aplica `touch-action: manipulation` a botones y
+  enlaces y `user-select: none` a botones, eliminando el retardo de doble toque y
+  la selección accidental de texto sin desactivar el zoom con pellizco.
+
+### Verificación
+
+- `pnpm verify`: typecheck OK, **143/143** pruebas en **17** archivos y build
+  `vite-ssg` correcto (6 páginas). Se añaden `AppNavbar.spec.ts` y
+  `useActiveSection.spec.ts` para blindar el menú y la geometría del resaltado.
+- Brave real con eventos táctiles a 390×844 y 320×568: el panel cabe en el
+  viewport, la página detrás no scrollea, Ajustes no se solapa, Escape y el
+  backdrop devuelven el foco, y al reabrir el menú Proyectos y Stack aparecen
+  resaltados. El zoom con pellizco sigue disponible.
+- Tras la fusión del PR se publica el tag anotado `v1.3.3` con `git push --follow-tags`;
+  los tags `v1.3.0`, `v1.3.1` y `v1.3.2` no se mueven.
+
 ## [1.3.2] - 2026-11-26
 
 ### Fixed
