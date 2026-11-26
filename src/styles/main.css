@@ -351,6 +351,15 @@
     transition: opacity 500ms ease;
   }
 
+  /* Short desktop viewports (~650px of usable height) need a slightly tighter
+     hero rhythm; these are static paddings, so they cannot cause CLS. */
+  @media (min-width: 1024px) and (max-height: 760px) {
+    .hero-content {
+      padding-block-start: clamp(4.5rem, 8vh, 5.5rem);
+      padding-block-end: clamp(1.5rem, 3vh, 2rem);
+    }
+  }
+
   /* Isolate layout and style recalculations per section while keeping real
      geometry available for view(block) scroll-driven reveal ranges. */
   .deferred-section {

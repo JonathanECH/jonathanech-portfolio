@@ -5,6 +5,30 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
+## [1.3.2] - 2026-11-26
+
+### Fixed
+
+- Dimensionamiento vertical de la home en desktop: `HeroSection.vue` usa
+  `lg:min-h-svh` y un ritmo vertical fluido con `clamp(..., ...vh, ...)` para que
+  badges, titular, subtítulo, CTAs, bloque de métricas y `SCROLL // STACK` quepan
+  completos en el primer pantallazo. Se añade un ajuste estático solo para
+  `(min-width: 1024px) and (max-height: 760px)`.
+- `TechEcosystem.vue`, `ProjectsShowcase.vue`, `AboutSection.vue` y
+  `ContactSection.vue` usan `flex flex-col justify-center lg:min-h-svh` y
+  conservan `lg:py-28` para la navbar fija. Ninguna sección fija su altura: pueden
+  crecer cuando el contenido supera el viewport.
+
+### Verificación
+
+- `pnpm verify`: typecheck OK, **138/138** pruebas en **15** archivos y build
+  `vite-ssg` correcto (6 páginas prerenderizadas). `reveal.spec.ts` añade un
+  contrato que impide volver a introducir alturas fijas.
+- Medición real en navegador a 1366×768, 1366×720 y 1280×1024: hero exactamente
+  del alto del viewport, `SCROLL // STACK` visible, la siguiente sección nunca
+  asoma y sin overflow horizontal. CLS 0 en Brave; geometría equivalente en
+  Firefox/Gecko.
+
 ## [1.3.1] - 2026-11-26
 
 ### Fixed

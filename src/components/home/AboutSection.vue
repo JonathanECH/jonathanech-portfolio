@@ -12,7 +12,7 @@ const sectionCode = computed(() => t('about.code'))
 <template>
   <section
     id="sobre-mi"
-    class="deferred-section relative border-t border-border/60 py-20 sm:py-24 lg:py-28"
+    class="deferred-section relative flex flex-col justify-center border-t border-border/60 py-20 sm:py-24 lg:min-h-svh lg:py-28"
   >
     <div class="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-12">
       <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">

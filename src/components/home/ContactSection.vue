@@ -19,7 +19,7 @@ function copyEmail(value: string): void {
 <template>
   <section
     id="contacto"
-    class="deferred-section relative border-t border-border/60 py-20 sm:py-24 lg:py-28"
+    class="deferred-section relative flex flex-col justify-center border-t border-border/60 py-20 sm:py-24 lg:min-h-svh lg:py-28"
   >
     <div class="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-12">
       <div class="relative overflow-clip rounded-2xl border border-border bg-surface/40 p-6 sm:p-10 lg:p-14">

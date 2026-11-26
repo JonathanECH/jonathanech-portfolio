@@ -6,7 +6,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 
 ## Estado General
 
-- **Rama activa:** `main` (release `v1.3.1`)
+- **Rama activa:** `main` (release `v1.3.2`)
 - **Fase 0 del CMS:** integrada en `main` el 24 de noviembre de 2026 (PR #19).
 - **Fecha de inicio:** 9 de noviembre de 2026
 - **Última actualización:** 26 de noviembre de 2026
@@ -21,7 +21,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | **0B** | Retirada de métricas de auditoría del sitio | **COMPLETADO** | `AuditMetric`, `audit.metrics` y `audit.consistencyNote` desaparecen de tipos, datos ES/EN y los cuatro componentes que las mostraban (`ProjectCard`, `ProjectQuickModal`, `ChallengeAudit`, `ProjectHeader`). Se conservan `diagnosis`, `resolution`, `badge`, `ZoomMetrics`, `profile.stats`, `profile.performance`, los alt texts, el whitepaper y esta documentación. La altura de las tarjetas se reserva con `min-h-*` para no introducir CLS. |
 | **0A** | Tema navideño global controlado solo por el admin | **COMPLETADO** | Worker de Cloudflare delante de Vercel: KV `THEME_STATE` con clave `theme` y enum `default` \| `christmas`, secreto `THEME_ADMIN_TOKEN`, cookie `ech_theme` en cada respuesta HTML y `Cache-Control: private, no-cache`. `GET /admin/theme` sirve un formulario temporal `noindex`/`no-store`; `POST /api/admin/theme` valida el token en tiempo constante (`401` sin escribir KV, `422` fuera del enum, `204` + `no-store`). Sin opción navideña en `SettingsMenu` ni claves nuevas en `src/i18n/messages/`. |
 | **0A** | Anti-flash y accesibilidad | **COMPLETADO** | `index.html` prioriza la cookie sobre `ech:preferences`, aplica `data-theme` y `theme-color` antes del primer paint, ignora valores inválidos y restaura la preferencia guardada cuando la cookie vuelve a `default`. `usePreferences.ts` no sobrescribe `christmas` al cambiar claro/oscuro. Tokens semánticos con contraste AA en texto, superficies y CTA; movimiento solo bajo `prefers-reduced-motion: no-preference`, sin transiciones en carga. |
-| **V** | Verificación | **COMPLETADO** | `cd worker && pnpm test` → 11/11 y `pnpm typecheck` limpio; `pnpm verify` → 135/135 tests, typecheck y 6 páginas SSG; `grep` de `christmas` en `SettingsMenu.vue` y `src/i18n/messages/` sin coincidencias; smoke con `wrangler dev`: `GET /api/admin/theme` → 401, `POST` sin token → 401, `POST` con token → 204, HTML con `ech_theme=christmas` y `private, no-cache`. |
+| **V** | Verificación | **COMPLETADO** | `cd worker && pnpm test` → 11/11 y `pnpm typecheck` limpio; `pnpm verify` → 138/138 tests, typecheck y 6 páginas SSG; `grep` de `christmas` en `SettingsMenu.vue` y `src/i18n/messages/` sin coincidencias; smoke con `wrangler dev`: `GET /api/admin/theme` → 401, `POST` sin token → 401, `POST` con token → 204, HTML con `ech_theme=christmas` y `private, no-cache`. |
 
 **Operación:** crear el namespace KV, pegar su id en `worker/wrangler.toml`, ejecutar `wrangler secret put THEME_ADMIN_TOKEN`, desplegar con `wrangler deploy` y usar `/admin/theme`. La vuelta a **Predeterminado** restaura las preferencias ES/EN y claro/oscuro de cada visitante sin redeploy. **Fase 1** migrará el estado a `site_settings.active_theme` y retirará el formulario, el endpoint y el secreto temporales.
 
@@ -37,7 +37,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | **P0.4** | **Honestidad en Estados y Clientes** | **COMPLETADO** | **TilyShop Inventory** confirmado como proyecto real desplegado en producción (`EN PRODUCCIÓN` / `IN PRODUCTION`), respaldado por su whitepaper técnico de arquitectura offline-first. Los otros dos proyectos se presentan honestamente como casos de estudio (`CASO DE ESTUDIO`). |
 | **P0.5** | **Contextualización de Métricas** | **COMPLETADO** | Se actualizaron las notas de consistencia (`consistencyNote`) de los 3 proyectos, explicando que las métricas corresponden a benchmarks en entornos de prueba y sincronización offline documentada en el whitepaper técnico. |
 | **P0.6** | **Posicionamiento Profesional Claro** | **COMPLETADO** | Se unificó el rol a "Desarrollador Frontend / Frontend Engineer", se eliminó "ARQUITECTO DE SOFTWARE" del titular (cambiado a `['DESARROLLADOR WEB', 'FRONTEND ENGINEER']`) y se explicitó la zona horaria (`UTC-4 (Barquisimeto, Venezuela)`). En la release 2026-11-18 se eliminaron pasantías, disponibilidad inmediata y etiquetas Junior/Mid: el bio pasó a describir colaboración con equipos remotos e internacionales y entregas listas para producción. |
-| **P0.7** | **Actualización de Tests de Paridad** | **COMPLETADO** | Se sincronizaron `src/stores/portfolio.spec.ts` e `src/i18n/i18n.spec.ts`. La suite completa pasa al 100% (135/135 pruebas en 15 archivos) junto a `vue-tsc` y `vite-ssg build`; el Worker añade 11 pruebas propias. |
+| **P0.7** | **Actualización de Tests de Paridad** | **COMPLETADO** | Se sincronizaron `src/stores/portfolio.spec.ts` e `src/i18n/i18n.spec.ts`. La suite completa pasa al 100% (138/138 pruebas en 15 archivos) junto a `vue-tsc` y `vite-ssg build`; el Worker añade 11 pruebas propias. |
 
 ---
 
@@ -59,7 +59,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | :--- | :--- | :---: | :--- |
 | **P2.1** | **Enlaces a Repositorios Públicos Reales** | **COMPLETADO (PARCIAL)** | `clima-vue` integrado con repositorio público (`github.com/JonathanECH/clima-vue`) y demo en vivo (`clima-vue-vert.vercel.app`). El `CRM desde cero` queda pendiente para una próxima fase. |
 | **P2.2** | **CV en PDF Actualizado** | **ACTUALIZADO** | `public/cv/CV_JonathanCampos.pdf` sustituye al antiguo `jonathan-campos-cv.pdf` (PDF 1.4, 408 KB). Los enlaces de descarga en `HeroSection.vue` y `AppNavbar.vue` apuntan al nuevo nombre y no quedan referencias al anterior. |
-| **P2.3** | **Verificación Integral CI/Local** | **COMPLETADO** | Pipeline `pnpm verify` pasando al 100%: 0 errores de typecheck, 135/135 pruebas unitarias en 15 archivos, 11 pruebas del Worker y build de producción con prerenderizado (`vite-ssg`). El CI usa pnpm 12.23.0, igual que `package.json` y el lockfile raíz. |
+| **P2.3** | **Verificación Integral CI/Local** | **COMPLETADO** | Pipeline `pnpm verify` pasando al 100%: 0 errores de typecheck, 138/138 pruebas unitarias en 15 archivos, 11 pruebas del Worker y build de producción con prerenderizado (`vite-ssg`). El CI usa pnpm 12.23.0, igual que `package.json` y el lockfile raíz. |
 
 ---
 
@@ -110,6 +110,29 @@ Checklist de la rama `feat/project-reveal-70` (commits `5bb208a` y `f593ee7`):
 3. **Sobre Mí:** las cuatro barras de métricas usan `cover` en vez de `entry`: inicios `cover 10% / 14% / 18% / 22%` y fin `cover 50%` en escritorio y `cover 45%` en móvil, manteniendo visible la cuarta barra (SEO) y sin animar `width`.
 4. **Verificación integral:** `pnpm verify` → typecheck OK, **110/110** tests en 12 archivos y build `vite-ssg` correcto (6 páginas prerenderizadas).
 5. **Publicación:** merge de la rama en `main` y tag anotado `v1.1.1` enviado con `git push --follow-tags`; `main` es la rama desplegada en producción.
+
+---
+
+## Validación previa a producción (release `v1.3.2` · 2026-11-26)
+
+Checklist del ajuste de viewport en desktop:
+
+1. **Alcance:** `HeroSection.vue` mantiene `min-h-screen` en móvil y usa
+   `lg:min-h-svh` en desktop, con espaciados fluidos
+   `clamp(..., ...vh, ...)`; las otras cuatro secciones usan
+   `flex flex-col justify-center lg:min-h-svh` y conservan `lg:py-28` para la
+   navbar fija. No hay alturas fijas: el contenido puede crecer.
+2. **Movimiento y CLS:** `overflow-clip` y `animation-timeline: view()` quedan
+   intactos. Todos los cambios son estilos estáticos, por lo que no hay
+   desplazamiento post-pintado.
+3. **Navegadores:** medición real a 1366×768, 1366×720 y 1280×1024 en Brave y
+   Firefox/Gecko: hero del alto exacto del viewport, `SCROLL // STACK` visible,
+   la siguiente sección siempre fuera del pantallazo y sin overflow horizontal.
+   CLS 0 medido en Brave; Firefox no expone la API `layout-shift`.
+4. **Verificación:** `pnpm verify` → typecheck OK, **138/138** pruebas en 15
+   archivos y build `vite-ssg` correcto (6 páginas).
+5. **Publicación:** fusión del PR en `main` y tag anotado `v1.3.2` enviado con
+   `git push --follow-tags`; los tags `v1.3.0` y `v1.3.1` no se mueven.
 
 ---
 

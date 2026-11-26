@@ -383,3 +383,43 @@ describe('scroll-driven reveal contract', () => {
     expect(interactive).not.toContain('all')
   })
 })
+
+describe('home viewport sizing contract', () => {
+  const sections = [
+    ['TechEcosystem.vue', '../components/home/TechEcosystem.vue'],
+    ['ProjectsShowcase.vue', '../components/home/ProjectsShowcase.vue'],
+    ['AboutSection.vue', '../components/home/AboutSection.vue'],
+    ['ContactSection.vue', '../components/home/ContactSection.vue'],
+  ] as const
+
+  it('keeps the hero at one viewport minimum on desktop with a fluid vertical rhythm', () => {
+    const hero = readFileSync(new URL('../components/home/HeroSection.vue', import.meta.url), 'utf8')
+    const openingTag = hero.match(/<section\s[^>]*>/)?.[0] ?? ''
+
+    expect(openingTag).toContain('min-h-screen')
+    expect(openingTag).toContain('lg:min-h-svh')
+    expect(hero).toContain('class="hero-content')
+    for (const token of ['lg:pt-[clamp(', 'lg:pb-[clamp(', 'lg:mt-[clamp(']) {
+      expect(hero, token).toContain(token)
+    }
+  })
+
+  it('centers every remaining home section within one desktop viewport without fixing its height', () => {
+    for (const [name, path] of sections) {
+      const source = readFileSync(new URL(path, import.meta.url), 'utf8')
+      const openingTag = source.match(/<section\s[^>]*>/)?.[0] ?? ''
+
+      for (const token of ['lg:min-h-svh', 'flex', 'flex-col', 'justify-center', 'lg:py-28']) {
+        expect(openingTag, `${name}: ${token}`).toContain(token)
+      }
+      expect(openingTag, name).not.toMatch(/(?:^|\s)h-(?:screen|\[)/)
+    }
+  })
+
+  it('keeps the short-desktop hero adjustment desktop-only and static', () => {
+    expect(css).toContain('@media (min-width: 1024px) and (max-height: 760px)')
+    expect(css).toContain('.hero-content')
+    expect(css).toContain('padding-block-start: clamp(')
+    expect(css).toContain('padding-block-end: clamp(')
+  })
+})
