@@ -8,9 +8,9 @@ import {
   SITE_AUTHOR,
   SITE_LOCALE,
   SITE_LOCALE_ALTERNATE,
-  SITE_URL,
   absoluteUrl,
   defaultOgImageAlt,
+  homeUrl,
   projectUrl,
   resolveSocialImageMeta,
   siteName,
@@ -33,7 +33,7 @@ export function useSeo(): void {
   const { content, locale, t } = useI18n()
 
   const project = computed<Project | null>(() => {
-    if (route.name !== 'project-detail') {
+    if (route.name !== 'project-detail' && route.name !== 'project-detail-en') {
       return null
     }
 
@@ -41,9 +41,12 @@ export function useSeo(): void {
     return content.value.projects.find((item) => item.slug === slug) ?? null
   })
 
-  const isHome = computed(() => route.name === 'home')
+  const isHome = computed(() => route.name === 'home' || route.name === 'home-en')
   const isNotFound = computed(() => route.name === 'not-found')
-  const isMissingProject = computed(() => route.name === 'project-detail' && !project.value)
+  const isMissingProject = computed(
+    () =>
+      (route.name === 'project-detail' || route.name === 'project-detail-en') && !project.value,
+  )
 
   const title = computed(() => {
     if (isHome.value) {
@@ -79,14 +82,31 @@ export function useSeo(): void {
 
   const canonicalUrl = computed(() => {
     if (project.value) {
-      return projectUrl(project.value.slug)
+      return projectUrl(project.value.slug, locale.value)
     }
 
     if (isHome.value) {
-      return `${SITE_URL}/`
+      return homeUrl(locale.value)
     }
 
     return absoluteUrl(route.path)
+  })
+
+  const hreflangUrls = computed(() => {
+    if (isNotFound.value || isMissingProject.value) {
+      return null
+    }
+
+    if (project.value) {
+      const slug = project.value.slug
+      return { es: projectUrl(slug, 'es'), en: projectUrl(slug, 'en') }
+    }
+
+    if (isHome.value) {
+      return { es: homeUrl('es'), en: homeUrl('en') }
+    }
+
+    return null
   })
 
   const socialImageMeta = computed(() => resolveSocialImageMeta(project.value))
@@ -140,12 +160,33 @@ export function useSeo(): void {
     twitterImageAlt: socialImageAlt,
   })
 
+  type HeadLink = {
+    readonly rel: string
+    readonly href: string
+    readonly hreflang?: string
+    readonly key?: string
+  }
+
   useHead(() => ({
     htmlAttrs: { lang: locale.value },
-    link:
-      isNotFound.value || isMissingProject.value
-        ? []
-        : [{ rel: 'canonical', href: canonicalUrl.value }],
+    link: ((): HeadLink[] => {
+      if (isNotFound.value || isMissingProject.value) {
+        return []
+      }
+
+      const links: HeadLink[] = [{ rel: 'canonical', href: canonicalUrl.value, key: 'canonical' }]
+      const alternates = hreflangUrls.value
+
+      if (alternates) {
+        links.push(
+          { rel: 'alternate', href: alternates.es, hreflang: 'es', key: 'hreflang-es' },
+          { rel: 'alternate', href: alternates.en, hreflang: 'en', key: 'hreflang-en' },
+          { rel: 'alternate', href: alternates.es, hreflang: 'x-default', key: 'hreflang-default' },
+        )
+      }
+
+      return links
+    })(),
     meta: [{ property: 'og:image:type', content: socialImageType.value }],
     script: [
       {

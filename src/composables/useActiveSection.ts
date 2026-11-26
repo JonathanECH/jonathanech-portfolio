@@ -49,7 +49,10 @@ export function useActiveSection(sectionIds: readonly string[], topOffset = 120)
     observer?.disconnect()
     observedElements = []
 
-    if (route.name !== 'home' || typeof IntersectionObserver === 'undefined') {
+    if (
+      (route.name !== 'home' && route.name !== 'home-en') ||
+      typeof IntersectionObserver === 'undefined'
+    ) {
       return
     }
 

@@ -27,6 +27,7 @@ export const enMessages = {
   'settings.light': 'Light',
 
   'footer.ariaSocial': 'Social links',
+  'footer.llms': 'AI-readable summary (llms.txt)',
   'footer.copyright':
     '© 2026 Jonathan Campos // Vue 3 • TypeScript • Tailwind CSS. All rights reserved.',
 

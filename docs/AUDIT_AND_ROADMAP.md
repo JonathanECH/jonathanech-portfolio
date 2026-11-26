@@ -37,7 +37,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 | **P0.4** | **Honestidad en Estados y Clientes** | **COMPLETADO** | **TilyShop Inventory** confirmado como proyecto real desplegado en producción (`EN PRODUCCIÓN` / `IN PRODUCTION`), respaldado por su whitepaper técnico de arquitectura offline-first. Los otros dos proyectos se presentan honestamente como casos de estudio (`CASO DE ESTUDIO`). |
 | **P0.5** | **Contextualización de Métricas** | **COMPLETADO** | Se actualizaron las notas de consistencia (`consistencyNote`) de los 3 proyectos, explicando que las métricas corresponden a benchmarks en entornos de prueba y sincronización offline documentada en el whitepaper técnico. |
 | **P0.6** | **Posicionamiento Profesional Claro** | **COMPLETADO** | Se unificó el rol a "Desarrollador Frontend / Frontend Engineer", se eliminó "ARQUITECTO DE SOFTWARE" del titular (cambiado a `['DESARROLLADOR WEB', 'FRONTEND ENGINEER']`) y se explicitó la zona horaria (`UTC-4 (Barquisimeto, Venezuela)`). En la release 2026-11-18 se eliminaron pasantías, disponibilidad inmediata y etiquetas Junior/Mid: el bio pasó a describir colaboración con equipos remotos e internacionales y entregas listas para producción. |
-| **P0.7** | **Actualización de Tests de Paridad** | **COMPLETADO** | Se sincronizaron `src/stores/portfolio.spec.ts` e `src/i18n/i18n.spec.ts`. La suite completa pasa al 100% (143/143 pruebas en 17 archivos) junto a `vue-tsc` y `vite-ssg build`; el Worker añade 11 pruebas propias. |
+| **P0.7** | **Actualización de Tests de Paridad** | **COMPLETADO** | Se sincronizaron `src/stores/portfolio.spec.ts` e `src/i18n/i18n.spec.ts`. La suite completa pasa al 100% (149/149 pruebas en 18 archivos) junto a `vue-tsc` y `vite-ssg build`; el Worker añade 11 pruebas propias. |
 
 ---
 
@@ -57,9 +57,9 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 
 | Ítem | Descripción | Estado | Detalle técnico |
 | :--- | :--- | :---: | :--- |
-| **P2.1** | **Enlaces a Repositorios Públicos Reales** | **COMPLETADO (PARCIAL)** | `clima-vue` integrado con repositorio público (`github.com/JonathanECH/clima-vue`) y demo en vivo (`clima-vue-vert.vercel.app`). El `CRM desde cero` queda pendiente para una próxima fase. |
+| **P2.1** | **Enlaces a Repositorios Públicos Reales** | **COMPLETADO (PARCIAL)** | `clima-vue` integrado con repositorio público (`github.com/JonathanECH/clima-vue`) y demo en vivo (`clima-vue-vert.vercel.app`). TilyShop aporta demo pública (`tilyshop-inventory.vercel.app`); Razetti y ERP solo enlazan al perfil de GitHub. El `CRM desde cero` queda pendiente. |
 | **P2.2** | **CV en PDF Actualizado** | **ACTUALIZADO** | `public/cv/CV_JonathanCampos.pdf` sustituye al antiguo `jonathan-campos-cv.pdf` (PDF 1.4, 408 KB). Los enlaces de descarga en `HeroSection.vue` y `AppNavbar.vue` apuntan al nuevo nombre y no quedan referencias al anterior. |
-| **P2.3** | **Verificación Integral CI/Local** | **COMPLETADO** | Pipeline `pnpm verify` pasando al 100%: 0 errores de typecheck, 143/143 pruebas unitarias en 17 archivos, 11 pruebas del Worker y build de producción con prerenderizado (`vite-ssg`). El CI usa pnpm 12.23.0, igual que `package.json` y el lockfile raíz. |
+| **P2.3** | **Verificación Integral CI/Local** | **COMPLETADO** | Pipeline `pnpm verify` pasando al 100%: 0 errores de typecheck, 149/149 pruebas unitarias en 18 archivos, 11 pruebas del Worker y build de producción con prerenderizado (`vite-ssg`). El CI usa pnpm 12.23.0, igual que `package.json` y el lockfile raíz. |
 
 ---
 

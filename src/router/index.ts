@@ -52,8 +52,19 @@ export const routes: RouteRecordRaw[] = [
     component: HomeView,
   },
   {
+    path: '/en',
+    name: 'home-en',
+    component: HomeView,
+  },
+  {
     path: '/proyectos/:slug',
     name: 'project-detail',
+    component: () => import('@/views/ProjectDetailView.vue'),
+    props: true,
+  },
+  {
+    path: '/en/proyectos/:slug',
+    name: 'project-detail-en',
     component: () => import('@/views/ProjectDetailView.vue'),
     props: true,
   },

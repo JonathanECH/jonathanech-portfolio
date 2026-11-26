@@ -2,11 +2,13 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ArrowLeft, ArrowUpRight, ExternalLink, FileText } from '@lucide/vue'
+import { useLocalizedPath } from '@/composables/useLocalizedPath'
 import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
 const props = defineProps<{ project: Project }>()
 const { t } = useI18n()
+const { withLocale } = useLocalizedPath()
 
 const accentStyle = computed<Record<string, string>>(() => ({
   '--project-accent': props.project.accent,
@@ -42,7 +44,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
           class="flex min-w-0 flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] sm:text-[11px]"
         >
           <RouterLink
-            :to="{ path: '/', hash: '#proyectos' }"
+            :to="{ path: withLocale('/'), hash: '#proyectos' }"
             class="group inline-flex items-center gap-2 text-muted transition-colors duration-200 hover:text-foreground"
           >
             <ArrowLeft

@@ -13,6 +13,7 @@ import {
   projectUrl,
   siteName,
 } from './site'
+import { localizedPath } from '@/utils/localized-path'
 
 export type JsonLdNode = Record<string, unknown> & { '@type': string }
 
@@ -118,7 +119,7 @@ export function buildProjectsItemList(
       position: index + 1,
       name: project.name,
       description: project.summary,
-      url: projectUrl(project.slug),
+      url: projectUrl(project.slug, locale),
       image: projectImage(project),
     })),
   }
@@ -127,12 +128,12 @@ export function buildProjectsItemList(
 export function buildProjectJsonLd(project: Project, locale: ResolvedLocale): JsonLdNode {
   return {
     '@type': 'CreativeWork',
-    '@id': `${projectUrl(project.slug)}#case-study`,
+    '@id': `${projectUrl(project.slug, locale)}#case-study`,
     name: project.name,
     headline: `${project.title} ${project.titleHighlight}`,
     description: project.summary,
     abstract: project.problem,
-    url: projectUrl(project.slug),
+    url: projectUrl(project.slug, locale),
     image: projectImage(project),
     copyrightYear: Number(project.year),
     creativeWorkStatus: project.status,
@@ -142,9 +143,11 @@ export function buildProjectJsonLd(project: Project, locale: ResolvedLocale): Js
     author: { '@id': PERSON_ID },
     creator: { '@id': PERSON_ID },
     isPartOf: { '@id': WEBSITE_ID },
-    mainEntityOfPage: projectUrl(project.slug),
+    mainEntityOfPage: projectUrl(project.slug, locale),
     about: project.techTags.map((tag) => ({ '@type': 'Thing', name: tag })),
-    ...(project.links.repo ? { codeRepository: project.links.repo } : {}),
+    ...(project.links.repo && project.links.repo !== SOCIAL_PROFILES.github
+      ? { codeRepository: project.links.repo }
+      : {}),
     ...(project.links.demo ? { sameAs: [project.links.demo] } : {}),
   }
 }
@@ -157,19 +160,19 @@ export function buildBreadcrumbJsonLd(project: Project, locale: ResolvedLocale):
         '@type': 'ListItem',
         position: 1,
         name: localized(locale, 'Inicio', 'Home'),
-        item: absoluteUrl('/'),
+        item: absoluteUrl(localizedPath('/', locale)),
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: localized(locale, 'Proyectos', 'Projects'),
-        item: absoluteUrl('/#proyectos'),
+        item: absoluteUrl(`${localizedPath('/', locale)}#proyectos`),
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: project.name,
-        item: projectUrl(project.slug),
+        item: projectUrl(project.slug, locale),
       },
     ],
   }

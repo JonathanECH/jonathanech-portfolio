@@ -82,7 +82,7 @@
           if (forcedTheme === 'christmas') {
             root.classList.remove('dark', 'light')
             root.dataset.theme = 'christmas'
-            root.lang = locale
+            root.lang = location.pathname === '/en' || location.pathname.startsWith('/en/') ? 'en' : locale
             if (themeColor) {
               themeColor.setAttribute('content', '#0B1F1A')
             }
@@ -90,7 +90,7 @@
             root.classList.toggle('dark', theme === 'dark')
             root.classList.toggle('light', theme === 'light')
             root.dataset.theme = theme
-            root.lang = locale
+            root.lang = location.pathname === '/en' || location.pathname.startsWith('/en/') ? 'en' : locale
             if (themeColor) {
               themeColor.setAttribute('content', theme === 'dark' ? '#0B0E14' : '#EDF0F8')
             }

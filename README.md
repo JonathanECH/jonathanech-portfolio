@@ -99,18 +99,28 @@ ssgOptions: {
   beastiesOptions: false,
   includedRoutes(paths) {
     const staticPaths = paths.filter((path) => !path.includes(':') && !path.includes('*'))
-    return [...staticPaths, ...projects.map((project) => `/proyectos/${project.slug}`)]
+    return Array.from(
+      new Set([
+        ...staticPaths,
+        '/404',
+        ...projects.flatMap((project) => [
+          `/proyectos/${project.slug}`,
+          `/en/proyectos/${project.slug}`,
+        ]),
+      ]),
+    )
   },
 },
 ```
 
-Resultado: `/proyectos/<slug>` se publica como HTML estático (`<slug>.html`) y Vercel lo sirve con URLs limpias.
+Resultado: `/proyectos/<slug>` y `/en/proyectos/<slug>` se publican como HTML estático (`<slug>.html`) y Vercel lo sirve con URLs limpias. La raíz `/` respeta la preferencia del navegador; `/en` fuerza inglés.
 
 ### 2. Internacionalización nativa y tipada
 
 - Diccionarios tipados en `src/i18n/messages/es.ts` y `src/i18n/messages/en.ts` bajo el contrato `UiMessageKey`.
 - Contenido desacoplado en `src/data/portfolio.ts` (ES) y `src/data/portfolio.en.ts` (EN).
-- Conmutación de idioma y tema sin recarga; los metadatos se recalculan de forma reactiva.
+- Conmutación de idioma (con navegación a `/en` cuando corresponde) y tema sin recarga; los metadatos se recalculan de forma reactiva.
+- `src/utils/localized-path.ts` es la única fuente de verdad para alternar entre rutas ES/EN; `useRouteLocale()` hace que la URL gane sobre `localStorage` en las páginas prerenderizadas.
 
 ### 3. Sistema de doble tema con tokens CSS runtime
 
@@ -159,7 +169,8 @@ La capa SEO vive en `src/seo/` y `src/composables/useSeo.ts`, con una única fue
 `useSeo()` combina `useSeoMeta` y `useHead` de `@unhead/vue` y calcula, para cada ruta:
 
 - `title` y `description` localizados.
-- `link[rel="canonical"]` absoluto hacia `https://jonathanech.dev`.
+- `link[rel="canonical"]` absoluto hacia la variante de idioma correspondiente (`https://jonathanech.dev` o `https://jonathanech.dev/en`).
+- `link[rel="alternate"]` con `hreflang="es"`, `hreflang="en"` y `x-default`, recíproco en cada página y en el sitemap.
 - Open Graph (`og:type`, `og:title`, `og:description`, `og:url`, `og:image`, `og:image:alt`, `og:locale`).
 - Twitter Card `summary_large_image`.
 - `robots` con `noindex` únicamente en la página 404.
@@ -173,10 +184,10 @@ Como `vite-ssg` ejecuta la aplicación en Node, estas etiquetas llegan al HTML f
 
 | Ruta | Nodos |
 | :--- | :--- |
-| `/` | `Person`, `WebSite`, `ItemList` de casos de estudio |
-| `/proyectos/<slug>` | `Person`, `WebSite`, `CreativeWork`, `BreadcrumbList` |
+| `/` y `/en` | `Person`, `WebSite`, `ItemList` de casos de estudio |
+| `/proyectos/<slug>` y `/en/proyectos/<slug>` | `Person`, `WebSite`, `CreativeWork`, `BreadcrumbList` |
 
-`Person` incluye `jobTitle`, `knowsAbout`, `sameAs` (GitHub y LinkedIn), ubicación y formación. `CreativeWork` expone problema (`abstract`), stack (`keywords`, `about`) e impacto (`workExample` con las métricas verificables).
+`Person` incluye `jobTitle`, `knowsAbout`, `sameAs` (GitHub y LinkedIn), ubicación y formación. `CreativeWork` expone problema (`abstract`), stack (`keywords`, `about`) y fuentes verificables (`codeRepository` y `sameAs` solo cuando existen de verdad).
 
 ### HTML semántico y contenido NLP-friendly
 
@@ -190,7 +201,8 @@ Como `vite-ssg` ejecuta la aplicación en Node, estas etiquetas llegan al HTML f
 
 - `public/robots.txt` permite explícitamente crawlers de IA (GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot, Google-Extended, CCBot y otros) y declara el sitemap.
 - `sitemap.xml` se genera en build desde un plugin de Vite (`vite.config.ts`) que reutiliza `src/seo/sitemap.ts` y la colección de proyectos.
-- `public/llms.txt` resume el perfil, stack, casos de estudio y enlaces canónicos para motores generativos.
+- `public/llms.txt` resume el perfil, stack, casos de estudio, repos/demos públicos reales y una cita sugerida por caso para motores generativos. Se descubre desde `robots.txt` y desde el footer.
+- `sitemap.xml` incluye las ocho entradas por idioma con `lastmod` basado en cambios reales de contenido (`Project.updatedAt`), nunca en la fecha del build.
 - `vercel.json` activa `cleanUrls`, elimina barras finales y añade caché a robots, sitemap, `llms.txt` y assets con hash.
 
 ---

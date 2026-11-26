@@ -2,10 +2,12 @@
 import { computed, onMounted, ref } from 'vue'
 import { RouterLink, useRoute, type RouteLocationRaw } from 'vue-router'
 import { ArrowRight, Home, Terminal } from '@lucide/vue'
+import { useLocalizedPath } from '@/composables/useLocalizedPath'
 import { useI18n, type UiMessageKey } from '@/i18n'
 
 const route = useRoute()
 const { t } = useI18n()
+const { withLocale } = useLocalizedPath()
 
 const isMounted = ref(false)
 
@@ -32,13 +34,21 @@ interface QuickRoute {
   readonly to: RouteLocationRaw
 }
 
-const quickRoutes: readonly QuickRoute[] = [
-  { code: '#01', labelKey: 'notFound.routeHome', to: { path: '/', hash: '#inicio' } },
-  { code: '#02', labelKey: 'notFound.routeStack', to: { path: '/', hash: '#stack' } },
-  { code: '#03', labelKey: 'notFound.routeProjects', to: { path: '/', hash: '#proyectos' } },
-  { code: '#04', labelKey: 'notFound.routeAbout', to: { path: '/', hash: '#sobre-mi' } },
-  { code: '#05', labelKey: 'notFound.routeContact', to: { path: '/', hash: '#contacto' } },
-]
+const quickRoutes = computed<readonly QuickRoute[]>(() => [
+  { code: '#01', labelKey: 'notFound.routeHome', to: { path: withLocale('/'), hash: '#inicio' } },
+  { code: '#02', labelKey: 'notFound.routeStack', to: { path: withLocale('/'), hash: '#stack' } },
+  {
+    code: '#03',
+    labelKey: 'notFound.routeProjects',
+    to: { path: withLocale('/'), hash: '#proyectos' },
+  },
+  { code: '#04', labelKey: 'notFound.routeAbout', to: { path: withLocale('/'), hash: '#sobre-mi' } },
+  {
+    code: '#05',
+    labelKey: 'notFound.routeContact',
+    to: { path: withLocale('/'), hash: '#contacto' },
+  },
+])
 </script>
 
 <template>
@@ -245,7 +255,7 @@ const quickRoutes: readonly QuickRoute[] = [
         class="mt-12 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center"
       >
         <RouterLink
-          :to="{ path: '/', hash: '#proyectos' }"
+          :to="{ path: withLocale('/'), hash: '#proyectos' }"
           class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-accent-contrast shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] interactive-transition hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] motion-safe:active:scale-[0.97] sm:text-xs"
         >
           <Terminal :size="16" aria-hidden="true" />
@@ -258,7 +268,7 @@ const quickRoutes: readonly QuickRoute[] = [
         </RouterLink>
 
         <RouterLink
-          to="/"
+          :to="withLocale('/')"
           class="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/60 px-6 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground interactive-transition hover:border-border-hover hover:bg-surface-card hover:text-cyan-accent motion-safe:active:scale-[0.97] sm:text-xs"
         >
           <Home :size="16" aria-hidden="true" />

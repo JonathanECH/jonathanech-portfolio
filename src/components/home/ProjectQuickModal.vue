@@ -2,12 +2,14 @@
 import { computed, nextTick, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ArrowRight, ExternalLink, X } from '@lucide/vue'
+import { useLocalizedPath } from '@/composables/useLocalizedPath'
 import { useScrollLock } from '@/composables/useScrollLock'
 import { useI18n } from '@/i18n'
 import { usePortfolioStore } from '@/stores/portfolio'
 
 const store = usePortfolioStore()
 const { t } = useI18n()
+const { projectPath } = useLocalizedPath()
 
 const dialogRef = ref<HTMLDialogElement | null>(null)
 const open = computed(() => store.isQuickViewOpen)
@@ -170,7 +172,7 @@ function handleNativeClose(): void {
                   <ExternalLink :size="13" aria-hidden="true" />
                 </a>
                 <RouterLink
-                  :to="`/proyectos/${project.slug}`"
+                  :to="projectPath(project.slug)"
                   class="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-4 py-2.5 font-sans text-xs font-semibold text-accent-contrast interactive-transition hover:shadow-[0_0_24px_rgba(var(--ech-accent-rgb),0.45)]"
                   @click="close"
                 >

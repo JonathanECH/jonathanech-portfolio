@@ -12,6 +12,7 @@ import type {
   ResolvedTheme,
   ThemeMode,
 } from '@/types/portfolio'
+import { isEnglishPath } from '@/utils/localized-path'
 
 export const PREFERENCES_STORAGE_KEY = 'ech:preferences'
 export const CHRISTMAS_THEME_COLOR = '#0B1F1A'
@@ -67,7 +68,7 @@ function applyToDocument(): void {
   const root = document.documentElement
   const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
 
-  root.lang = resolvedLocale.value
+  root.lang = isEnglishPath(window.location?.pathname ?? '') ? 'en' : resolvedLocale.value
 
   if (readForcedTheme() === 'christmas') {
     root.classList.remove('dark', 'light')

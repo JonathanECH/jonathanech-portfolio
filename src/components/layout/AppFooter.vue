@@ -38,6 +38,14 @@ const footerLinks = computed(() =>
             {{ link.id === 'email' ? 'EMAIL' : link.id === 'github' ? 'GITHUB' : 'LINKEDIN' }}
           </a>
         </template>
+        <span class="text-border" aria-hidden="true">//</span>
+        <a
+          href="/llms.txt"
+          class="transition-colors hover:text-cyan-accent"
+          :aria-label="t('footer.llms')"
+        >
+          LLMS.TXT
+        </a>
       </nav>
     </div>
   </footer>

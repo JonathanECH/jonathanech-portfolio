@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { ArrowLeft, ArrowRight } from '@lucide/vue'
+import { useLocalizedPath } from '@/composables/useLocalizedPath'
 import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
@@ -10,6 +11,7 @@ defineProps<{
 }>()
 
 const { t } = useI18n()
+const { projectPath } = useLocalizedPath()
 </script>
 
 <template>
@@ -18,7 +20,7 @@ const { t } = useI18n()
       <div class="grid gap-px overflow-hidden rounded border border-border bg-border sm:grid-cols-2">
         <RouterLink
           v-if="previous"
-          :to="`/proyectos/${previous.slug}`"
+          :to="projectPath(previous.slug)"
           class="group flex items-center gap-4 bg-background p-5 transition-colors duration-300 hover:bg-surface-card sm:p-6"
         >
           <span
@@ -68,7 +70,7 @@ const { t } = useI18n()
 
         <RouterLink
           v-if="next"
-          :to="`/proyectos/${next.slug}`"
+          :to="projectPath(next.slug)"
           class="group flex items-center justify-end gap-4 bg-background p-5 text-right transition-colors duration-300 hover:bg-surface-card sm:p-6"
         >
           <span class="min-w-0">

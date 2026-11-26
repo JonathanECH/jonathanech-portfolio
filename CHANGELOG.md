@@ -5,6 +5,27 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
+## [Unreleased]
+
+### Added
+
+- Rutas `/en` y `/en/proyectos/<slug>` prerenderizadas, con canonical, `hreflang="es"`, `hreflang="en"` y `x-default` tanto en las páginas como en `sitemap.xml` (`xhtml:link`). La URL manda sobre la preferencia guardada, así que una página inglesa nunca se hidrata en español.
+- `lastmod` real en el sitemap: fecha de cambio de contenido de cada caso (`updatedAt`) y fecha editorial de la home, sin usar nunca la fecha del build.
+- Repositorios y demos verificables en `llms.txt` y JSON-LD (`codeRepository` / `sameAs`), con una cita sugerida por caso de estudio. TilyShop incorpora su demo pública; solo Clima Vue declara repo público.
+- Enlace discreto a `llms.txt` en el footer, anunciado también desde `robots.txt`.
+
+### Changed
+
+- El selector de idioma navega a la ruta localizada correspondiente y los enlaces internos conservan el prefijo `/en`.
+
+### Fixed
+
+- Resaltado de la navegación en inglés: `useActiveSection` ahora observa las secciones tanto en `home` como en `home-en`; antes el navbar de `/en` nunca marcaba la sección activa.
+
+### Verificación
+
+- `pnpm verify`: typecheck OK, **149/149** pruebas en **18** archivos y build `vite-ssg` correcto (11 páginas: 2 homes, 8 casos y 404).
+
 ## [1.3.3] - 2026-11-26
 
 ### Fixed
