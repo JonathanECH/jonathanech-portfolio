@@ -6,7 +6,7 @@ Este documento registra las acciones realizadas y pendientes para transformar el
 
 ## Estado General
 
-- **Rama activa:** `main` (release `v1.3.0`)
+- **Rama activa:** `main` (release `v1.3.1`)
 - **Fase 0 del CMS:** integrada en `main` el 24 de noviembre de 2026 (PR #19).
 - **Fecha de inicio:** 9 de noviembre de 2026
 - **Última actualización:** 26 de noviembre de 2026
@@ -110,6 +110,16 @@ Checklist de la rama `feat/project-reveal-70` (commits `5bb208a` y `f593ee7`):
 3. **Sobre Mí:** las cuatro barras de métricas usan `cover` en vez de `entry`: inicios `cover 10% / 14% / 18% / 22%` y fin `cover 50%` en escritorio y `cover 45%` en móvil, manteniendo visible la cuarta barra (SEO) y sin animar `width`.
 4. **Verificación integral:** `pnpm verify` → typecheck OK, **110/110** tests en 12 archivos y build `vite-ssg` correcto (6 páginas prerenderizadas).
 5. **Publicación:** merge de la rama en `main` y tag anotado `v1.1.1` enviado con `git push --follow-tags`; `main` es la rama desplegada en producción.
+
+---
+
+## Validación previa a producción (release `v1.3.1` · 2026-11-26)
+
+Checklist del hotfix de metadatos tras la auditoría de la release `v1.3.0`:
+
+1. **Alcance:** `package.json` pasa de `1.2.0` a `1.3.1` para coincidir con el changelog y con el nuevo tag; no hay cambios en código de aplicación ni en dependencias.
+2. **Tag:** se crea `v1.3.1` anotado y se envía con `git push --follow-tags`; el tag `v1.3.0` ya publicado no se mueve ni se reutiliza.
+3. **Verificación:** `pnpm verify` → typecheck OK, **135/135** tests en 15 archivos y build `vite-ssg` correcto (6 páginas).
 
 ---
 

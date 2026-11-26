@@ -308,8 +308,8 @@ cd worker && pnpm install && pnpm test && pnpm typecheck && pnpm dev
 
 - `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**135/135 pruebas** en **15 archivos**) y el build estático con `vite-ssg` (6 páginas). `cd worker && pnpm test` añade **11 pruebas** del tema global y `pnpm typecheck` verifica el Worker.
 - **Fase 0 del CMS integrada en `main`** (PR #19, 2026-11-24): métricas de auditoría retiradas del sitio y tema navideño controlado solo por el admin mediante Worker + KV, sin opción pública en `SettingsMenu` ni claves nuevas en i18n.
-- Release actual: **v1.3.0** (2026-11-26), con Fase 0 del CMS (Worker + KV para el tema navideño), retirada de métricas de auditoría, CV renombrado y dependencias/pnpm actualizados.
-- Release anterior: **v1.2.0**. El detalle de los cambios de esta versión está en [`CHANGELOG.md`](CHANGELOG.md).
+- Release actual: **v1.3.1** (2026-11-26), corrección de metadatos tras `v1.3.0` (el `package.json` seguía en `1.2.0`).
+- Release anterior: **v1.3.0**, con Fase 0 del CMS (Worker + KV para el tema navideño), retirada de métricas, CV renombrado y dependencias/pnpm actualizados. El detalle está en [`CHANGELOG.md`](CHANGELOG.md).
 - Historial de cambios en [`CHANGELOG.md`](CHANGELOG.md); procedimientos de mantenimiento, tags, dependencias, monitoreo y rollback en [`docs/MAINTENANCE.md`](docs/MAINTENANCE.md).
 - Antes de publicar se revisa `git status`, se confirma que `main` no tiene cambios locales pendientes y se hace push a `origin/main` con `--follow-tags`; la rama está desplegada en producción.
 - El detalle de las mejoras, su trazabilidad y la validación previa al despliegue está en [`docs/AUDIT_AND_ROADMAP.md`](docs/AUDIT_AND_ROADMAP.md).
