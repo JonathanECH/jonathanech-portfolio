@@ -141,7 +141,7 @@ onUnmounted(() => {
         <SettingsMenu />
 
         <a
-          href="/cv/jonathan-campos-cv.pdf"
+          href="/cv/CV_JonathanCampos.pdf"
           download
           class="hidden items-center gap-1.5 rounded-lg bg-cyan-accent px-4 py-2 font-sans text-xs font-semibold text-accent-contrast interactive-transition hover:shadow-[0_0_15px_rgba(var(--ech-accent-rgb),0.4)] sm:flex"
         >
@@ -196,7 +196,7 @@ onUnmounted(() => {
         </nav>
 
         <a
-          href="/cv/jonathan-campos-cv.pdf"
+          href="/cv/CV_JonathanCampos.pdf"
           download
           class="mt-4 flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-4 py-3 font-sans text-xs font-semibold text-accent-contrast"
         >
