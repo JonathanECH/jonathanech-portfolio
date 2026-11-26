@@ -5,6 +5,15 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
+## [1.3.1] - 2026-11-26
+
+### Fixed
+
+- Corrección de metadatos de release: después de publicar `v1.3.0`, `package.json`
+  seguía en `1.2.0`. Se ajusta a `1.3.1` y se publica el tag anotado con el mismo
+  número, sin mover el tag `v1.3.0` ya publicado. El código de la aplicación no
+  cambia; solo la versión declarada y su documentación.
+
 ## [1.3.0] - 2026-11-26
 
 > Fase 0 del CMS integrada en `main` el 24 de noviembre de 2026 (PR #19).
