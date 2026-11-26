@@ -138,7 +138,9 @@ onUnmounted(() => {
       </nav>
 
       <div class="flex items-center gap-3">
-        <SettingsMenu />
+        <div @pointerdown="closeMobileMenu()">
+          <SettingsMenu />
+        </div>
 
         <a
           href="/cv/CV_JonathanCampos.pdf"
@@ -179,7 +181,7 @@ onUnmounted(() => {
       <div
         v-if="mobileOpen"
         id="mobile-navigation"
-        class="border-t border-border bg-background px-5 pb-6 pt-4 lg:hidden"
+        class="max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain border-t border-border bg-background px-5 pb-6 pt-4 lg:hidden"
       >
         <nav class="flex flex-col gap-1" :aria-label="t('nav.ariaMobile')">
           <RouterLink
@@ -189,6 +191,7 @@ onUnmounted(() => {
             class="flex items-center justify-between rounded-lg px-3 py-3 font-mono text-xs tracking-[0.18em] transition-colors"
             :class="isActive(link.section) ? 'bg-cyan-accent/10 text-cyan-accent' : 'text-muted hover:bg-surface-card hover:text-foreground'"
             :aria-current="isActive(link.section) ? 'page' : undefined"
+            @click="closeMobileMenu(true)"
           >
             {{ link.label }}
             <span class="font-mono text-[10px] text-muted">{{ link.hash }}</span>
@@ -218,9 +221,9 @@ onUnmounted(() => {
       >
         <div
           v-if="mobileOpen"
-          class="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs lg:hidden"
+          class="fixed inset-0 z-40 overflow-hidden overscroll-contain bg-black/60 backdrop-blur-xs lg:hidden"
           aria-hidden="true"
-          @click="closeMobileMenu(true)"
+          @pointerdown.prevent="closeMobileMenu(true)"
         />
       </Transition>
     </Teleport>
