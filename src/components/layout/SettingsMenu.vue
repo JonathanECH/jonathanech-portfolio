@@ -2,12 +2,16 @@
 import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { Check, Globe, Monitor, Moon, Settings, Sun } from '@lucide/vue'
 import type { Component } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { usePreferences } from '@/composables/usePreferences'
 import { useI18n } from '@/i18n'
 import type { LocaleMode, ThemeMode } from '@/types/portfolio'
+import { localizedPath } from '@/utils/localized-path'
 
 const { t } = useI18n()
-const { themeMode, localeMode, setTheme, setLocale } = usePreferences()
+const { themeMode, localeMode, resolvedLocale, setTheme, setLocale } = usePreferences()
+const route = useRoute()
+const router = useRouter()
 
 const open = ref(false)
 const rootRef = ref<HTMLElement | null>(null)
@@ -39,6 +43,14 @@ const localeOptions: readonly LocaleOption[] = [
 
 function toggle(): void {
   open.value = !open.value
+}
+
+function chooseLocale(value: LocaleMode): void {
+  setLocale(value)
+  const nextPath = localizedPath(route.path, resolvedLocale.value)
+  if (nextPath !== route.path) {
+    router.push(nextPath)
+  }
 }
 
 function close(returnFocus = false): void {
@@ -139,7 +151,7 @@ onUnmounted(() => {
                   : 'text-muted hover:bg-surface-card hover:text-foreground'
               "
               :aria-pressed="localeMode === option.value"
-              @click="setLocale(option.value)"
+              @click="chooseLocale(option.value)"
             >
               <span class="flex items-center gap-2">
                 <Globe :size="13" aria-hidden="true" class="shrink-0 opacity-70" />

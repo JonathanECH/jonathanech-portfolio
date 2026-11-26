@@ -98,7 +98,14 @@ const config = {
     includedRoutes(paths: string[]): string[] {
       const staticPaths = paths.filter((path) => !path.includes(':') && !path.includes('*'))
       return Array.from(
-        new Set([...staticPaths, '/404', ...projects.map((project) => `/proyectos/${project.slug}`)]),
+        new Set([
+          ...staticPaths,
+          '/404',
+          ...projects.flatMap((project) => [
+            `/proyectos/${project.slug}`,
+            `/en/proyectos/${project.slug}`,
+          ]),
+        ]),
       )
     },
   },

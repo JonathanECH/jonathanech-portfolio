@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import { usePreferences } from '@/composables/usePreferences'
+import { useRouteLocale } from '@/composables/useRouteLocale'
 import type { PortfolioContent, ResolvedLocale } from '@/types/portfolio'
 import { enContent, esContent } from './content'
 import { enMessages } from './messages/en'
@@ -35,16 +36,18 @@ export function translate(
 
 export function useI18n() {
   const { resolvedLocale } = usePreferences()
+  const routeLocale = useRouteLocale()
+  const locale = computed<ResolvedLocale>(() => routeLocale.value ?? resolvedLocale.value)
 
-  const messages = computed<UiMessages>(() => dictionaries[resolvedLocale.value])
-  const content = computed<PortfolioContent>(() => contents[resolvedLocale.value])
+  const messages = computed<UiMessages>(() => dictionaries[locale.value])
+  const content = computed<PortfolioContent>(() => contents[locale.value])
 
   function t(key: UiMessageKey, params?: MessageParams): string {
     return translate(messages.value, key, params)
   }
 
   return {
-    locale: resolvedLocale,
+    locale,
     messages,
     content,
     t,

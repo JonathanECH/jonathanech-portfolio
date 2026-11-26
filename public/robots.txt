@@ -52,4 +52,5 @@ Allow: /
 User-agent: *
 Allow: /
 
+# Machine-readable profile for AI assistants: https://jonathanech.dev/llms.txt
 Sitemap: https://jonathanech.dev/sitemap.xml

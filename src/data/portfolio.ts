@@ -232,6 +232,7 @@ export const projects: readonly Project[] = [
     title: 'TILYSHOP',
     titleHighlight: 'INVENTORY',
     year: '2026',
+    updatedAt: '2026-11-10',
     status: 'EN PRODUCCIÓN',
     summary:
       'Sistema de inventario offline-first para puntos de venta: cálculo de stock efectivo en cliente, trazabilidad atómica de lotes y sincronización transaccional.',
@@ -243,9 +244,10 @@ export const projects: readonly Project[] = [
     duration: '6 Semanas // Octubre 2026 – Noviembre 2026',
     stackKey: 'Vue 3 • Node.js • PostgreSQL',
     links: {
+      demo: 'https://tilyshop-inventory.vercel.app/',
       whitepaper: '/docs/tilyshop-whitepaper.pdf',
     },
-    liveHost: 'app.tilyshop.internal',
+    liveHost: 'tilyshop-inventory.vercel.app',
     accent: '#00E5FF',
     galleryDescription:
       'Interfaces reales del flujo operativo: panel general, administración de inventario, historial de ventas y seguridad del perfil.',
@@ -355,6 +357,7 @@ export const projects: readonly Project[] = [
     title: 'CLIMA',
     titleHighlight: 'VUE',
     year: '2026',
+    updatedAt: '2026-11-13',
     status: 'DESPLEGADO',
     summary:
       'Aplicación web de clima en tiempo real: autocompletado de ciudades con la API de Geocoding, geolocalización GPS validada, historial local y manejo explícito de errores sobre datos de OpenWeatherMap.',
@@ -470,6 +473,7 @@ export const projects: readonly Project[] = [
     title: 'CLÍNICA',
     titleHighlight: 'RAZETTI',
     year: '2026',
+    updatedAt: '2026-11-10',
     status: 'CASO DE ESTUDIO',
     summary:
       'Aplicación hospitalaria full-stack para administración de pacientes, especialistas, agendas clínicas y reportes: reactividad con Signals en Angular 19, blindaje RBAC y exportación de expedientes en PDF.',
@@ -614,6 +618,7 @@ export const projects: readonly Project[] = [
     title: 'ERP',
     titleHighlight: 'LUBRIKEN',
     year: '2026',
+    updatedAt: '2026-11-09',
     status: 'CASO DE ESTUDIO',
     summary:
       'Plataforma contable full-stack con doble partida, conciliación bancaria y reportes financieros reproducibles sobre una base transaccional.',

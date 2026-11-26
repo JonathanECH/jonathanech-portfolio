@@ -95,6 +95,8 @@ export interface Project {
   readonly title: string
   readonly titleHighlight: string
   readonly year: string
+  /** ISO date of the last real content change, used for sitemap lastmod. */
+  readonly updatedAt: string
   readonly status: string
   readonly summary: string
   readonly problem: string

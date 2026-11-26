@@ -23,6 +23,7 @@ const projects: readonly Project[] = [
     title: 'TILYSHOP',
     titleHighlight: 'INVENTORY',
     year: '2026',
+    updatedAt: '2026-11-10',
     status: 'IN PRODUCTION',
     summary:
       'Offline-first inventory system for retail POS: client-side effective stock calculation, atomic batch traceability and transactional synchronization.',
@@ -34,9 +35,10 @@ const projects: readonly Project[] = [
     duration: '6 Weeks // October 2026 – November 2026',
     stackKey: 'Vue 3 • Node.js • PostgreSQL',
     links: {
+      demo: 'https://tilyshop-inventory.vercel.app/',
       whitepaper: '/docs/tilyshop-whitepaper.pdf',
     },
-    liveHost: 'app.tilyshop.internal',
+    liveHost: 'tilyshop-inventory.vercel.app',
     accent: '#00E5FF',
     galleryDescription:
       'Real interfaces from the operational flow: overview panel, inventory administration, sales history and profile security.',
@@ -146,6 +148,7 @@ const projects: readonly Project[] = [
     title: 'CLIMA',
     titleHighlight: 'VUE',
     year: '2026',
+    updatedAt: '2026-11-13',
     status: 'DEPLOYED',
     summary:
       'Real-time weather web app: city autocomplete with the Geocoding API, validated GPS geolocation, local search history and explicit error handling on top of OpenWeatherMap data.',
@@ -261,6 +264,7 @@ const projects: readonly Project[] = [
     title: 'CLÍNICA',
     titleHighlight: 'RAZETTI',
     year: '2026',
+    updatedAt: '2026-11-10',
     status: 'CASE STUDY',
     summary:
       'Full-stack hospital management application for patients, specialists, clinical schedules and reports: reactive architecture with Angular 19 Signals, strict RBAC security and PDF medical records.',
@@ -405,6 +409,7 @@ const projects: readonly Project[] = [
     title: 'ERP',
     titleHighlight: 'LUBRIKEN',
     year: '2026',
+    updatedAt: '2026-11-09',
     status: 'CASE STUDY',
     summary:
       'Full-stack accounting platform with double-entry bookkeeping, bank reconciliation and reproducible financial reports on a transactional database.',

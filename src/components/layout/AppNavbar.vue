@@ -5,11 +5,13 @@ import { Download, Menu, X } from '@lucide/vue'
 import logoNavbar from '@/assets/logo-navbar.svg'
 import SettingsMenu from '@/components/layout/SettingsMenu.vue'
 import { useActiveSection } from '@/composables/useActiveSection'
+import { useLocalizedPath } from '@/composables/useLocalizedPath'
 import { useScrolled } from '@/composables/useScrolled'
 import { useI18n } from '@/i18n'
 
 const route = useRoute()
 const { t } = useI18n()
+const { homePath } = useLocalizedPath()
 const { scrolled } = useScrolled()
 const { activeSection } = useActiveSection(['inicio', 'stack', 'proyectos', 'sobre-mi', 'contacto'])
 const mobileOpen = ref(false)
@@ -24,11 +26,11 @@ const navLinks = computed(() => [
   { label: t('nav.contact'), hash: '#contacto', section: 'contacto' },
 ])
 
-const isHome = computed(() => route.name === 'home')
+const isHome = computed(() => route.name === 'home' || route.name === 'home-en')
 
 const activeLink = computed(() => {
   if (!isHome.value) {
-    return route.name === 'project-detail' ? 'proyectos' : ''
+    return route.name === 'project-detail' || route.name === 'project-detail-en' ? 'proyectos' : ''
   }
 
   return activeSection.value
@@ -99,7 +101,7 @@ onUnmounted(() => {
   >
     <div class="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-12">
       <RouterLink
-        to="/"
+        :to="homePath"
         class="group relative flex items-center justify-center rounded-lg"
         :aria-label="t('nav.ariaHome')"
       >
@@ -120,7 +122,7 @@ onUnmounted(() => {
         <RouterLink
           v-for="link in navLinks"
           :key="link.section"
-          :to="{ path: '/', hash: link.hash }"
+          :to="{ path: homePath, hash: link.hash }"
           class="group relative flex items-center gap-1.5 py-2 font-mono text-[11px] tracking-[0.18em] transition-colors duration-200"
           :class="isActive(link.section) ? 'text-foreground' : 'text-muted hover:text-foreground'"
           :aria-current="isActive(link.section) ? 'page' : undefined"
@@ -187,7 +189,7 @@ onUnmounted(() => {
           <RouterLink
             v-for="link in navLinks"
             :key="link.section"
-            :to="{ path: '/', hash: link.hash }"
+            :to="{ path: homePath, hash: link.hash }"
             class="flex items-center justify-between rounded-lg px-3 py-3 font-mono text-xs tracking-[0.18em] transition-colors"
             :class="isActive(link.section) ? 'bg-cyan-accent/10 text-cyan-accent' : 'text-muted hover:bg-surface-card hover:text-foreground'"
             :aria-current="isActive(link.section) ? 'page' : undefined"

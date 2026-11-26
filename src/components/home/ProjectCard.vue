@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ArrowRight, ArrowUpRight, ShieldCheck } from '@lucide/vue'
+import { useLocalizedPath } from '@/composables/useLocalizedPath'
 import { useI18n } from '@/i18n'
 import type { Project } from '@/types/portfolio'
 
@@ -14,6 +15,7 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
+const { projectPath } = useLocalizedPath()
 
 const BARS = [38, 62, 48, 76, 58, 90] as const
 
@@ -241,7 +243,7 @@ function openQuickView(): void {
 
       <!-- Stretched link: the whole card navigates to the case study -->
       <RouterLink
-        :to="`/proyectos/${project.slug}`"
+        :to="projectPath(project.slug)"
         class="absolute inset-0 z-0 rounded-2xl focus-visible:bg-cyan-accent/5 focus-visible:-outline-offset-2"
         :aria-label="t('projects.viewFullAria', { name: project.name })"
       />

@@ -1,10 +1,18 @@
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { activeSectionFromBounds } from '@/composables/useActiveSection'
+
+const source = readFileSync(fileURLToPath(new URL('./useActiveSection.ts', import.meta.url)), 'utf8')
 
 const TOP_OFFSET = 120
 const VIEWPORT_HEIGHT = 844
 
 describe('active section geometry', () => {
+  it('observes sections on both localized home routes', () => {
+    expect(source).toContain("route.name !== 'home' && route.name !== 'home-en'")
+  })
+
   it('highlights the newest section when two sections cross the band', () => {
     const active = activeSectionFromBounds(
       [

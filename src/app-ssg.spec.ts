@@ -39,7 +39,7 @@ describe('SSG locale hydration', () => {
 
   it('keeps the pre-paint preference script', () => {
     expect(indexSource).toContain("localStorage.getItem('ech:preferences')")
-    expect(indexSource).toContain('root.lang = locale')
+    expect(indexSource).toContain("root.lang = location.pathname === '/en' || location.pathname.startsWith('/en/') ? 'en' : locale")
   })
 })
 

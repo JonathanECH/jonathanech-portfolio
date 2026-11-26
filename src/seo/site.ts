@@ -1,4 +1,5 @@
 import type { Project, ResolvedLocale } from '@/types/portfolio'
+import { localizedPath } from '../utils/localized-path.ts'
 
 /**
  * Single source of truth for the canonical site identity.
@@ -13,6 +14,9 @@ export const SITE_JOB_TITLE = 'Frontend Web Developer'
 export const SITE_EMAIL = 'jonathancamposbusiness@gmail.com'
 export const SITE_LOCALE = 'es_VE'
 export const SITE_LOCALE_ALTERNATE = 'en_US'
+
+// shortcut: manual home date, move to the CMS publish timestamp when available.
+export const HOME_UPDATED_AT = '2026-11-26'
 
 export const SITE_ADDRESS = {
   city: 'Barquisimeto',
@@ -86,8 +90,16 @@ export function absoluteUrl(path = '/'): string {
   return `${SITE_URL}${normalized}`
 }
 
-export function projectUrl(slug: string): string {
-  return absoluteUrl(`/proyectos/${slug}`)
+export function localizedUrl(path: string, locale: ResolvedLocale): string {
+  return absoluteUrl(localizedPath(path, locale))
+}
+
+export function homeUrl(locale: ResolvedLocale = 'es'): string {
+  return localizedUrl('/', locale)
+}
+
+export function projectUrl(slug: string, locale: ResolvedLocale = 'es'): string {
+  return localizedUrl(`/proyectos/${slug}`, locale)
 }
 
 export function projectImage(project: Project): string {

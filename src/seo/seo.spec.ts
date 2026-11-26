@@ -9,6 +9,8 @@ import {
   DEFAULT_OG_IMAGE_TYPE,
   DEFAULT_OG_IMAGE_WIDTH,
   HOME_SOCIAL_COPY,
+  HOME_UPDATED_AT,
+  homeUrl,
   PROJECT_OG_IMAGE_HEIGHT,
   PROJECT_OG_IMAGE_WIDTH,
   SITE_URL,
@@ -169,13 +171,28 @@ describe('JSON-LD builders', () => {
     expect(node).not.toHaveProperty('additionalProperty')
   })
 
+  it('only advertises public repositories and live demos that really exist', () => {
+    const clima = projects.find((project) => project.slug === 'clima-vue')
+    const razetti = projects.find((project) => project.slug === 'gestion-medica')
+
+    expect(clima && buildProjectJsonLd(clima, 'es')).toMatchObject({
+      codeRepository: 'https://github.com/JonathanECH/clima-vue',
+      sameAs: ['https://clima-vue-vert.vercel.app/'],
+    })
+    expect(buildProjectJsonLd(firstProject, 'es').sameAs).toEqual([
+      'https://tilyshop-inventory.vercel.app/',
+    ])
+    expect(razetti && buildProjectJsonLd(razetti, 'es')).not.toHaveProperty('codeRepository')
+  })
+
   it('builds a three-level breadcrumb ending on the case study', () => {
     const node = buildBreadcrumbJsonLd(firstProject, 'en')
     const items = node.itemListElement as { position: number; name: string; item: string }[]
 
     expect(items.map((item) => item.position)).toEqual([1, 2, 3])
     expect(items[0].name).toBe('Home')
-    expect(items[2].item).toBe(projectUrl(firstProject.slug))
+    expect(items[0].item).toBe(homeUrl('en'))
+    expect(items[2].item).toBe(projectUrl(firstProject.slug, 'en'))
   })
 
   it('composes one schema.org graph for home and project routes', () => {
@@ -230,22 +247,42 @@ describe('JSON-LD builders', () => {
 })
 
 describe('sitemap generation', () => {
-  it('includes the home page and every case study without a build-date lastmod', () => {
+  it('publishes both locales with real lastmod and reciprocal hreflang', () => {
     const entries = buildSitemapEntries(projects)
     const xml = buildSitemap(projects)
+    const realDates = new Set([HOME_UPDATED_AT, ...projects.map((project) => project.updatedAt)])
 
-    expect(entries).toHaveLength(projects.length + 1)
-    expect(entries[0].url).toBe('https://jonathanech.dev/')
-    expect(entries.every((entry) => entry.lastmod === undefined)).toBe(true)
-    expect(entries.map((entry) => entry.url)).toContain(projectUrl(firstProject.slug))
-    expect(xml).not.toContain('<lastmod>')
+    expect(entries).toHaveLength((projects.length + 1) * 2)
+    expect(entries.map((entry) => entry.url)).toEqual([
+      homeUrl('es'),
+      homeUrl('en'),
+      ...projects.flatMap((project) => [
+        projectUrl(project.slug, 'es'),
+        projectUrl(project.slug, 'en'),
+      ]),
+    ])
+    expect(entries.every((entry) => Boolean(entry.lastmod && realDates.has(entry.lastmod)))).toBe(true)
+    expect(entries[0].alternates).toEqual([
+      { hreflang: 'es', href: homeUrl('es') },
+      { hreflang: 'en', href: homeUrl('en') },
+      { hreflang: 'x-default', href: homeUrl('es') },
+    ])
+    expect(xml).toContain(`<lastmod>${HOME_UPDATED_AT}</lastmod>`)
+    expect(xml).toContain(
+      `<xhtml:link rel="alternate" hreflang="en" href="${homeUrl('en')}" />`,
+    )
+    expect(xml).toContain(
+      `<xhtml:link rel="alternate" hreflang="x-default" href="${homeUrl('es')}" />`,
+    )
   })
 
   it('renders valid XML with escaped values and priorities', () => {
     const xml = buildSitemap(projects)
 
     expect(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>')).toBe(true)
-    expect(xml).toContain('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
+    expect(xml).toContain(
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+    )
     expect(xml).toContain('<priority>1</priority>')
     expect(xml).toContain('<priority>0.8</priority>')
     expect(xml.trimEnd().endsWith('</urlset>')).toBe(true)
