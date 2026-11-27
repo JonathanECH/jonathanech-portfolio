@@ -3,6 +3,9 @@ import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import robotsTxt from '../../public/robots.txt?raw'
 import { profile, projects } from '@/data/portfolio'
+import { enContent, esContent } from '@/i18n/content'
+import { enMessages } from '@/i18n/messages/en'
+import { esMessages } from '@/i18n/messages/es'
 import {
   DEFAULT_OG_IMAGE,
   DEFAULT_OG_IMAGE_HEIGHT,
@@ -301,5 +304,33 @@ describe('sitemap generation', () => {
   it('keeps robots.txt free of blank lines inside User-agent record groups (RFC 9309)', () => {
     expect(robotsTxt).not.toMatch(/User-agent:[^\r\n]+\r?\n\r?\n(Allow|Disallow):/)
     expect(robotsTxt).toContain('Sitemap: https://jonathanech.dev/sitemap.xml')
+  })
+})
+
+describe('meta descriptions', () => {
+  function expectSafeLength(label: string, value: string): void {
+    expect(value.length, label).toBeGreaterThanOrEqual(25)
+    expect(value.length, label).toBeLessThanOrEqual(160)
+  }
+
+  it('keeps every authored SERP description inside the safe range', () => {
+    for (const [locale, messages, content] of [
+      ['es', esMessages, esContent],
+      ['en', enMessages, enContent],
+    ] as const) {
+      expectSafeLength(`${locale} home`, messages['meta.description'])
+      expectSafeLength(`${locale} 404`, messages['meta.notFoundDescription'])
+
+      for (const project of content.projects) {
+        expectSafeLength(`${locale} ${project.slug}`, project.metaDescription)
+      }
+    }
+  })
+
+  it('keeps the full case summary in JSON-LD while the meta snippet stays short', () => {
+    const project = projects[0]
+
+    expect(project.metaDescription).not.toBe(project.summary)
+    expect(buildProjectJsonLd(project, 'es').description).toBe(project.summary)
   })
 })

@@ -70,7 +70,7 @@ export function useSeo(): void {
 
   const description = computed(() => {
     if (project.value) {
-      return project.value.summary
+      return project.value.metaDescription
     }
 
     if (isNotFound.value || isMissingProject.value) {

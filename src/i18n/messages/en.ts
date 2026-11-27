@@ -202,5 +202,5 @@ export const enMessages = {
   'meta.notFoundDescription':
     'The requested route does not exist on jonathanech.dev. Explore Jonathan Campos portfolio to browse the available case studies.',
   'meta.description':
-    'Jonathan Campos is a Frontend Web Developer specializing in Vue 3, Tailwind CSS, and TypeScript, based in Barquisimeto, Venezuela. Portfolio with case studies on frontend architecture, offline-first PWAs, accessibility and technical SEO.',
+    'Jonathan Campos is a frontend developer specialized in Vue 3, TypeScript and accessibility. Real case studies, remote or on-site.',
 } satisfies UiMessages
