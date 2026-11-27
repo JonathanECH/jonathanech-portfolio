@@ -98,7 +98,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="reveal reveal--stack h-full" role="listitem">
     <article
-      class="group relative flex h-full touch-manipulation select-none flex-col overflow-hidden rounded-xl border border-border bg-surface-card/60 p-4 transition-[transform,border-color,background-color] duration-300 motion-safe:hover:-translate-y-1 hover:border-border-hover hover:bg-surface-card-hover hover:shadow-[0_0_30px_-8px_rgba(var(--ech-accent-rgb),0.35)] active:border-cyan-accent active:bg-cyan-accent/10"
+      class="group relative flex h-full touch-manipulation select-none flex-col overflow-hidden rounded-xl border border-border bg-surface-card/60 p-4 transition-[transform,border-color,background-color] duration-300 motion-safe:hover:-translate-y-1 hover:border-border-hover hover:bg-surface-card-hover hover:shadow-[0_0_30px_-8px_rgba(var(--ech-accent-rgb),0.35)] active:border-accent-hover active:bg-accent-hover/10"
       :style="
         pressed
           ? {
@@ -135,7 +135,7 @@ onBeforeUnmount(() => {
       </div>
 
       <h3
-        class="mt-4 font-mono text-base font-bold tracking-wide text-foreground transition-colors duration-400 group-hover:text-cyan-accent"
+        class="mt-4 font-mono text-base font-bold tracking-wide text-foreground transition-colors duration-400 group-hover:text-accent-hover"
       >
         {{ technology.name }}
       </h3>

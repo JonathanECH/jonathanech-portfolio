@@ -5,9 +5,26 @@ import { describe, expect, it } from 'vitest'
 const css = readFileSync(fileURLToPath(new URL('./main.css', import.meta.url)), 'utf8')
 const christmasBlock =
   css.match(/\[data-theme=['"]christmas['"]\]\s*\{([\s\S]*?)\}/)?.[1] ?? ''
+const appSource = readFileSync(fileURLToPath(new URL('../App.vue', import.meta.url)), 'utf8')
+const navbarSource = readFileSync(
+  fileURLToPath(new URL('../components/layout/AppNavbar.vue', import.meta.url)),
+  'utf8',
+)
+const heroSource = readFileSync(
+  fileURLToPath(new URL('../components/home/HeroSection.vue', import.meta.url)),
+  'utf8',
+)
+const snowfallSource = readFileSync(
+  fileURLToPath(new URL('../components/ui/ChristmasSnowfall.vue', import.meta.url)),
+  'utf8',
+)
 
 function token(name: string): string {
   return christmasBlock.match(new RegExp(`--ech-${name}:\\s*([^;]+);`))?.[1]?.trim() ?? ''
+}
+
+function keyframes(name: string): string {
+  return css.match(new RegExp(`@keyframes ${name}\\s*\\{([\\s\\S]*?)\\n  \\}`))?.[1] ?? ''
 }
 
 function relativeLuminance(hex: string): number {
@@ -28,7 +45,7 @@ function contrastRatio(foreground: string, background: string): number {
 }
 
 describe('christmas theme tokens', () => {
-  it('replaces every semantic runtime token', () => {
+  it('replaces every semantic runtime token with the pine and gold palette', () => {
     const names = [
       'background',
       'surface',
@@ -37,6 +54,7 @@ describe('christmas theme tokens', () => {
       'border',
       'border-hover',
       'accent',
+      'accent-hover',
       'accent-contrast',
       'accent-glow',
       'muted',
@@ -48,6 +66,10 @@ describe('christmas theme tokens', () => {
       'warning',
       'warning-soft',
       'success',
+      'festive-accent',
+      'festive-red',
+      'xmas-cable',
+      'hero-halo',
       'grid-line',
       'grid-line-strong',
       'grid-blend',
@@ -67,43 +89,91 @@ describe('christmas theme tokens', () => {
     for (const name of names) {
       expect(token(name), name).not.toBe('')
     }
+
+    expect(token('background')).toBe('#071410')
+    expect(token('surface-card')).toBe('#0d2019')
+    expect(token('surface-card-hover')).toBe('#122a21')
+    expect(token('foreground')).toBe('#f8f5ee')
+    expect(token('foreground-soft')).toBe('#c4d1cb')
+    expect(token('muted')).toBe('#8fa69c')
+    expect(token('accent')).toBe('#f5c96b')
+    expect(token('accent-hover')).toBe('#fbd98a')
+    expect(token('accent-contrast')).toBe('#071410')
+    expect(token('festive-accent')).toBe('#f25c6e')
+    expect(token('festive-red')).toBe('#d93848')
+    expect(token('border')).toBe('rgba(245, 201, 107, 0.22)')
+    expect(token('border-hover')).toBe('rgba(245, 201, 107, 0.55)')
+    expect(css).toContain(
+      'radial-gradient(ellipse 60% 45% at 50% 28%, rgba(245, 201, 107, 0.11), rgba(217, 56, 72, 0.04) 55%, transparent 75%)',
+    )
   })
 
-  it('meets WCAG AA on backgrounds, surfaces, labels and the primary CTA', () => {
-    const background = token('background')
-    const surfaceCard = token('surface-card')
+  it('meets WCAG AA for text, secondary text, labels, accent and festive badge', () => {
+    const backgrounds = [token('background'), token('surface-card')]
 
-    for (const [foreground, backgroundToken] of [
-      ['foreground', 'background'],
-      ['foreground', 'surface-card'],
-      ['muted', 'background'],
-      ['muted', 'surface-card'],
-      ['razetti-accent', 'surface-card'],
-      ['warning', 'background'],
-      ['danger-soft', 'background'],
-      ['success', 'surface-card'],
-    ]) {
-      const backgroundValue = backgroundToken === 'background' ? background : surfaceCard
-      expect(
-        contrastRatio(token(foreground), backgroundValue),
-        `${foreground} on ${backgroundToken}`,
-      ).toBeGreaterThanOrEqual(4.5)
+    for (const background of backgrounds) {
+      for (const foreground of [
+        'foreground',
+        'foreground-soft',
+        'muted',
+        'accent',
+        'festive-accent',
+      ]) {
+        expect(
+          contrastRatio(token(foreground), background),
+          `${foreground} on ${background}`,
+        ).toBeGreaterThanOrEqual(4.5)
+      }
     }
 
     expect(contrastRatio(token('accent-contrast'), token('accent'))).toBeGreaterThanOrEqual(4.5)
   })
 
-  it('keeps theme motion inside no-preference and starts with no transition', () => {
+  it('keeps every christmas animation inside no-preference and starts with no transition', () => {
     expect(christmasBlock).not.toMatch(/transition|animation/)
+    expect(css).toMatch(/\.christmas-decor \{\s*display: none;\s*\}/)
+    expect(css).toMatch(
+      /html\[data-theme='christmas'\] \.christmas-decor \{\s*display: block;\s*\}/,
+    )
 
-    const motionBlock =
-      css.match(
-        /@media \(prefers-reduced-motion: no-preference\)\s*\{\s*\[data-theme=['"]christmas['"]\]\s+body\s*\{([\s\S]*?)\}\s*\}/,
-      )?.[1] ?? ''
+    const motionStart = css.indexOf("[data-theme='christmas'] body")
+    const motionEnd = css.indexOf('@keyframes fade-up')
+    const xmasMotion = css.slice(motionStart, motionEnd)
 
-    expect(motionBlock).toMatch(/transition:\s*background-color/)
-    expect(motionBlock).toMatch(/transition:[\s\S]*color/)
-    expect(motionBlock).not.toMatch(/\ball\b|width|height|top|left/)
+    expect(motionStart).toBeGreaterThan(-1)
+    expect(motionEnd).toBeGreaterThan(motionStart)
+    expect(xmasMotion).toContain('@keyframes xmas-twinkle')
+    expect(xmasMotion).toContain('@keyframes xmas-sway')
+    expect(xmasMotion).toContain('@keyframes xmas-fall')
+    expect(xmasMotion).not.toMatch(/transition:[^;]*(all|width|height|top|left)/)
+    expect(css.match(/@media \(prefers-reduced-motion: no-preference\)/g)?.length).toBeGreaterThan(1)
+  })
+
+  it('uses only compositor-friendly properties for the seasonal keyframes', () => {
+    const twinkle = keyframes('xmas-twinkle')
+    const sway = keyframes('xmas-sway')
+    const fall = keyframes('xmas-fall')
+
+    expect(twinkle).toMatch(/opacity:/)
+    expect(twinkle).not.toMatch(/transform|width|height|top|left/)
+
+    expect(sway).toMatch(/transform:\s*rotate/)
+    expect(sway).not.toMatch(/opacity|translate/)
+
+    expect(fall).toMatch(/transform:\s*translateY/)
+    expect(fall).toMatch(/rotate/)
+    expect(fall).toMatch(/opacity:/)
+  })
+
+  it('renders decorations from deterministic, hidden markup', () => {
+    expect(navbarSource).toContain('xmas-bulb xmas-bulb-a')
+    expect(navbarSource).toContain('xmas-bulb xmas-bulb-b')
+    expect(heroSource).toContain('christmas-decor--desktop')
+    expect(heroSource).toContain('xmas-badge')
+    expect(appSource).toContain('<ChristmasSnowfall />')
+    expect(snowfallSource).toContain('aria-hidden="true"')
+    expect(snowfallSource).not.toContain('Math.random')
+    expect(snowfallSource.match(/duration: '/g)).toHaveLength(16)
   })
 
   it('never exposes the global theme in the public settings or i18n', () => {

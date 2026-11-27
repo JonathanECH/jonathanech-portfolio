@@ -28,7 +28,7 @@ const footerLinks = computed(() =>
             :href="link.href"
             :target="link.external ? '_blank' : undefined"
             :rel="link.rel"
-            class="transition-colors hover:text-cyan-accent"
+            class="transition-colors hover:text-accent-hover"
             :aria-label="
               link.external
                 ? t('contact.externalAria', { action: link.label, value: link.value })
@@ -41,7 +41,7 @@ const footerLinks = computed(() =>
         <span class="text-border" aria-hidden="true">//</span>
         <a
           href="/llms.txt"
-          class="transition-colors hover:text-cyan-accent"
+          class="transition-colors hover:text-accent-hover"
           :aria-label="t('footer.llms')"
         >
           LLMS.TXT

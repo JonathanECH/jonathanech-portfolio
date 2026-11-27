@@ -151,7 +151,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             :href="project.links.demo"
             target="_blank"
             rel="noopener noreferrer"
-            class="group inline-flex items-center gap-2 rounded bg-cyan-accent px-5 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-contrast interactive-transition hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.35)]"
+            class="group inline-flex items-center gap-2 rounded bg-cyan-accent px-5 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-contrast interactive-transition hover:bg-accent-hover hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.35)]"
           >
             {{ t('detail.demo') }}
             <ArrowUpRight
@@ -167,7 +167,7 @@ const metaChips = computed<readonly { label: string; value: string }[]>(() => [
             :href="project.links.repo"
             target="_blank"
             rel="noopener noreferrer"
-            class="group inline-flex items-center gap-2 rounded border border-border bg-surface-card/60 px-5 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/85 interactive-transition hover:border-border-hover hover:text-cyan-accent"
+            class="group inline-flex items-center gap-2 rounded border border-border bg-surface-card/60 px-5 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/85 interactive-transition hover:border-border-hover hover:text-accent-hover"
           >
             {{ t('detail.viewCode') }}
             <ExternalLink :size="14" aria-hidden="true" />

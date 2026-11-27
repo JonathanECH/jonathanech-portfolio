@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import AppNavbar from '@/components/layout/AppNavbar.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
+import ChristmasSnowfall from '@/components/ui/ChristmasSnowfall.vue'
 import { initPreferences } from '@/composables/usePreferences'
 import { useSeo } from '@/composables/useSeo'
 import { useI18n } from '@/i18n'
@@ -19,6 +20,8 @@ onMounted(() => {
 
 <template>
   <div class="relative min-h-screen overflow-x-clip bg-background text-foreground/90">
+    <ChristmasSnowfall />
+
     <a
       href="#main-content"
       class="sr-only z-100 rounded-md bg-cyan-accent px-4 py-2 font-mono text-xs font-bold text-accent-contrast focus:not-sr-only focus:fixed focus:left-4 focus:top-4"

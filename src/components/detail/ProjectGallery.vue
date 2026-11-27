@@ -168,7 +168,7 @@ function announceCurrent(): void {
       <div class="flex shrink-0 items-center gap-1.5 sm:gap-3">
         <button
           type="button"
-          class="flex h-6 items-center gap-1 rounded-sm border border-border bg-background/60 px-1.5 text-muted transition-colors hover:border-cyan-accent/50 hover:text-cyan-accent"
+          class="flex h-6 items-center gap-1 rounded-sm border border-border bg-background/60 px-1.5 text-muted transition-colors hover:border-accent-hover/50 hover:text-accent-hover"
           :class="
             reducedMotion
               ? 'cursor-not-allowed opacity-50 hover:border-border hover:text-muted'
@@ -273,7 +273,7 @@ function announceCurrent(): void {
 
       <button
         type="button"
-        class="absolute left-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-foreground/80 backdrop-blur-md interactive-transition hover:border-cyan-accent/70 hover:text-cyan-accent motion-safe:active:scale-95 sm:left-4 sm:h-10 sm:w-10"
+        class="absolute left-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-foreground/80 backdrop-blur-md interactive-transition hover:border-accent-hover/70 hover:text-accent-hover motion-safe:active:scale-95 sm:left-4 sm:h-10 sm:w-10"
         :aria-label="t('gallery.previous')"
         @click="handlePrev"
       >
@@ -282,7 +282,7 @@ function announceCurrent(): void {
 
       <button
         type="button"
-        class="absolute right-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-foreground/80 backdrop-blur-md interactive-transition hover:border-cyan-accent/70 hover:text-cyan-accent motion-safe:active:scale-95 sm:right-4 sm:h-10 sm:w-10"
+        class="absolute right-2 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-sm border border-border bg-background/80 text-foreground/80 backdrop-blur-md interactive-transition hover:border-accent-hover/70 hover:text-accent-hover motion-safe:active:scale-95 sm:right-4 sm:h-10 sm:w-10"
         :aria-label="t('gallery.next')"
         @click="handleNext"
       >

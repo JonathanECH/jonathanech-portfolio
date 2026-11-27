@@ -448,6 +448,35 @@ onBeforeUnmount(() => {
       <div class="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-background to-transparent" />
     </div>
 
+    <svg
+      class="christmas-decor christmas-decor--desktop pointer-events-none select-none hidden lg:block absolute top-0 right-10 w-36 h-60"
+      viewBox="0 0 144 240"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path class="xmas-thread" d="M40 0v46M104 0v78" />
+      <g class="xmas-bauble xmas-bauble--gold">
+        <path d="M32 46h16" stroke="currentColor" stroke-width="2" />
+        <circle cx="40" cy="68" r="22" stroke="currentColor" />
+        <path
+          d="M40 46v44M18 68h44M24 52l32 32M56 52L24 84"
+          stroke="currentColor"
+          stroke-width="0.8"
+          opacity="0.55"
+        />
+      </g>
+      <g class="xmas-bauble xmas-bauble--ruby xmas-bauble--delayed">
+        <path d="M98 78h12" stroke="currentColor" stroke-width="2" />
+        <circle cx="104" cy="96" r="18" stroke="currentColor" />
+        <path
+          d="M104 78v36M86 96h36M91 83l26 26M117 83L91 109"
+          stroke="currentColor"
+          stroke-width="0.8"
+          opacity="0.55"
+        />
+      </g>
+    </svg>
+
     <div
       class="hero-content relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-5 pb-16 pt-28 text-center sm:px-6 sm:pt-32 lg:px-12 lg:pb-[clamp(2rem,4vh,3.5rem)] lg:pt-[clamp(5rem,9vh,7.5rem)]"
     >
@@ -462,13 +491,18 @@ onBeforeUnmount(() => {
         <span class="hidden h-3 w-px bg-border sm:block" aria-hidden="true" />
 
         <span
-          class="inline-flex items-center gap-2 rounded-full border border-cyan-accent/25 bg-cyan-accent/5 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.18em] text-cyan-accent sm:text-[10px]"
+          class="xmas-badge relative inline-flex items-center gap-2 rounded-full border border-cyan-accent/25 bg-cyan-accent/5 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.18em] text-cyan-accent sm:text-[10px]"
         >
           <span
             class="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-cyan-accent"
             aria-hidden="true"
           />
           {{ t('hero.available') }}
+          <span
+            class="christmas-decor pointer-events-none select-none absolute -right-3 -top-1 text-[10px] leading-none text-cyan-accent"
+            aria-hidden="true"
+            >✦</span
+          >
         </span>
       </div>
 
@@ -501,7 +535,7 @@ onBeforeUnmount(() => {
       <div class="mt-9 flex w-full flex-col items-stretch justify-center gap-3 sm:w-auto sm:flex-row lg:mt-[clamp(1.25rem,2.6vh,2rem)]">
         <a
           href="#proyectos"
-          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-accent-contrast shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] interactive-transition hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] motion-safe:active:scale-[0.97] sm:text-xs"
+          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-accent-contrast shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] interactive-transition hover:bg-accent-hover hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] motion-safe:active:scale-[0.97] sm:text-xs"
         >
           <Terminal :size="16" aria-hidden="true" />
           {{ t('hero.explore') }}
@@ -515,7 +549,7 @@ onBeforeUnmount(() => {
         <a
           href="/cv/CV_JonathanCampos.pdf"
           download
-          class="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/60 px-6 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground interactive-transition hover:border-border-hover hover:bg-surface-card hover:text-cyan-accent motion-safe:active:scale-[0.97] sm:text-xs"
+          class="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/60 px-6 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground interactive-transition hover:border-border-hover hover:bg-surface-card hover:text-accent-hover motion-safe:active:scale-[0.97] sm:text-xs"
         >
           <Download
             :size="16"
@@ -552,7 +586,7 @@ onBeforeUnmount(() => {
 
       <a
         href="#stack"
-        class="mt-10 inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-muted transition-colors duration-300 hover:text-cyan-accent sm:text-[10px] lg:mt-[clamp(1.25rem,2.6vh,2rem)]"
+        class="mt-10 inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-muted transition-colors duration-300 hover:text-accent-hover sm:text-[10px] lg:mt-[clamp(1.25rem,2.6vh,2rem)]"
       >
         {{ t('hero.scroll') }}
         <ArrowRight :size="13" class="rotate-90" aria-hidden="true" />

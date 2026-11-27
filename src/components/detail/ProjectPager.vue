@@ -24,7 +24,7 @@ const { projectPath } = useLocalizedPath()
           class="group flex items-center gap-4 bg-background p-5 transition-colors duration-300 hover:bg-surface-card sm:p-6"
         >
           <span
-            class="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-border text-muted interactive-transition motion-safe:group-hover:-translate-x-1 group-hover:border-border-hover group-hover:text-cyan-accent"
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-border text-muted interactive-transition motion-safe:group-hover:-translate-x-1 group-hover:border-border-hover group-hover:text-accent-hover"
             aria-hidden="true"
           >
             <ArrowLeft :size="17" />
@@ -34,7 +34,7 @@ const { projectPath } = useLocalizedPath()
               {{ t('pager.previous') }}
             </span>
             <span
-              class="mt-1 block text-base font-semibold leading-snug text-foreground transition-colors duration-200 group-hover:text-cyan-accent"
+              class="mt-1 block text-base font-semibold leading-snug text-foreground transition-colors duration-200 group-hover:text-accent-hover"
             >
               {{ previous.name }}
             </span>
@@ -78,7 +78,7 @@ const { projectPath } = useLocalizedPath()
               {{ t('pager.next') }}
             </span>
             <span
-              class="mt-1 block text-base font-semibold leading-snug text-foreground transition-colors duration-200 group-hover:text-cyan-accent"
+              class="mt-1 block text-base font-semibold leading-snug text-foreground transition-colors duration-200 group-hover:text-accent-hover"
             >
               {{ next.name }}
             </span>
@@ -87,7 +87,7 @@ const { projectPath } = useLocalizedPath()
             </span>
           </span>
           <span
-            class="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-border text-muted interactive-transition motion-safe:group-hover:translate-x-1 group-hover:border-border-hover group-hover:text-cyan-accent"
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-border text-muted interactive-transition motion-safe:group-hover:translate-x-1 group-hover:border-border-hover group-hover:text-accent-hover"
             aria-hidden="true"
           >
             <ArrowRight :size="17" />

@@ -256,7 +256,7 @@ const quickRoutes = computed<readonly QuickRoute[]>(() => [
       >
         <RouterLink
           :to="{ path: withLocale('/'), hash: '#proyectos' }"
-          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-accent-contrast shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] interactive-transition hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] motion-safe:active:scale-[0.97] sm:text-xs"
+          class="group inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-accent px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-accent-contrast shadow-[0_0_0_0_rgba(var(--ech-accent-rgb),0)] interactive-transition hover:bg-accent-hover hover:shadow-[0_0_28px_rgba(var(--ech-accent-rgb),0.45)] motion-safe:active:scale-[0.97] sm:text-xs"
         >
           <Terminal :size="16" aria-hidden="true" />
           {{ t('notFound.exploreProjects') }}
@@ -269,7 +269,7 @@ const quickRoutes = computed<readonly QuickRoute[]>(() => [
 
         <RouterLink
           :to="withLocale('/')"
-          class="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/60 px-6 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground interactive-transition hover:border-border-hover hover:bg-surface-card hover:text-cyan-accent motion-safe:active:scale-[0.97] sm:text-xs"
+          class="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-surface/60 px-6 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground interactive-transition hover:border-border-hover hover:bg-surface-card hover:text-accent-hover motion-safe:active:scale-[0.97] sm:text-xs"
         >
           <Home :size="16" aria-hidden="true" />
           {{ t('notFound.backHome') }}
@@ -289,7 +289,7 @@ const quickRoutes = computed<readonly QuickRoute[]>(() => [
           <li v-for="item in quickRoutes" :key="item.code">
             <RouterLink
               :to="item.to"
-              class="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface-card/60 px-3 py-1.5 font-mono text-[11px] text-muted interactive-transition motion-safe:hover:-translate-y-0.5 hover:border-border-hover hover:bg-surface-card-hover hover:text-cyan-accent"
+              class="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface-card/60 px-3 py-1.5 font-mono text-[11px] text-muted interactive-transition motion-safe:hover:-translate-y-0.5 hover:border-border-hover hover:bg-surface-card-hover hover:text-accent-hover"
             >
               <span class="text-[10px] text-cyan-accent">{{ item.code }}</span>
               <span>{{ t(item.labelKey) }}</span>

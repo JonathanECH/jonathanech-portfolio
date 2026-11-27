@@ -75,7 +75,7 @@ describe('pre-paint global theme', () => {
     expect(themeScript).toContain("startsWith('ech_theme=')")
     expect(themeScript).toContain("['default', 'christmas'].includes")
     expect(themeScript).toContain("root.dataset.theme = 'christmas'")
-    expect(themeScript).toContain("themeColor.setAttribute('content', '#0B1F1A')")
+    expect(themeScript).toContain("themeColor.setAttribute('content', '#071410')")
   })
 
   it('ignores unknown cookie values and restores the stored preference for default', () => {

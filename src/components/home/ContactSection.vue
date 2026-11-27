@@ -57,7 +57,7 @@ function copyEmail(value: string): void {
                   <SocialIcon :name="channel.icon" :size="18" />
                 </span>
                 <span
-                  class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-border text-muted transition-colors group-hover:border-border-hover group-hover:text-cyan-accent group-focus-within:border-border-hover group-focus-within:text-cyan-accent"
+                  class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-border text-muted transition-colors group-hover:border-border-hover group-hover:text-accent-hover group-focus-within:border-border-hover group-focus-within:text-cyan-accent"
                   aria-hidden="true"
                 >
                   <ArrowUpRight v-if="channel.external" :size="14" />
@@ -81,7 +81,7 @@ function copyEmail(value: string): void {
                 <button
                   v-if="channel.copyValue"
                   type="button"
-                  class="contact-copy-button relative z-10 mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-md border border-border bg-background/60 px-2.5 py-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-border-hover hover:text-cyan-accent active:border-cyan-accent active:text-cyan-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-safe:active:scale-[0.98]"
+                  class="contact-copy-button relative z-10 mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-md border border-border bg-background/60 px-2.5 py-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-border-hover hover:text-accent-hover active:border-accent-hover active:text-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-safe:active:scale-[0.98]"
                   :class="isCopied('email') ? 'border-cyan-accent/60 bg-cyan-accent/10 text-cyan-accent' : ''"
                   :aria-label="`${t('contact.copyEmail')}: ${channel.value}`"
                   @click.stop="copyEmail(channel.copyValue ?? channel.value)"
