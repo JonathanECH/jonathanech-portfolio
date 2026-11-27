@@ -15,9 +15,11 @@ describe('app footer', () => {
     expect(footerSource).not.toMatch(/derechos reservados|rights reserved/i)
   })
 
-  it('exposes the machine-readable summary from the footer', () => {
-    expect(footerSource).toContain('href="/llms.txt"')
-    expect(footerSource).toContain("t('footer.llms')")
+  it('keeps the footer limited to the three social channels', () => {
+    expect(footerSource).not.toContain('/llms.txt')
+    expect(footerSource).not.toContain('LLMS.TXT')
+    expect(footerSource).not.toContain('footer.llms')
+    expect(footerSource).toContain("['github', 'linkedin', 'email']")
   })
 
   it('binds contact link rel attributes from the centralized channel data', () => {

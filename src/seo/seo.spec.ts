@@ -304,6 +304,7 @@ describe('sitemap generation', () => {
   it('keeps robots.txt free of blank lines inside User-agent record groups (RFC 9309)', () => {
     expect(robotsTxt).not.toMatch(/User-agent:[^\r\n]+\r?\n\r?\n(Allow|Disallow):/)
     expect(robotsTxt).toContain('Sitemap: https://jonathanech.dev/sitemap.xml')
+    expect(robotsTxt).toContain('https://jonathanech.dev/llms.txt')
   })
 })
 

@@ -57,6 +57,7 @@ describe('usePreferences with the worker-managed theme', () => {
     const context = await loadPreferences('ech_theme=christmas', 'light')
 
     expect(context.root.dataset.theme).toBe('christmas')
+    expect(context.CHRISTMAS_THEME_COLOR).toBe('#071410')
     expect(context.themeColor.content).toBe(context.CHRISTMAS_THEME_COLOR)
     expect(context.root.classList.remove).toHaveBeenCalledWith('dark', 'light')
 

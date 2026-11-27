@@ -220,7 +220,7 @@ function openQuickView(): void {
 
         <div class="mt-auto flex items-center justify-between gap-3 border-t border-border/60 pt-4">
           <span
-            class="inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-muted transition-colors group-hover:text-cyan-accent"
+            class="inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-muted transition-colors group-hover:text-accent-hover"
           >
             {{ t('projects.viewCase') }}
             <ArrowRight
@@ -232,7 +232,7 @@ function openQuickView(): void {
 
           <button
             type="button"
-            class="relative z-10 inline-flex shrink-0 items-center gap-1 rounded-md border border-border px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-muted transition-colors hover:border-border-hover hover:text-cyan-accent"
+            class="relative z-10 inline-flex shrink-0 items-center gap-1 rounded-md border border-border px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-muted transition-colors hover:border-border-hover hover:text-accent-hover"
             :aria-label="t('projects.quickViewAria', { name: project.name })"
             @click.prevent.stop="openQuickView"
           >

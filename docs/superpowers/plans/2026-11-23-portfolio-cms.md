@@ -217,6 +217,15 @@ Expected: PASS con todos los asertos.
 git add supabase/ && git commit -m "feat: add CMS database schema"
 ```
 
+### Task 1A (Opcional — Enero 2027): Migrar hosting estático de Vercel a Cloudflare
+
+**Goal:** Unificar el hosting del sitio estático (Vite SSG) en Cloudflare (Pages o Workers Static Assets) para eliminar el doble salto de red (`Worker → Vercel`), simplificar la caché/SSL y preparar el despliegue conjunto con el CMS.
+
+- [ ] Replicar las reglas de `vercel.json` (`cleanUrls`, `trailingSlash: false` y cabeceras de caché) en la configuración de Cloudflare (`_headers` / `_redirects` o `wrangler.toml`) verificando que `/en` y `/en/proyectos/<slug>` no generen redirecciones con barra final.
+- [ ] Actualizar el Worker para servir los activos estáticos directamente desde Cloudflare en lugar de hacer proxy hacia Vercel.
+- [ ] Evaluar alojar también `apps/admin` y `apps/client` en Cloudflare con enrutamiento `/api/*` hacia `api.jonathanech.dev`.
+- [ ] Verificar en producción `sitemap.xml`, `robots.txt`, `llms.txt`, `hreflang` y `pnpm verify` en verde antes de retirar el proyecto de Vercel.
+
 ---
 
 ### Task 2: Dominio, repositorio Postgres, sqlc y health check
@@ -647,6 +656,7 @@ resultado, no cambia el contrato.
 | :--- | :--- | :--- |
 | **0B** | Completada | `AuditMetric`, `audit.metrics` y `audit.consistencyNote` ausentes de `src/`; `diagnosis`, `resolution`, `badge`, `ZoomMetrics`, `profile.stats`, `profile.performance`, alt texts, README, `docs/AUDIT_AND_ROADMAP.md` y whitepaper conservados. Alturas de tarjetas reservadas con `min-h-*`. |
 | **0A** | Completada | Worker con KV `THEME_STATE` (clave `theme`, enum `default` \| `christmas`), secreto `THEME_ADMIN_TOKEN`, cookie `ech_theme` en toda respuesta HTML, `GET /admin/theme`, `POST /api/admin/theme` (401/422/204), tokens CSS de contraste AA y anti-flash con cookie > `ech:preferences`. Sin opción navideña en `SettingsMenu` ni claves i18n nuevas. |
+| **Despliegue 0A** | Completada (Worker) | Ruta `jonathanech.dev/*` añadida: la wildcard `*.jonathanech.dev/*` no interceptaba el apex. Smoke en producción: `200` con `ech_theme=default`, `401` en la API y `noindex`/`aria-live` en `/admin/theme`. KV remoto sin clave `theme` → `default`. Runbook en `docs/CLOUDFLARE_WORKER.md`. Pendiente: deploy de Vercel y revisión de SSL/caché en el panel. |
 | **Revisión final** | Completada | Revisor independiente: dos hallazgos Important corregidos con tests RED→GREEN en `c7576f8` — la cookie no puede ser congelada por un caché compartido (`Cache-Control: private, no-cache` en HTML) y `GET /api/admin/theme` devuelve 401 sin llegar al proxy. |
 | **Documentación** | Completada | `CHANGELOG.md`, `README.md` y `docs/AUDIT_AND_ROADMAP.md` describen el alcance, el despliegue del Worker y la vuelta a `default` (commit `21a23a4`). |
 
@@ -664,5 +674,18 @@ plan/spec aprobados desde esta misma rama; configuración adicional del Worker
 finales de la revisión (endpoint temporal sin rate limiting, cookie sin
 `HttpOnly`/`Secure`/`Max-Age`, CI sin tests del Worker y AA verificado en tokens
 semánticos, no en opacidades preexistentes).
+
+### Comentario de despliegue (2026-11-27)
+
+El Worker de Task 0A está activo en `jonathanech.dev/*`. La ruta original
+`*.jonathanech.dev/*` no interceptaba el apex: la home no fijaba `ech_theme` y
+`/api/admin/theme` devolvía 404. Se añadió la ruta explícita y el smoke en
+producción confirmó `200` + `ech_theme=default`, `401` en la API y
+`noindex`/`aria-live` en `/admin/theme`. El KV remoto no tiene la clave `theme`,
+así que el valor efectivo sigue siendo `default`; el `christmas` que devuelve
+`wrangler kv key get` sin `--remote` era solo el KV local. Queda pendiente el
+deploy de Vercel para publicar la guirnalda y el `<link rel="alternate">` de
+`llms.txt`, además de confirmar en el panel SSL **Full (Strict)** y que no haya
+reglas de *Cache Everything* sobre HTML.
 
 Fase 1 permanece intacta y no se inicia antes de enero de 2027.

@@ -119,7 +119,7 @@ function toggleTechGrid(): void {
       <div v-if="canToggleTechGrid" class="mt-7 flex justify-center">
         <button
           type="button"
-          class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-surface-card/60 px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted interactive-transition hover:border-border-hover hover:text-cyan-accent motion-safe:active:scale-[0.97] active:border-cyan-accent active:text-cyan-accent sm:text-[11px]"
+          class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-surface-card/60 px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted interactive-transition hover:border-border-hover hover:text-accent-hover motion-safe:active:scale-[0.97] active:border-accent-hover active:text-accent-hover sm:text-[11px]"
           :aria-expanded="isTechGridExpanded"
           aria-controls="tech-grid"
           @click="toggleTechGrid"

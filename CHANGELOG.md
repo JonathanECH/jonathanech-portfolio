@@ -5,6 +5,25 @@ Todos los cambios notables de este proyecto se documentan en este archivo.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el
 proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
+## [Unreleased]
+
+## [1.5.0] - 2026-11-27
+
+### Added
+
+- Runbook [`docs/CLOUDFLARE_WORKER.md`](docs/CLOUDFLARE_WORKER.md) con el orden exacto para crear la KV, cargar `THEME_ADMIN_TOKEN`, desplegar y enrutar el Worker, verificar cabeceras en producción y revertir el tema sin redeploy.
+- Ruta `jonathanech.dev/*` para el Worker de tema: la wildcard `*.jonathanech.dev/*` no interceptaba el dominio raíz y la home no fijaba `ech_theme`.
+- Tag de release `v1.5.0` para identificar el deploy que activa el Worker de tema.
+
+### Changed
+
+- La guirnalda navideña se sirve desde el layout (`src/App.vue`) en un contenedor `absolute inset-x-0 top-18 z-0 h-7 overflow-hidden`, con `preserveAspectRatio="xMidYMin slice"`. Los bombillos se mantienen circulares en 375–390 px y la decoración sube con el scroll sin cruzar encabezados ni tarjetas. Sigue siendo CSS-only, sin `v-if` de cliente y con las animaciones dentro de `prefers-reduced-motion: no-preference`.
+- El footer ya no renderiza el enlace visible a `llms.txt`. El descubrimiento para IA se hace desde `<link rel="alternate" type="text/plain" title="LLMs Context" href="/llms.txt">` en el `<head>` de las 11 rutas prerenderizadas, con `robots.txt` intacto. Se retiró la clave i18n huérfana `footer.llms`.
+
+### Verificación
+
+- `pnpm verify`: typecheck OK, **156/156** pruebas en **18** archivos y build `vite-ssg` correcto (11 páginas). Las 11 HTML prerenderizadas incluyen el `<link>` de `llms.txt` y ninguna muestra `LLMS.TXT` visible.
+
 ## [1.4.0] - 2026-11-26
 
 ### Added

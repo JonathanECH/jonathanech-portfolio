@@ -107,7 +107,7 @@ onUnmounted(() => {
     <button
       ref="triggerRef"
       type="button"
-      class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-border text-muted interactive-transition hover:border-border-hover hover:text-cyan-accent motion-safe:active:scale-[0.97]"
+      class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-border text-muted interactive-transition hover:border-border-hover hover:text-accent-hover motion-safe:active:scale-[0.97]"
       :class="open ? 'border-border-hover text-cyan-accent' : ''"
       :aria-expanded="open"
       aria-controls="settings-panel"

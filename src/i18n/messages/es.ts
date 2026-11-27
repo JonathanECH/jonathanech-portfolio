@@ -25,7 +25,6 @@ export const esMessages = {
   'settings.light': 'Claro',
 
   'footer.ariaSocial': 'Enlaces sociales',
-  'footer.llms': 'Resumen legible por IA (llms.txt)',
   'footer.copyright':
     '© 2026 Jonathan Campos // Vue 3 • TypeScript • Tailwind CSS. Todos los derechos reservados.',
 

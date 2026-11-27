@@ -15,7 +15,7 @@ import type {
 import { isEnglishPath } from '@/utils/localized-path'
 
 export const PREFERENCES_STORAGE_KEY = 'ech:preferences'
-export const CHRISTMAS_THEME_COLOR = '#0B1F1A'
+export const CHRISTMAS_THEME_COLOR = '#071410'
 
 type ForcedTheme = 'default' | 'christmas' | null
 

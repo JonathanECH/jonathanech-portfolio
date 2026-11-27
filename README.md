@@ -151,10 +151,13 @@ Despliegue y operación:
 ```bash
 cd worker
 pnpm install
-# Crear el namespace KV en Cloudflare y pegar su id en wrangler.toml
-wrangler secret put THEME_ADMIN_TOKEN   # nunca se commitea
-wrangler deploy
+# Crear el namespace KV y pegar su id en wrangler.toml; PUBLIC_SITE_ORIGIN debe ser Vercel
+pnpm exec wrangler secret put THEME_ADMIN_TOKEN   # nunca se commitea
+pnpm exec wrangler deploy
 ```
+
+Guía completa de KV, secreto, ruta, DNS, caché, verificación y rollback:
+[`docs/CLOUDFLARE_WORKER.md`](docs/CLOUDFLARE_WORKER.md).
 
 Tras el despliegue, abre `https://<dominio-del-worker>/admin/theme`, introduce el token y pulsa **Navideño** o **Predeterminado**. El Interruptor afecta a todas las visitantes sin rebuild; **Predeterminado** restaura `ech:preferences` de cada visitante en la siguiente respuesta HTML. Fase 1 migrará este valor a `site_settings.active_theme`, retirará el formulario temporal y el endpoint de administración.
 
@@ -201,7 +204,7 @@ Como `vite-ssg` ejecuta la aplicación en Node, estas etiquetas llegan al HTML f
 
 - `public/robots.txt` permite explícitamente crawlers de IA (GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot, Google-Extended, CCBot y otros) y declara el sitemap.
 - `sitemap.xml` se genera en build desde un plugin de Vite (`vite.config.ts`) que reutiliza `src/seo/sitemap.ts` y la colección de proyectos.
-- `public/llms.txt` resume el perfil, stack, casos de estudio, repos/demos públicos reales y una cita sugerida por caso para motores generativos. Se descubre desde `robots.txt` y desde el footer.
+- `public/llms.txt` resume el perfil, stack, casos de estudio, repos/demos públicos reales y una cita sugerida por caso para motores generativos. Se descubre desde `robots.txt` y desde `<link rel="alternate" type="text/plain">` en el `<head>` de todas las rutas prerenderizadas; el footer ya no muestra un enlace visible.
 - `sitemap.xml` incluye las ocho entradas por idioma con `lastmod` basado en cambios reales de contenido (`Project.updatedAt`), nunca en la fecha del build.
 - `vercel.json` activa `cleanUrls`, elimina barras finales y añade caché a robots, sitemap, `llms.txt` y assets con hash.
 
@@ -318,9 +321,9 @@ cd worker && pnpm install && pnpm test && pnpm typecheck && pnpm dev
 
 ## Control de calidad y publicación
 
-- `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**151/151 pruebas** en **18 archivos**) y el build estático con `vite-ssg` (11 páginas). `cd worker && pnpm test` añade **11 pruebas** del tema global y `pnpm typecheck` verifica el Worker.
+- `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**156/156 pruebas** en **18 archivos**) y el build estático con `vite-ssg` (11 páginas). `cd worker && pnpm test` añade **11 pruebas** del tema global y `pnpm typecheck` verifica el Worker.
 - **Fase 0 del CMS integrada en `main`** (PR #19, 2026-11-24): métricas de auditoría retiradas del sitio y tema navideño controlado solo por el admin mediante Worker + KV, sin opción pública en `SettingsMenu` ni claves nuevas en i18n.
-- Release actual: **v1.4.0** (2026-11-26), mejoras de SEO/GEO: rutas `/en` prerenderizadas, `hreflang`, `lastmod` real, `llms.txt` enlazado, citas verificables y meta descriptions de 25–160 caracteres.
+- Release actual: **v1.5.0** (2026-11-27), tema navideño controlado por Worker/KV, guirnalda fuera del header fijo, descubrimiento de `llms.txt` desde el `<head>` y runbook de Cloudflare. v1.4.0 (2026-11-26) añadió las rutas `/en`, `hreflang`, `lastmod` real y citas verificables.
 - Release anterior: **v1.3.3**, corrección del menú móvil y del resaltado de sección activa en el navbar. El detalle está en [`CHANGELOG.md`](CHANGELOG.md).
 - Historial de cambios en [`CHANGELOG.md`](CHANGELOG.md); procedimientos de mantenimiento, tags, dependencias, monitoreo y rollback en [`docs/MAINTENANCE.md`](docs/MAINTENANCE.md).
 - Antes de publicar se revisa `git status`, se confirma que `main` no tiene cambios locales pendientes y se hace push a `origin/main` con `--follow-tags`; la rama está desplegada en producción.

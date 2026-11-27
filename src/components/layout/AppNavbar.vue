@@ -147,7 +147,7 @@ onUnmounted(() => {
         <a
           href="/cv/CV_JonathanCampos.pdf"
           download
-          class="hidden items-center gap-1.5 rounded-lg bg-cyan-accent px-4 py-2 font-sans text-xs font-semibold text-accent-contrast interactive-transition hover:shadow-[0_0_15px_rgba(var(--ech-accent-rgb),0.4)] sm:flex"
+          class="hidden items-center gap-1.5 rounded-lg bg-cyan-accent px-4 py-2 font-sans text-xs font-semibold text-accent-contrast interactive-transition hover:bg-accent-hover hover:shadow-[0_0_15px_rgba(var(--ech-accent-rgb),0.4)] sm:flex"
         >
           <Download :size="14" aria-hidden="true" />
           {{ t('nav.downloadCv') }}
@@ -156,7 +156,7 @@ onUnmounted(() => {
         <button
           ref="menuButtonRef"
           type="button"
-          class="relative flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground interactive-transition hover:border-border-hover hover:text-cyan-accent motion-safe:active:scale-[0.97] lg:hidden"
+          class="relative flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground interactive-transition hover:border-border-hover hover:text-accent-hover motion-safe:active:scale-[0.97] lg:hidden"
           :aria-expanded="mobileOpen"
           aria-controls="mobile-navigation"
           :aria-label="mobileOpen ? t('nav.closeMenu') : t('nav.openMenu')"
