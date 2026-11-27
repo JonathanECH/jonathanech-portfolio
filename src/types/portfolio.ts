@@ -98,6 +98,8 @@ export interface Project {
   /** ISO date of the last real content change, used for sitemap lastmod. */
   readonly updatedAt: string
   readonly status: string
+  /** Short SERP snippet; the full detail stays in `summary` and JSON-LD. */
+  readonly metaDescription: string
   readonly summary: string
   readonly problem: string
   readonly techTags: readonly string[]

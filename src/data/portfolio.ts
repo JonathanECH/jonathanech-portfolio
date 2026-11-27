@@ -236,6 +236,8 @@ export const projects: readonly Project[] = [
     status: 'EN PRODUCCIÓN',
     summary:
       'Sistema de inventario offline-first para puntos de venta: cálculo de stock efectivo en cliente, trazabilidad atómica de lotes y sincronización transaccional.',
+    metaDescription:
+      'Sistema de inventario offline-first para puntos de venta: stock efectivo, lotes trazables y sincronización transaccional.',
     problem:
       'Puntos de venta con conectividad inestable y riesgo de sobreventa por terminales concurrentes. El sistema previo no garantizaba atomicidad ni auditoría de ajustes.',
     techTags: ['Vue 3', 'TypeScript', 'Node.js', 'PostgreSQL', 'Pinia', 'Tailwind CSS'],
@@ -361,6 +363,8 @@ export const projects: readonly Project[] = [
     status: 'DESPLEGADO',
     summary:
       'Aplicación web de clima en tiempo real: autocompletado de ciudades con la API de Geocoding, geolocalización GPS validada, historial local y manejo explícito de errores sobre datos de OpenWeatherMap.',
+    metaDescription:
+      'App de clima con Vue 3: autocompletado, GPS validado, historial local y errores claros sobre datos de OpenWeatherMap.',
     problem:
       'La consulta climática dependía de escribir el nombre exacto de la ciudad, sin sugerencias, validación de ubicación ni historial; los errores de red o permisos dejaban la interfaz sin respuesta útil.',
     techTags: ['Vue 3', 'JavaScript', 'Vite', 'Tailwind CSS', 'Axios', 'OpenWeatherMap'],
@@ -477,6 +481,8 @@ export const projects: readonly Project[] = [
     status: 'CASO DE ESTUDIO',
     summary:
       'Aplicación hospitalaria full-stack para administración de pacientes, especialistas, agendas clínicas y reportes: reactividad con Signals en Angular 19, blindaje RBAC y exportación de expedientes en PDF.',
+    metaDescription:
+      'Plataforma hospitalaria con Angular 19 y Signals: agendas clínicas, expedientes PDF y acceso RBAC auditado.',
     problem:
       'Gestión fragmentada entre agendas paralelas y registros manuales; riesgo de vulnerabilidades IDOR en datos clínicos y necesidad de blindaje estricto por roles y auditoría médica.',
     techTags: ['Angular 19', 'TypeScript', 'Node.js', 'PostgreSQL', 'SCSS'],
@@ -622,6 +628,8 @@ export const projects: readonly Project[] = [
     status: 'CASO DE ESTUDIO',
     summary:
       'Plataforma contable full-stack con doble partida, conciliación bancaria y reportes financieros reproducibles sobre una base transaccional.',
+    metaDescription:
+      'ERP contable con doble partida, conciliación bancaria y reportes financieros reproducibles sobre PostgreSQL.',
     problem:
       'El cierre contable dependía de hojas de cálculo desconectadas; los asientos se duplicaban y la conciliación mensual consumía días de trabajo manual.',
     techTags: ['Vue 3', 'Node.js', 'PostgreSQL', 'Docker'],

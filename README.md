@@ -168,7 +168,7 @@ La capa SEO vive en `src/seo/` y `src/composables/useSeo.ts`, con una única fue
 
 `useSeo()` combina `useSeoMeta` y `useHead` de `@unhead/vue` y calcula, para cada ruta:
 
-- `title` y `description` localizados.
+- `title` y `description` localizados; el `description` se mantiene entre 25 y 160 caracteres. Los casos usan `Project.metaDescription`, separado del `summary` completo que alimenta el JSON-LD.
 - `link[rel="canonical"]` absoluto hacia la variante de idioma correspondiente (`https://jonathanech.dev` o `https://jonathanech.dev/en`).
 - `link[rel="alternate"]` con `hreflang="es"`, `hreflang="en"` y `x-default`, recíproco en cada página y en el sitemap.
 - Open Graph (`og:type`, `og:title`, `og:description`, `og:url`, `og:image`, `og:image:alt`, `og:locale`).

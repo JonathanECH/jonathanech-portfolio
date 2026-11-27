@@ -21,10 +21,11 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 ### Fixed
 
 - Resaltado de la navegación en inglés: `useActiveSection` ahora observa las secciones tanto en `home` como en `home-en`; antes el navbar de `/en` nunca marcaba la sección activa.
+- Longitud de `<meta description>`: la home y los casos de Clima Vue y Clínica Razetti superaban los 160 caracteres que muestra Bing/Google. Se añade `Project.metaDescription` (25–160 caracteres) separado del `summary` completo, que sigue alimentando el JSON-LD.
 
 ### Verificación
 
-- `pnpm verify`: typecheck OK, **149/149** pruebas en **18** archivos y build `vite-ssg` correcto (11 páginas: 2 homes, 8 casos y 404).
+- `pnpm verify`: typecheck OK, **151/151** pruebas en **18** archivos y build `vite-ssg` correcto (11 páginas: 2 homes, 8 casos y 404).
 
 ## [1.3.3] - 2026-11-26
 
