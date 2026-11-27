@@ -200,5 +200,5 @@ export const esMessages = {
   'meta.notFoundDescription':
     'La ruta solicitada no existe en jonathanech.dev. Explora el portafolio de Jonathan Campos para ver los casos de estudio disponibles.',
   'meta.description':
-    'Jonathan Campos es un Desarrollador Web Frontend especializado en Vue 3, Tailwind CSS y TypeScript, con base en Barquisimeto, Venezuela. Portafolio con casos de estudio de arquitectura frontend, PWA offline-first, accesibilidad y SEO técnico.',
+    'Jonathan Campos es desarrollador frontend especializado en Vue 3, TypeScript y accesibilidad. Casos reales en Barquisimeto y remoto.',
 } as const

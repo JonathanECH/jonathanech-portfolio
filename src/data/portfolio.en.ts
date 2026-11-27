@@ -27,6 +27,8 @@ const projects: readonly Project[] = [
     status: 'IN PRODUCTION',
     summary:
       'Offline-first inventory system for retail POS: client-side effective stock calculation, atomic batch traceability and transactional synchronization.',
+    metaDescription:
+      'Offline-first inventory system for retail POS: effective stock, traceable batches and transactional synchronization.',
     problem:
       'Retail POS points with unstable connectivity and overselling risks across concurrent terminals. The previous setup lacked atomicity and audit trails for stock adjustments.',
     techTags: ['Vue 3', 'TypeScript', 'Node.js', 'PostgreSQL', 'Pinia', 'Tailwind CSS'],
@@ -152,6 +154,8 @@ const projects: readonly Project[] = [
     status: 'DEPLOYED',
     summary:
       'Real-time weather web app: city autocomplete with the Geocoding API, validated GPS geolocation, local search history and explicit error handling on top of OpenWeatherMap data.',
+    metaDescription:
+      'Weather app built with Vue 3: city autocomplete, validated GPS, local history and explicit errors on OpenWeatherMap data.',
     problem:
       'Weather lookup required typing the exact city name, with no suggestions, location validation or history; network or permission errors left the interface without a useful response.',
     techTags: ['Vue 3', 'JavaScript', 'Vite', 'Tailwind CSS', 'Axios', 'OpenWeatherMap'],
@@ -268,6 +272,8 @@ const projects: readonly Project[] = [
     status: 'CASE STUDY',
     summary:
       'Full-stack hospital management application for patients, specialists, clinical schedules and reports: reactive architecture with Angular 19 Signals, strict RBAC security and PDF medical records.',
+    metaDescription:
+      'Hospital platform with Angular 19 Signals: clinical schedules, PDF records and audited role-based access.',
     problem:
       'Fragmented workflow across paper records and isolated schedules; risk of IDOR vulnerabilities in clinical data and need for strict role-based access control and medical auditing.',
     techTags: ['Angular 19', 'TypeScript', 'Node.js', 'PostgreSQL', 'SCSS'],
@@ -413,6 +419,8 @@ const projects: readonly Project[] = [
     status: 'CASE STUDY',
     summary:
       'Full-stack accounting platform with double-entry bookkeeping, bank reconciliation and reproducible financial reports on a transactional database.',
+    metaDescription:
+      'Accounting ERP with double-entry bookkeeping, bank reconciliation and reproducible financial reports on PostgreSQL.',
     problem:
       'Accounting close depended on disconnected spreadsheets; entries were duplicated and monthly reconciliation consumed days of manual work.',
     techTags: ['Vue 3', 'Node.js', 'PostgreSQL', 'Docker'],
