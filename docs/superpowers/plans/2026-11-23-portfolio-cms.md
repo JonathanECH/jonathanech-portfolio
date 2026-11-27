@@ -558,7 +558,7 @@ git add backend/ && git commit -m "feat: add testimonial moderation API"
 
 - [ ] **Step 1: Escribir los tests que fallan**
 
-Con `fetch` simulado, `worker/src/index.spec.ts` aserta: el HTML contiene `<script id="__ECH_CMS_DATA__" type="application/json">` y su contenido parseado incluye `projects` y `testimonials`; un testimonio con `</script><img onerror=...>` queda escapado como `\u003c` y no aparece como HTML ejecutable; `theme: "christmas"` fija `Set-Cookie: ech_theme=christmas; Path=/; SameSite=Lax`; si la API falla se sirve el HTML original sin cookie y sin 500; y una petición a `/proyectos/nuevo-slug` con `404` del origen devuelve `200` con el shell y el JSON inyectado. También aserta que `sitemap.xml` contiene el slug nuevo y que el JSON-LD de `/proyectos/<slug>` usa el título y la descripción de la BD. En la web, `useCmsData.spec.ts` aserta que el helper devuelve los datos parseados de forma síncrona, que la home solo muestra testimonios ordenados por `is_featured`/`sort_order`, que el detalle filtra por `project_slug` y que una lista vacía oculta la sección; además el script anti-flash prioriza `ech_theme` sobre `localStorage` y restaura la preferencia guardada cuando la cookie vale `default`.
+Con `fetch` simulado, `worker/src/index.spec.ts` aserta: el HTML contiene `<script id="__ECH_CMS_DATA__" type="application/json">` y su contenido parseado incluye `projects` y `testimonials`; un testimonio con `</script><img onerror=...>` queda escapado como `\u003c` y no aparece como HTML ejecutable; `theme: "christmas"` fija `Set-Cookie: ech_theme=christmas; Path=/; Max-Age=31536000; SameSite=Lax; Secure`; si la API falla se sirve el HTML original sin cookie y sin 500; y una petición a `/proyectos/nuevo-slug` con `404` del origen devuelve `200` con el shell y el JSON inyectado. También aserta que `sitemap.xml` contiene el slug nuevo y que el JSON-LD de `/proyectos/<slug>` usa el título y la descripción de la BD. En la web, `useCmsData.spec.ts` aserta que el helper devuelve los datos parseados de forma síncrona, que la home solo muestra testimonios ordenados por `is_featured`/`sort_order`, que el detalle filtra por `project_slug` y que una lista vacía oculta la sección; además el script anti-flash prioriza `ech_theme` sobre `localStorage` y restaura la preferencia guardada cuando la cookie vale `default`.
 
 - [ ] **Step 2: Verificar que falla**
 
@@ -567,7 +567,7 @@ Expected: FAIL, módulos no existen.
 
 - [ ] **Step 3: Implementar el bloque JSON, el helper y el fallback**
 
-`index.ts` usa `HTMLRewriter` para insertar el bloque JSON justo antes de `</body>`, serializando `<`, `>` y `&` como `\u003c`, `\u003e`, `\u0026`, sin inyectar HTML crudo; configurar TTL corto para la API. Ante un `404` del origen en `/proyectos/:slug`, solicitar `/index.html`, devolverlo con `200` y el JSON inyectado. El mismo contenido publicado alimenta `sitemap.xml` y el JSON-LD de cada ruta para que los proyectos nuevos sean indexables sin deploy. La cookie de tema se escribe con los mismos valores del contrato de Task 0A, sin modificar el anti-flash: se migra una sola vez el valor de KV a `site_settings.active_theme`, se retiran `/admin/theme`, `/api/admin/theme` y `THEME_ADMIN_TOKEN`, y el panel de admin pasa a ser el único control. `useCmsData.ts` lee `textContent` del elemento con id `__ECH_CMS_DATA__` y hace `JSON.parse` en `setup()`.
+`index.ts` usa `HTMLRewriter` para insertar el bloque JSON justo antes de `</body>`, serializando `<`, `>` y `&` como `\u003c`, `\u003e`, `\u0026`, sin inyectar HTML crudo; configurar TTL corto para la API. Ante un `404` del origen en `/proyectos/:slug`, solicitar `/index.html`, devolverlo con `200` y el JSON inyectado. El mismo contenido publicado alimenta `sitemap.xml` y el JSON-LD de cada ruta para que los proyectos nuevos sean indexables sin deploy. La cookie de tema se escribe con los mismos valores del contrato de Task 0A, sin modificar el anti-flash: se migra una sola vez el valor de KV a `site_settings.active_theme`, se retiran `/admin/theme`, `/api/admin/theme` y `THEME_ADMIN_TOKEN`, y el panel de admin pasa a ser el único control (secuencia y rollback en Task 11). `useCmsData.ts` lee `textContent` del elemento con id `__ECH_CMS_DATA__` y hace `JSON.parse` en `setup()`.
 
 - [ ] **Step 4: Verificar que pasa y no rompe la web**
 
@@ -624,6 +624,66 @@ Expected: PASS y sin archivos inesperados; README y MAINTENANCE describen el nue
 
 ```bash
 git add apps/ pnpm-workspace.yaml README.md docs/MAINTENANCE.md && git commit -m "feat: add admin and client apps with deployment config"
+```
+
+---
+
+### Task 11 (Fase 1): Migrar el control de tema a `admin.jonathanech.dev`
+
+**Goal:** sustituir el panel temporal del Worker por el panel real de `apps/admin`, dejar `site_settings.active_theme` como única fuente de verdad y retirar `/admin/theme`, `/api/admin/theme`, `THEME_ADMIN_TOKEN` y la KV `THEME_STATE` sin cambiar el contrato público de `ech_theme` ni el anti-flash.
+
+**Depende de:** Task 4 (auth de admin), Task 5/9 (`site_settings.active_theme` y Worker que lee la API) y Task 10 (apps y dominios). No ejecutar antes de que estén en producción.
+
+**Files:**
+- Modify: `worker/src/index.ts`, `worker/src/index.spec.ts`, `worker/wrangler.toml`
+- Create: `apps/admin/src/views/ThemeSettingsView.vue` (o el panel equivalente) y, si Task 5 no lo expone, `backend/internal/http/admin_settings.go`
+- Test: `worker/src/index.spec.ts`, tests de `apps/admin`, `backend/internal/http/admin_settings_test.go`
+- Modify: `docs/CLOUDFLARE_WORKER.md`, `docs/MAINTENANCE.md`, `README.md`, `CHANGELOG.md`
+
+**Decisiones de diseño:**
+- `ech_theme` sigue siendo una cookie *host-only* de `jonathanech.dev` (`Path=/`, `Max-Age=31536000`, `SameSite=Lax`, `Secure`). No ampliarla a `.jonathanech.dev`: la enviaría a todos los subdominios sin necesidad y el anti-flash solo la lee en el dominio público.
+- La sesión del panel es `ech_admin` (`HttpOnly`, `Secure`, `SameSite=Lax`, `Path=/`). Se emite desde el propio `admin.jonathanech.dev` mediante el rewrite `/api/*` de Task 10. No llamar a `api.jonathanech.dev` directamente desde el navegador: obligaría a `Domain=.jonathanech.dev` y a CORS con credenciales.
+- El cambio lo escribe el backend en `site_settings.active_theme` con enum estricto `default` | `christmas`; el Worker solo lee. No quedan dos fuentes de verdad.
+- El subdominio aporta aislamiento operativo, no seguridad por sí mismo: la seguridad sigue siendo la sesión firmada, `noindex`/`no-store`, WAF y rate limiting del login.
+
+- [ ] **Step 1: Migrar el valor actual de KV a la BD**
+
+  Migración idempotente: leer `THEME_STATE/theme` con `wrangler kv key get theme --remote --binding THEME_STATE`; escribir `active_theme='christmas'` solo si el valor es válido y distinto de `default`, si no `default`. Usar `INSERT ... ON CONFLICT DO UPDATE` con el `CHECK` del enum de Task 1. Test: ejecutarla dos veces deja la misma fila. **No borrar la KV todavía**: es el rollback.
+
+- [ ] **Step 2: Exponer el ajuste en el API de admin**
+
+  `PATCH /api/admin/site-settings` con `{ "active_theme": "default" | "christmas" }`, protegido por `RequireAdmin` → `204`; sin sesión → `401`; valor fuera del enum → `422`. El handler nunca acepta `THEME_ADMIN_TOKEN` ni devuelve `ech_admin` en el cuerpo.
+
+- [ ] **Step 3: Panel en `apps/admin`**
+
+  Selector con las dos opciones, oculto hasta que `GET /api/admin/me` devuelva `200`, con `aria-live` para el feedback, `noindex, no-store` en la ruta y sin token en HTML ni `localStorage`. Tests RED→GREEN para `default` y `christmas`.
+
+- [ ] **Step 4: Configurar DNS y caché del subdominio**
+
+  Registro `admin` *proxied* en Cloudflare hacia el hosting de `apps/admin` (o Cloudflare Pages si se aplica Task 1A), SSL **Full (Strict)** y sin reglas *Cache Everything* sobre HTML. El subdominio no entra en `sitemap.xml` ni en `robots.txt` del sitio público.
+
+- [ ] **Step 5: Retirar las rutas temporales del Worker**
+
+  Eliminar los manejadores de `/admin/theme` y `/api/admin/theme`, el binding/secreto `THEME_ADMIN_TOKEN` y sus tests. `GET /api/admin/theme` deja de responder `401` propio y cae al proxy (`404` del origen). Mantener la cookie `ech_theme` y el anti-flash intactos, ahora calculados desde `site_settings.active_theme` vía `GET /api/public/content` (Task 9). Hacer `wrangler secret delete THEME_ADMIN_TOKEN` solo después del smoke.
+
+- [ ] **Step 6: Corte en orden y verificación**
+
+  1. Desplegar BD/API y `apps/admin` con el selector; el Worker sigue con las rutas temporales activas.
+  2. Hacer login en `admin.jonathanech.dev`, cambiar a `christmas` y recargar `jonathanech.dev`: cookie `ech_theme=christmas` aplicada antes del primer paint.
+  3. Volver a `default`: cookie `ech_theme=default` y `ech:preferences` recupera claro/oscuro del visitante.
+  4. Solo entonces re-desplegar el Worker sin las rutas temporales. Comprobar `wrangler secret list` sin `THEME_ADMIN_TOKEN` y, tras el periodo de rollback, `wrangler kv namespace list` sin `THEME_STATE`.
+
+  Run: `cd backend && go test ./... && pnpm --filter admin test && cd worker && pnpm test && cd ../.. && pnpm verify`
+  Expected: PASS; sin referencias a `THEME_ADMIN_TOKEN`, `/admin/theme` ni `THEME_STATE` en `worker/` (el runbook histórico se actualiza al nuevo flujo).
+
+- [ ] **Step 7: Rollback**
+
+  Si falla el smoke: re-desplegar la versión anterior del Worker con `wrangler deployments list` (la que aún tiene `/admin/theme` y el secreto), restaurar el binding KV con el valor migrado y retirar el registro DNS de `admin` si el panel nuevo es la causa. No borrar la KV hasta 48 h después del corte.
+
+- [ ] **Step 8: Commit**
+
+```bash
+git add apps/admin/ backend/internal/http/ worker/ docs/ README.md CHANGELOG.md && git commit -m "feat: move theme control to admin subdomain"
 ```
 
 ## Verification Commands
