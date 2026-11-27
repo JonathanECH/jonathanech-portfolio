@@ -671,9 +671,10 @@ Decisiones registradas durante la ejecución: el orden 0B→0A; sincronización 
 plan/spec aprobados desde esta misma rama; configuración adicional del Worker
 (`tsconfig.json`, `packageManager`, `allowBuilds`, ignores de `.wrangler` y
 `.dev.vars`); formulario de admin servido por el Worker; y las decisiones
-finales de la revisión (endpoint temporal sin rate limiting, cookie sin
-`HttpOnly`/`Secure`/`Max-Age`, CI sin tests del Worker y AA verificado en tokens
-semánticos, no en opacidades preexistentes).
+finales de la revisión (endpoint temporal sin rate limiting, cookie `Secure` y
+persistente con `Max-Age=31536000` pero sin `HttpOnly` porque el anti-flash la
+lee desde JS, CI sin tests del Worker y AA verificado en tokens semánticos, no
+en opacidades preexistentes).
 
 ### Comentario de despliegue (2026-11-27)
 
@@ -683,9 +684,14 @@ El Worker de Task 0A está activo en `jonathanech.dev/*`. La ruta original
 producción confirmó `200` + `ech_theme=default`, `401` en la API y
 `noindex`/`aria-live` en `/admin/theme`. El KV remoto no tiene la clave `theme`,
 así que el valor efectivo sigue siendo `default`; el `christmas` que devuelve
-`wrangler kv key get` sin `--remote` era solo el KV local. Queda pendiente el
-deploy de Vercel para publicar la guirnalda y el `<link rel="alternate">` de
-`llms.txt`, además de confirmar en el panel SSL **Full (Strict)** y que no haya
-reglas de *Cache Everything* sobre HTML.
+`wrangler kv key get` sin `--remote` era solo el KV local. El deploy de Vercel ya
+publicó la guirnalda y el `<link rel="alternate">` de `llms.txt`; sigue pendiente
+confirmar en el panel SSL **Full (Strict)** y que no haya reglas de *Cache
+Everything* sobre HTML.
+
+Ajuste posterior: la cookie `ech_theme` lleva `Max-Age=31536000` y `Secure`, y el
+`POST` del panel también la fija, para que el dispositivo que configura vea el
+cambio sin recargar y el móvil no la pierda al cerrar el navegador. KV es
+eventualmente consistente: otros dispositivos pueden tardar hasta 60 s.
 
 Fase 1 permanece intacta y no se inicia antes de enero de 2027.

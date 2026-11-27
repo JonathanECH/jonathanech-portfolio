@@ -15,12 +15,14 @@ HTML. No hay base de datos ni backend propio.
 
 | Superficie | Comportamiento esperado |
 | :--- | :--- |
-| `GET /*` | Proxy al origen de Vercel; toda respuesta HTML lleva `Set-Cookie: ech_theme=<default\|christmas>; Path=/; SameSite=Lax` y `Cache-Control: private, no-cache`. |
+| `GET /*` | Proxy al origen de Vercel; toda respuesta HTML lleva `Set-Cookie: ech_theme=<default\|christmas>; Path=/; Max-Age=31536000; SameSite=Lax; Secure` y `Cache-Control: private, no-cache`. |
 | `GET /admin/theme` | Formulario temporal servido por el Worker: `noindex`, `no-store`, altura reservada para el feedback y el token nunca aparece en el HTML. |
-| `POST /api/admin/theme` | `{ "theme": "default" \| "christmas" }` con `Authorization: Bearer <token>` → `204` + `no-store`; sin token o token inválido → `401` sin escribir en KV; valor fuera del enum → `422`. |
+| `POST /api/admin/theme` | `{ "theme": "default" \| "christmas" }` con `Authorization: Bearer <token>` → `204` + `no-store` y fija la cookie en el dispositivo que configura; sin token o token inválido → `401` sin escribir en KV; valor fuera del enum → `422`. |
 
 KV: una sola clave `theme` con valores estrictos `default` o `christmas`. Si la
-clave no existe o tiene otro valor, el Worker sirve `default`.
+clave no existe o tiene otro valor, el Worker sirve `default`. KV es
+eventualmente consistente: el cambio puede tardar hasta 60 s en otros dispositivos,
+aunque el dispositivo que lo aplica recibe la cookie en la respuesta `204`.
 
 ## 1. Requisitos previos
 
@@ -85,13 +87,13 @@ Con el servidor en `http://localhost:8787` (en PowerShell usa `curl.exe`):
 
 | Comando | Resultado esperado |
 | :--- | :--- |
-| `curl -i localhost:8787/` | `200`, `set-cookie: ech_theme=default; Path=/; SameSite=Lax`, `cache-control: private, no-cache` |
+| `curl -i localhost:8787/` | `200`, `set-cookie: ech_theme=default; Path=/; Max-Age=31536000; SameSite=Lax; Secure`, `cache-control: private, no-cache` |
 | `curl -i localhost:8787/api/admin/theme` | `401` (método distinto de `POST`) |
 | `curl -i -X POST localhost:8787/api/admin/theme -H 'content-type: application/json' -d '{"theme":"christmas"}'` | `401`, KV sin cambios |
-| `curl -i -X POST localhost:8787/api/admin/theme -H "Authorization: Bearer $TOKEN" -H 'content-type: application/json' -d '{"theme":"christmas"}'` | `204` sin cuerpo |
+| `curl -i -X POST localhost:8787/api/admin/theme -H "Authorization: Bearer $TOKEN" -H 'content-type: application/json' -d '{"theme":"christmas"}'` | `204` sin cuerpo y la misma cookie `ech_theme=christmas` |
 | `curl -i -X POST localhost:8787/api/admin/theme -H "Authorization: Bearer $TOKEN" -H 'content-type: application/json' -d '{"theme":"navidad"}'` | `422` |
 | `curl -i localhost:8787/admin/theme` | `200`, `noindex`, `cache-control: no-store`, sin el token en el HTML |
-| `curl -i localhost:8787/` de nuevo | `set-cookie: ech_theme=christmas` |
+| `curl -i localhost:8787/` de nuevo | `set-cookie: ech_theme=christmas; Path=/; Max-Age=31536000; SameSite=Lax; Secure` |
 
 ## 5. Desplegar y enrutar
 
@@ -194,5 +196,7 @@ de verdad. No hagas ese cambio todavía.
 | No aparece `set-cookie` | La ruta no alcanza el Worker o una regla cachea HTML | Revisar *Routes* y desactivar *Cache Everything* |
 | `/admin/theme` devuelve 401 | Secreto ausente o token mal copiado | `wrangler secret put THEME_ADMIN_TOKEN` |
 | El tema no cambia para un visitante | Cookie `ech_theme` antigua o caché compartida | Borrar la cookie y comprobar `no-store`/`private, no-cache` |
+| El tema tarda en verse en otros dispositivos | Consistencia eventual de KV (hasta 60 s) | El dispositivo que aplica el cambio ya recibe la cookie en el `204`; espera ese margen y vuelve a cargar |
+| El tema se pierde al cerrar el navegador móvil | Cookie de sesión | Verificar `Max-Age=31536000; Secure` en la respuesta; si falta, el Worker desplegado es anterior |
 | 403 en las rutas de admin | WAF o Bot Management de Cloudflare | Permitir `/admin/theme` y `/api/admin/theme` para tu IP |
 | `wrangler deploy` borra variables del panel | Falta `--keep-vars` | Re-desplegar con `--keep-vars` |

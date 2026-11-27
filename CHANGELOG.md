@@ -7,6 +7,10 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+### Fixed
+
+- La cookie `ech_theme` ya es persistente (`Max-Age=31536000`) y `Secure`, y se fija también en la respuesta `204` del endpoint de admin. El dispositivo que cambia el tema lo ve de inmediato y el móvil conserva la elección tras cerrar el navegador; los demás dispositivos pueden tardar hasta 60 s por la consistencia eventual de KV.
+
 ## [1.5.0] - 2026-11-27
 
 ### Added
