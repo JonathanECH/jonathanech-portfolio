@@ -80,7 +80,7 @@ describe('theme worker', () => {
 
     expect(response.status).toBe(200)
     expect(await response.text()).toContain('origin html')
-    expect(response.headers.get('set-cookie')).toBe('ech_theme=default; Path=/; SameSite=Lax')
+    expect(response.headers.get('set-cookie')).toBe('ech_theme=default; Path=/; Max-Age=31536000; SameSite=Lax; Secure')
     expect(get).toHaveBeenCalledWith('theme')
     expect(put).not.toHaveBeenCalled()
 
@@ -95,7 +95,7 @@ describe('theme worker', () => {
     const response = await worker.fetch(new Request('https://worker.test/'), env, CONTEXT)
 
     expect(response.status).toBe(200)
-    expect(response.headers.get('set-cookie')).toBe('ech_theme=christmas; Path=/; SameSite=Lax')
+    expect(response.headers.get('set-cookie')).toBe('ech_theme=christmas; Path=/; Max-Age=31536000; SameSite=Lax; Secure')
   })
 
   it('ignores an invalid KV value and uses the default theme', async () => {
@@ -103,7 +103,7 @@ describe('theme worker', () => {
 
     const response = await worker.fetch(new Request('https://worker.test/'), env, CONTEXT)
 
-    expect(response.headers.get('set-cookie')).toBe('ech_theme=default; Path=/; SameSite=Lax')
+    expect(response.headers.get('set-cookie')).toBe('ech_theme=default; Path=/; Max-Age=31536000; SameSite=Lax; Secure')
   })
 
   it('does not let a shared cache freeze the theme cookie', async () => {
@@ -115,7 +115,7 @@ describe('theme worker', () => {
       CONTEXT,
     )
 
-    expect(response.headers.get('set-cookie')).toBe('ech_theme=christmas; Path=/; SameSite=Lax')
+    expect(response.headers.get('set-cookie')).toBe('ech_theme=christmas; Path=/; Max-Age=31536000; SameSite=Lax; Secure')
     expect(response.headers.get('cache-control')).toBe('private, no-cache')
   })
 
@@ -164,6 +164,9 @@ describe('theme worker', () => {
 
     expect(response.status).toBe(204)
     expect(response.headers.get('cache-control')).toBe('no-store')
+    expect(response.headers.get('set-cookie')).toBe(
+      'ech_theme=christmas; Path=/; Max-Age=31536000; SameSite=Lax; Secure',
+    )
     expect(put).toHaveBeenCalledWith('theme', 'christmas')
   })
 
@@ -189,7 +192,7 @@ describe('theme worker', () => {
 
     expect(response.status).toBe(200)
     expect(response.headers.get('cache-control')).toBe('no-store')
-    expect(response.headers.get('set-cookie')).toBe('ech_theme=default; Path=/; SameSite=Lax')
+    expect(response.headers.get('set-cookie')).toBe('ech_theme=default; Path=/; Max-Age=31536000; SameSite=Lax; Secure')
     expect(html).toContain('name="robots" content="noindex, nofollow"')
     expect(html).not.toContain('super-secret-admin-token')
     expect(html).toContain('aria-live="polite"')

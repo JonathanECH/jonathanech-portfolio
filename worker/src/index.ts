@@ -14,6 +14,12 @@ const THEMES: readonly Theme[] = ['default', 'christmas']
 const NO_STORE = 'no-store'
 // The cookie is per-visitor state: HTML that carries it must never be shared-cached.
 const HTML_CACHE_CONTROL = 'private, no-cache'
+// Mobile browsers drop session cookies when the tab is closed; keep the admin choice.
+const THEME_COOKIE_MAX_AGE = 31536000
+
+function themeCookie(theme: Theme): string {
+  return `${THEME_COOKIE}=${theme}; Path=/; Max-Age=${THEME_COOKIE_MAX_AGE}; SameSite=Lax; Secure`
+}
 
 function isTheme(value: unknown): value is Theme {
   return typeof value === 'string' && (THEMES as readonly string[]).includes(value)
@@ -49,7 +55,7 @@ function withThemeCookie(
   cacheControl = HTML_CACHE_CONTROL,
 ): Response {
   const headers = new Headers(response.headers)
-  headers.set('Set-Cookie', `${THEME_COOKIE}=${theme}; Path=/; SameSite=Lax`)
+  headers.set('Set-Cookie', themeCookie(theme))
   headers.set('Cache-Control', cacheControl)
   return new Response(response.body, {
     status: response.status,
@@ -131,7 +137,7 @@ async function handleThemeUpdate(request: Request, env: Env): Promise<Response> 
   }
 
   await env.THEME_STATE.put(THEME_KEY, theme)
-  return withNoStore(new Response(null, { status: 204 }))
+  return withThemeCookie(new Response(null, { status: 204 }), theme, NO_STORE)
 }
 
 function adminForm(theme: Theme): Response {
@@ -155,7 +161,7 @@ function adminForm(theme: Theme): Response {
   </head>
   <body>
     <h1>Tema global del portafolio</h1>
-    <p>Estado actual: <strong>${theme}</strong>. El cambio afecta a todos los visitantes sin deploy.</p>
+    <p>Estado actual: <strong>${theme}</strong>. El cambio afecta a todos los visitantes sin deploy. En este dispositivo es inmediato; en otros puede tardar hasta 60 s por la consistencia de KV.</p>
     <form id="theme-form">
       <label for="token">Token de administrador</label><br />
       <input id="token" name="token" type="password" autocomplete="off" required /><br /><br />
