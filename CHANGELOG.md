@@ -7,9 +7,13 @@ proyecto adopta [Semantic Versioning](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-11-27
+
 ### Added
 
 - Runbook [`docs/CLOUDFLARE_WORKER.md`](docs/CLOUDFLARE_WORKER.md) con el orden exacto para crear la KV, cargar `THEME_ADMIN_TOKEN`, desplegar y enrutar el Worker, verificar cabeceras en producción y revertir el tema sin redeploy.
+- Ruta `jonathanech.dev/*` para el Worker de tema: la wildcard `*.jonathanech.dev/*` no interceptaba el dominio raíz y la home no fijaba `ech_theme`.
+- Tag de release `v1.5.0` para identificar el deploy que activa el Worker de tema.
 
 ### Changed
 

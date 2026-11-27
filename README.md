@@ -321,9 +321,9 @@ cd worker && pnpm install && pnpm test && pnpm typecheck && pnpm dev
 
 ## Control de calidad y publicación
 
-- `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**151/151 pruebas** en **18 archivos**) y el build estático con `vite-ssg` (11 páginas). `cd worker && pnpm test` añade **11 pruebas** del tema global y `pnpm typecheck` verifica el Worker.
+- `pnpm verify` ejecuta typecheck estricto (`vue-tsc` + `tsc`), la suite de Vitest (**156/156 pruebas** en **18 archivos**) y el build estático con `vite-ssg` (11 páginas). `cd worker && pnpm test` añade **11 pruebas** del tema global y `pnpm typecheck` verifica el Worker.
 - **Fase 0 del CMS integrada en `main`** (PR #19, 2026-11-24): métricas de auditoría retiradas del sitio y tema navideño controlado solo por el admin mediante Worker + KV, sin opción pública en `SettingsMenu` ni claves nuevas en i18n.
-- Release actual: **v1.4.0** (2026-11-26), mejoras de SEO/GEO: rutas `/en` prerenderizadas, `hreflang`, `lastmod` real, `llms.txt` enlazado, citas verificables y meta descriptions de 25–160 caracteres.
+- Release actual: **v1.5.0** (2026-11-27), tema navideño controlado por Worker/KV, guirnalda fuera del header fijo, descubrimiento de `llms.txt` desde el `<head>` y runbook de Cloudflare. v1.4.0 (2026-11-26) añadió las rutas `/en`, `hreflang`, `lastmod` real y citas verificables.
 - Release anterior: **v1.3.3**, corrección del menú móvil y del resaltado de sección activa en el navbar. El detalle está en [`CHANGELOG.md`](CHANGELOG.md).
 - Historial de cambios en [`CHANGELOG.md`](CHANGELOG.md); procedimientos de mantenimiento, tags, dependencias, monitoreo y rollback en [`docs/MAINTENANCE.md`](docs/MAINTENANCE.md).
 - Antes de publicar se revisa `git status`, se confirma que `main` no tiene cambios locales pendientes y se hace push a `origin/main` con `--follow-tags`; la rama está desplegada en producción.
