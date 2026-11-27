@@ -151,10 +151,13 @@ Despliegue y operación:
 ```bash
 cd worker
 pnpm install
-# Crear el namespace KV en Cloudflare y pegar su id en wrangler.toml
-wrangler secret put THEME_ADMIN_TOKEN   # nunca se commitea
-wrangler deploy
+# Crear el namespace KV y pegar su id en wrangler.toml; PUBLIC_SITE_ORIGIN debe ser Vercel
+pnpm exec wrangler secret put THEME_ADMIN_TOKEN   # nunca se commitea
+pnpm exec wrangler deploy
 ```
+
+Guía completa de KV, secreto, ruta, DNS, caché, verificación y rollback:
+[`docs/CLOUDFLARE_WORKER.md`](docs/CLOUDFLARE_WORKER.md).
 
 Tras el despliegue, abre `https://<dominio-del-worker>/admin/theme`, introduce el token y pulsa **Navideño** o **Predeterminado**. El Interruptor afecta a todas las visitantes sin rebuild; **Predeterminado** restaura `ech:preferences` de cada visitante en la siguiente respuesta HTML. Fase 1 migrará este valor a `site_settings.active_theme`, retirará el formulario temporal y el endpoint de administración.
 
@@ -201,7 +204,7 @@ Como `vite-ssg` ejecuta la aplicación en Node, estas etiquetas llegan al HTML f
 
 - `public/robots.txt` permite explícitamente crawlers de IA (GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot, Google-Extended, CCBot y otros) y declara el sitemap.
 - `sitemap.xml` se genera en build desde un plugin de Vite (`vite.config.ts`) que reutiliza `src/seo/sitemap.ts` y la colección de proyectos.
-- `public/llms.txt` resume el perfil, stack, casos de estudio, repos/demos públicos reales y una cita sugerida por caso para motores generativos. Se descubre desde `robots.txt` y desde el footer.
+- `public/llms.txt` resume el perfil, stack, casos de estudio, repos/demos públicos reales y una cita sugerida por caso para motores generativos. Se descubre desde `robots.txt` y desde `<link rel="alternate" type="text/plain">` en el `<head>` de todas las rutas prerenderizadas; el footer ya no muestra un enlace visible.
 - `sitemap.xml` incluye las ocho entradas por idioma con `lastmod` basado en cambios reales de contenido (`Project.updatedAt`), nunca en la fecha del build.
 - `vercel.json` activa `cleanUrls`, elimina barras finales y añade caché a robots, sitemap, `llms.txt` y assets con hash.
 

@@ -29,6 +29,10 @@ const projectSources = {
 }
 const themeScript =
   indexSource.match(/<script>\s*([\s\S]*?)<\/script>/)?.[1] ?? ''
+const robotsSource = readFileSync(
+  fileURLToPath(new URL('../public/robots.txt', import.meta.url)),
+  'utf8',
+)
 
 describe('SSG locale hydration', () => {
   it('starts preferences after the first render', () => {
@@ -40,6 +44,20 @@ describe('SSG locale hydration', () => {
   it('keeps the pre-paint preference script', () => {
     expect(indexSource).toContain("localStorage.getItem('ech:preferences')")
     expect(indexSource).toContain("root.lang = location.pathname === '/en' || location.pathname.startsWith('/en/') ? 'en' : locale")
+  })
+})
+
+describe('machine-readable profile discovery', () => {
+  it('advertises llms.txt from the head shared by every prerendered route', () => {
+    const head = indexSource.slice(0, indexSource.indexOf('</head>'))
+
+    expect(head).toMatch(
+      /<link\s+rel="alternate"\s+type="text\/plain"\s+title="LLMs Context"\s+href="\/llms\.txt"\s*\/?>/,
+    )
+  })
+
+  it('keeps llms.txt referenced from robots.txt', () => {
+    expect(robotsSource).toContain('https://jonathanech.dev/llms.txt')
   })
 })
 

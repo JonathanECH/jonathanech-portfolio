@@ -166,14 +166,22 @@ describe('christmas theme tokens', () => {
   })
 
   it('renders decorations from deterministic, hidden markup', () => {
-    expect(navbarSource).toContain('xmas-bulb xmas-bulb-a')
-    expect(navbarSource).toContain('xmas-bulb xmas-bulb-b')
+    expect(appSource).toContain('xmas-bulb xmas-bulb-a')
+    expect(appSource).toContain('xmas-bulb xmas-bulb-b')
+    expect(navbarSource).not.toContain('xmas-bulb')
     expect(heroSource).toContain('christmas-decor--desktop')
     expect(heroSource).toContain('xmas-badge')
     expect(appSource).toContain('<ChristmasSnowfall />')
     expect(snowfallSource).toContain('aria-hidden="true"')
     expect(snowfallSource).not.toContain('Math.random')
     expect(snowfallSource.match(/duration: '/g)).toHaveLength(16)
+  })
+
+  it('scrolls the garland with the document without distorting the bulbs', () => {
+    expect(appSource).toContain('absolute inset-x-0 top-18 z-0 h-7 overflow-hidden')
+    expect(appSource).toContain('preserveAspectRatio="xMidYMin slice"')
+    expect(appSource).not.toContain('preserveAspectRatio="none"')
+    expect(appSource).toContain('aria-hidden="true"')
   })
 
   it('never exposes the global theme in the public settings or i18n', () => {
